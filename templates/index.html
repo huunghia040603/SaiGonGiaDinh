@@ -1,0 +1,757 @@
+{% extends 'base.html' %}
+
+{% block title %}Trang Chủ - Website Trường Cao Đẳng Sài Gòn Gia Định{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stylenganh.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- <div class="banner-slider">
+    <div class="slides">
+        <div class="slide">
+            <img src="/static/images/banner1.jpg" alt="Banner 1">
+        </div>
+        <div class="slide">
+            <img src="/static/images/banner2.jpg" alt="Banner 2">
+        </div>
+        <div class="slide">
+            <img src="/static/images/banner3.jpg" alt="Banner 3">
+        </div>
+    </div>
+
+    
+    <button class="slider-btn prev-btn">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="slider-btn next-btn">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="slider-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+ -->
+
+<h1 class="main-title">
+    <span>Cao Đẳng Sài Gòn Gia Định</span>
+    <span>Nâng Tầm Tri Thức, Mở Lối Tương Lai</span>
+</h1>
+
+<!-- Statistics Section -->
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stats-content">
+            <div class="stats-text">
+                <div class="stat-item">
+                    <h2 class="counter">21</h2>
+                    <p>NĂM KINH NGHIỆM</p>
+                </div>
+                <p class="stats-description">
+                    Trường Cao Đẳng Sài Gòn Gia Định từng bước nâng cao chất lượng đào tạo, mở rộng và hoàn thiện cơ sở
+                    vật chất, không ngừng phát triển các nguồn lực để giữ vững thương hiệu là địa chỉ tin cậy trong đào
+                    tạo nguồn nhân lực có chất lượng cho TP. Hồ Chí Minh và cả nước. Phấn đấu trong tương lai gần nhất
+                    có đủ những điều kiện cơ bản để nâng cấp thành trường Đại học đa ngành nhằm đào tạo nguồn nhân lực
+                    có chất lượng cao đáp ứng công cuộc công nghiệp hóa và hiện đại hóa đất nước..
+                </p>
+                <a href="#" class="learn-more-btn" style="font-family: font2;">Đọc Thêm</a>
+            </div>
+
+            <div class="stats-numbers">
+                <div class="stat-box">
+                    <h3 class="counter">32000</h3>
+                    <p>SINH VIÊN</p>
+                </div>
+                <div class="stat-box">
+                    <h3 class="counter">100<span class="percent-sign">%</span></h3>
+                    <p>CÓ VIỆC LÀM</p>
+                </div>
+                <div class="stat-box">
+                    <h3 class="counter">210</h3>
+                    <p>GIẢNG VIÊN</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="worker-image-container">
+            <img src="/static/images/nobackground/GH2.png" alt="Professional Worker" class="worker-image">
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-grid">
+            <!-- Vision Card -->
+            <div class="about-card vision-card">
+                <img src="{{ url_for('static', filename='images/sv/sv1.jpg') }}" alt="Vision Image" class="about-image">
+                <div class="card-content orange">
+                    <h3>Tầm nhìn của chúng tôi</h3>
+                    <p>Trở thành một trong những cơ sở giáo dục hàng đầu trong việc đào tạo nguồn nhân lực chất lượng
+                        cao, đáp ứng nhu cầu của xã hội và hội nhập quốc tế.</p>
+                </div>
+            </div>
+
+            <!-- Mission Card -->
+            <div class="about-card mission-card">
+                <img src="{{ url_for('static', filename='images/sv/sv3.jpg') }}" alt="Mission Image"
+                    class="about-image">
+                <div class="card-content navy">
+                    <h3>Sứ mệnh của chúng tôi</h3>
+                    <p>Đào tạo nguồn nhân lực có trình độ cao, có khả năng sáng tạo và thích ứng với môi trường làm việc
+                        hiện đại, góp phần vào sự phát triển của đất nước.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Content -->
+        <div class="about-content" data-aos="fade-up">
+            <div class="section-header">
+                <span class="subtitle">GIỚI THIỆU VỀ CHÚNG TÔI</span>
+                <h2 class="title">Được xây dựng trên sự chính trực và đổi mới</h2>
+            </div>
+
+            <div class="quote-container">
+                <blockquote>
+                    "Tại Cao Đẳng Sài Gòn Gia Định, chúng tôi tin rằng mỗi sinh viên đều là một câu chuyện — về tầm
+                    nhìn, sự tận tụy và khát khao học hỏi. Sứ mệnh của chúng tôi không chỉ là đào tạo mà còn là hiện
+                    thực hóa ước mơ một cách chính xác và có mục đích."
+                </blockquote>
+
+                <div class="author-info">
+                    <img src="{{ url_for('static', filename='images/sv/ht01.png') }}" alt="Hiệu trưởng"
+                        class="author-avatar">
+                    <div class="author-details">
+                        <h4>GV. TẠI TRƯỜNG</h4>
+                        <p>CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="description">
+                Với hơn 21 năm kinh nghiệm trong lĩnh vực giáo dục, chúng tôi không ngừng đổi mới và phát triển để mang
+                đến những giá trị tốt nhất cho sinh viên và xã hội.
+            </p>
+
+            <a href="#" class="learn-more-btn about-btn">Tìm Hiểu Thêm</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="services-container">
+        <div class="services-header">
+            <h1 class="services-title">
+                <span>NGÀNH XÉT TUYỂN
+                </span>
+                <span style="font-size: 30px;">Cao Đẳng Sài Gòn Gia Định</span>
+            </h1>
+            <div class="services-intro">
+                <p style="font-family: font6;">Hãy đăng ký ngay hôm nay để nhận được những ưu đãi đặc biệt và trở thành
+                    sinh viên của Cao Đẳng Sài Gòn Gia Định!</p>
+                <a href="#" class="consultation-btn" style="font-family: font2;">Đăng Ký Ngay</a>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- Row 1 -->
+            <!-- General Construction -->
+            <div class="service-card orange">
+                <div class="service-icon">
+                    <i class="fa-solid fa-money-check-dollar" style="font-size: 40px;"></i>
+                </div>
+                <h3>KINH TẾ - TÀI CHÍNH</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ có
+                    niềm đam mê với lĩnh vực kinh tế, mong muốn có một sự nghiệp vững chắc trong tương lai.</p>
+            </div>
+
+            <!-- Renovation Remodeling -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-shield-dog" style="font-size: 40px;"></i>
+                </div>
+                <h3>THÚ Y - CHĂN NUÔI</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn hấp dẫn cho những bạn trẻ có
+                    niềm đam mê với động vật và mong muốn đóng góp vào sự phát triển của ngành nông nghiệp nước nhà.</p>
+            </div>
+
+            <!-- Architectural Design -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-microchip" style="font-size: 40px;"></i>
+                </div>
+                <h3>CÔNG NGHỆ - KỸ THUẬT</h3>
+                <p style="font-family: font6;">Với phương châm đào tạo "thực học - thực hành" và mạng lưới đối tác doanh
+                    nghiệp vững chắc, Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ yêu thích công
+                    nghệ và mong muốn có một tương lai nghề nghiệp ổn định, phát triển.</p>
+            </div>
+
+            <!-- Row 2 -->
+            <!-- Planning Development -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-stethoscope" style="font-size: 40px;"></i>
+                </div>
+                <h3>Y - DƯỢC</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định, nhóm ngành Y Dược là một trong những khối
+                    ngành trọng điểm, được nhà trường tập trung đầu tư để đào tạo ra đội ngũ nhân lực chất lượng cao,
+                    đáp ứng nhu cầu chăm sóc sức khỏe cộng đồng ngày càng lớn.</p>
+            </div>
+
+            <!-- Project Management -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-scale-balanced" style="font-size: 40px;"></i>
+                </div>
+                <h3>XÃ HỘI - DU LỊCH - PHÁP LUẬT</h3>
+                <p style="font-family: font6;">Với phương pháp đào tạo thực tiễn, gắn liền với nhu cầu xã hội và doanh
+                    nghiệp, Cao đẳng Sài Gòn Gia Định là lựa chọn phù hợp cho những bạn trẻ năng động, yêu thích giao
+                    tiếp, thích khám phá và mong muốn làm việc trong các lĩnh vực dịch vụ hoặc pháp luật.</p>
+            </div>
+
+            <!-- Structural Engineering -->
+            <div class="service-card navy">
+                <div class="service-icon">
+                    <i class="fa-solid fa-book-medical" style="font-size: 40px;"></i>
+                </div>
+                <h3>VĂN HOÁ THPT 9+</h3>
+                <p>Chương trình Văn hóa THPT 9+ tại Cao đẳng Sài Gòn Gia Định là một mô hình đào tạo đặc biệt dành cho
+                    các bạn học sinh đã tốt nghiệp THCS. Đây là một lựa chọn tối ưu giúp các em vừa hoàn thành chương
+                    trình văn hóa phổ thông, vừa học nghề ngay, rút ngắn thời gian và tăng cơ hội việc làm sau này.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Detailed Majors Section -->
+<section class="detailed-majors">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">CHƯƠNG TRÌNH ĐÀO TẠO</h2>
+            <p class="section-subtitle">Khám phá các chuyên ngành đào tạo tại Cao đẳng Sài Gòn Gia Định</p>
+        </div>
+
+        <div class="majors-grid">
+            <!-- Kinh tế -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='/images/nganh/kt-tc/ke-toan.jpg') }}" alt="Kế toán">
+                        <div class="major-content">
+                            <h3>Kế toán doanh nghiệp</h3>
+                            <p>Đào tạo chuyên sâu về kế toán, kiểm toán và tài chính doanh nghiệp</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Kế toán trưởng</li>
+                                <li>Kiểm toán viên</li>
+                                <li>Chuyên viên tư vấn tài chính</li>
+                                <li>Chuyên viên phân tích tài chính</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quản trị kinh doanh -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/quantri.jpg') }}"
+                            alt="Quản trị kinh doanh">
+                        <div class="major-content">
+                            <h3>Quản trị kinh doanh</h3>
+                            <p>Phát triển kỹ năng quản lý và điều hành doanh nghiệp hiệu quả</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Giám đốc điều hành</li>
+                                <li>Quản lý dự án</li>
+                                <li>Chuyên viên tư vấn chiến lược</li>
+                                <li>Quản lý kinh doanh</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tài chính ngân hàng -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/nganh/tai-chinh.jpg') }}"
+                            alt="Tài chính ngân hàng">
+                        <div class="major-content">
+                            <h3>Tài chính - Ngân hàng</h3>
+                            <p>Đào tạo chuyên gia trong lĩnh vực tài chính và ngân hàng</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Chuyên viên tín dụng</li>
+                                <li>Chuyên viên đầu tư</li>
+                                <li>Quản lý quỹ</li>
+                                <li>Tư vấn tài chính cá nhân</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thương mại điện tử -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/tmdt.jpg') }}" alt="Thương mại điện tử">
+                        <div class="major-content">
+                            <h3>Thương mại điện tử</h3>
+                            <p>Đào tạo chuyên gia trong lĩnh vực kinh doanh trực tuyến</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Quản lý sàn TMĐT</li>
+                                <li>Digital Marketing</li>
+                                <li>Quản lý dự án online</li>
+                                <li>Chuyên viên phát triển thị trường</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logistics -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/logistics.jpg') }}" alt="Logistics">
+                        <div class="major-content">
+                            <h3>Logistics</h3>
+                            <p>Đào tạo chuyên gia trong lĩnh vực quản lý chuỗi cung ứng và logistics</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Chuyên viên logistics</li>
+                                <li>Quản lý chuỗi cung ứng</li>
+                                <li>Điều phối vận tải</li>
+                                <li>Quản lý kho vận</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thú y -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/thuY.jpg') }}" alt="Thú y">
+                        <div class="major-content">
+                            <h3>Thú y</h3>
+                            <p>Đào tạo bác sĩ thú y chuyên nghiệp với kiến thức và kỹ năng toàn diện</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Bác sĩ thú y</li>
+                                <li>Chuyên gia dinh dưỡng động vật</li>
+                                <li>Nghiên cứu viên</li>
+                                <li>Quản lý trại chăn nuôi</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Công nghệ thông tin -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/cntt.jpg') }}" alt="Công nghệ thông tin">
+                        <div class="major-content">
+                            <h3>Công nghệ thông tin</h3>
+                            <p>Đào tạo kỹ sư CNTT với chương trình cập nhật theo xu hướng công nghệ mới nhất</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Chuyên ngành</h4>
+                            <ul>
+                                <li>Quản trị cơ sở dữ liệu</li>
+                                <li>Thiết kế đồ họa</li>
+                                <li>Lập trình máy tính</li>
+                                <li>An toàn thông tin</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Công nghệ ô tô -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/oto.jpg') }}" alt="Công nghệ ô tô">
+                        <div class="major-content">
+                            <h3>Công nghệ ô tô</h3>
+                            <p>Đào tạo kỹ thuật viên chuyên nghiệp trong lĩnh vực công nghệ ô tô</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Kỹ thuật viên ô tô</li>
+                                <li>Tư vấn kỹ thuật</li>
+                                <li>Quản lý xưởng dịch vụ</li>
+                                <li>Kiểm định viên ô tô</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Công nghệ thực phẩm -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/thucpham.jpg') }}"
+                            alt="Công nghệ thực phẩm">
+                        <div class="major-content">
+                            <h3>Công nghệ thực phẩm</h3>
+                            <p>Đào tạo chuyên gia trong lĩnh vực chế biến và bảo quản thực phẩm</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Quản lý sản xuất</li>
+                                <li>Kiểm soát chất lượng</li>
+                                <li>R&D thực phẩm</li>
+                                <li>Tư vấn dinh dưỡng</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dược -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/duoc.jpg') }}" alt="Dược">
+                        <div class="major-content">
+                            <h3>Dược</h3>
+                            <p>Đào tạo dược sĩ chuyên nghiệp với kiến thức chuyên môn cao</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Dược sĩ nhà thuốc</li>
+                                <li>Trình dược viên</li>
+                                <li>Kiểm nghiệm dược phẩm</li>
+                                <li>Quản lý dược phẩm</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Điều dưỡng -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/dieuduong.jpg') }}" alt="Điều dưỡng">
+                        <div class="major-content">
+                            <h3>Điều dưỡng</h3>
+                            <p>Đào tạo điều dưỡng viên chuyên nghiệp với tâm huyết chăm sóc sức khỏe cộng đồng</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Điều dưỡng viên</li>
+                                <li>Chăm sóc sức khỏe</li>
+                                <li>Hộ sinh viên</li>
+                                <li>Y tá trưởng</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Y sĩ đa khoa -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/ysi.jpg') }}" alt="Y sĩ đa khoa">
+                        <div class="major-content">
+                            <h3>Y sĩ đa khoa</h3>
+                            <p>Đào tạo y sĩ với kiến thức tổng quát về y học và kỹ năng khám chữa bệnh</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Y sĩ đa khoa</li>
+                                <li>Nhân viên y tế</li>
+                                <li>Trạm y tế</li>
+                                <li>Phòng khám đa khoa</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kỹ thuật phục hình răng -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/rang.jpg') }}"
+                            alt="Kỹ thuật phục hình răng">
+                        <div class="major-content">
+                            <h3>Kỹ thuật phục hình răng</h3>
+                            <p>Đào tạo chuyên viên kỹ thuật trong lĩnh vực nha khoa</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Kỹ thuật viên phục hình</li>
+                                <li>Trợ lý nha khoa</li>
+                                <li>Chuyên viên labo răng</li>
+                                <li>Tư vấn nha khoa</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kỹ thuật phục hồi chức năng -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/phuchoi.jpg') }}"
+                            alt="Kỹ thuật phục hồi chức năng">
+                        <div class="major-content">
+                            <h3>Kỹ thuật phục hồi chức năng</h3>
+                            <p>Đào tạo chuyên viên vật lý trị liệu và phục hồi chức năng</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Kỹ thuật viên PHCN</li>
+                                <li>Vật lý trị liệu</li>
+                                <li>Chuyên viên trị liệu</li>
+                                <li>Phục hồi chức năng</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Y học cổ truyền -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/yhct.jpg') }}" alt="Y học cổ truyền">
+                        <div class="major-content">
+                            <h3>Y học cổ truyền</h3>
+                            <p>Đào tạo y sĩ y học cổ truyền kết hợp với y học hiện đại</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Y sĩ YHCT</li>
+                                <li>Châm cứu viên</li>
+                                <li>Bốc thuốc đông y</li>
+                                <li>Phòng khám YHCT</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Du lịch -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/dulich.jpg') }}" alt="Du lịch">
+                        <div class="major-content">
+                            <h3>Du lịch</h3>
+                            <p>Đào tạo chuyên viên trong lĩnh vực du lịch và lữ hành</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Hướng dẫn viên du lịch</li>
+                                <li>Điều hành tour</li>
+                                <li>Quản lý du lịch</li>
+                                <li>Tư vấn du lịch</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ngôn ngữ Anh -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/english.jpg') }}" alt="Ngôn ngữ Anh">
+                        <div class="major-content">
+                            <h3>Ngôn ngữ Anh</h3>
+                            <p>Đào tạo chuyên gia ngôn ngữ Anh với kỹ năng giao tiếp quốc tế</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Biên phiên dịch</li>
+                                <li>Giáo viên tiếng Anh</li>
+                                <li>Trợ lý đối ngoại</li>
+                                <li>Nhân viên quan hệ quốc tế</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Luật - Dịch vụ pháp lý -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/luat.jpg') }}" alt="Luật">
+                        <div class="major-content">
+                            <h3>Luật - Dịch vụ pháp lý</h3>
+                            <p>Đào tạo chuyên viên pháp lý với kiến thức luật thực tiễn</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Chuyên viên pháp lý</li>
+                                <li>Tư vấn luật</li>
+                                <li>Thư ký tòa án</li>
+                                <li>Trợ lý pháp lý</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sư phạm mầm non -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/mamnon.jpg') }}" alt="Sư phạm mầm non">
+                        <div class="major-content">
+                            <h3>Sư phạm mầm non</h3>
+                            <p>Đào tạo giáo viên mầm non chuyên nghiệp với tâm huyết giáo dục</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Triển vọng nghề nghiệp</h4>
+                            <ul>
+                                <li>Giáo viên mầm non</li>
+                                <li>Quản lý trường mầm non</li>
+                                <li>Tư vấn giáo dục</li>
+                                <li>Chuyên gia giáo dục sớm</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Văn hóa THPT 9+ -->
+            <div class="major-card">
+                <div class="major-card-inner">
+                    <div class="major-front">
+                        <img src="{{ url_for('static', filename='images/majors/vanhoa.jpg') }}" alt="Văn hóa THPT 9+">
+                        <div class="major-content">
+                            <h3>Văn hóa THPT 9+</h3>
+                            <p>Chương trình đào tạo văn hóa kết hợp với hướng nghiệp</p>
+                        </div>
+                    </div>
+                    <div class="major-back">
+                        <div class="major-details">
+                            <h4>Chương trình học</h4>
+                            <ul>
+                                <li>Văn hóa THPT</li>
+                                <li>Kỹ năng mềm</li>
+                                <li>Định hướng nghề nghiệp</li>
+                                <li>Ngoại ngữ và tin học</li>
+                            </ul>
+                            <a href="#" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{{ url_for('static', filename='js/banner.js') }}"></script>
+<script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jsnganh.js') }}"></script>
+{% endblock %}

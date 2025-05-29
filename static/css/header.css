@@ -1,0 +1,382 @@
+/* Container */
+@font-face {
+    font-family: fontVinamilk;
+    src: url(/static/font/font1.ttf);
+  }
+@font-face {
+    font-family: font2;
+    src: url(/static/font/font2.ttf);
+  }
+  
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Top Bar */
+.top-bar {
+    background-color: #002147;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.top-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+/* Logo in top bar */
+.top-links .logo {
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.top-links .logo img {
+    height: 40px;
+    width: auto;
+}
+
+.top-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s;
+    font-family: font2;
+}
+
+.top-links a i {
+    font-size: 14px;
+}
+
+.top-links a:hover {
+    color: #dc3545;
+}
+
+/* Main Header */
+.header {
+    background-color: #fff;
+    padding: 15px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Logo and School Name */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+.school-name {
+    flex: 1;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.school-name h1 {
+    color: #dc3545;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.logo-text {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* Marquee Animation */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-text {
+    display: flex;
+    font-family: font2;
+    /* letter-spacing: 1px; */
+    animation: marquee 8s linear infinite;
+    white-space: nowrap;
+    position: relative;
+    width: max-content;
+}
+
+.marquee-text h1 {
+    color: #dc3545;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    padding-right: 30px;
+    flex-shrink: 0;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause animation on hover */
+.marquee-container:hover .marquee-text {
+    animation-play-state: paused;
+}
+
+/* Navigation */
+.main-nav {
+    background-color: #dc3545;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.main-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap;
+}
+
+.nav-list>li {
+    position: relative;
+}
+
+.nav-list>li>a {
+    color: #fff;
+    font-family: font2;
+    text-decoration: none;
+    padding: 12px 23px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.home-link {
+    background-color: #003366;
+    border-radius: 8px;
+}
+
+.nav-list>li>a:hover,
+.nav-list>li:hover>a {
+    background-color: #c82333;
+}
+
+/* Dropdown Menus */
+.dropdown-toggle i {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 4px;
+    overflow: hidden;
+    transform-origin: top;
+    animation: dropdownFade 0.2s ease-in-out;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    overflow: hidden;
+    margin: 10px 0;
+    min-width: 250px;
+    padding: 5px 15px;
+    height: 25px;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    color: #fff;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.search-box input {
+    background: transparent;
+    padding: 8px 10px;
+    padding-right: 35px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    color: #fff;
+    flex: 1;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.search-box:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Fixed Navigation */
+.main-nav.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: scaleY(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .nav-list>li>a {
+        padding: 15px 15px;
+        font-size: 13px;
+    }
+
+    .search-box input {
+        width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-list {
+        display: none;
+        width: 100%;
+    }
+
+    .mobile-menu-open .nav-list {
+        display: block;
+    }
+
+    .nav-list>li {
+        width: 100%;
+    }
+
+    .nav-list>li>a {
+        padding: 12px 15px;
+        justify-content: space-between;
+    }
+
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        background-color: #f8f9fa;
+        display: none;
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+
+    .search-box {
+        width: 100%;
+        margin: 10px 15px;
+    }
+
+    .top-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .main-nav .container {
+        flex-direction: column;
+    }
+}
