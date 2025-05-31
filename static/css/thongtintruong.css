@@ -1,0 +1,206 @@
+/* services2.css */
+
+
+
+/* Container chính của toàn bộ phần này */
+.main-container2 {
+    display: flex;
+    min-height: 100vh; /* Đảm bảo đủ chiều cao để cuộn */
+    background-color: #0d47a1; /* Màu nền xanh đậm như trong ảnh */
+    color: white;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 50px 0; /* Padding trên dưới */
+    position: relative; /* Cho background lines */
+    overflow: hidden; /* Đảm bảo hiệu ứng người không tràn ra */
+}
+
+/* Background lines effect (Tùy chọn) */
+.main-container2::before,
+.main-container2::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><line x1="0" y1="25%" x2="100%" y2="25%" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/><line x1="0" y1="75%" x2="100%" y2="75%" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/><line x1="25%" y1="0" x2="25%" y2="100%" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/><line x1="75%" y1="0" x2="75%" y2="100%" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
+    background-size: 100% 100%;
+    z-index: 0;
+}
+
+.left-section2, .right-section2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1; /* Đảm bảo nội dung nằm trên background lines */
+}
+
+.left-section2 {
+    position: relative;
+    overflow: hidden; /* Đảm bảo hình ảnh ẩn đi khi ở ngoài */
+}
+
+/* Hiệu ứng ảnh người chuyển động từ trái vào */
+.worker-image2 {
+    max-width: 80%;
+    height: auto;
+    transform: translateX(-100%); /* Ẩn ban đầu sang trái */
+    opacity: 0; /* Ẩn hình ảnh ban đầu */
+    transition: transform 5s ease-out, opacity 5s ease-out; /* Hiệu ứng chuyển động 5s */
+}
+
+.worker-image2.slide-in {
+    transform: translateX(0); /* Di chuyển vào vị trí */
+    opacity: 1; /* Hiện hình ảnh */
+}
+
+.right-section2 {
+    text-align: left;
+    padding-right: 50px; /* Khoảng cách bên phải */
+}
+
+.how-it-works2 {
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+h1 {
+    font-size: 3.5em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+.info-box-wrapper2 {
+    width: 100%;
+    max-width: 500px; /* Giới hạn chiều rộng cho các info box */
+}
+
+/* 3 ô thông tin */
+.info-box2 {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start; /* Căn trên cùng cho icon và text */
+    opacity: 0; /* Ẩn ban đầu */
+    transform: translateY(20px); /* Di chuyển nhẹ từ dưới lên */
+    transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng mờ dần và di chuyển */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hiệu ứng rê chuột vào các ô */
+.info-box2:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transform: translateY(0) scale(1.02); /* Phóng to nhẹ khi hover */
+}
+
+.icon-placeholder2 {
+    flex-shrink: 0; /* Ngăn icon bị co lại */
+    width: 50px; /* Kích thước icon */
+    height: 50px;
+    border-radius: 50%; /* Hình tròn */
+    background-color: white; /* Nền trắng cho icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.icon-placeholder2 img {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.info-box2 h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+.info-box2 p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Các lớp JavaScript sẽ thêm vào để kích hoạt hiệu ứng xuất hiện */
+.info-box2.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Tạo độ trễ khác nhau cho mỗi hộp */
+.info-box2:nth-child(1).fade-in { transition-delay: 0.2s; }
+.info-box2:nth-child(2).fade-in { transition-delay: 0.4s; }
+.info-box2:nth-child(3).fade-in { transition-delay: 0.6s; }
+
+
+/* ===== MEDIA QUERIES cho giao diện mobile ===== */
+@media (max-width: 768px) {
+    .main-container2 {
+        flex-direction: column; /* Xếp chồng các section */
+        padding: 30px 15px;
+        text-align: center;
+        height: auto; /* Chiều cao tự động trên mobile */
+    }
+
+    .left-section2, .right-section2 {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .left-section2 {
+        order: 2; /* Đặt ảnh ở dưới trên mobile */
+        margin-top: 30px;
+    }
+
+    .right-section2 {
+        order: 1; /* Đặt text ở trên trên mobile */
+        padding-right: 15px; /* Điều chỉnh padding */
+    }
+
+    .worker-image2 {
+        max-width: 100%; /* Đảm bảo ảnh không quá lớn trên mobile */
+    }
+
+    h1 {
+        font-size: 2.5em; /* Giảm kích thước chữ tiêu đề */
+    }
+
+    .info-box-wrapper2 {
+        max-width: 100%; /* Full width trên mobile */
+    }
+
+    .info-box2 {
+        flex-direction: column; /* Icon và text xếp chồng */
+        align-items: center; /* Căn giữa các item */
+        text-align: center;
+    }
+
+    .icon-placeholder2 {
+        margin-right: 0; /* Bỏ margin phải */
+        margin-bottom: 15px; /* Thêm margin dưới */
+    }
+}
+
+/* Thêm một media query cho màn hình cực nhỏ nếu cần thiết */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+    .info-box2 {
+        padding: 15px;
+    }
+    .info-box2 h3 {
+        font-size: 1.3em;
+    }
+    .info-box2 p {
+        font-size: 0.85em;
+    }
+}

@@ -2,22 +2,24 @@
 
 {% block title %}Trang Chủ - Website Trường Cao Đẳng Sài Gòn Gia Định{% endblock %}
 
-{% block styles %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#ee232b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/stylenganh.css') }}">
 {% endblock %}
 
 {% block content %}
-<!-- <div class="banner-slider">
+<div class="banner-slider">
     <div class="slides">
         <div class="slide">
-            <img src="/static/images/banner1.jpg" alt="Banner 1">
+            <img src="/static/images/banner4.jpg" alt="Banner 1">
         </div>
         <div class="slide">
-            <img src="/static/images/banner2.jpg" alt="Banner 2">
+            <img src="/static/images/banner5.jpg" alt="Banner 2">
         </div>
-        <div class="slide">
-            <img src="/static/images/banner3.jpg" alt="Banner 3">
-        </div>
+       
     </div>
 
     
@@ -35,7 +37,7 @@
     </div>
 </div>
 
- -->
+
 
 <h1 class="main-title">
     <span>Cao Đẳng Sài Gòn Gia Định</span>
@@ -78,162 +80,19 @@
         </div>
 
         <div class="worker-image-container">
-            <img src="/static/images/nobackground/GH2.png" alt="Professional Worker" class="worker-image">
+            <img src="/static/images/nobackground/G3.png" alt="Professional Worker" class="worker-image">
         </div>
     </div>
 </section>
 
-<!-- About Section -->
-<section class="about-section">
-    <div class="about-container">
-        <div class="about-grid">
-            <!-- Vision Card -->
-            <div class="about-card vision-card">
-                <img src="{{ url_for('static', filename='images/sv/sv1.jpg') }}" alt="Vision Image" class="about-image">
-                <div class="card-content orange">
-                    <h3>Tầm nhìn của chúng tôi</h3>
-                    <p>Trở thành một trong những cơ sở giáo dục hàng đầu trong việc đào tạo nguồn nhân lực chất lượng
-                        cao, đáp ứng nhu cầu của xã hội và hội nhập quốc tế.</p>
-                </div>
-            </div>
 
-            <!-- Mission Card -->
-            <div class="about-card mission-card">
-                <img src="{{ url_for('static', filename='images/sv/sv3.jpg') }}" alt="Mission Image"
-                    class="about-image">
-                <div class="card-content navy">
-                    <h3>Sứ mệnh của chúng tôi</h3>
-                    <p>Đào tạo nguồn nhân lực có trình độ cao, có khả năng sáng tạo và thích ứng với môi trường làm việc
-                        hiện đại, góp phần vào sự phát triển của đất nước.</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- About Content -->
-        <div class="about-content" data-aos="fade-up">
-            <div class="section-header">
-                <span class="subtitle">GIỚI THIỆU VỀ CHÚNG TÔI</span>
-                <h2 class="title">Được xây dựng trên sự chính trực và đổi mới</h2>
-            </div>
-
-            <div class="quote-container">
-                <blockquote>
-                    "Tại Cao Đẳng Sài Gòn Gia Định, chúng tôi tin rằng mỗi sinh viên đều là một câu chuyện — về tầm
-                    nhìn, sự tận tụy và khát khao học hỏi. Sứ mệnh của chúng tôi không chỉ là đào tạo mà còn là hiện
-                    thực hóa ước mơ một cách chính xác và có mục đích."
-                </blockquote>
-
-                <div class="author-info">
-                    <img src="{{ url_for('static', filename='images/sv/ht01.png') }}" alt="Hiệu trưởng"
-                        class="author-avatar">
-                    <div class="author-details">
-                        <h4>GV. TẠI TRƯỜNG</h4>
-                        <p>CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
-                    </div>
-                </div>
-            </div>
-
-            <p class="description">
-                Với hơn 21 năm kinh nghiệm trong lĩnh vực giáo dục, chúng tôi không ngừng đổi mới và phát triển để mang
-                đến những giá trị tốt nhất cho sinh viên và xã hội.
-            </p>
-
-            <a href="#" class="learn-more-btn about-btn">Tìm Hiểu Thêm</a>
-        </div>
-    </div>
-</section>
-
-<!-- Services Section -->
-<section class="services-section">
-    <div class="services-container">
-        <div class="services-header">
-            <h1 class="services-title">
-                <span>NGÀNH XÉT TUYỂN
-                </span>
-                <span style="font-size: 30px;">Cao Đẳng Sài Gòn Gia Định</span>
-            </h1>
-            <div class="services-intro">
-                <p style="font-family: font6;">Hãy đăng ký ngay hôm nay để nhận được những ưu đãi đặc biệt và trở thành
-                    sinh viên của Cao Đẳng Sài Gòn Gia Định!</p>
-                <a href="#" class="consultation-btn" style="font-family: font2;">Đăng Ký Ngay</a>
-            </div>
-        </div>
-
-        <div class="services-grid">
-            <!-- Row 1 -->
-            <!-- General Construction -->
-            <div class="service-card orange">
-                <div class="service-icon">
-                    <i class="fa-solid fa-money-check-dollar" style="font-size: 40px;"></i>
-                </div>
-                <h3>KINH TẾ - TÀI CHÍNH</h3>
-                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ có
-                    niềm đam mê với lĩnh vực kinh tế, mong muốn có một sự nghiệp vững chắc trong tương lai.</p>
-            </div>
-
-            <!-- Renovation Remodeling -->
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fa-solid fa-shield-dog" style="font-size: 40px;"></i>
-                </div>
-                <h3>THÚ Y - CHĂN NUÔI</h3>
-                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn hấp dẫn cho những bạn trẻ có
-                    niềm đam mê với động vật và mong muốn đóng góp vào sự phát triển của ngành nông nghiệp nước nhà.</p>
-            </div>
-
-            <!-- Architectural Design -->
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fa-solid fa-microchip" style="font-size: 40px;"></i>
-                </div>
-                <h3>CÔNG NGHỆ - KỸ THUẬT</h3>
-                <p style="font-family: font6;">Với phương châm đào tạo "thực học - thực hành" và mạng lưới đối tác doanh
-                    nghiệp vững chắc, Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ yêu thích công
-                    nghệ và mong muốn có một tương lai nghề nghiệp ổn định, phát triển.</p>
-            </div>
-
-            <!-- Row 2 -->
-            <!-- Planning Development -->
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fa-solid fa-stethoscope" style="font-size: 40px;"></i>
-                </div>
-                <h3>Y - DƯỢC</h3>
-                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định, nhóm ngành Y Dược là một trong những khối
-                    ngành trọng điểm, được nhà trường tập trung đầu tư để đào tạo ra đội ngũ nhân lực chất lượng cao,
-                    đáp ứng nhu cầu chăm sóc sức khỏe cộng đồng ngày càng lớn.</p>
-            </div>
-
-            <!-- Project Management -->
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fa-solid fa-scale-balanced" style="font-size: 40px;"></i>
-                </div>
-                <h3>XÃ HỘI - DU LỊCH - PHÁP LUẬT</h3>
-                <p style="font-family: font6;">Với phương pháp đào tạo thực tiễn, gắn liền với nhu cầu xã hội và doanh
-                    nghiệp, Cao đẳng Sài Gòn Gia Định là lựa chọn phù hợp cho những bạn trẻ năng động, yêu thích giao
-                    tiếp, thích khám phá và mong muốn làm việc trong các lĩnh vực dịch vụ hoặc pháp luật.</p>
-            </div>
-
-            <!-- Structural Engineering -->
-            <div class="service-card navy">
-                <div class="service-icon">
-                    <i class="fa-solid fa-book-medical" style="font-size: 40px;"></i>
-                </div>
-                <h3>VĂN HOÁ THPT 9+</h3>
-                <p>Chương trình Văn hóa THPT 9+ tại Cao đẳng Sài Gòn Gia Định là một mô hình đào tạo đặc biệt dành cho
-                    các bạn học sinh đã tốt nghiệp THCS. Đây là một lựa chọn tối ưu giúp các em vừa hoàn thành chương
-                    trình văn hóa phổ thông, vừa học nghề ngay, rút ngắn thời gian và tăng cơ hội việc làm sau này.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Detailed Majors Section -->
 <section class="detailed-majors">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">CHƯƠNG TRÌNH ĐÀO TẠO</h2>
+            <h2 class="section-title">NGÀNH ĐÀO TẠO</h2>
             <p class="section-subtitle">Khám phá các chuyên ngành đào tạo tại Cao đẳng Sài Gòn Gia Định</p>
         </div>
 
@@ -745,6 +604,290 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+<!-- Facilities Section -->
+<section class="facilities-section">
+    <div class="facilities-header">
+        <h2 class="facilities-title">Đăng Ký Nhập Học Ngay</h2>
+    </div>
+    
+    <div class="facilities-grid">
+        <!-- Facility Image -->
+        <div class="facility-item">
+            <img src="{{ url_for('static', filename='images/bannerdk1.jpg') }}" alt="Cơ sở Sala" class="facility-image">
+        </div>
+        
+        
+        <!-- Registration Form -->
+        <div class="registration-form">
+            <h3 class="form-title" >ĐĂNG KÝ</h3>
+            <form id="tourForm" action="/register-tour" method="POST">
+                
+
+                <div class="form-group">
+                    <label for="class" class="form-label">Họ Và Tên *</label>
+                    <input type="text" id="class" name="class" class="form-control" required placeholder="Nhập họ và tên">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Số điện thoại *</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required placeholder="Nhập số điện thoại">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Địa chỉ Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Nhập địa chỉ email">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Địa Chỉ Liên Lạc *</label>
+                    <input type="text" id="name" name="name" class="form-control" required placeholder="Nhập địa chỉ liên lạc">
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label for="facility" class="form-label">Ngành Đăng Ký *</label>
+                    <select id="facility" name="facility" class="form-control" required>
+                        <option value="">Chọn ngành đăng ký</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">KẾ TOÁN DOANH NGHIỆP</option>
+                        <option value="QUẢN TRỊ KINH DOANH">QUẢN TRỊ KINH DOANH</option>
+                        <option value="TÀI CHÍNH - NGÂN HÀNG">TÀI CHÍNH - NGÂN HÀNG</option>
+                        <option value="THƯƠNG MẠI ĐIỆN TỬ">THƯƠNG MẠI ĐIỆN TỬ</option>
+                        <option value="LOGISTICS">LOGISTICS</option>
+                        <option value="THÚ Y">THÚ Y</option>
+                        <option value="CÔNG NGHỆ THÔNG TIN">CÔNG NGHỆ THÔNG TIN</option>
+                        <option value="QUẢN TRỊ CƠ SỞ DỮ LIỆU">QUẢN TRỊ CƠ SỞ DỮ LIỆU</option>
+                         <option value="THIẾT KẾ ĐỒ HOẠ"> THIẾT KẾ ĐỒ HOẠ </option>
+                         <option value="LẬP TRÌNH MÁY TÍNH"> LẬP TRÌNH MÁY TÍNH </option>
+                         <option value="CÔNG NGHỆ Ô TÔ"> CÔNG NGHỆ Ô TÔ </option>
+                         <option value="CÔNG NGHỆ THỰC PHẨM"> CÔNG NGHỆ THỰC PHẨM </option>
+                         <option value="DƯỢC"> DƯỢC </option>
+                         <option value="ĐIỀU DƯỠNG"> ĐIỀU DƯỠNG </option>
+                         <option value="Y SĨ ĐA KHOA"> Y SĨ ĐA KHOA </option>
+                         <option value="KỸ THUẬT PHỤC HÌNH RĂNG ( Răng - Hàm - Mặt )"> KỸ THUẬT PHỤC HÌNH RĂNG ( Răng - Hàm - Mặt ) </option>
+                         <option value="KỸ THUẬT PHỤC HỒI CHỨC NĂNG ( Vật lý trị liệu & Phục hồi chức năng )"> KỸ THUẬT PHỤC HỒI CHỨC NĂNG ( Vật lý trị liệu & Phục hồi chức năng ) </option>
+                         <option value="Y HỌC CỔ TRUYỀN"> Y HỌC CỔ TRUYỀN </option>
+                         <option value="DU LỊCH"> DU LỊCH </option>
+                         <option value="Hướng dẫn du lịch"> Hướng dẫn du lịch </option>
+                         <option value="Quản trị nhà hàng - Khách sạn"> Quản trị nhà hàng - Khách sạn </option>
+                         <option value="NGÔN NGỮ ANH"> NGÔN NGỮ ANH </option>
+                         <option value="LUẬT - DỊCH VỤ PHÁP LÝ"> LUẬT - DỊCH VỤ PHÁP LÝ </option>
+                         <option value="SƯ PHẠM MẦM NON"> SƯ PHẠM MẦM NON </option>
+                         
+                         
+                         
+                         
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="facility" class="form-label">Bạn Đã Tốt Nghiệp *</label>
+                    <select id="facility" name="facility" class="form-control" required>
+                        <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">Tốt Nghiệp THCS</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">Tốt Nghiệp THPT</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">Tốt Nghiệp Trung Cấp</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">Tốt Nghiệp Cao Đẳng</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">Tốt Nghiệp Đại Học</option>
+                    </select>
+                </div>
+
+              
+                <div class="form-check">
+                    <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required>
+                    <label for="privacy" class="form-check-label">
+                        Tôi đã đọc và đồng ý cho Cao Đẳng Sài Gòn Gia Định xử lý dữ liệu cá nhân của tôi theo Chính sách bảo mật dữ liệu cá nhân của chúng tôi.
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Gửi thông tin</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- About Section -->
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-grid">
+            <!-- Vision Card -->
+            <div class="about-card vision-card">
+                <img src="{{ url_for('static', filename='images/sv/sv1.jpg') }}" alt="Vision Image" class="about-image">
+                <div class="card-content orange">
+                    <h3>Tầm nhìn của chúng tôi</h3>
+                    <p>Trở thành một trong những cơ sở giáo dục hàng đầu trong việc đào tạo nguồn nhân lực chất lượng
+                        cao, đáp ứng nhu cầu của xã hội và hội nhập quốc tế.</p>
+                </div>
+            </div>
+
+            <!-- Mission Card -->
+            <div class="about-card mission-card">
+                <img src="{{ url_for('static', filename='images/sv/sv3.jpg') }}" alt="Mission Image"
+                    class="about-image">
+                <div class="card-content navy">
+                    <h3>Sứ mệnh của chúng tôi</h3>
+                    <p>Đào tạo nguồn nhân lực có trình độ cao, có khả năng sáng tạo và thích ứng với môi trường làm việc
+                        hiện đại, góp phần vào sự phát triển của đất nước.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Content -->
+        <div class="about-content" data-aos="fade-up">
+            <div class="section-header">
+                <span class="subtitle">GIỚI THIỆU VỀ CHÚNG TÔI</span>
+                <h2 class="title">Được xây dựng trên sự chính trực và đổi mới</h2>
+            </div>
+
+            <div class="quote-container">
+                <blockquote>
+                    "Tại Cao Đẳng Sài Gòn Gia Định, chúng tôi tin rằng mỗi sinh viên đều là một câu chuyện — về tầm
+                    nhìn, sự tận tụy và khát khao học hỏi. Sứ mệnh của chúng tôi không chỉ là đào tạo mà còn là hiện
+                    thực hóa ước mơ một cách chính xác và có mục đích."
+                </blockquote>
+
+                <div class="author-info">
+                    <img src="{{ url_for('static', filename='images/sv/ht01.png') }}" alt="Hiệu trưởng"
+                        class="author-avatar">
+                    <div class="author-details">
+                        <h4>GV. TẠI TRƯỜNG</h4>
+                        <p>CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="description">
+                Với hơn 21 năm kinh nghiệm trong lĩnh vực giáo dục, chúng tôi không ngừng đổi mới và phát triển để mang
+                đến những giá trị tốt nhất cho sinh viên và xã hội.
+            </p>
+
+            <a href="#" class="learn-more-btn about-btn">Tìm Hiểu Thêm</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="services-container">
+        <div class="services-header">
+            <h1 class="services-title">
+                <span>NGÀNH XÉT TUYỂN
+                </span>
+                <span style="font-size: 30px;">Cao Đẳng Sài Gòn Gia Định</span>
+            </h1>
+            <div class="services-intro">
+                <p style="font-family: font6;">Hãy đăng ký ngay hôm nay để nhận được những ưu đãi đặc biệt và trở thành
+                    sinh viên của Cao Đẳng Sài Gòn Gia Định!</p>
+                <a href="#" class="consultation-btn" style="font-family: font2;">Đăng Ký Ngay</a>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- Row 1 -->
+            <!-- General Construction -->
+            <div class="service-card orange">
+                <div class="service-icon">
+                    <i class="fa-solid fa-money-check-dollar" style="font-size: 40px;"></i>
+                </div>
+                <h3>KINH TẾ - TÀI CHÍNH</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ có
+                    niềm đam mê với lĩnh vực kinh tế, mong muốn có một sự nghiệp vững chắc trong tương lai.</p>
+            </div>
+
+            <!-- Renovation Remodeling -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-shield-dog" style="font-size: 40px;"></i>
+                </div>
+                <h3>THÚ Y - CHĂN NUÔI</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định là lựa chọn hấp dẫn cho những bạn trẻ có
+                    niềm đam mê với động vật và mong muốn đóng góp vào sự phát triển của ngành nông nghiệp nước nhà.</p>
+            </div>
+
+            <!-- Architectural Design -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-microchip" style="font-size: 40px;"></i>
+                </div>
+                <h3>CÔNG NGHỆ - KỸ THUẬT</h3>
+                <p style="font-family: font6;">Với phương châm đào tạo "thực học - thực hành" và mạng lưới đối tác doanh
+                    nghiệp vững chắc, Cao đẳng Sài Gòn Gia Định là lựa chọn lý tưởng cho những bạn trẻ yêu thích công
+                    nghệ và mong muốn có một tương lai nghề nghiệp ổn định, phát triển.</p>
+            </div>
+
+            <!-- Row 2 -->
+            <!-- Planning Development -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-stethoscope" style="font-size: 40px;"></i>
+                </div>
+                <h3>Y - DƯỢC</h3>
+                <p style="font-family: font6;">Tại Cao đẳng Sài Gòn Gia Định, nhóm ngành Y Dược là một trong những khối
+                    ngành trọng điểm, được nhà trường tập trung đầu tư để đào tạo ra đội ngũ nhân lực chất lượng cao,
+                    đáp ứng nhu cầu chăm sóc sức khỏe cộng đồng ngày càng lớn.</p>
+            </div>
+
+            <!-- Project Management -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-scale-balanced" style="font-size: 40px;"></i>
+                </div>
+                <h3>XÃ HỘI - DU LỊCH - PHÁP LUẬT</h3>
+                <p style="font-family: font6;">Với phương pháp đào tạo thực tiễn, gắn liền với nhu cầu xã hội và doanh
+                    nghiệp, Cao đẳng Sài Gòn Gia Định là lựa chọn phù hợp cho những bạn trẻ năng động, yêu thích giao
+                    tiếp, thích khám phá và mong muốn làm việc trong các lĩnh vực dịch vụ hoặc pháp luật.</p>
+            </div>
+
+            <!-- Structural Engineering -->
+            <div class="service-card navy">
+                <div class="service-icon">
+                    <i class="fa-solid fa-book-medical" style="font-size: 40px;"></i>
+                </div>
+                <h3>VĂN HOÁ THPT 9+</h3>
+                <p>Chương trình Văn hóa THPT 9+ tại Cao đẳng Sài Gòn Gia Định là một mô hình đào tạo đặc biệt dành cho
+                    các bạn học sinh đã tốt nghiệp THCS. Đây là một lựa chọn tối ưu giúp các em vừa hoàn thành chương
+                    trình văn hóa phổ thông, vừa học nghề ngay, rút ngắn thời gian và tăng cơ hội việc làm sau này.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="main-container2">
+    <div class="left-section2">
+        <img src="./static/images/construction_worker.png" alt="Construction Worker" class="worker-image2">
+    </div>
+    <div class="right-section2">
+        <p class="how-it-works2">HOW IT WORKS</p>
+        <h1>Building Made Simple</h1>
+
+        <div class="info-box-wrapper2">
+            <div class="info-box2" id="infoBox1">
+                <div class="icon-placeholder2"><img src="./static/images/icon_consultation.png" alt="Get Consultation"></div>
+                <h3>Get Consultation</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="info-box2" id="infoBox2">
+                <div class="icon-placeholder2"><img src="./static/images/icon_planning.png" alt="Planning & Consultation"></div>
+                <h3>Planning & Consultation</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="info-box2" id="infoBox3">
+                <div class="icon-placeholder2"><img src="./static/images/icon_construction.png" alt="Construction & Delivery"></div>
+                <h3>Construction & Delivery</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -754,4 +897,69 @@
 <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
 <script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jsnganh.js') }}"></script>
+<script>
+// Add touch support for mobile devices
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle touch events for major cards
+    const majorCards = document.querySelectorAll('.major-card');
+    majorCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.classList.add('touched');
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.classList.remove('touched');
+        });
+    });
+
+    // Improve form usability on mobile
+    const form = document.getElementById('tourForm');
+    if (form) {
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                // Scroll to input when focused
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+        });
+    }
+
+    // Initialize AOS with mobile-friendly settings
+    AOS.init({
+        disable: 'mobile', // Disable animations on mobile
+        once: true, // Only animate once
+        duration: 600
+    });
+
+    // Improve slider performance on mobile
+    const slider = document.querySelector('.banner-slider');
+    if (slider) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        slider.addEventListener('touchmove', function(e) {
+            touchEndX = e.touches[0].clientX;
+        }, { passive: true });
+
+        slider.addEventListener('touchend', function() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    // Swipe right
+                    document.querySelector('.prev-btn').click();
+                } else {
+                    // Swipe left
+                    document.querySelector('.next-btn').click();
+                }
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

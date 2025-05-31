@@ -1,0 +1,556 @@
+@font-face {
+    font-family: font2;
+    src: url('/static/fonts/font2.ttf');
+}
+
+
+@font-face {
+    font-family: font6;
+    src: url('/static/font/font6.ttf');
+}
+
+body {
+    font-family: font6; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2c2c2c;
+    overflow: hidden;
+}
+
+.login-container {
+    display: flex;
+    width: 900px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.illustration-section {
+    flex: 1;
+    background-color: #f7f7f7;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 50px;
+}
+
+/* Các hình dạng nhân vật */
+.character {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Mắt ở phía trên của shape */
+    overflow: hidden;
+    transition: transform 0.1s ease-out, background-color 0.3s ease-in-out; /* Thêm transition cho màu sắc */
+}
+
+
+.character-purple {
+    width: 40px;
+    height: 80px;
+    background-color: #663399; /* Tím */
+    border-radius: 15px;
+    bottom: -10px;
+    left: 995px; /* Vị trí điều chỉnh để nằm sau cam */
+    z-index: 2; /* Dưới cam, trên đen */
+    transform: rotate(5deg); /* Hơi nghiêng */
+}
+/* Màu đỏ khi vui */
+.character-purple.character-purple--happy {
+    background-color: #ee232b; /* Màu đỏ */
+}
+
+.character-black {
+    width: 40px;
+    height: 50px;
+    background-color: #333; /* Đen */
+    border-radius: 15px;
+    bottom: -6px;
+    left: 960px; /* Vị trí điều chỉnh để nằm sau tím */
+    z-index: 1; /* Dưới tím */
+    transform: rotate(-5deg); /* Hơi nghiêng */
+}
+/* Màu xanh dương khi vui */
+.character-black.character-black--happy {
+    background-color: #003366; /* Màu xanh dương */
+}
+
+
+/* Kiểu dáng mắt */
+.eye {
+    width: 2px;
+    height: 2px;
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s linear;
+}
+
+/* Mắt cho nhân vật cam */
+.character-orange .eye {
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 1px solid #000;
+    top: 30px;
+}
+.character-orange .eye-left { left: 40%; }
+.character-orange .eye-right { left: 60%; }
+
+/* Mắt cho nhân vật tím */
+.character-purple .eye {
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border: 1px solid #000;
+    top: 20px;
+}
+.character-purple .eye-left { left: 35%; }
+.character-purple .eye-right { left: 65%; }
+
+/* Mắt cho nhân vật đen */
+.character-black .eye {
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border: 1px solid #000;
+    top: 15px;
+}
+.character-black .eye-left { left: 30%; }
+.character-black .eye-right { left: 70%; }
+
+
+/* Miệng và chi tiết khác (sử dụng ::before để tạo) */
+/* Miệng mặc định cho cam */
+.character-orange::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    border: 2px solid #000;
+    border-top: none;
+    border-radius: 0 0 50px 50px;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+}
+/* Miệng cười cho cam */
+.character-orange.character-orange--happy::before {
+    width: 40px;
+    height: 20px;
+    border: 3px solid #000;
+    border-top: none;
+    border-radius: 0 0 50px 50px;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Miệng mặc định cho tím */
+.character-purple::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    border: 2px solid #000;
+    border-bottom: none;
+    border-radius: 50px 50px 0 0;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+}
+/* Miệng cười cho tím */
+.character-purple.character-purple--happy::before {
+    content: ''; /* Giữ content */
+    width: 20px;
+    height: 10px;
+    border: 3px solid #000;
+    border-top: none;
+    border-bottom: auto; /* Bỏ border-bottom */
+    border-radius: 0 0 50px 50px; /* Làm miệng cười hướng xuống */
+    bottom: 25px; /* Điều chỉnh vị trí miệng khi cười */
+    top: auto; /* Bỏ top để dùng bottom */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Miệng mặc định cho đen */
+.character-black::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: #000;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+}
+/* Miệng cười cho đen */
+.character-black.character-black--happy::before {
+    content: ''; /* Giữ content */
+    width: 10px;
+    height: 6px;
+    border: 3px solid #000;
+    border-top: none;
+    border-radius: 0 0 50px 50px;
+    bottom: 10px; /* Điều chỉnh vị trí miệng khi cười */
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Phần đăng nhập */
+.login-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo {
+    margin-bottom: 0px;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
+h2 {
+    font-size: 2.2em;
+    margin-bottom: 0px;
+}
+
+p {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+}
+
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 30px;
+    font-size: 0.9em;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: #555;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.forgot-password {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.btn-login {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.btn-login:hover {
+    background-color: #333;
+}
+
+.btn-google {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-google img {
+    margin-right: 10px;
+}
+
+.btn-google:hover {
+    background-color: #f7f7f7;
+}
+
+.signup-link {
+    margin-top: 30px;
+    color: #777;
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+.illustration-section {
+    flex: 1;
+    background-color: #f7f7f7; /* Màu nền dự phòng nếu ảnh không tải được */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 50px;
+    overflow: hidden;
+
+    /* Các thuộc tính mới cho ảnh nền */
+    background-image: url('/static/images/banner4.jpg');
+    opacity: 1; /* Thay 'background_image.jpg' bằng đường dẫn đến ảnh của bạn */
+    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
+    background-position: center; /* Căn giữa ảnh nền */
+    background-repeat: no-repeat; /* Không lặp lại ảnh nền */
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .login-container {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .illustration-section {
+        display: none; /* Hide illustration on mobile */
+    }
+
+    .login-section {
+        width: 100%;
+        padding: 20px;
+        justify-content: flex-start;
+        margin-top: 40px;
+    }
+
+    .logo img {
+        width: 60px;
+        height: 60px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin: 20px 0;
+        padding: 0 20px;
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    p {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        font-size: 14px;
+    }
+
+    .input-group input {
+        height: 45px;
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 10px;
+    }
+
+    .toggle-password {
+        top: 55%;
+        font-size: 20px;
+    }
+
+    .options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .remember-me {
+        font-size: 14px;
+    }
+
+    .forgot-password {
+        font-size: 14px;
+    }
+
+    .btn-login {
+        height: 45px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .btn-google {
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .signup-link {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    /* Adjust character positions for mobile */
+    .character {
+        transform: scale(0.8);
+    }
+
+    .character-purple {
+        left: 65%;
+        bottom: 20px;
+    }
+
+    .character-black {
+        left: 45%;
+        bottom: 20px;
+    }
+}
+
+/* Small Mobile Devices */
+@media screen and (max-width: 480px) {
+    .login-section {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+        padding: 0 10px;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .input-group {
+        margin-bottom: 12px;
+    }
+
+    .btn-login, .btn-google {
+        height: 42px;
+        font-size: 15px;
+    }
+
+    /* Further reduce character size */
+    .character {
+        transform: scale(0.7);
+    }
+}
+
+/* Improve touch targets on mobile */
+@media (hover: none) {
+    .input-group input,
+    .btn-login,
+    .btn-google,
+    .forgot-password,
+    .remember-me input[type="checkbox"] {
+        cursor: default;
+    }
+
+    .toggle-password {
+        padding: 10px;
+        margin: -10px;
+    }
+
+    .remember-me input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Fix for iOS input styles */
+@supports (-webkit-touch-callout: none) {
+    .input-group input {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .remember-me input[type="checkbox"] {
+        -webkit-appearance: checkbox;
+    }
+}
+
+/* Landscape mode optimization */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .login-container {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .login-section {
+        padding: 20px;
+        margin-top: 0;
+    }
+
+    .character {
+        display: none; /* Hide characters in landscape mode */
+    }
+}
