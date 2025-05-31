@@ -1,136 +1,6 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     const loginBtn = document.getElementById('loginBtn');
-//     const characterOrange = document.querySelector('.character-orange');
-//     const characterPurple = document.querySelector('.character-purple');
-//     const characterBlack = document.querySelector('.character-black');
-
-//     const togglePassword = document.querySelector('.toggle-password');
-//     const passwordInput = document.getElementById('password');
-
-//     if (togglePassword && passwordInput) {
-//         togglePassword.addEventListener('click', () => {
-//             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-//             passwordInput.setAttribute('type', type);
-//             togglePassword.textContent = type === 'password' ? '👁' : '✖';
-//         });
-//     }
-
-//     document.addEventListener('mousemove', (e) => {
-//         const eyes = document.querySelectorAll('.eye');
-//         eyes.forEach(eye => {
-//             const character = eye.closest('.character');
-//             if (!character) return;
-//             const characterRect = character.getBoundingClientRect();
-//             const characterCenterX = characterRect.left + characterRect.width / 2;
-//             const characterCenterY = characterRect.top + characterRect.height / 2;
-//             const deltaX = e.clientX - characterCenterX;
-//             const deltaY = e.clientY - characterCenterY;
-//             const angle = Math.atan2(deltaY, deltaX);
-//             const maxMovement = 3;
-//             const eyeX = Math.cos(angle) * maxMovement;
-//             const eyeY = Math.sin(angle) * maxMovement;
-//             eye.style.transform = `translate(${eyeX}px, ${eyeY}px)`;
-//         });
-//     });
-
-//     const emailInput = document.getElementById('email');
-
-//     if (loginBtn && emailInput && passwordInput && characterOrange && characterPurple && characterBlack) {
-//         loginBtn.addEventListener('mouseenter', () => {
-//             characterOrange.classList.add('character-orange--happy');
-//             characterPurple.classList.add('character-purple--happy');
-//             characterBlack.classList.add('character-black--happy');
-//         });
-
-//         loginBtn.addEventListener('mouseleave', () => {
-//             characterOrange.classList.remove('character-orange--happy');
-//             characterPurple.classList.remove('character-purple--happy');
-//             characterBlack.classList.remove('character-black--happy');
-//         });
-
-//         loginBtn.addEventListener('click', async (event) => {
-//             event.preventDefault(); // Ngăn chặn form submit mặc định
-
-//             const email = emailInput.value;
-//             const password = passwordInput.value;
-
-//             if (!email || !password) {
-//                 alert('Vui lòng nhập Email và Mật khẩu.');
-//                 return;
-//             }
-
-//             console.log('Đang cố gắng đăng nhập với:', { email, password });
-
-//             try {
-                
-//                 const response = await axios.post('https://saigongiadinh.pythonanywhere.com/auth/login/', {
-//                     email: "sinhvien123@gmail.com",
-//                     password: "123456789012"
-//                 }, {
-//                     headers: {
-//                         'Content-Type': 'application/json'
-//                     }
-//                 });
-
-//                 const statusCode = response.status;
-//                 const data = response.data;
-
-//                 if (statusCode === 200) {
-//                     console.log('Đăng nhập thành công:', data);
-//                     alert('Đăng nhập thành công!');
-                    
-                    
-//                     characterPurple.classList.add('character-purple--happy');
-//                     characterBlack.classList.add('character-black--happy');
-
-//                     // Điều hướng về trang gốc của ứng dụng (nếu index.html là trang gốc)
-//                     // HOẶC nếu bạn đang chạy local bằng cách mở file trực tiếp, thì 'index.html' là đúng
-//                     setTimeout(() => {
-//                         window.location.href = '/'; // Thay bằng '/' nếu index.html là trang gốc của domain
-//                                                 // Hoặc 'index.html' nếu bạn mở file trực tiếp
-//                     }, 1000); 
-                    
-//                 } else {
-//                     console.error(`Đăng nhập thất bại (Status: ${statusCode}):`, data);
-//                     const errorMessage = data.message || data.detail || 'Email hoặc mật khẩu không đúng.';
-//                     alert('Đăng nhập thất bại: ' + errorMessage);
-                    
-                   
-//                     characterPurple.classList.remove('character-purple--happy');
-//                     characterBlack.classList.remove('character-black--happy');
-//                 }
-
-//             } catch (error) {
-//                 if (error.response) {
-//                     const statusCode = error.response.status;
-//                     const errorData = error.response.data;
-//                     console.error(`Đăng nhập thất bại (Status: ${statusCode}):`, errorData);
-//                     const errorMessage = errorData.message || errorData.detail || 'Email hoặc mật khẩu không đúng.';
-//                     alert('Đăng nhập thất bại: ' + errorMessage);
-//                 } else if (error.request) {
-//                     console.error('Không nhận được phản hồi từ máy chủ:', error.request);
-//                     alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.');
-//                 } else {
-//                     console.error('Lỗi khi gửi yêu cầu đăng nhập:', error.message);
-//                     alert('Đã xảy ra lỗi khi cố gắng gửi yêu cầu. Vui lòng thử lại.');
-//                 }
-                
-              
-//                 characterPurple.classList.remove('character-purple--happy');
-//                 characterBlack.classList.remove('character-black--happy');
-//             }
-//         });
-//     } else {
-       
-//         console.log('loginBtn:', loginBtn);
-//         console.log('emailInput:', emailInput);
-//         console.log('passwordInput:', passwordInput);
-//         console.log('characterPurple:', characterPurple);
-//         console.log('characterBlack:', characterBlack);
-//     }
-// });
 
 
+// dangnhap.js (đã sửa đổi)
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('loginBtn');
     const characterOrange = document.querySelector('.character-orange');
@@ -141,11 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const emailInput = document.getElementById('email');
 
-    // Toggle password visibility
+    // BỎ DÒNG NÀY: const loginStatusLink = document.getElementById('loginStatusLink');
+    const loginTitle = document.getElementById('loginTitle'); // Giữ lại nếu bạn muốn cập nhật tiêu đề trên trang đăng nhập
+
+    // BỎ HÀM NÀY: function updateLoginStatusUI() { ... }
+    // BỎ DÒNG NÀY: updateLoginStatusUI(); // Không gọi ở đây nữa
+
+
+    // Toggle password visibility (giữ nguyên)
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
+
             
             // Toggle SVG icons
             const eyeOpen = togglePassword.querySelector('.eye-open');
@@ -157,10 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 eyeOpen.style.display = 'none';
                 eyeClosed.style.display = 'block';
             }
+
+
+
         });
     }
 
-    // Eye movement tracking (purely visual)
+    // Eye movement tracking (giữ nguyên)
     document.addEventListener('mousemove', (e) => {
         const eyes = document.querySelectorAll('.eye');
         eyes.forEach(eye => {
@@ -172,16 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const deltaX = e.clientX - characterCenterX;
             const deltaY = e.clientY - characterCenterY;
             const angle = Math.atan2(deltaY, deltaX);
-            const maxMovement = 3; // Adjust for desired eye movement range
+            const maxMovement = 3;
             const eyeX = Math.cos(angle) * maxMovement;
             const eyeY = Math.sin(angle) * maxMovement;
             eye.style.transform = `translate(${eyeX}px, ${eyeY}px)`;
         });
     });
 
-    // Ensure all necessary elements are present before adding event listeners
+    // Ensure all necessary elements are present before adding event listeners (giữ nguyên)
     if (loginBtn && emailInput && passwordInput) {
-        // Adding visual feedback for login button hover (characters becoming 'happy')
+        // Adding visual feedback for login button hover (giữ nguyên)
         if (characterOrange) {
             loginBtn.addEventListener('mouseenter', () => {
                 characterOrange.classList.add('character-orange--happy');
@@ -208,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         loginBtn.addEventListener('click', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
             const email = emailInput.value;
             const password = passwordInput.value;
 
-            // Client-side validation
+            // Client-side validation (giữ nguyên)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Vui lòng nhập email hợp lệ');
@@ -235,9 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Attempting login with:', payload);
 
             try {
-                // Ensure axios library is included in your HTML before this script
-                // Example: <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
                 const response = await axios.post('https://saigongiadinh.pythonanywhere.com/auth/login/', payload, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -249,13 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (statusCode === 200) {
                     console.log('Login successful:', data);
-                    alert('Đăng nhập thành công!');
 
-                    // Add happy classes if characters exist
                     if (characterPurple) characterPurple.classList.add('character-purple--happy');
                     if (characterBlack) characterBlack.classList.add('character-black--happy');
 
-                    // Store token/user info if needed (e.g., in localStorage)
+                    // Store token/user info in localStorage (giữ nguyên)
                     if (data.token) {
                         localStorage.setItem('authToken', data.token);
                     }
@@ -268,23 +144,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.role) {
                         localStorage.setItem('userRole', data.role);
                     }
+                    if (data.user && data.user.full_name) {
+                        localStorage.setItem('userFullName', data.user.full_name);
+                    }
 
-                    // Redirect after a short delay
+                    // BỎ DÒNG NÀY: updateLoginStatusUI(); // Không gọi ở đây nữa
+
+                    // Cập nhật tiêu đề trên trang đăng nhập (nếu đang ở trang đăng nhập)
+                    if (loginTitle && data.user && data.user.full_name) {
+                        loginTitle.textContent = `Chào, ${data.user.full_name}!`;
+                    }
+
+                    // Redirect after a short delay (giữ nguyên)
                     setTimeout(() => {
-                        window.location.href = '/'; // Adjust this to your actual root page
-                    }, 1000);
+                        window.location.href = '/'; // Điều hướng về trang chủ
+                    }, 100);
 
                 } else {
                     console.error(`Login failed (Status: ${statusCode}):`, data);
                     const errorMessage = data.message || data.detail || 'Email hoặc mật khẩu không đúng.';
                     alert('Đăng nhập thất bại: ' + errorMessage);
 
-                    // Remove happy classes on failure
                     if (characterPurple) characterPurple.classList.remove('character-purple--happy');
                     if (characterBlack) characterBlack.classList.remove('character-black--happy');
                 }
 
             } catch (error) {
+                // Xử lý lỗi (giữ nguyên)
                 if (error.response) {
                     const statusCode = error.response.status;
                     const errorData = error.response.data;
@@ -306,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Đã xảy ra lỗi khi cố gắng gửi yêu cầu. Vui lòng thử lại.');
                 }
 
-                // Ensure characters are reset on error
                 if (characterPurple) characterPurple.classList.remove('character-purple--happy');
                 if (characterBlack) characterBlack.classList.remove('character-black--happy');
             }

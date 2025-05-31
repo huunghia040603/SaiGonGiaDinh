@@ -44,12 +44,13 @@
     {# Include the footer section #}
     {% include 'footer.html' %}
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
     <script src="{{ url_for('static', filename='js/jsbody.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jsfooter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
     <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
     <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth_status.js') }}"></script>
 
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}
