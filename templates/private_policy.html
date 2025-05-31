@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    
+    <title>{% block title %}Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block stylesheets %}
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylenganh.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/thongtintruong.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
+        integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% endblock %}
+    <title>Chính sách bảo mật dữ liệu cá nhân</title>
+    
+    <style>
+       
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        section {
+            margin-bottom: 25px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .last-updated {
+            text-align: right;
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    {# Include the header section #}
+    {% include 'header.html' %}
+    <h1>CHÍNH SÁCH BẢO MẬT DỮ LIỆU CÁ NHÂN</h1>
+
+    <section>
+        <h2>1. Giới thiệu</h2>
+        <p>Chào mừng bạn đến với trang web của CAO ĐẲNG SÀI GÒN - GIA ĐỊNH của chúng tôi. Chúng tôi cam kết bảo vệ quyền riêng tư và dữ liệu cá nhân của người dùng. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng, tiết lộ và bảo vệ thông tin cá nhân của bạn khi bạn sử dụng dịch vụ của chúng tôi.</p>
+        <p>Bằng cách sử dụng trang web và dịch vụ của chúng tôi, bạn đồng ý với các điều khoản của Chính sách bảo mật này.</p>
+    </section>
+
+    <section>
+        <h2>2. Thông tin chúng tôi thu thập</h2>
+        <p>Chúng tôi có thể thu thập các loại thông tin cá nhân sau đây từ bạn:</p>
+        <ul>
+            <li>Thông tin nhận dạng cá nhân: Tên đầy đủ, số điện thoại, địa chỉ email, địa chỉ liên hệ.</li>
+            <li>Thông tin học vấn: Ngành học quan tâm, trình độ tốt nghiệp.</li>
+            <li>Thông tin kỹ thuật: Địa chỉ IP, loại trình duyệt, hệ điều hành, thời gian truy cập, trang web đã truy cập trước và sau khi truy cập trang của chúng tôi, dữ liệu cookie.</li>
+            <li>Thông tin khác: Bất kỳ thông tin nào khác mà bạn tự nguyện cung cấp cho chúng tôi thông qua các biểu mẫu hoặc liên hệ trực tiếp.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Cách chúng tôi sử dụng thông tin của bạn</h2>
+        <p>Chúng tôi sử dụng thông tin cá nhân thu thập được cho các mục đích sau:</p>
+        <ol>
+            <li>Để cung cấp dịch vụ: Xử lý yêu cầu đăng ký tư vấn của bạn, liên hệ với bạn để cung cấp thông tin về ngành học, chương trình đào tạo, và các vấn đề liên quan.</li>
+            <li>Để cải thiện dịch vụ: Phân tích dữ liệu sử dụng để hiểu cách người dùng tương tác với trang web của chúng tôi, từ đó cải thiện trải nghiệm người dùng và chất lượng dịch vụ.</li>
+            <li>Truyền thông: Gửi thông báo, cập nhật, tài liệu quảng cáo (nếu bạn đã đồng ý nhận), và các thông tin liên quan khác.</li>
+            <li>Tuân thủ pháp luật: Thực hiện các nghĩa vụ pháp lý, giải quyết tranh chấp và thực thi các thỏa thuận của chúng tôi.</li>
+            <li>Bảo mật: Bảo vệ trang web và người dùng của chúng tôi khỏi các hoạt động gian lận hoặc bất hợp pháp.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>4. Tiết lộ thông tin cá nhân</h2>
+        <p>Chúng tôi cam kết không bán, cho thuê hoặc trao đổi thông tin cá nhân của bạn với bên thứ ba vì mục đích tiếp thị của bên thứ ba. Chúng tôi chỉ có thể tiết lộ thông tin của bạn trong các trường hợp sau:</p>
+        <ul>
+            <li>Với sự đồng ý của bạn: Khi bạn cho phép chúng tôi chia sẻ thông tin của bạn.</li>
+            <li>Cho các nhà cung cấp dịch vụ: Chúng tôi có thể chia sẻ thông tin với các nhà cung cấp dịch vụ bên thứ ba đáng tin cậy hỗ trợ chúng tôi trong việc vận hành trang web, thực hiện các dịch vụ hoặc phân tích dữ liệu (ví dụ: dịch vụ lưu trữ, phân tích dữ liệu, dịch vụ email). Các bên này chỉ được phép sử dụng thông tin của bạn để thực hiện các dịch vụ được giao và phải tuân thủ các chính sách bảo mật tương tự.</li>
+            <li>Tuân thủ pháp luật: Khi được yêu cầu bởi pháp luật, lệnh của tòa án hoặc các cơ quan chính phủ có thẩm quyền.</li>
+            <li>Bảo vệ quyền lợi: Để bảo vệ quyền, tài sản hoặc sự an toàn của [Tên tổ chức/website của bạn], người dùng của chúng tôi hoặc công chúng.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Bảo mật dữ liệu</h2>
+        <p>Chúng tôi áp dụng các biện pháp bảo mật vật lý, điện tử và quản lý phù hợp để bảo vệ thông tin cá nhân của bạn khỏi việc truy cập, sử dụng hoặc tiết lộ trái phép. Tuy nhiên, không có phương pháp truyền dữ liệu qua internet hoặc phương pháp lưu trữ điện tử nào là an toàn tuyệt đối. Do đó, chúng tôi không thể đảm bảo an toàn tuyệt đối cho thông tin của bạn.</p>
+    </section>
+
+    <section>
+        <h2>6. Quyền của bạn</h2>
+        <p>Bạn có các quyền sau đối với dữ liệu cá nhân của mình:</p>
+        <ul>
+            <li>Quyền truy cập: Yêu cầu quyền truy cập vào thông tin cá nhân mà chúng tôi đang nắm giữ về bạn.</li>
+            <li>Quyền chỉnh sửa: Yêu cầu chỉnh sửa hoặc cập nhật thông tin cá nhân không chính xác hoặc không đầy đủ.</li>
+            <li>Quyền xóa: Yêu cầu xóa thông tin cá nhân của bạn khỏi hệ thống của chúng tôi trong một số trường hợp nhất định.</li>
+            <li>Quyền từ chối/hạn chế xử lý: Từ chối hoặc yêu cầu hạn chế việc xử lý dữ liệu cá nhân của bạn.</li>
+            <li>Quyền rút lại sự đồng ý: Rút lại sự đồng ý của bạn đối với việc xử lý dữ liệu cá nhân bất cứ lúc nào, nếu việc xử lý đó dựa trên sự đồng ý của bạn.</li>
+        </ul>
+        <p>Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi theo thông tin dưới đây.</p>
+    </section>
+
+    <section>
+        <h2>7. Thay đổi Chính sách bảo mật</h2>
+        <p>Chúng tôi có thể cập nhật Chính sách bảo mật này theo thời gian để phản ánh những thay đổi trong hoạt động của chúng tôi hoặc các yêu cầu pháp lý. Mọi thay đổi sẽ được đăng tải trên trang này và ngày "Cập nhật lần cuối" sẽ được sửa đổi. Chúng tôi khuyến khích bạn xem lại Chính sách bảo mật này định kỳ để nắm được cách chúng tôi bảo vệ thông tin của bạn.</p>
+    </section>
+
+    <section>
+        <h2>8. Thông tin liên hệ</h2>
+        <p>Nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào về Chính sách bảo mật này hoặc về cách chúng tôi xử lý dữ liệu cá nhân của bạn, vui lòng liên hệ với chúng tôi qua:</p>
+        <ul>
+            <li>Email: <a>tuyensinhsaigongiaidnh@gmail.com</a></li>
+            <li>Số điện thoại: (028) 3588 5558 </li>
+            <li>Địa chỉ: 514 Lê Quang Định, phường 1, quận Gò Vấp, Thành phố Hồ Chí Minh</li>
+        </ul>
+    </section>
+    {# Include the footer section #}
+    {% include 'footer.html' %}
+
+    <p class="last-updated">Cập nhật lần cuối: 31 tháng 5 năm 2025</p>
+</body>
+</html>
