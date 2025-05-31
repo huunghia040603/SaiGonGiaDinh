@@ -272,8 +272,29 @@ p {
     transform: translateY(-50%);
     cursor: pointer;
     color: #999;
+    background: none;
+    border: none;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0.6;
 }
 
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.toggle-password svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 .options {
     display: flex;
@@ -362,7 +383,7 @@ p {
     overflow: hidden;
 
     /* Các thuộc tính mới cho ảnh nền */
-    background-image: url('/static/images/banner4.jpg');
+    background-image: url('/static/images/bannerdk1.jpg');
     opacity: 1; /* Thay 'background_image.jpg' bằng đường dẫn đến ảnh của bạn */
     background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
     background-position: center; /* Căn giữa ảnh nền */

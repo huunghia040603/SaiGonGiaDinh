@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #0056b3;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+main {
+    padding: 20px;
+    max-width: 960px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.content-section {
+    padding: 40px 0;
+    border-bottom: 1px solid #eee;
+    opacity: 0; /* Mặc định ẩn để AOS có thể làm lộ dần */
+    transition: opacity 1s ease-out; /* Chuyển động mượt mà cho opacity */
+}
+
+.content-section:last-child {
+    border-bottom: none;
+}
+
+.content-section h2 {
+    color: #0056b3;
+    margin-top: 0;
+    font-size: 2em;
+    border-left: 5px solid #0056b3;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.content-section ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding: 0;
+}
+
+.content-section ul li {
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: #333;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+/* Các hiệu ứng AOS sẽ được tự động áp dụng bởi thư viện */
+/* Ví dụ: [data-aos="fade-up"].aos-animate { opacity: 1; transform: translateY(0); } */

@@ -146,8 +146,17 @@ document.addEventListener('DOMContentLoaded', () => {
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            // Change the eye icon based on visibility
-            togglePassword.textContent = type === 'password' ? '👁' : '✖';
+            
+            // Toggle SVG icons
+            const eyeOpen = togglePassword.querySelector('.eye-open');
+            const eyeClosed = togglePassword.querySelector('.eye-closed');
+            if (type === 'password') {
+                eyeOpen.style.display = 'block';
+                eyeClosed.style.display = 'none';
+            } else {
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'block';
+            }
         });
     }
 

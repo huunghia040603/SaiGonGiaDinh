@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chương trình Văn hóa THPT 9+ tại Cao đẳng Sài Gòn Gia Định - Kết hợp học văn hóa THPT với đào tạo nghề chuyên nghiệp, tạo nền tảng vững chắc cho tương lai.">
+    <meta name="keywords" content="văn hóa thpt 9+, cao đẳng sài gòn gia định, giáo dục thpt, đào tạo nghề">
+    <title>Chương Trình Văn Hóa THPT 9+ - Cao Đẳng Sài Gòn Gia Định</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/nganh/ketoan.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <section class="featured-banner">
+        <img src="/static/images/nganh/vanhoa-banner.jpg" alt="Chương Trình Văn Hóa THPT 9+" class="banner-image">
+        <div class="banner-content">
+            <h1 class="banner-title">
+                <span class="typing-text">Chương Trình Văn Hóa THPT 9+</span>
+            </h1>
+            <p class="banner-subtitle">
+                Kết hợp học văn hóa và nghề nghiệp - <span class="highlight-text">Con đường sự nghiệp vững chắc</span>
+            </p>
+            <div class="banner-buttons">
+                <a href="#dang-ky-tu-van" class="banner-btn btn-primary">Đăng Ký Tư Vấn</a>
+                <a href="#tong-quan" class="banner-btn btn-secondary">Tìm Hiểu Thêm</a>
+            </div>
+        </div>
+        <div class="scroll-down" onclick="document.getElementById('tong-quan').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <main>
+        <section id="tong-quan" class="content-section" data-aos="fade-up">
+            <h2 class="section-title">Tổng Quan Chương Trình</h2>
+            <p>Chương trình Văn hóa THPT 9+ tại Cao đẳng Sài Gòn Gia Định là sự kết hợp hoàn hảo giữa học văn hóa THPT và đào tạo nghề, giúp học sinh vừa hoàn thành chương trình phổ thông, vừa được trang bị kiến thức và kỹ năng nghề nghiệp.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-book-open feature-icon"></i>
+                    <h3>Văn hóa THPT</h3>
+                    <p>Học đầy đủ các môn văn hóa theo chuẩn Bộ GD&ĐT</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-briefcase feature-icon"></i>
+                    <h3>Đào tạo nghề</h3>
+                    <p>Song song học nghề theo ngành yêu thích</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bullseye feature-icon"></i>
+                    <h3>Định hướng nghề nghiệp</h3>
+                    <p>Tư vấn, định hướng nghề nghiệp chuyên sâu</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="co-hoi-nghe-nghiep" class="content-section" data-aos="fade-right">
+            <h2 class="section-title">Lợi Ích Chương Trình</h2>
+            <ul class="benefits-list">
+                <li>Tiết kiệm thời gian học tập</li>
+                <li>Nhận bằng tốt nghiệp THPT và chứng chỉ nghề</li>
+                <li>Cơ hội việc làm ngay sau tốt nghiệp</li>
+                <li>Phát triển toàn diện kiến thức và kỹ năng</li>
+                <li>Học phí hợp lý, tiết kiệm chi phí</li>
+                <li>Môi trường học tập chuyên nghiệp</li>
+            </ul>
+        </section>
+
+        <section id="dang-ky-tu-van" class="content-section" data-aos="fade-left">
+            <h2 class="section-title">Đăng Ký Tư Vấn</h2>
+            <form class="registration-form" id="consultationForm">
+                <div class="form-group">
+                    <label for="fullName">Họ và Tên*</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số Điện Thoại*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa Chỉ</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="facility" class="form-label">Ngành Đăng Ký *</label>
+                    <select id="facility" name="facility" class="form-control" required>
+                        <option value="">Chọn ngành đăng ký</option>
+                        <option value="NGÔN NGỮ ANH">NGÔN NGỮ ANH</option>
+                        <option value="LUẬT - DỊCH VỤ PHÁP LÝ">LUẬT - DỊCH VỤ PHÁP LÝ</option>
+                        <option value="SƯ PHẠM MẦM NON">SƯ PHẠM MẦM NON</option>
+                        <option value="VĂN HÓA THPT 9+" selected>VĂN HÓA THPT 9+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="education" class="form-label">Bạn Đã Tốt Nghiệp *</label>
+                    <select id="education" name="education" class="form-control" required>
+                        <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
+                        <option value="Tốt Nghiệp THCS">Tốt Nghiệp THCS</option>
+                        <option value="Tốt Nghiệp THPT">Tốt Nghiệp THPT</option>
+                        <option value="Tốt Nghiệp Trung Cấp">Tốt Nghiệp Trung Cấp</option>
+                        <option value="Tốt Nghiệp Cao Đẳng">Tốt Nghiệp Cao Đẳng</option>
+                        <option value="Tốt Nghiệp Đại Học">Tốt Nghiệp Đại Học</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="consultationType">Hình Thức Tư Vấn</label>
+                    <select id="consultationType" name="consultationType" required>
+                        <option value="">Chọn hình thức tư vấn</option>
+                        <option value="online">Tư vấn online</option>
+                        <option value="offline">Tư vấn trực tiếp tại trường</option>
+                        <option value="phone">Tư vấn qua điện thoại</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Ghi Chú</label>
+                    <textarea id="note" name="note" rows="3" placeholder="Nhập thông tin bổ sung nếu có"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Đăng Ký Ngay</button>
+            </form>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/static/js/nganh/ketoan.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html> 

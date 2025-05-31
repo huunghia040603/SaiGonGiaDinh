@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chương trình đào tạo Ngôn ngữ Anh tại Cao đẳng Sài Gòn Gia Định - Đào tạo chuyên gia ngôn ngữ với khả năng giao tiếp xuất sắc và cơ hội việc làm toàn cầu.">
+    <meta name="keywords" content="ngôn ngữ anh, cao đẳng sài gòn gia định, tiếng anh, ngoại ngữ, giáo dục">
+    <title>Ngành Ngôn Ngữ Anh - Cao Đẳng Sài Gòn Gia Định</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/nganh/ketoan.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <section class="featured-banner">
+        <img src="/static/images/nganh/ngoaingu-banner.jpg" alt="Ngành Ngôn Ngữ Anh" class="banner-image">
+        <div class="banner-content">
+            <h1 class="banner-title">
+                <span class="typing-text">Ngành Ngôn Ngữ Anh</span>
+            </h1>
+            <p class="banner-subtitle">
+                Mở cửa thế giới với <span class="highlight-text">ngôn ngữ toàn cầu</span>
+            </p>
+            <div class="banner-buttons">
+                <a href="#dang-ky-tu-van" class="banner-btn btn-primary">Đăng Ký Tư Vấn</a>
+                <a href="#tong-quan" class="banner-btn btn-secondary">Tìm Hiểu Thêm</a>
+            </div>
+        </div>
+        <div class="scroll-down" onclick="document.getElementById('tong-quan').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <main>
+        <section id="tong-quan" class="content-section" data-aos="fade-up">
+            <h2 class="section-title">Tổng Quan Ngành Học</h2>
+            <p>Chương trình đào tạo Ngôn ngữ Anh tại Cao đẳng Sài Gòn Gia Định được thiết kế nhằm đào tạo sinh viên trở thành những chuyên gia ngôn ngữ với khả năng giao tiếp xuất sắc trong môi trường quốc tế.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-book-reader feature-icon"></i>
+                    <h3>Kỹ năng ngôn ngữ toàn diện</h3>
+                    <p>Phát triển 4 kỹ năng: Nghe, Nói, Đọc, Viết</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe feature-icon"></i>
+                    <h3>Môi trường quốc tế</h3>
+                    <p>Giao lưu và học tập với giảng viên bản ngữ</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-certificate feature-icon"></i>
+                    <h3>Chứng chỉ quốc tế</h3>
+                    <p>Hỗ trợ đạt các chứng chỉ IELTS, TOEIC, TOEFL</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="co-hoi-nghe-nghiep" class="content-section" data-aos="fade-right">
+            <h2 class="section-title">Cơ Hội Nghề Nghiệp</h2>
+            <ul class="benefits-list">
+                <li>Giáo viên tiếng Anh</li>
+                <li>Biên - Phiên dịch viên</li>
+                <li>Chuyên viên đối ngoại</li>
+                <li>Nhân viên kinh doanh quốc tế</li>
+                <li>Trợ lý đối ngoại</li>
+                <li>Hướng dẫn viên du lịch quốc tế</li>
+            </ul>
+        </section>
+
+        <section id="dang-ky-tu-van" class="content-section" data-aos="fade-left">
+            <h2 class="section-title">Đăng Ký Tư Vấn</h2>
+            <form class="registration-form" id="consultationForm">
+                <div class="form-group">
+                    <label for="fullName">Họ và Tên*</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số Điện Thoại*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa Chỉ</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="facility" class="form-label">Ngành Đăng Ký *</label>
+                    <select id="facility" name="facility" class="form-control" required>
+                        <option value="">Chọn ngành đăng ký</option>
+                        <option value="NGÔN NGỮ ANH" selected>NGÔN NGỮ ANH</option>
+                        <option value="LUẬT - DỊCH VỤ PHÁP LÝ">LUẬT - DỊCH VỤ PHÁP LÝ</option>
+                        <option value="SƯ PHẠM MẦM NON">SƯ PHẠM MẦM NON</option>
+                        <option value="VĂN HÓA THPT 9+">VĂN HÓA THPT 9+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="education" class="form-label">Bạn Đã Tốt Nghiệp *</label>
+                    <select id="education" name="education" class="form-control" required>
+                        <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
+                        <option value="Tốt Nghiệp THCS">Tốt Nghiệp THCS</option>
+                        <option value="Tốt Nghiệp THPT">Tốt Nghiệp THPT</option>
+                        <option value="Tốt Nghiệp Trung Cấp">Tốt Nghiệp Trung Cấp</option>
+                        <option value="Tốt Nghiệp Cao Đẳng">Tốt Nghiệp Cao Đẳng</option>
+                        <option value="Tốt Nghiệp Đại Học">Tốt Nghiệp Đại Học</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="consultationType">Hình Thức Tư Vấn</label>
+                    <select id="consultationType" name="consultationType" required>
+                        <option value="">Chọn hình thức tư vấn</option>
+                        <option value="online">Tư vấn online</option>
+                        <option value="offline">Tư vấn trực tiếp tại trường</option>
+                        <option value="phone">Tư vấn qua điện thoại</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Ghi Chú</label>
+                    <textarea id="note" name="note" rows="3" placeholder="Nhập thông tin bổ sung nếu có"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Đăng Ký Ngay</button>
+            </form>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/static/js/nganh/ketoan.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html> 

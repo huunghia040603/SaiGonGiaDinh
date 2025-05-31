@@ -144,10 +144,39 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 400);
     });
 
-    // Animation for major cards
-    const majorCards = document.querySelectorAll('.major-card');
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
 
-    // Intersection Observer for fade-up animation
+    // Handle major card clicks for redirection
+    const majorCards = document.querySelectorAll('.major-card');
+    majorCards.forEach(card => {
+        const link = card.querySelector('.major-link');
+        if (link) {
+            const href = link.getAttribute('href');
+            card.style.cursor = 'pointer';
+            
+            // Add click event to the entire card
+            card.addEventListener('click', function(e) {
+                // Prevent default behavior if clicking on the link itself
+                if (e.target.closest('.major-link')) {
+                    e.preventDefault();
+                }
+                window.location.href = href;
+            });
+
+            // Prevent card flip on mobile when intending to navigate
+            card.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                window.location.href = href;
+            });
+        }
+    });
+
+    // Animation for major cards
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -158,28 +187,13 @@ document.addEventListener('DOMContentLoaded', function () {
         threshold: 0.1
     });
 
-    // Observe each major card
+    // Observe each major card for animations
     majorCards.forEach((card, index) => {
-        // Add delay to stagger the animations
         card.style.transitionDelay = `${index * 0.1}s`;
         observer.observe(card);
 
-        // Touch support for mobile devices
-        card.addEventListener('touchstart', function (e) {
-            e.preventDefault();
-            const allCards = document.querySelectorAll('.major-card');
-
-            // Remove touched class from all other cards
-            allCards.forEach(c => {
-                if (c !== this) c.classList.remove('touched');
-            });
-
-            // Toggle touched class on current card
-            this.classList.toggle('touched');
-        });
-
         // Mouse enter animation for image
-        card.addEventListener('mouseenter', function () {
+        card.addEventListener('mouseenter', function() {
             const img = this.querySelector('.major-front img');
             if (img) {
                 img.style.transform = 'scale(1.1)';
@@ -187,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Mouse leave animation for image
-        card.addEventListener('mouseleave', function () {
+        card.addEventListener('mouseleave', function() {
             const img = this.querySelector('.major-front img');
             if (img) {
                 img.style.transform = 'scale(1)';

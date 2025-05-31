@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngành Kỹ Thuật Phục Hình Răng - Cao Đẳng Sài Gòn Gia Định</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+
+    <link rel="stylesheet" href="/static/css/nganh/ketoan.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <section class="featured-banner">
+        <img src="/static/images/nganh/rang/banner-rang.jpg" alt="Kỹ thuật phục hình răng banner" class="banner-image">
+        <div class="banner-content">
+            <h1 class="banner-title">
+                <span class="typing-text">Ngành Kỹ Thuật Phục Hình Răng</span>
+            </h1>
+            <p class="banner-subtitle">
+                Tạo Nụ Cười <span class="highlight-text">Hoàn Hảo</span>
+            </p>
+            <div class="banner-buttons">
+                <a href="#dang-ky-tu-van" class="banner-btn btn-primary">Đăng Ký Tư Vấn</a>
+                <a href="#tong-quan" class="banner-btn btn-secondary">Tìm Hiểu Thêm</a>
+            </div>
+        </div>
+        <div class="scroll-down" onclick="document.getElementById('tong-quan').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <main>
+        <section id="tong-quan" class="content-section" data-aos="fade-up">
+            <h2 class="section-title">Tổng Quan Ngành Kỹ Thuật Phục Hình Răng</h2>
+            <p>Ngành Kỹ thuật phục hình răng tại Cao đẳng Sài Gòn Gia Định đào tạo chuyên gia trong lĩnh vực nha khoa. Sinh viên được trang bị kiến thức về giải phẫu răng miệng, kỹ thuật làm răng giả, phục hình răng sứ, và các kỹ thuật nha khoa hiện đại. Chương trình học kết hợp giữa lý thuyết và thực hành tại các phòng thí nghiệm và phòng khám nha khoa hiện đại.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-tooth feature-icon"></i>
+                    <h3>Phục Hình Răng</h3>
+                    <p>Kỹ thuật làm răng giả và phục hình</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-microscope feature-icon"></i>
+                    <h3>Công Nghệ Hiện Đại</h3>
+                    <p>Sử dụng thiết bị và kỹ thuật tiên tiến</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-smile feature-icon"></i>
+                    <h3>Thẩm Mỹ Nha Khoa</h3>
+                    <p>Tạo nụ cười thẩm mỹ hoàn hảo</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="co-hoi-nghe-nghiep" class="content-section" data-aos="fade-right">
+            <h2 class="section-title">Cơ Hội Nghề Nghiệp</h2>
+            <ul class="benefits-list">
+                <li>Kỹ thuật viên phục hình răng</li>
+                <li>Chuyên viên làm răng giả</li>
+                <li>Chuyên viên phục hình răng sứ</li>
+                <li>Kỹ thuật viên nha khoa</li>
+                <li>Tư vấn kỹ thuật nha khoa</li>
+                <li>Quản lý phòng lab nha khoa</li>
+            </ul>
+        </section>
+
+        <section id="dang-ky-tu-van" class="content-section" data-aos="fade-left">
+            <h2 class="section-title">Đăng Ký Tư Vấn</h2>
+            <form class="registration-form" id="consultationForm">
+                <div class="form-group">
+                    <label for="fullName">Họ và Tên*</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số Điện Thoại*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa Chỉ</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="facility" class="form-label">Ngành Đăng Ký *</label>
+                    <select id="facility" name="facility" class="form-control" required>
+                        <option value="">Chọn ngành đăng ký</option>
+                        <option value="KẾ TOÁN DOANH NGHIỆP">KẾ TOÁN DOANH NGHIỆP</option>
+                        <option value="QUẢN TRỊ KINH DOANH">QUẢN TRỊ KINH DOANH</option>
+                        <option value="TÀI CHÍNH - NGÂN HÀNG">TÀI CHÍNH - NGÂN HÀNG</option>
+                        <option value="THƯƠNG MẠI ĐIỆN TỬ">THƯƠNG MẠI ĐIỆN TỬ</option>
+                        <option value="LOGISTICS">LOGISTICS</option>
+                        <option value="THÚ Y">THÚ Y</option>
+                        <option value="CÔNG NGHỆ THÔNG TIN">CÔNG NGHỆ THÔNG TIN</option>
+                        <option value="QUẢN TRỊ CƠ SỞ DỮ LIỆU">QUẢN TRỊ CƠ SỞ DỮ LIỆU</option>
+                        <option value="THIẾT KẾ ĐỒ HOẠ">THIẾT KẾ ĐỒ HOẠ</option>
+                        <option value="LẬP TRÌNH MÁY TÍNH">LẬP TRÌNH MÁY TÍNH</option>
+                        <option value="CÔNG NGHỆ Ô TÔ">CÔNG NGHỆ Ô TÔ</option>
+                        <option value="CÔNG NGHỆ THỰC PHẨM">CÔNG NGHỆ THỰC PHẨM</option>
+                        <option value="DƯỢC">DƯỢC</option>
+                        <option value="ĐIỀU DƯỠNG">ĐIỀU DƯỠNG</option>
+                        <option value="Y SĨ ĐA KHOA">Y SĨ ĐA KHOA</option>
+                        <option value="KỸ THUẬT PHỤC HÌNH RĂNG" selected>KỸ THUẬT PHỤC HÌNH RĂNG</option>
+                        <option value="KỸ THUẬT PHỤC HỒI CHỨC NĂNG">KỸ THUẬT PHỤC HỒI CHỨC NĂNG</option>
+                        <option value="Y HỌC CỔ TRUYỀN">Y HỌC CỔ TRUYỀN</option>
+                        <option value="DU LỊCH">DU LỊCH</option>
+                        <option value="HƯỚNG DẪN DU LỊCH">HƯỚNG DẪN DU LỊCH</option>
+                        <option value="QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN">QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN</option>
+                        <option value="NGÔN NGỮ ANH">NGÔN NGỮ ANH</option>
+                        <option value="LUẬT - DỊCH VỤ PHÁP LÝ">LUẬT - DỊCH VỤ PHÁP LÝ</option>
+                        <option value="SƯ PHẠM MẦM NON">SƯ PHẠM MẦM NON</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="education" class="form-label">Bạn Đã Tốt Nghiệp *</label>
+                    <select id="education" name="education" class="form-control" required>
+                        <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
+                        <option value="Tốt Nghiệp THCS">Tốt Nghiệp THCS</option>
+                        <option value="Tốt Nghiệp THPT">Tốt Nghiệp THPT</option>
+                        <option value="Tốt Nghiệp Trung Cấp">Tốt Nghiệp Trung Cấp</option>
+                        <option value="Tốt Nghiệp Cao Đẳng">Tốt Nghiệp Cao Đẳng</option>
+                        <option value="Tốt Nghiệp Đại Học">Tốt Nghiệp Đại Học</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="consultationType">Hình Thức Tư Vấn</label>
+                    <select id="consultationType" name="consultationType" required>
+                        <option value="">Chọn hình thức tư vấn</option>
+                        <option value="online">Tư vấn online</option>
+                        <option value="offline">Tư vấn trực tiếp tại trường</option>
+                        <option value="phone">Tư vấn qua điện thoại</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Ghi Chú</label>
+                    <textarea id="note" name="note" rows="3" placeholder="Nhập thông tin bổ sung nếu có"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Đăng Ký Ngay</button>
+            </form>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/static/js/nganh/ketoan.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html> 
