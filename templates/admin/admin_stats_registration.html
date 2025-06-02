@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo lượt đăng ký tư vấn theo tháng</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center; /* Căn giữa nội dung */
+        }
+        h1, h2 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 400px; /* Chiều cao cố định cho biểu đồ */
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex; /* Dùng flexbox để căn giữa canvas */
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Báo cáo lượt đăng ký tư vấn</h1>
+        <div class="chart-container">
+            <canvas id="monthlyAdvisoryChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu được nhúng trực tiếp từ JSON bạn cung cấp
+        const monthlyData = {
+            "labels": [
+                "T1", "T2", "T3", "T4", "T5", "T6",
+                "T7", "T8", "T9", "T10", "T11", "T12"
+            ],
+            "data": [
+                0, 0, 0, 0, 1, 0,
+                0, 0, 0, 0, 0, 0
+            ],
+            "title": "Số lượt đăng ký tư vấn theo tháng năm 2025"
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctxMonthly = document.getElementById('monthlyAdvisoryChart').getContext('2d');
+            new Chart(ctxMonthly, {
+                type: 'bar', // Biểu đồ cột
+                data: {
+                    labels: monthlyData.labels,
+                    datasets: [{
+                        label: 'Lượt đăng ký',
+                        data: monthlyData.data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Quan trọng để điều chỉnh chiều cao
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: monthlyData.title,
+                            font: {
+                                size: 18
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1, // Hiển thị số nguyên
+                                callback: function(value) {
+                                    if (value % 1 === 0) return value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

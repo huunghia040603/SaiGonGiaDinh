@@ -1,0 +1,8 @@
+{% extends "admin/base_admin.html" %} {# Điều chỉnh đường dẫn nếu base_admin.html nằm ở thư mục gốc templates #}
+
+{% block title %}Trang Chủ Quản Trị{% endblock %} {# Tùy chỉnh tiêu đề trang #}
+
+{% block main_content %}
+    {# Bao gồm (include) nội dung từ stats.html vào đây #}
+    {% include 'admin/stats.html' %} 
+{% endblock %}

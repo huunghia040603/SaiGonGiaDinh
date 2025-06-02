@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #0d6efd;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        .alert {
+            margin-top: 15px;
+            display: none; /* Ẩn ban đầu */
+        }
+        /* CSS cho spinner để căn chỉnh với text */
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: .15em; /* Tăng độ dày một chút cho dễ nhìn */
+            margin-right: .5rem; /* Khoảng cách giữa spinner và chữ */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="login-container">
+            <h2>Đăng nhập Admin</h2>
+            <div id="alertMessage" class="alert alert-danger" role="alert">
+            </div>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email đăng nhập</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary" id="loginButton">
+                        <span id="buttonText">Đăng nhập</span>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const alertMessage = document.getElementById('alertMessage');
+            const loginButton = document.getElementById('loginButton'); // Lấy nút đăng nhập
+            const buttonText = document.getElementById('buttonText');     // Lấy phần text của nút
+            const spinner = loginButton.querySelector('.spinner-border'); // Lấy spinner
+
+            // Hàm hiển thị trạng thái loading của nút
+            function showLoading(isLoading) {
+                if (isLoading) {
+                    loginButton.disabled = true; // Vô hiệu hóa nút
+                    buttonText.textContent = 'Đang đăng nhập...'; // Thay đổi text
+                    spinner.style.display = 'inline-block'; // Hiển thị spinner
+                } else {
+                    loginButton.disabled = false; // Kích hoạt lại nút
+                    buttonText.textContent = 'Đăng nhập'; // Trở lại text ban đầu
+                    spinner.style.display = 'none'; // Ẩn spinner
+                }
+            }
+
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Ngăn chặn hành vi submit mặc định của form
+
+                // Ẩn thông báo lỗi cũ
+                alertMessage.style.display = 'none';
+                alertMessage.textContent = '';
+
+                // Client-side validation
+                const email = emailInput.value;
+                const password = passwordInput.value;
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showAlert('Vui lòng nhập email hợp lệ.', 'danger');
+                    emailInput.focus();
+                    return;
+                }
+
+                if (password.length < 3) {
+                    showAlert('Mật khẩu phải có ít nhất 3 ký tự.', 'danger');
+                    passwordInput.focus();
+                    return;
+                }
+
+                // Bắt đầu hiển thị trạng thái loading
+                showLoading(true); 
+
+                const payload = {
+                    email: email,
+                    password: password
+                };
+
+                console.log('Attempting admin login with:', payload);
+
+                try {
+                    const response = await axios.post('https://saigongiadinh.pythonanywhere.com/auth/login/', payload, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    const statusCode = response.status;
+                    const data = response.data;
+
+                    if (statusCode === 200) {
+                        console.log('Admin Login successful:', data);
+
+                        showAlert('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+
+                        if (data.token) {
+                            localStorage.setItem('adminAuthToken', data.token);
+                        }
+                        if (data.user_id) {
+                            localStorage.setItem('adminUserId', data.user_id);
+                        }
+                        if (data.email) {
+                            localStorage.setItem('adminEmail', data.email);
+                        }
+                        if (data.user && data.user.full_name) {
+                            localStorage.setItem('adminFullName', data.user.full_name);
+                        }
+
+                        // Chuyển hướng đến trang admin dashboard sau một khoảng thời gian ngắn
+                        setTimeout(() => {
+                            window.location.href = '/admin/home'; // Thay đổi URL trang admin dashboard của bạn
+                        }, 1000);
+
+                    } else {
+                        console.error(`Admin Login failed (Status: ${statusCode}):`, data);
+                        const errorMessage = data.message || data.detail || 'Email hoặc mật khẩu không đúng.';
+                        showAlert('Đăng nhập thất bại: ' + errorMessage, 'danger');
+                    }
+
+                } catch (error) {
+                    if (error.response) {
+                        const statusCode = error.response.status;
+                        const errorData = error.response.data;
+                        console.error(`Admin Login failed (Status: ${statusCode}):`, errorData);
+
+                        let errorMessage = errorData.message || errorData.detail;
+                        if (statusCode === 405) {
+                            errorMessage = 'Phương thức không được phép. Lỗi cấu hình máy chủ hoặc CORS.';
+                        } else if (!errorMessage) {
+                            errorMessage = 'Email hoặc mật khẩu không đúng.';
+                        }
+                        showAlert('Đăng nhập thất bại: ' + errorMessage, 'danger');
+
+                    } else if (error.request) {
+                        console.error('No response received from server:', error.request);
+                        showAlert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn hoặc lỗi CORS.', 'danger');
+                    } else {
+                        console.error('Error setting up admin login request:', error.message);
+                        showAlert('Đã xảy ra lỗi khi cố gắng gửi yêu cầu. Vui lòng thử lại.', 'danger');
+                    }
+                } finally {
+                    // Luôn luôn dừng trạng thái loading sau khi request hoàn tất (dù thành công hay thất bại)
+                    showLoading(false); 
+                }
+            });
+
+            // Hàm hiển thị thông báo
+            function showAlert(message, type) {
+                alertMessage.textContent = message;
+                alertMessage.className = `alert alert-${type}`;
+                alertMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
