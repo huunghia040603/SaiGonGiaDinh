@@ -1,0 +1,203 @@
+/* Import Google Font - Space Mono */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+/* FAQ Container */
+.faq-container3 {
+    display: flex;
+    max-width: 1400px; /* Chiều rộng tối đa cho container */
+    margin: 0 auto; /* Canh giữa */
+    padding: 0 20px; /* Padding ngang cho responsive */
+    gap: 50px; /* Khoảng cách giữa phần nội dung và ảnh */
+    background-color: #fff; /* Nền trắng cho khung tổng thể */
+    border-radius: 4px; /* Bo góc nhẹ như ảnh */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Shadow nhẹ */
+    overflow: hidden;
+}
+
+.faq-content3 {
+    flex: 1; /* Phần nội dung chiếm 1 phần */
+    max-width: 800px; /* Giới hạn chiều rộng cho nội dung FAQ */
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* FAQ Header */
+.faq-header3 {
+    margin-bottom: 40px;
+    padding-left: 40px; /* Căn chỉnh với câu hỏi */
+}
+
+.faq-header3 p {
+    font-size: 14px;
+    color: #333; /* Màu xám đen */
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.faq-header3 h1 {
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #000; /* Màu đen */
+    margin: 0;
+    line-height: 1.2;
+    font-weight: bold; /* Chữ đậm */
+}
+
+/* FAQ List */
+.faq-list3 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Khoảng cách giữa các mục FAQ */
+    padding-right: 40px; /* Padding bên phải */
+    padding-left: 40px; /* Padding bên trái */
+}
+
+/* FAQ Item */
+.faq-item3 {
+    background: #f8f9fa; /* Nền xám nhạt cho item */
+    border-radius: 4px; /* Bo góc nhẹ */
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item3:hover {
+    transform: translateY(-2px); /* Nâng nhẹ khi hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow khi hover */
+}
+
+/* FAQ Question */
+.faq-question3 {
+    padding: 20px;
+    background: #f8f9fa; /* Nền xám nhạt */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333; /* Màu chữ xám đen */
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.faq-question3:hover {
+    background: #e9ecef; /* Nền nhạt hơn khi hover */
+}
+
+/* Toggle Icon (+/-) */
+.toggle-icon3 {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 24px;
+    color: #ff6b00; /* Màu cam nổi bật như trong ảnh */
+    transition: all 0.3s ease;
+    user-select: none;
+    transform: rotate(0deg); /* Đảm bảo không xoay */
+}
+
+/* FAQ Answer */
+.faq-answer3 {
+    background: #fff; /* Nền trắng cho câu trả lời */
+    max-height: 0; /* Ẩn ban đầu */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Hiệu ứng trượt */
+    padding: 0 20px; /* Padding ngang khi ẩn */
+}
+
+.faq-answer3 p {
+    margin: 0;
+    padding: 20px 0; /* Padding khi hiện ra */
+    font-size: 14px;
+    color: #666; /* Màu xám */
+    line-height: 1.6;
+    opacity: 0; /* Ẩn chữ ban đầu */
+    transform: translateY(-10px); /* Dịch lên trên một chút */
+    transition: all 0.3s ease; /* Hiệu ứng hiện chữ */
+}
+
+/* Active States */
+.faq-item3.active .faq-question3 {
+    background: #1a202c; /* Màu xanh đậm gần như đen như trong ảnh */
+    color: #fff; /* Chữ trắng */
+}
+
+.faq-item3.active .toggle-icon3 {
+    color: #fff; /* Dấu trừ màu trắng */
+}
+
+.faq-item3.active .faq-answer3 {
+    max-height: 1000px; /* Giá trị đủ lớn để chứa nội dung */
+}
+
+.faq-item3.active .faq-answer3 p {
+    opacity: 1; /* Hiện chữ */
+    transform: translateY(0); /* Đưa chữ về vị trí ban đầu */
+}
+
+/* FAQ Image */
+.faq-image3 {
+    flex: 1; /* Phần ảnh chiếm 1 phần */
+    max-width: 500px; /* Giới hạn chiều rộng ảnh */
+    display: flex; /* Dùng flex để canh giữa ảnh */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    padding: 40px; /* Padding xung quanh ảnh */
+}
+
+.faq-image3 img {
+    width: 100%;
+    height: auto; /* Chiều cao tự động để giữ tỉ lệ */
+    max-height: 700px; /* Giới hạn chiều cao tối đa */
+    object-fit: cover; /* Đảm bảo ảnh đầy đủ mà không bị méo */
+    border-radius: 4px; /* Bo góc ảnh */
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .faq-container3 {
+        flex-direction: column; /* Chuyển thành 1 cột */
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        margin: 20px auto;
+        gap: 0; /* Bỏ khoảng cách giữa các phần */
+        box-shadow: none; /* Bỏ shadow trên mobile để trông gọn hơn */
+        border-radius: 0; /* Bỏ bo góc */
+    }
+
+    .faq-content3 {
+        max-width: 100%;
+        padding: 20px; /* Điều chỉnh padding */
+    }
+
+    .faq-header3 {
+        padding: 0;
+        margin-bottom: 20px;
+        text-align: center; /* Căn giữa tiêu đề trên mobile */
+    }
+
+    .faq-header3 h1 {
+        font-size: 32px;
+    }
+
+    .faq-list3 {
+        padding: 0;
+    }
+
+    .faq-question3 {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+
+    .faq-answer3 {
+        font-size: 0.9em;
+    }
+
+    .faq-image3 {
+        max-width: 100%;
+        height: 300px; /* Đặt chiều cao cố định cho ảnh trên mobile */
+        padding: 20px; /* Điều chỉnh padding ảnh */
+    }
+}
