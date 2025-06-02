@@ -1,0 +1,322 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8; /* Nền nhẹ nhàng hơn để nổi bật các khối */
+    color: #333;
+    line-height: 1.6;
+}
+
+.header4 {
+    background-color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: none; /* Ẩn header theo ảnh mẫu, nếu muốn hiện thì bỏ dòng này */
+}
+
+.navbar4 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-item4 {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Pricing Section */
+.pricing-section4 {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.pricing-plan-label4 {
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.section-title4 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.section-description4 {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+}
+
+.pricing-cards-container4 {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Khoảng cách giữa các card */
+    flex-wrap: wrap; /* Cho phép các card xuống dòng trên màn hình nhỏ */
+}
+
+.pricing-card4 {
+    background-color: #fff; /* Giữ làm màu dự phòng nếu ảnh không tải được */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    width: 10%; /* Điều chỉnh để 3 card nằm trên 1 hàng */
+    min-width: 220px; /* Đảm bảo card không quá nhỏ */
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng hover */
+    position: relative; /* Rất quan trọng để lớp phủ ::before hoạt động */
+    overflow: hidden; /* Đảm bảo ảnh nền không tràn ra khỏi bo tròn */
+    z-index: 1; /* Đảm bảo nội dung nằm trên lớp phủ */
+}
+
+.pricing-card4:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Các lớp phủ (overlays) cho ảnh nền để tăng độ tương phản và dễ đọc chữ */
+.pricing-card4::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Đặt dưới nội dung */
+    border-radius: 10px; /* Đảm bảo lớp phủ cũng bo tròn */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+
+/* Hiệu ứng Fade-in on Scroll */
+.fade-in-on-scroll4 {
+    opacity: 0;
+    transform: translateY(20px); /* Bắt đầu hơi dịch xuống dưới */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Thời gian và kiểu chuyển động */
+}
+
+.fade-in-on-scroll4.show4 { /* class 'show' cũng được thêm số 4 */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.plan-name4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+    margin-top: -10px;
+}
+
+.price4 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.choose-plan-btn4 {
+    display: block;
+    width: 100%;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 25px;
+}
+
+/* Màu và ảnh nền cho từng gói */
+
+.basic4 {
+    /* Nền trắng, chữ đen -> ảnh sáng, lớp phủ sáng */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333; /* Chữ đen */
+}
+
+.basic4::before {
+}
+
+.basic4 .price4 {
+    color: #333; /* Màu đen cho giá Basic */
+}
+
+.basic-btn4 {
+    background-color: #212121; /* Màu đen */
+    color: #fff;
+}
+.basic-btn4:hover {
+    background-color: #000;
+}
+
+
+.standard4 {
+    /* Nền cam cũ, chữ trắng -> ảnh màu, lớp phủ tối nhẹ */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff; /* Chữ trắng */
+}
+
+.standard4::before {
+}
+
+.standard4 .plan-name4,
+.standard4 .price4,
+.standard4 .plan-description4,
+.standard4 .features-list4 li,
+.standard4 .checkmark4 { /* Cần chỉnh màu dấu tick và viền nếu nền tối */
+    color: #fff;
+    border-color: #fff;
+}
+.standard4 .checkmark4::after {
+    border-color: #fff;
+}
+
+
+.standard-btn4 {
+    background-color: #fff;
+    color: #ffa500; /* Màu cam tương ứng với gói Standard */
+}
+.standard-btn4:hover {
+    background-color: #f0f0f0;
+}
+
+.premium4 {
+    /* Nền xanh đậm cũ, chữ trắng -> ảnh tối, lớp phủ tối */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff; /* Chữ trắng */
+}
+
+.premium4::before {
+}
+
+
+.premium4 .plan-name4,
+.premium4 .price4,
+.premium4 .plan-description4,
+.premium4 .features-list4 li,
+.premium4 .checkmark4 { /* Cần chỉnh màu dấu tick và viền nếu nền tối */
+    color: #fff;
+    border-color: #fff;
+}
+.premium4 .checkmark4::after {
+    border-color: #fff;
+}
+
+
+.premium-btn4 {
+    background-color: #fff;
+    color: #2e3e57; /* Màu xanh đậm tương ứng với gói Premium */
+}
+.premium-btn4:hover {
+    background-color: #f0f0f0;
+}
+
+
+.plan-description4 {
+    font-size: 16px;
+    /* Màu chữ được đặt trong từng gói để phù hợp với nền ảnh */
+    margin-bottom: 30px;
+    flex-grow: 1; /* Đảm bảo mô tả chiếm đủ không gian */
+}
+
+.features-list4 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-list4 li {
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    /* Màu chữ được đặt trong từng gói để phù hợp với nền ảnh */
+}
+
+.checkmark4 {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /* Màu viền được đặt trong từng gói để phù hợp với nền ảnh */
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
+    flex-shrink: 0; /* Không co lại khi text dài */
+}
+
+/* Dấu tick thực sự - màu được đặt trong từng gói */
+.checkmark4::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    /* Màu dấu tick được đặt trong từng gói */
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .pricing-card4 {
+        width: 45%; /* 2 card trên 1 hàng */
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title4 {
+        font-size: 38px;
+    }
+    .section-description4 {
+        font-size: 16px;
+    }
+    .pricing-card4 {
+        width: 80%; /* 1 card trên 1 hàng, căn giữa */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pricing-cards-container4 {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-card4 {
+        padding: 30px;
+        min-width: unset;
+        width: 90%;
+    }
+    .section-title4 {
+        font-size: 30px;
+    }
+    .price4 {
+        font-size: 40px;
+    }
+}

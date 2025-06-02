@@ -257,5 +257,18 @@ def private_policy():
 def profile():
     return render_template('profile.html')
 
+@app.route('/dangki')
+def dangki():
+    return render_template('dangki.html')
+
+@app.route('/about')
+def vechungtoi():
+    return render_template('vechungtoi.html')
+
+@app.route('/vision')
+def tamnhinsumenh():
+    return render_template('tamnhinsumenh.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

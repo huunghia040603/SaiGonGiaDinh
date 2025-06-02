@@ -19,12 +19,12 @@
    
 </head>
 <body>
-    {% include 'header.html' %}\
+    {% include 'header.html' %}
     <section class="featured-banner">
         <img src="/static/images/nganh/dieuduong/banner-dieuduong.jpg" alt="Điều dưỡng banner" class="banner-image">
         <div class="banner-content">
             <h1 class="banner-title">
-                <span class="typing-text">Ngành Điều Dưỡng</span>
+                <span class="typing-text">Ngành Công Nghệ Thông Tin</span>
             </h1>
             <p class="banner-subtitle">
                 Dẫn Đầu Công Nghệ <span class="highlight-text">Trong Kỷ Nguyên Số</span>
@@ -83,108 +83,113 @@
             </div>
         </section>
 
-        <section id="co-hoi-nghe-nghiep" class="content-section" data-aos="fade-right">
-            <h2 class="section-title">Cơ Hội Nghề Nghiệp</h2>
-            <ul class="benefits-list" role="list">
+        
+
+
+            <section id="co-hoi-nghe-nghiep" class="content-section" data-aos="fade-right">
+              <h2 class="section-title">Cơ Hội Nghề Nghiệp</h2>
+              <ul class="benefits-list" role="list">
                 <li role="listitem">Lập trình viên phần mềm</li>
                 <li role="listitem">Chuyên viên phát triển web</li>
                 <li role="listitem">Kỹ sư phát triển ứng dụng di động</li>
                 <li role="listitem">Quản trị viên hệ thống</li>
                 <li role="listitem">Chuyên viên phân tích dữ liệu</li>
                 <li role="listitem">Chuyên viên bảo mật thông tin</li>
-            </ul>
-        </section>
-
-        <section id="dang-ky-tu-van" class="content-section" data-aos="fade-left">
-            <h2 class="section-title">Đăng Ký Tư Vấn</h2>
-            <form class="registration-form" id="consultationForm" novalidate>
+              </ul>
+            </section>
+          
+            <section id="dang-ky-tu-van" class="content-section" data-aos="fade-left">
+              <h2 class="section-title">Đăng Ký Tư Vấn</h2>
+              <form class="registration-form" id="consultationForm" novalidate>
                 <div class="form-group">
-                    <label for="fullName">Họ và Tên*</label>
-                    <input type="text" id="fullName" name="fullName" required aria-required="true">
+                  <label for="fullName">Họ và Tên*</label>
+                  <input type="text" id="fullName" name="fullName" required aria-required="true">
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="phone">Số Điện Thoại*</label>
-                    <input type="tel" id="phone" name="phone" required aria-required="true" pattern="[0-9]{10,11}">
+                  <label for="phone">Số Điện Thoại*</label>
+                  <input type="tel" id="phone" name="phone" required aria-required="true" pattern="[0-9]{10,11}">
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="email">Email*</label>
-                    <input type="email" id="email" name="email" required aria-required="true">
+                  <label for="email">Email*</label>
+                  <input type="email" id="email" name="email" required aria-required="true">
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="address">Địa Chỉ</label>
-                    <input type="text" id="address" name="address" required>
+                  <label for="address">Địa Chỉ</label>
+                  <input type="text" id="address" name="address" required>
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="facility" class="form-label">Ngành Đăng Ký *</label>
-                    <select id="facility" name="facility" class="form-control" required aria-required="true">
-                        <option value="">Chọn ngành đăng ký</option>
-                        <option value="KẾ TOÁN DOANH NGHIỆP">KẾ TOÁN DOANH NGHIỆP</option>
-                        <option value="QUẢN TRỊ KINH DOANH">QUẢN TRỊ KINH DOANH</option>
-                        <option value="TÀI CHÍNH - NGÂN HÀNG">TÀI CHÍNH - NGÂN HÀNG</option>
-                        <option value="THƯƠNG MẠI ĐIỆN TỬ">THƯƠNG MẠI ĐIỆN TỬ</option>
-                        <option value="LOGISTICS">LOGISTICS</option>
-                        <option value="THÚ Y">THÚ Y</option>
-                        <option value="CÔNG NGHỆ THÔNG TIN" selected>CÔNG NGHỆ THÔNG TIN</option>
-                        <option value="QUẢN TRỊ CƠ SỞ DỮ LIỆU">QUẢN TRỊ CƠ SỞ DỮ LIỆU</option>
-                        <option value="THIẾT KẾ ĐỒ HOẠ">THIẾT KẾ ĐỒ HOẠ</option>
-                        <option value="LẬP TRÌNH MÁY TÍNH">LẬP TRÌNH MÁY TÍNH</option>
-                        <option value="CÔNG NGHỆ Ô TÔ">CÔNG NGHỆ Ô TÔ</option>
-                        <option value="CÔNG NGHỆ THỰC PHẨM">CÔNG NGHỆ THỰC PHẨM</option>
-                        <option value="DƯỢC">DƯỢC</option>
-                        <option value="ĐIỀU DƯỠNG">ĐIỀU DƯỠNG</option>
-                        <option value="Y SĨ ĐA KHOA">Y SĨ ĐA KHOA</option>
-                        <option value="KỸ THUẬT PHỤC HÌNH RĂNG">KỸ THUẬT PHỤC HÌNH RĂNG</option>
-                        <option value="KỸ THUẬT PHỤC HỒI CHỨC NĂNG">KỸ THUẬT PHỤC HỒI CHỨC NĂNG</option>
-                        <option value="Y HỌC CỔ TRUYỀN">Y HỌC CỔ TRUYỀN</option>
-                        <option value="DU LỊCH">DU LỊCH</option>
-                        <option value="HƯỚNG DẪN DU LỊCH">HƯỚNG DẪN DU LỊCH</option>
-                        <option value="QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN">QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN</option>
-                        <option value="NGÔN NGỮ ANH">NGÔN NGỮ ANH</option>
-                        <option value="LUẬT - DỊCH VỤ PHÁP LÝ">LUẬT - DỊCH VỤ PHÁP LÝ</option>
-                        <option value="SƯ PHẠM MẦM NON">SƯ PHẠM MẦM NON</option>
-                    </select>
+                  <label for="facility" class="form-label">Ngành Đăng Ký *</label>
+                  <select id="facility" name="facility" class="form-control" required aria-required="true">
+                    <option value="">Chọn ngành đăng ký</option>
+                    <option value="KẾ TOÁN DOANH NGHIỆP">KẾ TOÁN DOANH NGHIỆP</option>
+                    <option value="QUẢN TRỊ KINH DOANH">QUẢN TRỊ KINH DOANH</option>
+                    <option value="TÀI CHÍNH - NGÂN HÀNG">TÀI CHÍNH - NGÂN HÀNG</option>
+                    <option value="THƯƠNG MẠI ĐIỆN TỬ">THƯƠNG MẠI ĐIỆN TỬ</option>
+                    <option value="LOGISTICS">LOGISTICS</option>
+                    <option value="THÚ Y">THÚ Y</option>
+                    <option value="CÔNG NGHỆ THÔNG TIN" selected>CÔNG NGHỆ THÔNG TIN</option>
+                    <option value="QUẢN TRỊ CƠ SỞ DỮ LIỆU">QUẢN TRỊ CƠ SỞ DỮ LIỆU</option>
+                    <option value="THIẾT KẾ ĐỒ HỌA">THIẾT KẾ ĐỒ HỌA</option>
+                    <option value="LẬP TRÌNH MÁY TÍNH">LẬP TRÌNH MÁY TÍNH</option>
+                    <option value="CÔNG NGHỆ Ô TÔ">CÔNG NGHỆ Ô TÔ</option>
+                    <option value="CÔNG NGHỆ THỰC PHẨM">CÔNG NGHỆ THỰC PHẨM</option>
+                    <option value="DƯỢC">DƯỢC</option>
+                    <option value="ĐIỀU DƯỠNG">ĐIỀU DƯỠNG</option>
+                    <option value="Y SĨ ĐA KHOA">Y SĨ ĐA KHOA</option>
+                    <option value="KỸ THUẬT PHỤC HÌNH RĂNG">KỸ THUẬT PHỤC HÌNH RĂNG</option>
+                    <option value="KỸ THUẬT PHỤC HỒI CHỨC NĂNG">KỸ THUẬT PHỤC HỒI CHỨC NĂNG</option>
+                    <option value="Y HỌC CỔ TRUYỀN">Y HỌC CỔ TRUYỀN</option>
+                    <option value="DU LỊCH">DU LỊCH</option>
+                    <option value="HƯỚNG DẪN DU LỊCH">HƯỚNG DẪN DU LỊCH</option>
+                    <option value="QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN">QUẢN TRỊ NHÀ HÀNG - KHÁCH SẠN</option>
+                    <option value="NGÔN NGỮ ANH">NGÔN NGỮ ANH</option>
+                    <option value="LUẬT - DỊCH VỤ PHÁP LÝ">LUẬT - DỊCH VỤ PHÁP LÝ</option>
+                    <option value="SƯ PHẠM MẦM NON">SƯ PHẠM MẦM NON</option>
+                  </select>
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="education" class="form-label">Bạn Đã Tốt Nghiệp *</label>
-                    <select id="education" name="education" class="form-control" required aria-required="true">
-                        <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
-                        <option value="Tốt Nghiệp THCS">Tốt Nghiệp THCS</option>
-                        <option value="Tốt Nghiệp THPT">Tốt Nghiệp THPT</option>
-                        <option value="Tốt Nghiệp Trung Cấp">Tốt Nghiệp Trung Cấp</option>
-                        <option value="Tốt Nghiệp Cao Đẳng">Tốt Nghiệp Cao Đẳng</option>
-                        <option value="Tốt Nghiệp Đại Học">Tốt Nghiệp Đại Học</option>
-                    </select>
+                  <label for="education" class="form-label">Bạn Đã Tốt Nghiệp *</label>
+                  <select id="education" name="education" class="form-control" required aria-required="true">
+                    <option value="">Chọn Bạn Đã Tốt Nghiệp</option>
+                    <option value="Tốt Nghiệp THCS">Tốt Nghiệp THCS</option>
+                    <option value="Tốt Nghiệp THPT">Tốt Nghiệp THPT</option>
+                    <option value="Tốt Nghiệp Trung Cấp">Tốt Nghiệp Trung Cấp</option>
+                    <option value="Tốt Nghiệp Cao Đẳng">Tốt Nghiệp Cao Đẳng</option>
+                    <option value="Tốt Nghiệp Đại Học">Tốt Nghiệp Đại Học</option>
+                  </select>
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="consultationType">Hình Thức Tư Vấn</label>
-                    <select id="consultationType" name="consultationType" required aria-required="true">
-                        <option value="">Chọn hình thức tư vấn</option>
-                        <option value="online">Tư vấn online</option>
-                        <option value="offline">Tư vấn trực tiếp tại trường</option>
-                        <option value="phone">Tư vấn qua điện thoại</option>
-                    </select>
+                  <label for="consultationType">Hình Thức Tư Vấn</label>
+                  <select id="consultationType" name="consultationType" required aria-required="true">
+                    <option value="">Chọn hình thức tư vấn</option>
+                    <option value="online">Tư vấn online</option>
+                    <option value="offline">Tư vấn trực tiếp tại trường</option>
+                    <option value="phone">Tư vấn qua điện thoại</option>
+                  </select>
                 </div>
-
+          
                 <div class="form-group">
-                    <label for="note">Ghi Chú</label>
-                    <textarea id="note" name="note" rows="3" placeholder="Nhập thông tin bổ sung nếu có"></textarea>
+                  <label for="note">Ghi Chú</label>
+                  <textarea id="note" name="note" rows="3" placeholder="Nhập thông tin bổ sung nếu có"></textarea>
                 </div>
-
+          
                 <button type="submit" class="submit-btn">
-                    <span class="btn-text">Đăng Ký Ngay</span>
-                    <span class="loading-text" style="display: none;">Đang gửi...</span>
+                  <span class="btn-text">Đăng Ký Ngay</span>
+                  <span class="loading-text" style="display: none;">Đang gửi...</span>
                 </button>
-            </form>
-        </section>
-    </main>
+              </form>
+              
+            </section>
+          </main>
 
-    {% include 'footer.html' %}
+
+            {% include 'footer.html' %}
 
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
