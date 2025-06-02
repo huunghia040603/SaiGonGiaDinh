@@ -66,12 +66,17 @@
     transform: translateY(-2px); /* Nâng nhẹ khi hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow khi hover */
 }
+@font-face {
+    font-family: font2;
+    src: url('/static/font/font2.ttf');
+}
 
 /* FAQ Question */
 .faq-question3 {
     padding: 20px;
     background: #f8f9fa; /* Nền xám nhạt */
     display: flex;
+    font-family: font2;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;

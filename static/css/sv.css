@@ -1,0 +1,158 @@
+/* Global Styles */
+
+/* Testimonial Section */
+.testimonial-section5 {
+    max-width: 1400px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.section-tagline5 {
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.section-heading5 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #2e3e57; /* Màu xanh đậm */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.section-description5 {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+}
+
+.testimonial-cards-container5 {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Khoảng cách giữa các card */
+    flex-wrap: wrap; /* Cho phép các card xuống dòng trên màn hình nhỏ */
+}
+
+.testimonial-card5 {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Bóng nhẹ ban đầu */
+    padding: 5px;
+    width: 180px; /* Điều chỉnh để 3 card nằm trên 1 hàng */
+    min-width: 270px; /* Đảm bảo card không quá nhỏ */
+    display: flex;
+    height: 250px;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+    cursor: pointer; /* Cho biết đây là phần tử tương tác */
+}
+
+/* Hiệu ứng Hover cho testimonial-card */
+.testimonial-card5:hover {
+    transform: translateY(-10px); /* Nâng nhẹ card lên */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Tăng độ bóng */
+}
+@font-face {
+    font-family: 'font6';
+    src: url('/static/fonts/font6.ttf');
+}
+
+.testimonial-text5 {
+    font-size: 14px;
+    font-family: 'font6';
+    color: #555;
+    margin-left: 15px;
+    margin-right: 15px;
+    flex-grow: 1; /* Đảm bảo văn bản chiếm đủ không gian */
+}
+
+.client-info5 {
+    display: flex;
+    align-items: center;
+    margin-top: auto; /* Đẩy thông tin khách hàng xuống dưới cùng */
+}
+
+.client-avatar5 {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.client-details5 {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-name5 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2e3e57;
+    margin: 0;
+}
+
+.client-role5 {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .testimonial-card5 {
+        width: 45%; /* 2 card trên 1 hàng */
+    }
+}
+
+@media (max-width: 768px) {
+    .section-heading5 {
+        font-size: 38px;
+    }
+    .section-description5 {
+        font-size: 16px;
+    }
+    .testimonial-card5 {
+        width: 80%; /* 1 card trên 1 hàng, căn giữa */
+     
+    }
+    .testimonial-cards-container5 {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-card5 {
+        padding: 30px;
+        min-width: unset;
+        width: 90%;
+    }
+    .section-heading5 {
+        font-size: 30px;
+    }
+    .testimonial-text5 {
+        font-size: 15px;
+    }
+    .client-avatar5 {
+        width: 50px;
+        height: 50px;
+    }
+    .client-name5 {
+        font-size: 16px;
+    }
+    .client-role5 {
+        font-size: 12px;
+    }
+}
