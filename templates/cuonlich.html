@@ -1,0 +1,474 @@
+
+<style>
+.calendar-page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* Đảm bảo đủ chiều cao, trừ đi chiều cao header/footer */
+    padding: 20px 0;
+}
+
+.calendar-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 1200px; /* Kích thước cố định chiều rộng */
+    height: 1050px; /* Kích thước cố định chiều cao */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Đảm bảo các phần tử giãn cách đều */
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+    box-sizing: border-box; /* Tính cả padding vào kích thước */
+}
+
+.calendar-main-title {
+    font-family: font2; /* Hoặc font tương tự cho tiêu đề */
+    color: #dc3545; /* Màu đỏ của trường */
+    font-size: 2.8em;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.calendar-main-title::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #007bff; /* Màu xanh nổi bật */
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.calendar-wrapper {
+    width: 100%;
+    flex-grow: 1; /* Cho phép wrapper chiếm hết không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Bắt đầu từ trên cùng */
+    align-items: center;
+}
+
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    border-bottom: 2px solid #eee;
+}
+
+.calendar-nav-btn {
+    background-color: #007bff; /* Màu xanh dương */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-nav-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.calendar-month-year {
+    font-family: 'font2', sans-serif; /* Hoặc font khác cho tháng/năm */
+    color: #002147; /* Màu xanh đậm của trường */
+    font-size: 2.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 cột cho các ngày trong tuần */
+    width: 90%;
+    gap: 8px; /* Khoảng cách giữa các ô */
+}
+
+.calendar-day-name {
+    background-color: #f8f9fa; /* Màu nền cho tên ngày */
+    color: #666;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 0;
+    border-radius: 8px;
+    font-size: 1.1em;
+}
+
+.calendar-days-grid {
+    height: auto; /* Cho phép tự điều chỉnh chiều cao */
+    min-height: 400px; /* Chiều cao tối thiểu để hiển thị đủ 6 hàng */
+}
+
+.calendar-day {
+    background-color: #e9ecef; /* Màu nền cho ô ngày */
+    color: #333;
+    height: 90px; /* Chiều cao cố định cho mỗi ô ngày */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-sizing: border-box; /* Bao gồm padding trong chiều cao */
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar-day:hover {
+    background-color: #dbe2e9;
+    transform: translateY(-2px);
+}
+
+.calendar-day.empty {
+    background-color: #f8f9fa; /* Màu cho các ô trống */
+    cursor: default;
+}
+
+.calendar-day.empty:hover {
+    background-color: #f8f9fa;
+    transform: none;
+}
+
+.calendar-day.current-month {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.calendar-day.current-date {
+    background-color: #ffc107; /* Màu vàng cho ngày hiện tại */
+    color: #333;
+    font-weight: bold;
+}
+
+.calendar-day.highlight-event {
+    background-color: #28a745; /* Màu xanh lá cây nổi bật cho sự kiện */
+    color: #fff;
+    box-shadow: 0 0 0 3px #dc3545; /* Vòng tròn màu đỏ */
+    position: relative;
+    z-index: 1;
+    font-family: font6;
+    font-size: 12px;
+}
+
+.calendar-day.highlight-event::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #dc3545; /* Dấu chấm đỏ */
+    border-radius: 50%;
+}
+
+
+.calendar-day-number {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.calendar-day-event {
+    font-size: 0.8em;
+    color: #002147;
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.highlight-event .calendar-day-event {
+    color: #fff; /* Chữ trắng cho sự kiện nổi bật */
+}
+
+
+.event-legend {
+    width: 90%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 15px 0;
+    border-top: 2px solid #eee;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+    border: 2px solid #dc3545; /* Viền đỏ cho legend */
+    background-color: #28a745; /* Màu nền xanh lá */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .calendar-container {
+        width: 100%;
+        height: auto; /* Chiều cao tự động để thích ứng */
+        max-width: 800px; /* Giảm max-width */
+        padding: 20px;
+    }
+
+    .calendar-main-title {
+        font-size: 2.2em;
+    }
+
+    .calendar-month-year {
+        font-size: 1.8em;
+    }
+
+    .calendar-day-name {
+        padding: 10px 0;
+        font-size: 1em;
+    }
+
+    .calendar-day {
+        height: 70px; /* Giảm chiều cao ô ngày */
+        font-size: 1.1em;
+        padding: 8px;
+    }
+    .calendar-day-number {
+        font-size: 1.2em;
+    }
+    .calendar-day-event {
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-container {
+        padding: 15px;
+    }
+
+    .calendar-main-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .calendar-month-year {
+        font-size: 1.5em;
+    }
+
+    .calendar-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1em;
+    }
+
+    .calendar-day-name {
+        padding: 8px 0;
+        font-size: 0.9em;
+    }
+
+    .calendar-day {
+        height: 60px; /* Giảm thêm chiều cao ô ngày */
+        font-size: 1em;
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-container {
+        padding: 10px;
+    }
+
+    .calendar-main-title {
+        font-size: 1.5em;
+    }
+
+    .calendar-month-year {
+        font-size: 1.2em;
+    }
+
+    .calendar-nav-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8em;
+    }
+
+    .calendar-day-name {
+        font-size: 0.8em;
+    }
+
+    .calendar-day {
+        height: 50px; /* Chiều cao tối thiểu */
+        font-size: 0.9em;
+    }
+    .calendar-day-number {
+        font-size: 1em;
+    }
+    .calendar-day-event {
+        font-size: 0.6em;
+    }
+    .event-legend {
+        font-size: 0.9em;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .legend-item {
+        margin-bottom: 5px;
+    }
+}
+</style>
+
+    <main class="calendar-page-content">
+        <div class="container calendar-container">
+            <h1 class="calendar-main-title">LỊCH KHAI GIẢNG NĂM 2025</h1>
+
+            <div class="calendar-wrapper">
+                <div class="calendar-header">
+                    <button id="prevMonth" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                    <h2 id="currentMonthYear" class="calendar-month-year">Tháng Năm 2025</h2>
+                    <button id="nextMonth" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-name">T2</div>
+                    <div class="calendar-day-name">T3</div>
+                    <div class="calendar-day-name">T4</div>
+                    <div class="calendar-day-name">T5</div>
+                    <div class="calendar-day-name">T6</div>
+                    <div class="calendar-day-name">T7</div>
+                    <div class="calendar-day-name">CN</div>
+                </div>
+                <div id="calendarDays" class="calendar-grid calendar-days-grid">
+                    </div>
+                <div class="event-legend">
+                    <div class="legend-item">
+                        <span class="legend-color highlight-event"></span>
+                        <span class="legend-text">Ngày khai giảng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script >document.addEventListener('DOMContentLoaded', () => {
+        const calendarDays = document.getElementById('calendarDays');
+        const currentMonthYear = document.getElementById('currentMonthYear');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+    
+        let currentDate = new Date(); // Bắt đầu từ ngày hiện tại
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+    
+        // Định nghĩa các sự kiện khai giảng
+        // Chú ý: Tháng trong JavaScript là 0-indexed (0 = Tháng 1, 5 = Tháng 6)
+        const khaiGiangDates = [
+            { date: new Date('2025-06-01T00:00:00'), event: 'Lớp T7, CN khai giảng' }, // Ngày 1 tháng 6 năm 2025
+            { date: new Date('2025-06-02T00:00:00'), event: 'Lớp buổi tối khai giảng' }  // Ngày 2 tháng 6 năm 2025
+        ];
+    
+        function renderCalendar() {
+            calendarDays.innerHTML = ''; // Xóa các ngày cũ
+            currentMonthYear.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+    
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+            const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDayOfMonth.getDate();
+    
+            // Lấy thứ của ngày đầu tiên trong tháng (0 = Chủ Nhật, 1 = Thứ 2, ..., 6 = Thứ 7)
+            // Điều chỉnh để Thứ 2 là 0, Chủ Nhật là 6
+            let startDay = firstDayOfMonth.getDay();
+            if (startDay === 0) startDay = 6; // Nếu là Chủ Nhật (0), chuyển thành 6
+            else startDay--; // Nếu là Thứ 2-Thứ 7, giảm đi 1 để Thứ 2 là 0
+    
+            // Điền các ô trống đầu tiên (các ngày của tháng trước)
+            for (let i = 0; i < startDay; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('calendar-day', 'empty');
+                calendarDays.appendChild(emptyDiv);
+            }
+    
+            // Điền các ngày trong tháng
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day', 'current-month');
+                dayDiv.innerHTML = `<span class="calendar-day-number">${day}</span>`;
+    
+                const fullDate = new Date(currentYear, currentMonth, day);
+    
+                // Kiểm tra và đánh dấu ngày hiện tại
+                if (day === currentDate.getDate() && currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
+                    dayDiv.classList.add('current-date');
+                }
+    
+                // Kiểm tra và đánh dấu các ngày khai giảng
+                const eventOnThisDay = khaiGiangDates.find(event =>
+                    event.date.getDate() === day &&
+                    event.date.getMonth() === currentMonth &&
+                    event.date.getFullYear() === currentYear
+                );
+    
+                if (eventOnThisDay) {
+                    dayDiv.classList.add('highlight-event');
+                    const eventSpan = document.createElement('span');
+                    eventSpan.classList.add('calendar-day-event');
+                    eventSpan.textContent = eventOnThisDay.event;
+                    dayDiv.appendChild(eventSpan);
+                }
+    
+                calendarDays.appendChild(dayDiv);
+            }
+        }
+    
+        function getMonthName(monthIndex) {
+            const monthNames = [
+                'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+            ];
+            return monthNames[monthIndex];
+        }
+    
+        prevMonthBtn.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+    
+        nextMonthBtn.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+    
+        // Render lịch khi trang được tải
+        renderCalendar();
+    });</script>
+ 

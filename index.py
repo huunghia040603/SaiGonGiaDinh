@@ -277,5 +277,13 @@ def  nganh():
 def cosovatchat():
     return render_template('cosovatchat.html')
 
+@app.route('/lich')
+def lich():
+    return render_template('lich.html')
+
+@app.route('/admission')
+def tt_tuyensinh():
+    return render_template('tt-tuyensinh.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
