@@ -17,23 +17,32 @@ def admin_home():
 
 @admin_bp.route('/advisory-registrations/')
 def admin_advisory_registrations():
-    """
-    Trang xem các lượt đăng ký tư vấn
-    """
+ 
     return render_template('admin/admin_registrations.html')
 
 
 @admin_bp.route('/stats-traffic/')
 def count_traffic():
-    """
-    Trang xem các lượt truy cập vào web
-    """
+    
     return render_template('admin/stats.html')
 
 @admin_bp.route('/stats-traffic/')
 def count_registration():
-    """
-    Trang xem các lượt truy cập vào web
-    """
+    
     return render_template('admin/admin_stats_registration.html')
+
+@admin_bp.route('/create_account/')
+def create_account():
+    
+    return render_template('admin/create_account.html')
+
+
+@admin_bp.route('/manage_account_student/')
+def manage_account_student():
+    
+    return render_template('admin/manage_account_student.html')
+
+
+
+
 

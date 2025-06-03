@@ -167,12 +167,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.count_traffic') }}">
-                    <i class="bi bi-table me-2"></i>Quản lý lượt truy cập
+                    <i class="bi bi-table me-2"></i>Thống kê lượt truy cập
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.count_registration') }}">
-                    <i class="bi bi-ui-checks me-2"></i>Quản lý lượt đăng ký
+                    <i class="bi bi-ui-checks me-2"></i>Thống kê lượt đăng ký
                 </a>
             </li>
             <li class="nav-item">
@@ -221,7 +221,9 @@
             </div>
         </nav>
 
-        {% block content %}{% endblock %}
+        {# THIS IS THE KEY CHANGE #}
+        {# The content block is moved here to be below the top-navbar #}
+        {% block content %}{% endblock %} 
 
     </div>
 

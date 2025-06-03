@@ -274,5 +274,5 @@ async function loadTrafficData(period) {
 
 // Tải dữ liệu ban đầu khi trang được load (mặc định theo ngày)
 document.addEventListener('DOMContentLoaded', () => {
-    loadTrafficData('day');
+    setTimeout(loadTrafficData('day'), 1000);
 });

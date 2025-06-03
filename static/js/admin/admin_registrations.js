@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('advisory-registrations-table-body');
     const notesModal = new bootstrap.Modal(document.getElementById('notesModal'));
