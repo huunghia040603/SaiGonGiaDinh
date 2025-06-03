@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    
+
+    <main>
+       
+           
+ 
+
+        <section id="co-so-list" class="facility-list-section">
+            <div class="container">
+                <h3 class="section-heading">KHÁM PHÁ CÁC CƠ SỞ ĐÀO TẠO ĐẲNG CẤP CỦA CHÚNG TÔI</h3>
+                <p class="section-subheading">Mỗi cơ sở được thiết kế và trang bị đặc biệt, mang đến không gian học tập và phát triển tối ưu cho sinh viên.</p>
+           
+              
+                <div class="facility-grid">
+                    <div class="facility-item1">
+                        <img src="/static/images/gioithieu/pexels-richard-harris-980304-31340385.jpg" alt="Cơ sở 1: Gò Vấp">
+                        <div class="facility-content">
+                            <h4>Cơ sở 1: Gò Vấp - Trái tim năng động của sự học tập</h4>
+                            <p class="address">514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM</p>
+                            <p class="description">
+                                Nằm tại vị trí đắc địa, ngay trung tâm Quận Gò Vấp sôi động, Cơ sở 1 là điểm đến lý tưởng cho sinh viên yêu thích sự tiện nghi và năng động. Với hệ thống phòng học thông minh, thư viện hiện đại cùng các phòng thực hành chuyên biệt được trang bị công nghệ tiên tiến nhất, cơ sở này đảm bảo mang lại trải nghiệm học tập đỉnh cao. Sự kết nối giao thông thuận tiện giúp sinh viên dễ dàng tiếp cận các tiện ích xung quanh và tham gia vào các hoạt động cộng đồng.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="facility-item1">
+                        <img src="/static/images/gioithieu/pexels-richard-harris-980304-31340385.jpg" alt="Cơ sở 2: Tân Phú">
+                        <div class="facility-content">
+                            <h4>Cơ sở 2: Tân Phú - Không gian xanh và sáng tạo</h4>
+                            <p class="address">173-173A-173B, Hiền Vương, P.Phú Thạnh, Q. Tân Phú, TP.HCM</p>
+                            <p class="description">
+                                Cơ sở Tân Phú gây ấn tượng với không gian xanh mát, khuôn viên rộng rãi và yên tĩnh, rất phù hợp cho việc học tập và nghiên cứu chuyên sâu. Tại đây, sinh viên được tận hưởng cơ sở vật chất đầy đủ từ phòng học đa năng đến sân thể thao hiện đại, tạo điều kiện phát triển toàn diện cả về tri thức và thể chất. Đặc biệt, khu vực ký túc xá tiện nghi gần kề giúp sinh viên an tâm học tập và sinh hoạt.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="facility-item1">
+                        <img src="/static/images/gioithieu/pexels-richard-harris-980304-31340385.jpg" alt="Cơ sở 3: Quận 12">
+                        <div class="facility-content">
+                            <h4>Cơ sở 3: Quận 12 - Trung tâm của công nghệ và đổi mới</h4>
+                            <p class="address">390/61 Hà Huy Giáp, P. Thạnh Lộc, Q.12, TP.HCM</p>
+                            <p class="description">
+                                Tọa lạc tại Quận 12, Cơ sở 3 là nơi tập trung các phòng thí nghiệm và xưởng thực hành tiên tiến, đặc biệt dành cho các ngành học về kỹ thuật, công nghệ và y dược. Đây là môi trường lý tưởng để sinh viên thực hành, nghiên cứu và phát triển kỹ năng chuyên môn sâu rộng. Với sự đầu tư mạnh mẽ vào trang thiết bị, cơ sở này cam kết mang đến những trải nghiệm học tập thực tế và chuẩn quốc tế, giúp sinh viên sẵn sàng cho thị trường lao động.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <p class="closing-statement" style="font-family: 'font2';">Chúng tôi tự hào mang đến hệ thống cơ sở vật chất hiện đại, đáp ứng mọi nhu cầu học tập, nghiên cứu và phát triển của sinh viên. Hãy đến và trải nghiệm môi trường học tập đẳng cấp tại Trường Cao đẳng Sài Gòn Gia Định!</p>
+            </div>
+        </section>
+    </main>
+
+{% include 'dangkytuvan.html' %}
+
+ 
+<style>
+@font-face {
+    font-family: 'font2';
+    src: url('/static/fonts/font2.ttf');
+}
+
+@font-face {
+    font-family: 'font6';
+    src: url('/static/fonts/font6.ttf');
+}
+
+
+
+/* Hero Banner for Cơ Sở Page */
+#co-so-hero {
+    background-image: url('/static/images/gioithieu/pexels-petra-nesti-1766376-32335901.jpg'); /* Thay đổi ảnh nền phù hợp cho trang cơ sở */
+    height:500px;
+    width: 100%; 
+    opacity: 0.8;
+    /* Có thể điều chỉnh chiều cao */
+    background-size: cover;
+}
+
+/* Facility List Section */
+.facility-list-section {
+    padding: 60px 0;
+    background-color: var(--light-bg-color); /* Sử dụng màu nền nhạt */
+}
+
+.facility-list-section .section-heading {
+    text-align: center;
+    font-size: 2.8em;
+    color: var(--primary-color);
+    margin-bottom: 10px; 
+    font-family: 'font2';
+} 
+
+
+.facility-list-section .section-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.section-subheading { /* Thêm style cho subheading mới */
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 40px; /* Khoảng cách với grid */
+    max-width: 800px;
+    margin-left: auto;
+    font-family: 'font2';
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.facility-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 3 cột trên màn hình lớn, tự động xuống dòng */
+    gap: 30px;
+    padding: 0 20px; /* Đảm bảo padding cho grid */
+}
+
+.facility-item1 {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden; /* Quan trọng để ảnh không tràn ra ngoài */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Đổ bóng tinh tế */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column; /* Xếp ảnh và nội dung theo chiều dọc */
+}
+
+.facility-item:hover {
+    transform: translateY(-10px); /* Hiệu ứng nổi lên khi hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
+}
+
+.facility-item1 img {
+    width: 100%;
+    height: 220px; /* Chiều cao cố định cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh được căn và cắt để vừa khung */
+    display: block; /* Loại bỏ khoảng trắng dưới ảnh */
+    border-bottom: 4px solid var(--secondary-color); /* Đường viền đỏ dưới ảnh */
+}
+
+.facility-content {
+    font-family: 'font6';
+    padding: 25px;
+    flex-grow: 1; /* Cho phép nội dung co giãn */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Đẩy nút xuống dưới cùng */
+}
+
+.facility-content h4 {
+    font-size: 1.6em; /* Điều chỉnh font size cho tiêu đề phụ */
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.facility-content p.address { /* Thêm class cho địa chỉ */
+    font-size: 1.05em;
+    color: rgb(0, 47, 255);
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-weight: bold; /* Địa chỉ nổi bật hơn */
+}
+
+.facility-content p.description { /* Mô tả chi tiết hơn */
+    font-size: 0.95em;
+    color: #666;
+    margin-top: 15px;
+    flex-grow: 1; /* Cho phép mô tả giãn ra nếu cần */
+}
+
+.view-map-button {
+    display: inline-flex; /* Sử dụng flex để căn giữa nếu có icon */
+    align-items: center;
+    background-color: var(--accent-orange); /* Nút màu cam */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 20px; /* Khoảng cách với nội dung trên */
+    align-self: flex-start; /* Căn trái nút */
+    /* transition: background-color 0.3s ease, transform 0.3s ease; */
+}
+
+
+
+.closing-statement { /* Style cho câu kết */
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-top: 60px;
+    padding: 0 20px;
+    line-height: 1.6;
+}
+
+
+/* Responsive cho trang cơ sở */
+@media (max-width: 992px) {
+    .facility-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 cột trên màn hình trung bình */
+    }
+    .facility-content h4 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 768px) {
+    #co-so-hero {
+        height: 300px;
+    }
+    .facility-list-section .section-heading {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .section-subheading {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+    }
+    .facility-grid {
+        grid-template-columns: 1fr; /* 1 cột trên màn hình nhỏ */
+        padding: 0 15px;
+    }
+    .facility-item img {
+        height: 200px;
+    }
+    .facility-content {
+        padding: 20px;
+    }
+    .facility-content h4 {
+        font-size: 1.4em;
+    }
+    .view-map-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    .closing-statement {
+        font-size: 1.1em;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    #co-so-hero {
+        height: 250px;
+    }
+    .facility-list-section .section-heading {
+        font-size: 1.8em;
+    }
+    .section-subheading {
+        font-size: 1em;
+    }
+    .facility-item img {
+        height: 180px;
+    }
+    .facility-content {
+        padding: 15px;
+    }
+    .facility-content h4 {
+        font-size: 1.3em;
+    }
+    .view-map-button {
+        padding: 10px 18px;
+        font-size: 0.85em;
+    }
+}
+</style>
+    </html>
+{% endblock %}

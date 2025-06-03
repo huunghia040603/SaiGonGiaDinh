@@ -1,0 +1,300 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset và style chung */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f8fa;
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+/* Container chính */
+.container7 {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.container7 h1 {
+    font-size: 2.5rem;
+    color: #1a202c;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Card Profile */
+#student-info {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+#student-info:hover {
+    transform: translateY(-5px);
+}
+
+/* Profile Header */
+.profile-header7 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-avatar7 {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.profile-avatar7:hover {
+    transform: scale(1.05);
+}
+
+#student-name7 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+#student-id7 {
+    color: #718096;
+    font-size: 1rem;
+}
+
+/* Profile Details */
+.profile-details7 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.detail-item7 {
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.detail-item7:hover {
+    background: #edf2f7;
+    transform: translateY(-2px);
+}
+
+.detail-label7 {
+    display: block;
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.detail-label7 i {
+    margin-right: 8px;
+    color: #4299e1;
+}
+
+.detail-value7 {
+    color: #2d3748;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+/* Loading Animation */
+.loading7 {
+    text-align: center;
+    padding: 20px;
+    color: #718096;
+    font-size: 1.1rem;
+    position: relative;
+}
+
+.loading7::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4299e1;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error Message */
+.error-message7 {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.error-message7 i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Login Prompt */
+.login-prompt7 {
+    text-align: center;
+    padding: 30px;
+    background: #ebf8ff;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.login-prompt7 a {
+    color: #4299e1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-prompt7 a:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+/* Logout Button */
+.logout-button-container7 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#logoutBtn {
+    background: #4299e1;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#logoutBtn:hover {
+    background: #2b6cb0;
+    transform: translateY(-2px);
+}
+
+/* Fade In Animation */
+.fade-in-container7 {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container7 {
+        margin: 20px auto;
+    }
+
+    .container7 h1 {
+        font-size: 2rem;
+    }
+
+    .profile-details7 {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-avatar7 {
+        width: 120px;
+        height: 120px;
+    }
+
+    #student-name7 {
+        font-size: 1.5rem;
+    }
+
+    .detail-item7 {
+        padding: 12px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a202c;
+        color: #e2e8f0;
+    }
+
+    .container7 h1 {
+        color: #e2e8f0;
+    }
+
+    #student-info {
+        background: #2d3748;
+    }
+
+    .detail-item7 {
+        background: #2d3748;
+    }
+
+    .detail-item7:hover {
+        background: #4a5568;
+    }
+
+    .detail-label7 {
+        color: #a0aec0;
+    }
+
+    .detail-value7 {
+        color: #e2e8f0;
+    }
+
+    .error-message7 {
+        background: #742a2a;
+        color: #feb2b2;
+    }
+
+    .login-prompt7 {
+        background: #2c5282;
+        color: #e2e8f0;
+    }
+
+    .login-prompt7 a {
+        color: #63b3ed;
+    }
+
+    .login-prompt7 a:hover {
+        color: #90cdf4;
+    }
+} 

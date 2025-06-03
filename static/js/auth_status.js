@@ -42,3 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //     });
     // }
 });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainNav = document.querySelector('.main-nav');
+        const scrollThreshold = 250; // Ngưỡng cuộn (px)
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY >= scrollThreshold) {
+                mainNav.classList.add('fixed');
+            } else {
+                mainNav.classList.remove('fixed');
+            }
+        });
+    });
