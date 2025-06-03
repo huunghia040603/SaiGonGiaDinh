@@ -1,5 +1,3 @@
-// CollegeApp/static/js/traffic.js
-
 let trafficChart = null;
 
 // Hàm để lấy token xác thực, giống như trong admin_registrations.js
@@ -10,6 +8,13 @@ function getAuthToken() {
 
 // Hàm để tải dữ liệu và vẽ biểu đồ
 async function loadTrafficData(period) {
+    // Kiểm tra xem trang hiện tại có phải là trang admin không
+    // Nếu không phải trang admin, không cần kiểm tra token và thoát hàm
+    if (!window.location.pathname.startsWith('/admin')) {
+        console.log('Không phải trang admin, bỏ qua kiểm tra xác thực.');
+        return;
+    }
+
     // Sử dụng URL tuyệt đối để nhất quán với admin_registrations.js
     const apiUrl = `https://saigongiadinh.pythonanywhere.com/api/admin/traffic-stats/?period=${period}`;
 
@@ -17,7 +22,7 @@ async function loadTrafficData(period) {
     const token = getAuthToken();
     console.log('Token từ localStorage (traffic.js):', token ? 'Có token' : 'Không có token');
 
-    // Kiểm tra nếu token không tồn tại (null hoặc undefined)
+    // Kiểm tra nếu token không tồn tại (null hoặc undefined) và đang ở trang admin
     if (!token) {
         console.warn('Lỗi: Không tìm thấy token xác thực admin. Vui lòng đăng nhập lại.');
         alert('Bạn cần đăng nhập để xem thống kê. Chuyển hướng đến trang đăng nhập.');
@@ -105,14 +110,14 @@ async function loadTrafficData(period) {
         if (period === 'day') {
             // Đối với 'day', kết hợp biểu đồ đường và cột
             datasets.push({
-    label: 'Tổng lượt truy cập',
-    data: totalVisits,
-    type: 'bar', // Chuyển sang biểu đồ cột
-    backgroundColor: 'rgba(54, 162, 235, 0.6)', // Màu sắc cho cột, làm cho nó trong suốt hơn một chút
-    borderColor: 'rgba(54, 162, 235, 1)',
-    borderWidth: 1, // Độ dày của viền cột
-    yAxisID: 'y'
-});
+                label: 'Tổng lượt truy cập',
+                data: totalVisits,
+                type: 'bar', // Chuyển sang biểu đồ cột
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Màu sắc cho cột, làm cho nó trong suốt hơn một chút
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1, // Độ dày của viền cột
+                yAxisID: 'y'
+            });
             datasets.push({
                 label: 'Lượt truy cập của khách',
                 data: guestVisits,
@@ -221,8 +226,6 @@ async function loadTrafficData(period) {
                                     // Tạo Date object với định dạng YYYY-MM-DD để tránh lỗi múi giờ
                                     const currentChartDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`);
 
-                                    // Lấy ngày trong tuần (0 = Chủ Nhật, 1 = Thứ Hai, ..., 6 = Thứ Bảy)
-                                    // Hoặc lấy ngày của tháng và kiểm tra (vd: 30, 6, 13, 20, 27)
                                     // Để hiển thị mỗi 7 ngày từ ngày 30/5/2025:
                                     // Tính số ngày kể từ 30/5/2025
                                     const startDate = new Date('2025-05-30T00:00:00');
@@ -240,19 +243,6 @@ async function loadTrafficData(period) {
                         }
                     }
                 },
-                options: {
-    scales: {
-        y: {
-            beginAtZero: true, // Bắt đầu trục Y từ 0
-            ticks: {
-                stepSize: 1000, // Chia vạch trục Y mỗi 1000 đơn vị (bạn có thể điều chỉnh số này tùy theo dữ liệu của bạn)
-                callback: function(value) {
-                    return value.toLocaleString(); // Định dạng số cho dễ đọc
-                }
-            }
-        }
-    }
-},
                 plugins: {
                     tooltip: {
                         mode: 'index',
@@ -274,5 +264,5 @@ async function loadTrafficData(period) {
 
 // Tải dữ liệu ban đầu khi trang được load (mặc định theo ngày)
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(loadTrafficData('day'), 1000);
+    setTimeout(() => loadTrafficData('day'), 1000); // Thêm mũi tên hàm để gọi hàm sau 1s
 });
