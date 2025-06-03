@@ -7,6 +7,15 @@
     font-family: font2;
     src: url(/static/font/font2.ttf);
   }
+
+  .main-nav {
+    background-color: #dc3545;
+    padding: 0;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out; /* Thêm dòng này */
+}
+
+/* Các thuộc tính khác của .main-nav */
   
 .container {
     max-width: 1200px;

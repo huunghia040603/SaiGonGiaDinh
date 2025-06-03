@@ -269,6 +269,13 @@ def vechungtoi():
 def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
 
+@app.route('/nganh')
+def  nganh():
+    return render_template('nganh.html')
+
+@app.route('/facilities')
+def cosovatchat():
+    return render_template('cosovatchat.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

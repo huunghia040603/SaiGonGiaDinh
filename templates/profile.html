@@ -1,78 +1,69 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block stylesheets %}
-    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+{% extends 'base.html' %}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylenganh.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/thongtintruong.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
-        integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {% endblock %}
-    <title>Thông tin Sinh viên Đăng nhập</title>
-  
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    {# Include the header section #}
-    {% include 'header.html' %}
-
-    <div class="container">
-        <h1>Thông tin Sinh viên</h1>
+    <div class="container7">
+        <h1 style="font-family: 'Courier New', Courier, monospace;"><i class="fas fa-user-graduate" ></i> Thông tin Sinh viên</h1>
+        
         <div id="student-info">
-            <p class="loading">Đang tải thông tin...</p>
+            <p class="loading7">Đang tải thông tin...</p>
         </div>
-        <div id="error-message" class="error-message" style="display: none;"></div>
-        <div id="login-required" class="login-prompt" style="display: none;">
-            Bạn chưa đăng nhập. Vui lòng <a href="/login.html">đăng nhập</a> để xem thông tin.
+
+        <div id="error-message" class="error-message7" style="display: none;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="error-text"></span>
         </div>
-        <div class="logout-button-container">
-            <button id="logoutBtn" style="display: none;">Đăng xuất</button>
+
+        <div id="login-required" class="login-prompt7" style="display: none;">
+            <i class="fas fa-lock"></i>
+            <p>Bạn chưa đăng nhập. Vui lòng <a href="/login.html">đăng nhập</a> để xem thông tin.</p>
+        </div>
+
+        <div class="logout-button-container7">
+            <button id="logoutBtn" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </button>
         </div>
     </div>
 
     <script>
         const API_URL = "https://saigongiadinh.pythonanywhere.com/Students/me/";
-        // Bạn có thể định nghĩa URL trang đăng nhập ở đây để dễ thay đổi
-        const LOGIN_PAGE_URL = "/"; // URL thực tế của trang đăng nhập của bạn
-        // Cần đảm bảo có một API endpoint để xử lý logout trên server nếu bạn muốn
-        // gửi yêu cầu logout để invalidate token trên server. Nếu không, chỉ cần xóa token cục bộ.
-        const LOGOUT_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/logout/"; // Ví dụ
+        const LOGIN_PAGE_URL = "/"; 
+        const LOGOUT_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/logout/";
 
         async function fetchStudentInfo() {
             const studentInfoDiv = document.getElementById('student-info');
             const errorMessageDiv = document.getElementById('error-message');
             const loginRequiredDiv = document.getElementById('login-required');
             const logoutBtn = document.getElementById('logoutBtn');
+            const containerDiv = document.querySelector('.container7');
 
             const authToken = localStorage.getItem('authToken');
 
+            if (containerDiv) {
+                containerDiv.classList.add('fade-in-container7');
+            }
+
             if (!authToken) {
                 studentInfoDiv.innerHTML = '';
-                loginRequiredDiv.style.display = 'block';
-                logoutBtn.style.display = 'none'; // Ẩn nút đăng xuất nếu chưa đăng nhập
+                loginRequiredDiv.style.display = 'flex';
+                logoutBtn.style.display = 'none'; 
                 return;
             }
 
-            // Hiển thị nút đăng xuất nếu có token
             logoutBtn.style.display = 'block';
-
-            studentInfoDiv.innerHTML = '<p class="loading">Đang tải thông tin...</p>';
+            studentInfoDiv.innerHTML = '<p class="loading7">Đang tải thông tin...</p>';
             errorMessageDiv.style.display = 'none';
             loginRequiredDiv.style.display = 'none';
+
+            const loadingParagraph = studentInfoDiv.querySelector('.loading7');
+            if (loadingParagraph) {
+                loadingParagraph.classList.remove('hide7');
+            }
 
             try {
                 const response = await fetch(API_URL, {
@@ -86,7 +77,7 @@
                 if (!response.ok) {
                     if (response.status === 401 || response.status === 403) {
                         handleLogout("Phiên đăng nhập đã hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.");
-                        return; // Quan trọng: dừng hàm sau khi gọi handleLogout
+                        return;
                     }
                     const errorData = await response.json();
                     throw new Error(errorData.detail || `Lỗi khi tải thông tin: ${response.status} ${response.statusText}`);
@@ -98,40 +89,69 @@
             } catch (error) {
                 console.error("Lỗi khi fetch thông tin sinh viên:", error);
                 studentInfoDiv.innerHTML = '';
-                errorMessageDiv.textContent = `Lỗi: ${error.message}`;
-                errorMessageDiv.style.display = 'block';
+                errorMessageDiv.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span class="error-text">Lỗi: ${error.message}</span>
+                `;
+                errorMessageDiv.style.display = 'flex';
+            } finally {
+                const finalLoadingParagraph = studentInfoDiv.querySelector('.loading7');
+                if (finalLoadingParagraph) {
+                    finalLoadingParagraph.classList.add('hide7');
+                }
             }
         }
 
         function displayStudentInfo(student) {
             const studentInfoDiv = document.getElementById('student-info');
+            const loadingParagraph = studentInfoDiv.querySelector('.loading7');
+            if (loadingParagraph) {
+                loadingParagraph.classList.add('hide7');
+            }
+
             studentInfoDiv.innerHTML = `
-                <div class="info-item"><strong>ID:</strong> ${student.id || 'N/A'}</div>
-                <div class="info-item"><strong>Email:</strong> ${student.email || 'N/A'}</div>
-                <div class="info-item"><strong>Họ:</strong> ${student.last_name || 'N/A'}</div>
-                <div class="info-item"><strong>Tên đệm và Tên:</strong> ${student.first_name || 'N/A'}</div>
-                <div class="info-item"><strong>Họ và tên đầy đủ:</strong> ${student.full_name || 'N/A'}</div>
-                <div class="info-item"><strong>Vai trò:</strong> ${student.role || 'N/A'}</div>
+                <div class="profile-header7">
+                    <img src="https://res.cloudinary.com/dftarzzfw/${student.user_photo || 'default-avatar.png'}" 
+                         alt="${student.full_name || 'Ảnh đại diện'}" 
+                         class="profile-avatar7" 
+                         id="profile-avatar7"
+                         onerror="this.src='/static/images/default-avatar.png'">
+                    <h2 id="student-name7">${student.full_name || 'N/A'}</h2>
+                    <p id="student-id7"><i class="fas fa-id-card"></i> ${student.id || 'N/A'}</p>
+                </div>
+                <div class="profile-details7">
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fas fa-envelope"></i> Email</span>
+                        <span class="detail-value7" id="student-email7">${student.email || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fas fa-user-tag"></i> Vai trò</span>
+                        <span class="detail-value7" id="student-role7">${student.role || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fas fa-user"></i> Họ</span>
+                        <span class="detail-value7" id="student-lastname7">${student.last_name || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fas fa-user-circle"></i> Tên đệm & Tên</span>
+                        <span class="detail-value7" id="student-firstname7">${student.first_name || 'N/A'}</span>
+                    </div>
+                </div>
             `;
         }
 
-        // Hàm xử lý đăng xuất
         async function handleLogout(message = "Đã đăng xuất thành công.") {
-            // Xóa tất cả các thông tin đăng nhập khỏi localStorage
             localStorage.removeItem('authToken');
             localStorage.removeItem('userId');
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userRole');
             localStorage.removeItem('userFullName');
 
-            // Optionally: Gửi yêu cầu đăng xuất tới API server để invalidate token
-            // Điều này là cần thiết nếu bạn muốn token không còn hợp lệ trên server
-            // ngay cả khi nó bị lộ ra ngoài.
-            const authToken = localStorage.getItem('authToken'); // Lấy lại token nếu vẫn còn sau khi xóa (chắc chắn là không)
-            if (authToken) { // Chỉ gửi yêu cầu logout API nếu token vẫn còn
+            const authToken = localStorage.getItem('authToken'); 
+            if (authToken) { 
                 try {
                     await fetch(LOGOUT_API_URL, {
-                        method: 'POST', // Hoặc 'DELETE', tùy thuộc vào API của bạn
+                        method: 'POST',
                         headers: {
                             'Authorization': `Token ${authToken}`
                         }
@@ -139,32 +159,25 @@
                     console.log('Token invalidated on server.');
                 } catch (error) {
                     console.error('Lỗi khi gửi yêu cầu logout tới server:', error);
-                    // Không cần làm gì nhiều ở đây, vì token đã bị xóa cục bộ rồi.
                 }
             }
-
-
-     
-            window.location.href = LOGIN_PAGE_URL; // Chuyển hướng về trang đăng nhập
+            alert(message);
+            window.location.href = LOGIN_PAGE_URL;
         }
 
-        // Gắn sự kiện click cho nút đăng xuất
         document.addEventListener('DOMContentLoaded', () => {
-            fetchStudentInfo(); // Gọi hàm này khi tải trang
+            fetchStudentInfo();
 
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', handleLogout);
             }
 
-            // Cập nhật link đăng nhập trong thông báo "chưa đăng nhập"
             const loginPromptLink = document.querySelector('#login-required a');
             if (loginPromptLink) {
                 loginPromptLink.href = LOGIN_PAGE_URL;
             }
         });
     </script>
-    {# Include the footer section #}
-    {% include 'footer.html' %}
 </body>
-</html>
+{% endblock %}
