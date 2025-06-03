@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clb.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sv.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sansang.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -49,9 +50,19 @@
 
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
    
-    <script src="{{ url_for('static', filename='js/admin/traffic.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/admin/admin_registrations.js') }}"></script>
-
+    
+    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sv.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>  
+    <script src="{{ url_for('static', filename='js/auth_status.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cauhoithuonggap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/clb.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jsbody.js') }}"></script>    
+    <script src="{{ url_for('static', filename='js/jsfooter.js') }}"></script>
+   
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}
     {% endblock %}
