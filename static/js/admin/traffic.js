@@ -210,38 +210,26 @@ async function loadTrafficData(period) {
                         }
                     },
                     x: {
-                        title: {
-                            display: true,
-                            text: `Thời gian (${period === 'day' ? 'ngày' : period === 'month' ? 'tháng' : 'năm'})`
-                        },
-                        ticks: {
-                            autoSkip: false, // Không tự động bỏ qua nhãn
-                            maxRotation: 45,
-                            minRotation: 0,
-                            callback: function(value, index, values) {
-                                if (period === 'day') {
-                                    // Chuyển đổi chuỗi ngày sang đối tượng Date để lấy ngày trong tháng
-                                    const dateStr = this.getLabelForValue(value); // ví dụ: "30/5/2025"
-                                    const parts = dateStr.split('/');
-                                    // Tạo Date object với định dạng YYYY-MM-DD để tránh lỗi múi giờ
-                                    const currentChartDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`);
+                        title: {
+                            display: true,
+                            text: `Thời gian (${period === 'day' ? 'ngày' : period === 'month' ? 'tháng' : 'năm'})`
+                        },
+                        ticks: {
+                            autoSkip: false, // Không tự động bỏ qua nhãn
+                            maxRotation: 45,
+                            minRotation: 0,
+                            callback: function(value, index, values) {
+                                if (period === 'day') {
+                                    // Chuyển đổi chuỗi ngày sang đối tượng Date để lấy ngày trong tháng
+                                    const dateStr = this.getLabelForValue(value); // ví dụ: "30/5/2025"
+                                    // Bỏ qua logic hiển thị mỗi 7 ngày
+                                    return dateStr; // Trả về ngày trực tiếp
+                                }
+                                return this.getLabelForValue(value);
+                            }
+                        }
+                    }
 
-                                    // Để hiển thị mỗi 7 ngày từ ngày 30/5/2025:
-                                    // Tính số ngày kể từ 30/5/2025
-                                    const startDate = new Date('2025-05-30T00:00:00');
-                                    const diffTime = Math.abs(currentChartDate - startDate);
-                                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                                    // Hiển thị nhãn cho ngày 0 (30/5), ngày 7 (6/6), ngày 14 (13/6) v.v.
-                                    if (diffDays % 7 === 0) {
-                                        return dateStr;
-                                    }
-                                    return ''; // Ẩn các nhãn khác
-                                }
-                                return this.getLabelForValue(value);
-                            }
-                        }
-                    }
                 },
                 plugins: {
                     tooltip: {

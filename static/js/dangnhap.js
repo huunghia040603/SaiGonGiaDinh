@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (password.length < 6) {
-                alert('Mật khẩu phải có ít nhất 6 ký tự');
+            if (password.length < 3) {
+                alert('Mật khẩu phải có ít nhất 3 ký tự');
                 passwordInput.focus();
                 return;
             }
