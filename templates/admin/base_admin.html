@@ -209,6 +209,16 @@
                     <i class="bi bi-person-plus me-2"></i>Quản lý tài khoản sinh viên
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.manage_account_faculty') }}"> {# Thêm liên kết này #}
+                    <i class="bi bi-person-plus me-2"></i>Quản lý tài khoản giảng viên
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.manage_news') }}"> {# Thêm liên kết này #}
+                    <i class="bi bi-person-plus me-2"></i>Quản lý tin tức
+                </a>
+            </li>
 
             <li class="nav-item mt-3">
                 <span class="nav-link text-uppercase fw-bold text-muted" style="font-size: 0.75rem; padding: 5px 20px;">Auth</span>

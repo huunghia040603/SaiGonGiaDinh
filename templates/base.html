@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block stylesheets %}
     <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,24 +46,26 @@
         {% endblock %}
     </main>
 
-   
+
+    {# Include the footer section #}
     {% include 'footer.html' %}
+    
 
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
+
    
     
-    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/sv.js') }}"></script>
+   
+    <script src="{{ url_for('static', filename='js/jsbody.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jsfooter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>  
+    <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth_status.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cauhoithuonggap.js') }}"></script>
     <script src="{{ url_for('static', filename='js/clb.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jsbody.js') }}"></script>    
-    <script src="{{ url_for('static', filename='js/jsfooter.js') }}"></script>
-   
+
+
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}
     {% endblock %}

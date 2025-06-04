@@ -117,16 +117,12 @@
                          id="profile-avatar7"
                          onerror="this.src='/static/images/default-avatar.png'">
                     <h2 id="student-name7">${student.full_name || 'N/A'}</h2>
-                    <p id="student-id7"><i class="fas fa-id-card"></i> ${student.id || 'N/A'}</p>
+                    <p id="student-id7"><i class="fas fa-id-card"></i> ${student.student_code || 'N/A'}</p>
                 </div>
                 <div class="profile-details7">
                     <div class="detail-item7">
                         <span class="detail-label7"><i class="fas fa-envelope"></i> Email</span>
                         <span class="detail-value7" id="student-email7">${student.email || 'N/A'}</span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fas fa-user-tag"></i> Vai trò</span>
-                        <span class="detail-value7" id="student-role7">${student.role || 'N/A'}</span>
                     </div>
                     <div class="detail-item7">
                         <span class="detail-label7"><i class="fas fa-user"></i> Họ</span>
@@ -135,6 +131,54 @@
                     <div class="detail-item7">
                         <span class="detail-label7"><i class="fas fa-user-circle"></i> Tên đệm & Tên</span>
                         <span class="detail-value7" id="student-firstname7">${student.first_name || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fa-solid fa-cake-candles"></i>Ngày sinh</span>
+                        <span class="detail-value7" id="student-firstname7">
+                            ${
+                                student.date_of_birth
+                                    ? new Date(student.date_of_birth).toLocaleDateString('vi-VN', {
+                                        day: '2-digit',
+                                        month: '2-digit',
+                                        year: 'numeric',
+                                    })
+                                    : 'N/A'
+                            }
+                        </span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fa-solid fa-briefcase"></i> Khoa</span>
+                        <span class="detail-value7" id="student-firstname7">${student.department_name || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fa-solid fa-chalkboard"></i>Ngành</span>
+                        <span class="detail-value7" id="student-firstname7">${student.major_name || 'N/A'}</span>
+                    </div>
+                    
+                   <div class="detail-item7">
+                        <span class="detail-label7"><i class="fa-solid fa-box-archive"></i>Hệ đào tạo</span>
+                        <span class="detail-value7" id="student-firstname7">
+                            ${
+                                (() => {
+                                    switch (student.program_name) {
+                                        case 'CHINH_QUY':
+                                            return 'CHÍNH QUY';
+                                        case 'PHO_THONG_CAO_DANG':
+                                            return 'Phổ thông cao đẳng 9+';
+                                        case 'LIEN_THONG_VAN_BANG_2_CAO_DANG':
+                                            return 'Liên thông/Văn bằng 2 cao đẳng';
+                                        case 'LIEN_THONG_VAN_BANG_2_DAI_HOC':
+                                            return 'Liên thông/Văn bằng 2 đại học';
+                                        default:
+                                            return student.program_name || 'N/A';
+                                    }
+                                })()
+                            }
+                        </span>
+                    </div>
+                    <div class="detail-item7">
+                        <span class="detail-label7"><i class="fa-solid fa-graduation-cap"></i>Niên khóa</span>
+                        <span class="detail-value7" id="student-firstname7">${student.academic_year_name || 'N/A'}</span>
                     </div>
                 </div>
             `;

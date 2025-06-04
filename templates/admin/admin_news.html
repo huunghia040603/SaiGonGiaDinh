@@ -1,0 +1,287 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Quản lý tin tức{% endblock %}
+{% block page_styles %}
+<style>
+    /* Reset và cơ bản */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font hiện đại hơn */
+        margin: 0; /* Loại bỏ margin mặc định của body */
+        padding: 20px;
+        background-color: #eef2f7; /* Màu nền nhẹ nhàng hơn */
+        color: #34495e; /* Màu chữ đậm hơn một chút */
+    }
+
+    .container {
+        max-width: 1200px; /* Tăng chiều rộng tối đa */
+        margin: 20px auto; /* Tự động căn giữa và thêm margin trên/dưới */
+        background: #ffffff; /* Nền trắng */
+        padding: 30px; /* Tăng padding */
+        border-radius: 12px; /* Bo góc mềm mại hơn */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Bóng đổ nổi bật hơn */
+    }
+
+    h1, h2 {
+        color: #0056b3;
+        margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+        font-weight: 600; /* Tiêu đề đậm hơn */
+    }
+
+    h1 {
+        font-size: 2.2em; /* Kích thước lớn hơn cho tiêu đề chính */
+        border-bottom: 2px solid #e0e0e0; /* Đường kẻ dưới tiêu đề */
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-top: 30px;
+    }
+
+    /* Form Styles */
+    form {
+        margin-bottom: 40px; /* Tăng khoảng cách dưới form */
+        padding: 25px; /* Tăng padding của form */
+        border: 1px solid #e0e0e0; /* Viền nhẹ hơn */
+        border-radius: 8px; /* Bo góc cho form */
+        background-color: #fcfcfc; /* Nền form hơi khác một chút */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Bóng nhẹ cho form */
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 8px; /* Khoảng cách dưới label */
+        font-weight: 700; /* Label đậm hơn */
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    form input[type="text"],
+    form input[type="url"],
+    form textarea,
+    form select {
+        width: calc(100% - 24px); /* Điều chỉnh width để bù padding */
+        padding: 12px; /* Tăng padding input */
+        margin-bottom: 15px; /* Tăng khoảng cách dưới input */
+        border: 1px solid #d0d0d0; /* Viền input */
+        border-radius: 6px; /* Bo góc input */
+        font-size: 1em;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động */
+    }
+
+    form input[type="text"]:focus,
+    form input[type="url"]:focus,
+    form textarea:focus,
+    form select:focus {
+        border-color: #007bff; /* Màu viền khi focus */
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Bóng khi focus */
+        outline: none; /* Bỏ outline mặc định */
+    }
+
+    form textarea {
+        resize: vertical; /* Cho phép resize theo chiều dọc */
+        min-height: 80px; /* Chiều cao tối thiểu cho textarea */
+    }
+
+    form select {
+        appearance: none; /* Bỏ style mặc định của select */
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Icon mũi tên */
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+        padding-right: 30px; /* Để icon không đè lên text */
+    }
+
+    form input[type="checkbox"] {
+        margin-right: 8px;
+        transform: scale(1.2); /* Phóng to checkbox */
+        vertical-align: middle; /* Căn giữa với label */
+        margin-top: -3px; /* Điều chỉnh vị trí nhỏ */
+    }
+
+    /* Button Styles */
+    .button-group {
+        margin-top: 20px; /* Khoảng cách trên nhóm nút */
+    }
+    form button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 20px; /* Tăng padding nút */
+        border: none;
+        border-radius: 6px; /* Bo góc nút */
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Thêm hiệu ứng */
+    }
+    form button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px); /* Hiệu ứng nhấc nhẹ */
+    }
+
+    /* Style cho nút Hủy */
+    #cancelFormBtn {
+        background-color: #6c757d; /* Màu xám */
+        margin-left: 10px; /* Khoảng cách với nút submit */
+    }
+    #cancelFormBtn:hover {
+        background-color: #5a6268;
+    }
+
+    /* Message Styles */
+    #message {
+        margin-top: 25px;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .hidden {
+        display: none !important; /* Quan trọng để override các display khác */
+    }
+
+    /* Nút thêm tin tức */
+    #addNewsButton {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 25px; /* Tăng padding */
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em; /* Kích thước lớn hơn một chút */
+        font-weight: 600;
+        margin-bottom: 25px; /* Tăng khoảng cách dưới nút */
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    #addNewsButton:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* News List Styles */
+    .news-list {
+        margin-top: 30px;
+        border-top: 1px solid #e0e0e0; /* Đường kẻ phân cách */
+        padding-top: 20px;
+    }
+    .news-item {
+        background: #f7f9fc; /* Nền item sáng hơn */
+        padding: 15px 20px; /* Tăng padding */
+        margin-bottom: 12px; /* Khoảng cách giữa các item */
+        border-radius: 8px; /* Bo góc item */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Bóng nhẹ cho item */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .news-item:hover {
+        transform: translateY(-3px); /* Hiệu ứng nhấc nhẹ khi hover */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .news-item span {
+        flex-grow: 1; /* Cho phép text chiếm hết không gian */
+        margin-right: 20px; /* Khoảng cách giữa text và nút */
+        font-size: 1.05em;
+        line-height: 1.5;
+        color: #333;
+    }
+    .news-item strong {
+        color: #0056b3; /* Màu đậm cho tiêu đề */
+    }
+    .news-item div {
+        display: flex; /* Đảm bảo các nút nằm trên cùng một hàng */
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+    .news-item button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px; /* Bo góc nút hành động */
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-left: 0; /* Bỏ margin-left cũ */
+    }
+    .news-item button:hover {
+        transform: translateY(-1px);
+    }
+    .news-item .edit-btn { background-color: #ffc107; color: #333; }
+    .news-item .edit-btn:hover { background-color: #e0a800; }
+    .news-item .delete-btn { background-color: #dc3545; color: white; }
+    .news-item .delete-btn:hover { background-color: #c82333; }
+    .image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* Giúp ảnh không bị biến dạng khi thay đổi kích thước */
+    border-radius: 8px; /* Tùy chọn: làm tròn các góc ảnh */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tùy chọn: thêm đổ bóng nhẹ */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Quản lý Tin tức</h1>
+
+        <button id="addNewsButton">Thêm Tin tức Mới</button>
+
+        <form id="newsForm" class="hidden">
+            <h2>Tạo Tin tức Mới</h2>
+            <input type="hidden" id="newsId">
+            <label for="title">Tiêu đề:</label>
+            <input type="text" id="title" required>
+
+            <label for="short_description">Mô tả ngắn:</label>
+            <textarea id="short_description" rows="3" required></textarea>
+
+            <label for="content">Nội dung:</label>
+            <textarea id="content" rows="10" required></textarea>
+
+            <label for="featured_image">Ảnh đại diện (URL):</label>
+            <input type="url" id="featured_image" placeholder="http://example.com/image.jpg">
+
+            <label for="active">Kích hoạt:</label>
+            <input type="checkbox" id="active" checked>
+
+            <label for="tags">Tags (Chọn nhiều):</label>
+            <select id="tags" multiple size="5" style="height: auto;"></select>
+
+            <label for="album_gallery">Album Thư viện ảnh:</label>
+            <select id="album_gallery">
+                <option value="">-- Chọn Album --</option>
+            </select>
+            <div class="button-group"> {# Thêm một nhóm div cho các nút #}
+                <button type="submit" id="submitBtn">Tạo Tin tức</button>
+                <button type="button" id="cancelFormBtn">Hủy</button> {# Nút hủy form #}
+            </div>
+        </form>
+
+        <div id="message" class="message"></div>
+
+        <h2>Danh sách Tin tức</h2>
+        <div class="news-list" id="newsList">
+            <p>Đang tải tin tức...</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {# Liên kết đến file JavaScript mới #}
+    <script src="{{ url_for('static', filename='js/admin/manage_news.js') }}"></script>
+{% endblock %}

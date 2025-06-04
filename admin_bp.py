@@ -42,6 +42,17 @@ def manage_account_student():
     
     return render_template('admin/manage_account_student.html')
 
+@admin_bp.route('/manage_account_faculty/')
+def manage_account_faculty():
+    
+    return render_template('admin/manage_account_faculty.html')
+
+
+@admin_bp.route('/manage_news/')
+def manage_news():
+    
+    return render_template('admin/admin_news.html')
+
 
 
 

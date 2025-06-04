@@ -1,0 +1,247 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Quản lý Tài Khoản Giảng viên{% endblock %}
+
+{% block page_styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #343a40;
+        }
+        .container-fluid {
+            margin-top: 30px;
+            padding: 0 15px;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-body {
+            padding: 30px;
+            background-color: #ffffff;
+        }
+        .table-responsive {
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .table thead th {
+            background-color: #f1f3f5;
+            color: #495057;
+            font-weight: bold;
+            vertical-align: middle;
+            border-bottom: 2px solid #dee2e6;
+            padding: 10px 15px;
+            white-space: nowrap;
+            text-align: left; /* Giữ căn trái cho tiêu đề mặc định */
+        }
+        .table tbody tr:hover {
+            background-color: #f0f8ff;
+        }
+        .table tbody td {
+            vertical-align: middle;
+            padding: 10px 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-sizing: border-box;
+        }
+        .user-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            flex-shrink: 0;
+        }
+
+        /* --- ĐIỀU CHỈNH CÁC NÚT Ở ĐÂY --- */
+        .action-buttons {
+            display: flex;
+            flex-direction: column; /* Xếp nút theo chiều dọc */
+            gap: 5px; /* Khoảng cách giữa các nút */
+            align-items: center; /* Căn giữa các nút theo chiều ngang */
+            justify-content: center; /* Căn giữa các nút theo chiều dọc trong td */
+            height: 100%; /* Đảm bảo chiếm hết chiều cao của td để căn giữa dọc hoạt động */
+        }
+
+        .action-buttons button {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            width: 80px;
+        }
+
+        .action-buttons .view-faculty-btn {
+            background-color: #b3e0ff;
+            color: #0056b3;
+        }
+        .action-buttons .view-faculty-btn:hover {
+            background-color: #007bff;
+            color: white;
+            transform: translateY(-1px);
+        }
+        .action-buttons .view-faculty-btn:active {
+            transform: translateY(0);
+        }
+
+        .action-buttons .edit-faculty-btn {
+            background-color: #fffac2;
+            color: #b38600;
+        }
+        .action-buttons .edit-faculty-btn:hover {
+            background-color: #ffc107;
+            color: white;
+            transform: translateY(-1px);
+        }
+        .action-buttons .edit-faculty-btn:active {
+            transform: translateY(0);
+        }
+
+        .action-buttons .delete-faculty-btn {
+            background-color: #ffb3b3;
+            color: #b30000;
+        }
+        .action-buttons .delete-faculty-btn:hover {
+            background-color: #dc3545;
+            color: white;
+            transform: translateY(-1px);
+        }
+        .action-buttons .delete-faculty-btn:active {
+            transform: translateY(0);
+        }
+        /* --- KẾT THÚC ĐIỀU CHỈNH CÁC NÚT --- */
+
+        .btn-add-new {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-add-new:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            color: white;
+        }
+        .btn-add-new i {
+            margin-right: 8px;
+        }
+        .alert {
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        /* Tùy chỉnh chiều rộng cho các cột cụ thể để giãn đều ra */
+        .table th:nth-child(1), .table td:nth-child(1) { /* STT */
+            width: 4%;
+            min-width: 40px;
+        }
+        .table th:nth-child(2), .table td:nth-child(2) { /* Mã GV */
+            width: 8%;
+            min-width: 80px;
+        }
+        .table th:nth-child(3), .table td:nth-child(3) { /* Ảnh */
+            width: 6%;
+            min-width: 60px;
+        }
+        .table th:nth-child(4), .table td:nth-child(4) { /* Họ và tên */
+            width: 15%;
+            min-width: 150px;
+        }
+        .table th:nth-child(5), .table td:nth-child(5) { /* Email */
+            width: 18%;
+            min-width: 180px;
+        }
+        .table th:nth-child(6), .table td:nth-child(6) { /* Khoa/Phòng ban */
+            width: 15%;
+            min-width: 150px;
+        }
+        .table th:nth-child(7), .table td:nth-child(7) { /* Chức vụ */
+            width: 12%;
+            min-width: 100px;
+        }
+        .table th:nth-child(8), .table td:nth-child(8) { /* Học vị */
+            width: 8%;
+            min-width: 80px;
+        }
+        /* Cột Hành động */
+        .table th:nth-child(9), .table td:nth-child(9) { /* Hành động */
+            width: 14%; /* Giữ nguyên hoặc điều chỉnh nếu cần */
+            min-width: 120px; /* Đảm bảo đủ rộng cho các nút */
+            text-align: center; /* **Căn giữa tiêu đề cột Hành động** */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <span>Danh sách Giảng viên</span>
+            </div>
+            <div class="card-body">
+                <div id="loadingMessage" class="alert alert-info text-center" role="alert">
+                    <i class="fas fa-spinner fa-spin me-2"></i> Đang tải dữ liệu giảng viên...
+                </div>
+                <div id="errorMessage" class="alert alert-danger text-center d-none" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i> Không thể tải danh sách giảng viên. Vui lòng thử lại sau.
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover d-none" id="facultyTable">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã GV</th>
+                                <th>Ảnh</th>
+                                <th>Họ và tên</th>
+                                <th>Email</th>
+                                <th>Khoa/Phòng ban</th>
+                                <th>Chức vụ</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="facultyTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {# Liên kết đến file JavaScript #}
+    <script src="{{ url_for('static', filename='js/admin/manage_faculty.js') }}"></script>
+{% endblock %}
