@@ -297,5 +297,17 @@ def tintucgiaoduc():
 def phongtraosinhvien():
     return render_template('phongtraosinhvien.html')
 
+@app.route('/camnang')
+def camnang():
+    return render_template('camnang.html')
+
+@app.route('/contact')
+def lienhe():
+    return render_template('lienhe.html')
+
+@app.route('/cao-dang-chinh-quy')
+def caodangchinhquy():
+    return render_template('caodang.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,1040 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        /* Các font custom đã định nghĩa trong header.css */
+        @font-face {
+            font-family: fontVinamilk;
+            src: url(/static/font/font1.ttf);
+        }
+        @font-face {
+            font-family: font2;
+            src: url(/static/font/font2.ttf);
+        }
+
+        /* General for admission page */
+
+
+.admission-page-content {
+    padding: 40px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Admission Hero Section */
+.admission-hero {
+    background: linear-gradient(135deg, #28a745, #218838); /* Green gradient (Growth, Opportunity) */
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.admission-hero::before,
+.admission-hero::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 0;
+}
+
+.admission-hero::before {
+    width: 250px;
+    height: 250px;
+    top: -70px;
+    left: -70px;
+}
+
+.admission-hero::after {
+    width: 350px;
+    height: 350px;
+    bottom: -100px;
+    right: -100px;
+}
+
+.admission-main-title {
+    font-family: 'font2', sans-serif;
+    font-size: 4.2em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
+}
+
+.admission-subtitle {
+    font-size: 1.6em;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #fff;
+    color: #28a745;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    font-family: 'font2', sans-serif;
+}
+
+.hero-button:hover {
+    background-color: #e6ffe6;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-button i {
+    margin-right: 10px;
+}
+
+/* Section Heading */
+.section-heading {
+    font-family: 'font2', sans-serif;
+    font-size: 2.8em;
+    color: #002147;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80px;
+    height: 4px;
+    background-color: #007bff; /* Blue accent */
+    border-radius: 2px;
+}
+
+/* Overview Section */
+.overview-section {
+    margin-bottom: 60px;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.overview-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid #dc3545; /* Red accent */
+}
+
+.overview-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.overview-icon {
+    font-size: 3.5em;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.overview-card h3 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.8em;
+    color: #002147;
+    margin-bottom: 15px;
+}
+
+.overview-card p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.overview-card p strong {
+    color: #dc3545;
+}
+
+/* Majors Section */
+.majors-section {
+    background-color: #e9f5ff; /* Light blue background */
+    padding: 50px;
+    border-radius: 12px;
+    margin-bottom: 60px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.majors-intro {
+    text-align: center;
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.major-category {
+    margin-bottom: 40px;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+    border-left: 5px solid #28a745; /* Green accent */
+}
+
+.major-category h3 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.8em;
+    color: #002147;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.major-category h3 i {
+    color: #28a745;
+    font-size: 1.3em;
+}
+
+.majors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.major-item {
+    background-color: #f7fafd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    color: #333;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.major-item:hover {
+    background-color: #eef5fc;
+    border-color: #cceeff;
+    transform: translateY(-3px);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.majors-note {
+    text-align: center;
+    font-size: 1em;
+    color: #666;
+    margin-top: 20px;
+}
+
+.majors-note a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.majors-note a:hover {
+    text-decoration: underline;
+}
+
+/* Application Documents Section */
+.application-documents-section {
+    margin-bottom: 60px;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.document-item {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.document-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.document-icon-wrapper {
+    background-color: #f0f8ff; /* Light blue background for icons */
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 2px solid #007bff;
+}
+
+.document-icon {
+    font-size: 2.5em;
+    color: #007bff;
+}
+
+.document-item h4 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.4em;
+    color: #002147;
+    margin-bottom: 10px;
+}
+
+.document-item p {
+    font-size: 0.95em;
+    color: #666;
+    flex-grow: 1; /* Allow description to take available space */
+}
+
+/* Registration Methods Section */
+.registration-methods-section {
+    background-color: #fff8e1; /* Light yellow background */
+    padding: 50px;
+    border-radius: 12px;
+    margin-bottom: 60px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.method-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.method-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    text-align: center;
+    border-bottom: 5px solid #ffc107; /* Yellow accent */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.method-icon-wrapper {
+    background-color: #ffe082; /* Lighter yellow for icon wrapper */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.method-icon {
+    font-size: 3em;
+    color: #ff9800; /* Orange for method icons */
+}
+
+.method-card h3 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.6em;
+    color: #002147;
+    margin-bottom: 15px;
+}
+
+.method-card p {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.method-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #dc3545; /* Red accent */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.method-button:hover {
+    background-color: #a31f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4);
+}
+
+.method-button i {
+    margin-left: 10px;
+}
+
+/* Admission Methods Section */
+.admission-methods-section {
+    margin-bottom: 60px;
+}
+
+.admission-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.admission-method-item {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid #007bff; /* Blue accent */
+}
+
+.admission-method-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.method-icon-small {
+    font-size: 2.2em;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.admission-method-item h4 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.4em;
+    color: #002147;
+    margin-bottom: 10px;
+}
+
+.admission-method-item p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+.admission-methods-note {
+    text-align: center;
+    font-size: 1.1em;
+    color: #444;
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+/* Contact Admission Section (CTA) */
+.contact-admission-section {
+    background-color: #f7fafd; /* Light blue background */
+    padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #28a745; /* Green accent */
+}
+
+.contact-admission-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.contact-details, .registration-prompt {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+.contact-details h3, .registration-prompt h3 {
+    font-family: 'font2', sans-serif;
+    font-size: 1.8em;
+    color: #002147;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-details p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.contact-details p i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.contact-details p a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-details p a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.contact-note {
+    font-style: italic;
+    font-size: 0.95em;
+    color: #777;
+    margin-top: 20px;
+}
+
+.registration-prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #ffebee; /* Light red for prompt */
+    border-left: 5px solid #dc3545; /* Red accent */
+}
+
+.registration-prompt h3 {
+    justify-content: center;
+    color: #dc3545;
+}
+
+.registration-prompt h3 i {
+    color: #dc3545;
+}
+
+.registration-prompt p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.register-now-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 18px 40px;
+    background-color: #28a745; /* Green for main CTA */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.4em;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.register-now-button:hover {
+    background-color: #218838;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
+}
+
+.register-now-button i {
+    margin-right: 12px;
+}
+
+/* Pulse animation for the main CTA button */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(40, 167, 69, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .admission-hero {
+        padding: 60px 15px;
+    }
+    .admission-main-title {
+        font-size: 3.5em;
+    }
+    .admission-subtitle {
+        font-size: 1.4em;
+    }
+    .hero-button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+    .section-heading {
+        font-size: 2.2em;
+    }
+    .overview-grid, .documents-grid, .method-cards-grid, .admission-methods-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    .overview-icon, .document-icon, .method-icon, .method-icon-small {
+        font-size: 3em;
+    }
+    .overview-card h3, .major-category h3, .method-card h3, .admission-method-item h4 {
+        font-size: 1.6em;
+    }
+    .majors-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .major-item {
+        font-size: 1em;
+        padding: 12px 18px;
+    }
+    .contact-details h3, .registration-prompt h3 {
+        font-size: 1.6em;
+    }
+    .contact-details p, .registration-prompt p {
+        font-size: 1em;
+    }
+    .register-now-button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .admission-hero {
+        padding: 40px 15px;
+        border-radius: 0;
+    }
+    .admission-main-title {
+        font-size: 2.5em;
+        letter-spacing: 1px;
+    }
+    .admission-subtitle {
+        font-size: 1.2em;
+    }
+    .hero-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    .section-heading {
+        font-size: 1.8em;
+    }
+    .overview-grid, .documents-grid, .method-cards-grid, .admission-methods-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .overview-card, .document-item, .method-card, .admission-method-item {
+        padding: 25px;
+    }
+    .majors-section, .registration-methods-section, .contact-admission-section {
+        padding: 30px 15px;
+        border-radius: 0;
+    }
+    .majors-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .major-item {
+        font-size: 0.95em;
+        padding: 10px 15px;
+    }
+    .contact-admission-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .contact-details, .registration-prompt {
+        max-width: 100%;
+        padding: 25px;
+    }
+    .register-now-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admission-hero {
+        padding: 30px 10px;
+    }
+    .admission-main-title {
+        font-size: 1.8em;
+    }
+    .admission-subtitle {
+        font-size: 1em;
+    }
+    .section-heading {
+        font-size: 1.5em;
+    }
+    .majors-intro {
+        font-size: 0.95em;
+    }
+    .major-category {
+        padding: 20px;
+    }
+    .major-category h3 {
+        font-size: 1.5em;
+    }
+    .majors-grid {
+        grid-template-columns: 1fr;
+    }
+    .major-item {
+        font-size: 0.9em;
+    }
+    .document-item h4, .method-card h3, .admission-method-item h4 {
+        font-size: 1.2em;
+    }
+    .document-item p, .method-card p, .admission-method-item p, .contact-details p, .registration-prompt p {
+        font-size: 0.9em;
+    }
+    .register-now-button {
+        font-size: 1.1em;
+        padding: 12px 25px;
+    }
+}
+    </style>
+
+
+    <main class="admission-page-content">
+        <div class="container">
+            <section class="admission-hero">
+                <h1 class="admission-main-title">TUYỂN SINH CAO ĐẲNG CHÍNH QUY 2025</h1>
+                <p class="admission-subtitle">Mở ra cánh cửa tương lai vững chắc cùng Trường Cao đẳng Sài Gòn Gia Định!</p>
+                <a href="#register-form-section" class="hero-button"><i class="fas fa-arrow-alt-circle-right"></i> ĐĂNG KÝ XÉT TUYỂN NGAY</a>
+            </section>
+
+            <section class="overview-section">
+                <h2 class="section-heading">THÔNG TIN CHUNG</h2>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <i class="fas fa-user-graduate overview-icon"></i>
+                        <h3>Đối Tượng Tuyển Sinh</h3>
+                        <p>Tốt nghiệp THPT (hoặc tương đương) trên toàn quốc.</p>
+                        <p>Không giới hạn độ tuổi, giới tính, vùng miền.</p>
+                    </div>
+                    <div class="overview-card">
+                        <i class="fas fa-clock overview-icon"></i>
+                        <h3>Thời Gian Đào Tạo</h3>
+                        <p>Chỉ từ <strong>2 – 2,5 năm</strong> (tương đương 06 học kỳ) bao gồm cả thời gian thực tập tại doanh nghiệp.</p>
+                        <p>Chương trình đào tạo tinh gọn, tập trung vào kiến thức và kỹ năng thực tiễn.</p>
+                    </div>
+                    <div class="overview-card">
+                        <i class="fas fa-award overview-icon"></i>
+                        <h3>Giá Trị Bằng Cấp</h3>
+                        <p>Bằng tốt nghiệp Cao đẳng chính quy theo quy định của Bộ Lao động – Thương binh và Xã hội.</p>
+                        <p>Có giá trị pháp lý toàn quốc, là nền tảng vững chắc cho việc học lên cao hoặc khởi nghiệp.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="majors-section">
+                <h2 class="section-heading">CÁC NGÀNH ĐÀO TẠO</h2>
+                <p class="majors-intro">Với đa dạng các ngành nghề theo xu thế thị trường, Trường Cao đẳng Sài Gòn Gia Định cam kết trang bị cho sinh viên kiến thức chuyên sâu và kỹ năng thực tế, đáp ứng mọi yêu cầu của nhà tuyển dụng.</p>
+
+                <div class="major-category">
+                    <h3><i class="fas fa-briefcase"></i> KHỐI KINH TẾ - QUẢN TRỊ</h3>
+                    <div class="majors-grid">
+                        <div class="major-item">Quản trị kinh doanh</div>
+                        <div class="major-item">Kế toán doanh nghiệp</div>
+                        <div class="major-item">Tài chính - Ngân hàng</div>
+                        <div class="major-item">Logistics </div>
+                        <div class="major-item">Thương mại điện tử</div>
+                    </div>
+                </div>
+
+                <div class="major-category">
+                    <h3><i class="fas fa-laptop-code"></i> KHỐI CÔNG NGHỆ - KỸ THUẬT</h3>
+                    <div class="majors-grid">
+                        <div class="major-item">Công nghệ thông tin</div>
+                        <div class="major-item">Thiết kế đồ họa</div>
+                        <div class="major-item">Lập trình máy tính</div>
+                        <div class="major-item">Công nghệ Ô tô</div>
+                        <div class="major-item">Công nghệ Thực phẩm</div>
+                    </div>
+                </div>
+
+                <div class="major-category">
+                    <h3><i class="fas fa-user-md"></i> KHỐI Y - DƯỢC</h3>
+                    <div class="majors-grid">
+                        <div class="major-item">Dược</div>
+                        <div class="major-item">Điều dưỡng</div>
+                        <div class="major-item">Y sĩ đa khoa</div>
+                        <div class="major-item">Y học cổ truyền</div>
+                        <div class="major-item">Kỹ thuật phục hồi chức năng</div>
+                        <div class="major-item">Kỹ thuật phục hình răng</div>
+                    </div>
+                </div>
+
+                <div class="major-category">
+                    <h3><i class="fas fa-dog"></i> KHỐI THÚ Y - CHĂN NUÔI</h3>
+                    <div class="majors-grid">
+                        <div class="major-item">Thú y</div>
+                    </div>
+                </div>
+
+                <div class="major-category">
+                    <h3><i class="fas fa-laptop-code"></i> KHỐI XÃ HỘI - DU LỊCH - PHÁP LUẬT</h3>
+                    <div class="majors-grid">
+                        <div class="major-item">Du lịch</div>
+                        <div class="major-item">Ngôn ngữ Anh</div>
+                        <div class="major-item">Luật - Dịch vụ pháp lý</div>
+                    </div>
+                </div>
+
+                <p class="majors-note">Để biết thêm chi tiết về chương trình đào tạo của từng ngành, vui lòng truy cập <a href="/programs">trang Chương trình đào tạo</a> hoặc liên hệ Phòng Tuyển sinh.</p>
+            </section>
+
+            <section class="application-documents-section">
+                <h2 class="section-heading">HỒ SƠ ĐĂNG KÝ XÉT TUYỂN</h2>
+                <div class="documents-grid">
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-file-alt document-icon"></i></div>
+                        <h4>Phiếu đăng ký xét tuyển</h4>
+                        <p>Theo mẫu của trường, có thể tải về từ website hoặc nhận trực tiếp tại Phòng Tuyển sinh.</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-book document-icon"></i></div>
+                        <h4>Bản sao Bằng tốt nghiệp THPT</h4>
+                        <p>Hoặc Giấy chứng nhận tốt nghiệp tạm thời (đối với thí sinh tốt nghiệp trong năm 2025).</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-scroll document-icon"></i></div>
+                        <h4>Bản sao Học bạ THPT</h4>
+                        <p>Bản sao công chứng hoặc có chứng thực.</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-certificate document-icon"></i></div>
+                        <h4>Bản sao các loại giấy tờ ưu tiên (nếu có)</h4>
+                        <p>Ví dụ: Giấy chứng nhận con liệt sĩ, con thương binh, hộ nghèo, ...</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-heartbeat document-icon"></i></div>
+                        <h4>Phiếu khám sức khỏe</h4>
+                        <p>Có thể bổ sung sau khi trúng tuyển và nhập học. Đảm bảo đủ sức khỏe để học tập.</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-camera document-icon"></i></div>
+                        <h4>04 ảnh thẻ 2x3 và file ảnh</h4>
+                        <p>Ghi rõ họ tên, ngày tháng năm sinh phía sau ảnh.</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-id-card document-icon"></i></div>
+                        <h4>Bản sao CCCD/CMND</h4>
+                        <p>Bản sao công chứng.</p>
+                    </div>
+                    <div class="document-item">
+                        <div class="document-icon-wrapper"><i class="fas fa-birthday-cake document-icon"></i></div>
+                        <h4>Bản sao Giấy khai sinh</h4>
+                        <p>Bản sao công chứng.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="registration-methods-section">
+                <h2 class="section-heading">HÌNH THỨC ĐĂNG KÝ XÉT TUYỂN</h2>
+                <div class="method-cards-grid">
+                    <div class="method-card">
+                        <div class="method-icon-wrapper"><i class="fas fa-laptop method-icon"></i></div>
+                        <h3>Hình thức 1: Online</h3>
+                        <p>Nộp hồ sơ xét tuyển trực tuyến (online) trên website chính thức của trường.</p>
+                        <a href="/dangki" class="method-button">Đăng ký Online Ngay <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon-wrapper"><i class="fas fa-mail-bulk method-icon"></i></div>
+                        <h3>Hình thức 2: Qua Bưu Điện</h3>
+                        <p>Gửi hồ sơ xét tuyển qua đường bưu điện về địa chỉ trụ sở chính của trường.</p>
+                        <p><strong>Địa chỉ:</strong> 514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM</p>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon-wrapper"><i class="fas fa-school method-icon"></i></div>
+                        <h3>Hình thức 3: Trực Tiếp</h3>
+                        <p>Nộp hồ sơ xét tuyển trực tiếp tại trường (trụ sở chính).</p>
+                        <p><strong>Địa chỉ:</strong> 514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admission-methods-section">
+                <h2 class="section-heading">PHƯƠNG THỨC XÉT TUYỂN</h2>
+                <div class="admission-methods-grid">
+                    <div class="admission-method-item">
+                        <i class="fas fa-clipboard-check method-icon-small"></i>
+                        <h4>Phương thức 1: Xét học bạ lớp 12 THPT</h4>
+                        <p>Dựa trên tổng điểm trung bình cả năm lớp 12 của tổ hợp 3 môn xét tuyển. Phương thức này giúp giảm áp lực thi cử và tạo cơ hội cho những bạn có học lực ổn định.</p>
+                    </div>
+                    <div class="admission-method-item">
+                        <i class="fas fa-pen-fancy method-icon-small"></i>
+                        <h4>Phương thức 2: Xét kết quả kỳ thi tốt nghiệp THPT 2025</h4>
+                        <p>Sử dụng kết quả chính thức của kỳ thi tốt nghiệp THPT quốc gia năm 2025 theo quy định của Bộ GD&ĐT.</p>
+                    </div>
+                    <div class="admission-method-item">
+                        <i class="fas fa-brain method-icon-small"></i>
+                        <h4>Phương thức 3: Xét kết quả kỳ thi Đánh giá năng lực của ĐHQG TPHCM 2025</h4>
+                        <p>Dựa vào điểm thi của kỳ thi đánh giá năng lực do Đại học Quốc gia TP.HCM tổ chức, tạo thêm lựa chọn cho thí sinh.</p>
+                    </div>
+                    <div class="admission-method-item">
+                        <i class="fas fa-hands-helping method-icon-small"></i>
+                        <h4>Phương thức 4: Tuyển thẳng, ưu tiên xét tuyển</h4>
+                        <p>Theo Quy chế tuyển sinh trình độ cao đẳng của Bộ Lao động – Thương binh và Xã hội (áp dụng cho các đối tượng đặc biệt, thí sinh đoạt giải, v.v.).</p>
+                    </div>
+                </div>
+                <p class="admission-methods-note">Thí sinh có thể chọn một hoặc nhiều phương thức xét tuyển để tăng cơ hội trúng tuyển.</p>
+            </section>
+
+            <section class="contact-admission-section" id="register-form-section">
+                <h2 class="section-heading">THÔNG TIN LIÊN HỆ & ĐĂNG KÝ</h2>
+                <div class="contact-admission-content">
+                    <div class="contact-details">
+                        <h3><i class="fas fa-headset"></i> Phòng Công tác học sinh-sinh viên và Tuyển sinh</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Địa chỉ:</strong> 514 Lê Quang Định, Phường 1, Quận Gò Vấp, TP. Hồ Chí Minh</p>
+                        <p><i class="fas fa-globe"></i> <strong>Website:</strong> <a href="https://sgc.edu.vn" target="_blank">www.sgc.edu.vn</a></p>
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:tuyensinhsaigongiadinh@gmail.com">tuyensinhsaigongiadinh@gmail.com</a></p>
+                        <p><i class="fas fa-phone-alt"></i> <strong>Hotline/Zalo:</strong> <a href="tel:02838923232">028 3892 3232</a> (miễn phí)</p>
+                        <p class="contact-note">Đừng ngần ngại liên hệ để được tư vấn chi tiết về ngành học, học phí, học bổng và các chính sách hỗ trợ.</p>
+                    </div>
+                    <div class="registration-prompt">
+                        <h3><i class="fas fa-edit"></i> Bạn đã sẵn sàng bứt phá?</h3>
+                        <p>Điền thông tin và gửi hồ sơ xét tuyển ngay để không bỏ lỡ cơ hội học tập tại Sài Gòn Gia Định!</p>
+                        <a href="/dangki" class="register-now-button pulse-animation"><i class="fas fa-paper-plane"></i> ĐĂNG KÝ NGAY</a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="/static/js/auth_status.js"></script>
+    <script>
+        // Script để xử lý việc cố định thanh điều hướng và điều chỉnh padding-top cho body
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainNav = document.querySelector('.main-nav');
+            const header = document.querySelector('.header');
+            let headerHeight = header ? header.offsetHeight : 0;
+            let navHeight = mainNav ? mainNav.offsetHeight : 0;
+
+            function updatePadding() {
+                if (mainNav && mainNav.classList.contains('fixed')) {
+                    document.body.style.paddingTop = navHeight + 'px';
+                } else {
+                    document.body.style.paddingTop = '0px';
+                }
+            }
+
+            if (mainNav) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > headerHeight) {
+                        mainNav.classList.add('fixed');
+                        updatePadding();
+                    } else {
+                        mainNav.classList.remove('fixed');
+                        updatePadding();
+                    }
+                });
+            }
+
+            updatePadding();
+
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navList = document.querySelector('.nav-list');
+
+            if (mobileMenuBtn && navList) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-menu-open');
+                });
+            }
+
+            const dropdownToggles = document.querySelectorAll('.nav-list .dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const dropdownMenu = this.nextElementSibling;
+                        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                            dropdownMenu.classList.toggle('show');
+                        }
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && navList && mobileMenuBtn && !navList.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navList.classList.remove('mobile-menu-open');
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (navList) navList.classList.remove('mobile-menu-open');
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                    document.body.style.paddingTop = '0px';
+                } else {
+                    updatePadding();
+                }
+            });
+
+            // Smooth scroll for hero button
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href.length > 1 && document.querySelector(href)) {
+                        e.preventDefault();
+                        document.querySelector(href).scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
