@@ -285,5 +285,17 @@ def lich():
 def tt_tuyensinh():
     return render_template('tt-tuyensinh.html')
 
+@app.route('/hoatdongtuvan')
+def hoatdongtuvan():
+    return render_template('tintuctuyensinh.html')
+
+@app.route('/tintucgiaoduc')
+def tintucgiaoduc():
+    return render_template('tintucgiaoduc.html')
+
+@app.route('/phongtraosinhvien')
+def phongtraosinhvien():
+    return render_template('phongtraosinhvien.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
