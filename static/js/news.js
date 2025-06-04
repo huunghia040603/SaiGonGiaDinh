@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="card-category">${category}</span>
             </div>
             <div class="card-content">
-                <h3 class="card-title">${truncatedTitle}</h3>
-                <p class="card-date"><i class="far fa-calendar-alt"></i> ${formatDate(newsItem.created_at)}</p>
-                <p class="card-excerpt">${truncatedDescription}</p>
+                <h3 class="card-title">${newsItem.title}</h3>
+                <p class="card-date"><i class="far fa-calendar-alt"></i> ${formatDate(newsItem.published_date)}</p>
+                <p class="card-excerpt">${newsItem.short_description}</p>
                 <a href="${detailUrl}" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
             </div>
         `;
