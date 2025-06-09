@@ -309,5 +309,37 @@ def lienhe():
 def caodangchinhquy():
     return render_template('caodang.html')
 
+@app.route('/lien-thong-van-bang-2-cao-dang')
+def vanbang2caodang():
+    return render_template('vanbang2caodang.html')
+
+@app.route('/phothong-cao-dang-9')
+def phothong9plus():
+    return render_template('phothong9+.html')
+
+@app.route('/lien-thong-van-bang-2-dai-hoc')
+def vanbang2daihoc():
+    return render_template('vanbang2daihoc.html')
+
+@app.route('/KT-TC')
+def kinhtetaichinh():
+    return render_template('kinhte-taichinh.html')
+
+@app.route('/THUY-CHANNUOI')
+def thuy():
+    return render_template('thuy.html')
+
+@app.route('/CN-KT')
+def cnkt():
+    return render_template('congnghekithuat.html')
+
+@app.route('/Y-D')
+def yduoc():
+    return render_template('y-duoc.html')
+
+@app.route('/XH-DL-PL')
+def xhdlpl():
+    return render_template('xh-dl-pl.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

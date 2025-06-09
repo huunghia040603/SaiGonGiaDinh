@@ -1,0 +1,485 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* * Lưu ý: Để tối ưu và dễ quản lý, bạn nên tách phần CSS này ra
+     * thành một file .css riêng (ví dụ: department_styles.css)
+     * và liên kết nó trong file base.html hoặc ở đầu mỗi trang khoa.
+     * Điều này sẽ giúp tránh lặp lại mã CSS trên nhiều trang.
+     */
+
+    @font-face {
+        font-family: fontVinamilk;
+        src: url(/static/font/font1.ttf);
+    }
+    @font-face {
+        font-family: font2;
+        src: url(/static/font/font2.ttf);
+    }
+    @font-face {
+        font-family: font6;
+        src: url(/static/font/font6.ttf);
+    }
+    /* Custom CSS Variables */
+    :root {
+        --primary-color: #ee232b; /* Đỏ đậm */
+        --secondary-color: #002147; /* Xanh navy đậm */
+        --text-color-dark: #333;
+        --text-color-light: #f8f8f8;
+        --light-bg: #f5f5f5; /* Nền nhạt */
+        --card-bg: #ffffff;
+        --shadow-light: rgba(0, 0, 0, 0.08);
+        --shadow-medium: rgba(0, 0, 0, 0.15);
+        --shadow-strong: rgba(0, 0, 0, 0.25);
+        --border-light: #e0e0e0;
+    }
+
+    /* Base Styles */
+    body {
+        font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto hiện đại hơn nếu có */
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: var(--light-bg);
+        color: var(--text-color-dark);
+    }
+
+
+    /* General styling for main content */
+    .main-content {
+        padding: 30px 20px; /* Tăng padding */
+        max-width: 1200px;
+        margin: 0 auto;
+        line-height: 1.7; /* Tăng line-height cho dễ đọc */
+    }
+
+    /* Department Hero Section */
+    .department-hero {
+        background-color: var(--secondary-color); /* Nền xanh navy đậm */
+        color: var(--text-color-light);
+        padding: 70px 20px; /* Tăng padding */
+        text-align: center;
+        border-radius: 15px; /* Bo góc nhiều hơn */
+        margin-bottom: 60px; /* Tăng khoảng cách */
+        box-shadow: 0 15px 40px var(--shadow-strong); /* Bóng mạnh hơn */
+        position: relative;
+        overflow: hidden;
+    }
+
+    .department-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, rgba(238, 35, 43, 0.15), rgba(0, 33, 71, 0.15)); /* Lớp phủ gradient nhẹ */
+        z-index: 0;
+    }
+
+    .department-hero .hero-content {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative; /* Đặt hero-content lên trên pseudo-element */
+        z-index: 1;
+    }
+
+    .department-hero h1 {
+        font-size: 4em; /* Tiêu đề rất lớn */
+        margin-bottom: 15px;
+        font-weight: 900; /* Rất đậm */
+        letter-spacing: 2px; /* Tăng khoảng cách chữ */
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        font-family: font2;
+    }
+
+    .department-hero .tagline {
+        font-size: 2em;
+        font-style: italic;
+        margin-bottom: 30px;
+        opacity: 0.95;
+        font-weight: 300; /* Mỏng hơn để tạo tương phản */
+        font-family: font2;
+    }
+
+    .department-hero p {
+        font-size: 1.2em; /* Tăng kích thước chữ */
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: font6;
+    }
+
+    /* Section Titles */
+    .section-title {
+        text-align: center;
+        font-size: 3.2em; /* Lớn và nổi bật */
+        color: var(--primary-color); /* Màu đỏ chủ đạo */
+        margin-bottom: 50px;
+        position: relative;
+        padding-bottom: 15px;
+        font-weight: 700;
+        text-transform: uppercase; /* Viết hoa */
+        letter-spacing: 1px;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 100px; /* Dài hơn */
+        height: 6px; /* Dày hơn */
+        background-color: var(--secondary-color); /* Màu xanh navy cho gạch chân */
+        border-radius: 3px;
+    }
+
+    /* Majors Grid Layout */
+    .majors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+        gap: 35px; /* Khoảng cách lớn hơn */
+        padding: 0;
+    }
+
+    /* Styling for each major card */
+    .major-card {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--card-bg);
+        border-radius: 18px; /* Bo góc nhiều hơn */
+        overflow: hidden;
+        box-shadow: 0 10px 30px var(--shadow-light); /* Bóng ban đầu mạnh hơn */
+        transition: transform 0.4s ease-out, box-shadow 0.4s ease-out; /* Chuyển động mượt mà hơn */
+        text-decoration: none;
+        color: var(--text-color-dark);
+        border: 1px solid var(--border-light); /* Viền nhẹ */
+        position: relative;
+        z-index: 1;
+    }
+
+    .major-card:hover {
+        transform: translateY(-15px) scale(1.02); /* Lift and slightly scale on hover */
+        box-shadow: 0 20px 50px var(--shadow-medium); /* Rất mạnh trên hover */
+    }
+
+    .major-card img {
+        width: 100%;
+        height: 190px; 
+        object-fit: cover;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        transition: transform 0.3s ease-out; /* Hiệu ứng zoom nhẹ cho ảnh */
+    }
+
+    .major-card:hover img {
+        transform: scale(1.05); /* Zoom ảnh nhẹ khi hover */
+    }
+
+    .major-info {
+        padding: 25px 20px; /* Padding đồng đều hơn */
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .major-info h3 {
+        font-size: 2em; /* Tên ngành lớn hơn */
+        color: var(--secondary-color); /* Màu xanh navy cho tên ngành */
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-transform: capitalize;
+        font-family: font2;
+    }
+
+    .major-info p {
+        font-size: 1.05em;
+        color: #666; /* Màu xám đậm hơn cho mô tả */
+        line-height: 1.6;
+        margin-bottom: 0;
+        font-family: font6;
+    }
+
+    /* Career Opportunities Section */
+    .career-opportunities {
+        background-color: var(--card-bg); /* Nền trắng */
+        padding: 50px; /* Tăng padding */
+        border-radius: 15px;
+        box-shadow: 0 8px 25px var(--shadow-light);
+        margin-top: 60px;
+        border: 1px solid var(--border-light);
+    }
+
+    .career-opportunities p {
+        font-size: 1.15em; /* Lớn hơn */
+        margin-bottom: 30px;
+        text-align: center;
+        color: var(--text-color-dark);
+    }
+
+    .career-opportunities ul {
+        list-style: none;
+        padding: 0;
+        max-width: 900px; /* Rộng hơn */
+        margin: 0 auto 30px auto;
+    }
+
+    .career-opportunities ul li {
+        background-color: var(--light-bg); /* Nền nhạt cho từng mục */
+        border: 1px solid var(--border-light);
+        padding: 18px 25px; /* Tăng padding */
+        margin-bottom: 12px;
+        border-radius: 10px; /* Bo góc hơn */
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        transition: background-color 0.3s ease;
+    }
+
+    .career-opportunities ul li:hover {
+        background-color: #e6e6e6; /* Màu nền hơi đậm hơn khi hover */
+    }
+
+    .career-opportunities ul li::before {
+        content: '✓';
+        color: var(--primary-color); /* Dấu tích màu đỏ chủ đạo */
+        font-weight: bold;
+        margin-right: 15px;
+        font-size: 1.3em; /* Kích thước lớn hơn */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .department-hero h1 {
+            font-size: 3.2em;
+        }
+        .department-hero .tagline {
+            font-size: 1.7em;
+            font-family: font2;
+        }
+        .department-hero p {
+            font-size: 1.1em;
+        }
+        .section-title {
+            font-size: 2.6em;
+            margin-bottom: 40px;
+        }
+        .section-title::after {
+            width: 80px;
+            height: 5px;
+        }
+        .majors-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .major-card img {
+            height: 220px;
+        }
+        .major-info h3 {
+            font-size: 1.8em;
+        }
+        .major-info p {
+            font-size: 1em;
+        }
+        .career-opportunities {
+            padding: 40px;
+        }
+        .career-opportunities p {
+            font-size: 1.05em;
+        }
+        .career-opportunities ul li {
+            padding: 15px 20px;
+            font-size: 1em;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 20px 15px;
+        }
+        .department-hero {
+            padding: 50px 15px;
+            margin-bottom: 40px;
+        }
+        .department-hero h1 {
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+        .department-hero .tagline {
+            font-size: 1.4em;
+        }
+        .department-hero p {
+            font-size: 1em;
+        }
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        .section-title::after {
+            width: 60px;
+            height: 4px;
+        }
+        .majors-grid {
+            grid-template-columns: 1fr; /* Single column on small screens */
+            gap: 20px;
+        }
+        .major-card img {
+            height: 200px;
+        }
+        .major-info {
+            padding: 20px 15px;
+        }
+        .major-info h3 {
+            font-size: 1.6em;
+        }
+        .major-info p {
+            font-size: 0.95em;
+        }
+        .career-opportunities {
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+        .career-opportunities p {
+            font-size: 1em;
+        }
+        .career-opportunities ul li {
+            padding: 12px 15px;
+            font-size: 0.95em;
+        }
+        .career-opportunities ul li::before {
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+    }
+</style>
+<main class="main-content">
+    <section class="department-hero department-theme-bg">
+        <div class="hero-content">
+            <h1>Khoa Y Dược</h1>
+            <p class="tagline">Vì sức khỏe cộng đồng, vì tương lai y học</p>
+            <p>
+                Khoa Y Dược là trung tâm đào tạo và nghiên cứu y học hàng đầu, cam kết trang bị cho sinh viên kiến thức chuyên sâu và kỹ năng thực hành xuất sắc trong lĩnh vực y tế, dược phẩm và phục hồi chức năng. 
+                Với đội ngũ giảng viên là những chuyên gia đầu ngành, cơ sở vật chất hiện đại và môi trường học tập chú trọng thực hành, chúng tôi đào tạo ra những cán bộ y tế có đạo đức, năng lực, sẵn sàng phục vụ cộng đồng.
+            </p>
+        </div>
+    </section>
+
+    <section class="majors-overview">
+        <h2 class="section-title">Các ngành đào tạo</h2>
+        <div class="majors-grid">
+            <a href="nganh-duoc.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/duoc.jpg" alt="Ngành Dược">
+                <div class="major-info">
+                    <h3>Dược</h3>
+                    <p>Nghiên cứu, bào chế, sản xuất, phân phối và quản lý dược phẩm, đảm bảo chất lượng thuốc.</p>
+                </div>
+            </a>
+
+            <a href="nganh-dieu-duong.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/dieu-duong.jpg" alt="Ngành Điều Dưỡng">
+                <div class="major-info">
+                    <h3>Điều Dưỡng</h3>
+                    <p>Chăm sóc toàn diện cho người bệnh, hỗ trợ bác sĩ trong chẩn đoán, điều trị và phục hồi sức khỏe.</p>
+                </div>
+            </a>
+
+            <a href="nganh-y-si-da-khoa.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/y-si.jpg" alt="Ngành Y Sĩ Đa Khoa">
+                <div class="major-info">
+                    <h3>Y Sĩ Đa Khoa</h3>
+                    <p>Chẩn đoán, điều trị các bệnh lý thông thường, thực hiện sơ cấp cứu và quản lý sức khỏe cộng đồng.</p>
+                </div>
+            </a>
+
+            <a href="nganh-phuc-hinh-rang.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/phuc-hinh-rang.jpg" alt="Ngành Kỹ thuật Phục hình răng">
+                <div class="major-info">
+                    <h3>Kỹ thuật Phục hình răng</h3>
+                    <p>Chế tạo, sửa chữa răng giả, cầu răng, mão răng và các khí cụ chỉnh hình răng hàm mặt.</p>
+                </div>
+            </a>
+
+            <a href="nganh-phuc-hoi-chuc-nang.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/phuc-hoi-chuc-nang.jpg" alt="Ngành Kỹ thuật Phục hồi chức năng">
+                <div class="major-info">
+                    <h3>Kỹ thuật Phục hồi chức năng</h3>
+                    <p>Sử dụng các phương pháp vật lý trị liệu để giúp bệnh nhân phục hồi chức năng vận động sau chấn thương, bệnh tật.</p>
+                </div>
+            </a>
+
+            <a href="nganh-y-hoc-co-truyen.html" class="major-card">
+                <img src="static/images/nganh/y-duoc/co-truyen.jpg" alt="Ngành Y học cổ truyền">
+                <div class="major-info">
+                    <h3>Y học cổ truyền</h3>
+                    <p>Nghiên cứu và ứng dụng các phương pháp y học truyền thống như châm cứu, bấm huyệt, thuốc nam, thuốc bắc.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="career-opportunities">
+        <h2 class="section-title">Cơ hội nghề nghiệp</h2>
+        <p>
+            Sinh viên tốt nghiệp từ Khoa Y Dược có thể đảm nhận nhiều vị trí quan trọng trong ngành y tế, từ bệnh viện, phòng khám đến các công ty dược và trung tâm phục hồi chức năng. Các vai trò tiềm năng bao gồm:
+        </p>
+        <ul>
+            <li> Dược sĩ:  Làm việc tại bệnh viện, nhà thuốc, công ty dược phẩm, viện nghiên cứu.</li>
+            <li> Điều dưỡng viên:  Chăm sóc bệnh nhân tại bệnh viện, phòng khám, trung tâm y tế.</li>
+            <li> Y sĩ đa khoa:  Khám, chữa bệnh thông thường, tư vấn sức khỏe tại các cơ sở y tế địa phương.</li>
+            <li> Kỹ thuật viên phục hình răng:  Chế tạo và sửa chữa răng giả tại phòng Lab nha khoa, bệnh viện.</li>
+            <li> Kỹ thuật viên phục hồi chức năng:  Thực hiện các liệu pháp vật lý trị liệu tại bệnh viện, trung tâm phục hồi chức năng.</li>
+            <li> Bác sĩ Y học cổ truyền:  Khám và điều trị bằng các phương pháp Y học cổ truyền tại bệnh viện, phòng khám.</li>
+            <li>Chuyên viên nghiên cứu và phát triển sản phẩm y tế/dược phẩm.</li>
+            <li>Giảng viên, nghiên cứu viên tại các trường đại học, viện nghiên cứu.</li>
+        </ul>
+        <p>
+            Chúng tôi cam kết đào tạo những cán bộ y tế giỏi chuyên môn, giàu y đức, sẵn sàng đóng góp vào sự nghiệp chăm sóc và bảo vệ sức khỏe nhân dân.
+        </p>
+    </section>
+</main>
+<script>
+    // Hàm để kiểm tra xem phần tử có nằm trong viewport không
+    const majorCards = document.querySelectorAll('.major-card');
+
+    // Cấu hình cho Intersection Observer
+    const observerOptions = {
+        root: null, // Quan sát so với viewport của trình duyệt
+        rootMargin: '0px', // Không có lề thêm
+        threshold: 0.1 // Kích hoạt khi 10% phần tử hiển thị
+    };
+
+    // Callback function sẽ được gọi khi một phần tử được quan sát cắt qua threshold
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible'); // Thêm class để kích hoạt CSS transition
+                observer.unobserve(entry.target); // Ngừng quan sát phần tử này sau khi đã hiển thị
+            }
+        });
+    };
+
+    // Tạo một Intersection Observer mới
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Bắt đầu quan sát mỗi major-card
+    majorCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Hiệu ứng tương tác thêm khi rê chuột (có thể giữ lại hoặc tùy chỉnh)
+    document.querySelectorAll('.major-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            // Bạn có thể giữ lại hiệu ứng CSS hover đã có,
+            // hoặc thêm các hiệu ứng JavaScript phức tạp hơn ở đây nếu muốn.
+        });
+        card.addEventListener('mouseleave', () => {
+            // Ví dụ: card.style.backgroundColor = 'white';
+        });
+    });
+</script> 
+{% endblock %}

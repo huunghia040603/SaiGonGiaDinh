@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* General Body and Container */
+
+
+.container {
+    max-width: 1200px;
+    
+}
+
+/* Hero Section */
+.admission-hero {
+    background: linear-gradient(135deg, #003366, #a31f2f); /* Màu gradient */
+    color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-title {
+    font-family: font2; /* Sử dụng font riêng nếu có */
+    font-size: 3.2em;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-subtitle {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.publish-date {
+    font-style: italic;
+    font-size: 1.1em;
+    opacity: 0.8;
+    margin-bottom: 30px;
+}
+
+.hero-actions .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    margin: 0 10px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Màu xanh dương */
+    color: #fff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #fff;
+    border-color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Sections */
+.admission-section {
+    background-color: #fff;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-family: font2;
+    font-size: 2.2em;
+    color: #003366;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.section-title .icon {
+    margin-right: 10px;
+    color: #007bff; /* Màu icon */
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #007bff;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.section-description {
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Majors Grid */
+.majors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.major-category {
+    background-color: #f0f8ff; /* Light blue background */
+    border: 1px solid #e0eaf0;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.major-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-title {
+    font-family: 'font2', sans-serif;
+    font-size: 1.5em;
+    color: #003366; /* Dark blue */
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.category-title i {
+    margin-right: 10px;
+    color: #dc3545; /* Red accent */
+    font-size: 1.2em;
+}
+
+.major-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.major-category ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    color: #444;
+    font-size: 1.05em;
+}
+
+.major-category ul li:last-child {
+    border-bottom: none;
+}
+
+/* Content Blocks for general information */
+.content-block {
+    background-color: #f9f9f9;
+    border-left: 5px solid #dc3545;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.content-block h3 {
+    color: #003366;
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-family: font2;
+}
+
+.content-block h3 i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.content-block ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding: 0;
+}
+
+.content-block ul li {
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.content-block p {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.content-block .note {
+    font-style: italic;
+    color: #666;
+    font-size: 0.95em;
+    margin-top: 20px;
+    border-top: 1px dashed #ddd;
+    padding-top: 10px;
+}
+
+/* Document List styling */
+.document-list {
+    list-style: none;
+    padding: 0;
+}
+
+.document-list li {
+    background-color: #e6f7ff; /* Light blue for list items */
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+}
+
+.document-list li:hover {
+    background-color: #d1edff;
+}
+
+.document-list li i {
+    margin-right: 15px;
+    color: #007bff;
+    font-size: 1.3em;
+}
+
+/* Submission methods */
+.submission-methods {
+    list-style: none;
+    padding: 0;
+}
+
+.submission-methods li {
+    background-color: #f0fff4; /* Light green for methods */
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-size: 1.1em;
+}
+
+.submission-methods li i {
+    margin-right: 15px;
+    color: #28a745; /* Green for icons */
+    font-size: 1.4em;
+    flex-shrink: 0;
+}
+
+/* Contact Info Section */
+.contact-info-section {
+    background-color: #e9f5ff; /* Lighter blue for contact */
+    border-left-color: #007bff; /* Blue border */
+    text-align: center;
+}
+
+.contact-info-section .section-title {
+    color: #003366;
+}
+
+.contact-details p {
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+.contact-details p i {
+    margin-right: 10px;
+    color: #dc3545;
+    font-size: 1.2em;
+    width: 25px; /* Đảm bảo căn chỉnh icon */
+    text-align: center;
+}
+
+.contact-details a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admission-hero {
+        padding: 40px 15px;
+    }
+
+    .hero-title {
+        font-size: 2.2em;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2em;
+    }
+
+    .section-title {
+        font-size: 1.8em;
+    }
+
+    .majors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admission-section {
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    .hero-actions .btn {
+        display: block;
+        margin: 15px auto;
+        width: 80%;
+    }
+
+    .contact-details p {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .contact-details p i {
+        margin-bottom: 5px;
+        margin-right: 0;
+        align-self: center; /* Căn giữa icon khi chuyển thành cột */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8em;
+    }
+
+    .hero-subtitle {
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .major-category {
+        padding: 20px;
+    }
+
+    .category-title {
+        font-size: 1.3em;
+    }
+
+    .content-block {
+        padding: 15px 20px;
+    }
+
+    .document-list li,
+    .submission-methods li {
+        font-size: 0.95em;
+        padding: 10px 12px;
+    }
+}
+</style>
+
+   
+    <main class="main-content">
+        <div class="container" style="margin-top: 20px;">
+            <section class="admission-hero">
+                <h1 class="hero-title" style="text-transform: uppercase;"> Tuyển sinh Liên thông / Văn bằng 2 Đại học!</h1>
+                <p class="hero-subtitle" style="font-family: font2;">Bạn đang tìm kiếm cơ hội để nâng cao trình độ, mở rộng kiến thức hoặc chuyển đổi ngành nghề ?</p>
+                <p class="publish-date" style="font-family: font6;">Chương trình Liên thông Đại học và Văn bằng 2 Đại học chính là con đường vững chắc để bạn hiện thực hóa những hoài bão!</p>
+                <div class="hero-actions">
+                    <a href="#register-section" class="btn btn-primary">Đăng ký ngay</a>
+                    <a href="/dangki" class="btn btn-secondary">Liên hệ tư vấn</a>
+                </div>
+            </section>
+          
+
+            <section id="nganh-tuyen-sinh" class="admission-section">
+                <h2 class="section-title"><i class="fas fa-graduation-cap icon"></i> Ngành Tuyển Sinh</h2>
+                <p class="section-description">Trường Cao đẳng Sài Gòn Gia Định tự hào đào tạo đa dạng các ngành nghề, đáp ứng nhu cầu phát triển xã hội:</p>
+                <div class="majors-grid">
+                    <div class="major-category">
+                        <h3 class="category-title"><i class="fas fa-notes-medical"></i> Khoa Y - Dược</h3>
+                        <ul>
+                            <li>Cao đẳng Y học cổ truyền</li>
+                            <li>Cao đẳng Y sỹ đa khoa</li>
+                            <li>Dược</li>
+                            <li>Điều dưỡng</li>
+                            <li>Kỹ thuật phục hồi chức năng (Vật lý trị liệu và phục hồi chức năng)</li>
+                            <li>Kỹ thuật phục hình răng (Răng - Hàm – Mặt)</li>
+                        </ul>
+                    </div>
+                    <div class="major-category">
+                        <h3 class="category-title"><i class="fas fa-paw"></i> Khoa Thú y – Chăn nuôi</h3>
+                        <ul>
+                            <li>Thú y</li>
+                        </ul>
+                    </div>
+                    <div class="major-category">
+                        <h3 class="category-title"><i class="fas fa-chart-line"></i> Khoa Kinh tế - Tài chính</h3>
+                        <ul>
+                            <li>Kế toán doanh nghiệp</li>
+                            <li>Quản trị kinh doanh</li>
+                            <li>Tài chính – Ngân hàng</li>
+                            <li>Thương mại điện tử</li>
+                            <li>Logistics</li>
+                        </ul>
+                    </div>
+                    <div class="major-category">
+                        <h3 class="category-title"><i class="fas fa-laptop-code"></i> Khoa Công nghệ - Kỹ thuật</h3>
+                        <ul>
+                            <li>Công nghệ thông tin</li>
+                            <li>Quản trị cơ sở dữ liệu</li>
+                            <li>Thiết kế đồ họa</li>
+                            <li>Lập trình máy tính</li>
+                            <li>Công nghệ ô tô</li>
+                            <li>Công nghệ thực phẩm</li>
+                        </ul>
+                    </div>
+                     <div class="major-category">
+                        <h3 class="category-title"><i class="fas fa-globe-asia"></i> Khoa Xã hội - Du lịch – Pháp luật</h3>
+                        <ul>
+                            <li>Du lịch</li>
+                            <li>Hướng dẫn du lịch</li>
+                            <li>Quản trị Nhà hàng – Khách sạn</li>
+                            <li>Ngôn ngữ Anh</li>
+                            <li>Luật – Dịch vụ pháp lý</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="doi-tuong-phuong-thuc" class="admission-section">
+                <h2 class="section-title"><i class="fas fa-user-graduate icon"></i> Đối tượng & Phương thức Tuyển sinh</h2>
+                <div class="content-block">
+                    <h3>Đối tượng tuyển sinh:</h3>
+                    <ul>
+                        <li>Thí sinh tốt nghiệp Trung cấp cùng ngành.</li>
+                        <li>Thí sinh tốt nghiệp Trung cấp, Cao đẳng, Đại học khác ngành.</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3>Phương thức tuyển sinh:</h3>
+                    <p>Xét tuyển hồ sơ.</p>
+                </div>
+                <div class="content-block">
+                    <h3>Quy chế tuyển sinh:</h3>
+                    <p>Theo quy chế của Bộ Giáo dục và Đào tạo.</p>
+                </div>
+            </section>
+
+            <section id="dao-tao-thoi-gian" class="admission-section">
+                <h2 class="section-title"><i class="fas fa-clock icon"></i> Tổ chức đào tạo và Thời gian học</h2>
+                <div class="content-block">
+                    <h3>Tổ chức đào tạo:</h3>
+                    <p>Trực tiếp kết hợp trực tuyến.</p>
+                </div>
+                <div class="content-block">
+                    <h3>Thời gian học:</h3>
+                    <ul>
+                        <li><strong style="font-family: font2;">Lớp buổi tối:</strong> từ Thứ 2 đến Thứ 6.</li>
+                        <li><strong style="font-family: font2;">Lớp cuối tuần:</strong> sáng và chiều Thứ 7, Chủ nhật.</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3>Học phí:</h3>
+                    <p>Theo quy định của nhà trường.</p>
+                </div>
+            </section>
+
+            <section id="thoi-gian-dang-ky" class="admission-section">
+                <h2 class="section-title"><i class="fas fa-calendar-alt icon"></i> Thời gian Tuyển sinh & Hình thức Đăng ký</h2>
+                <div class="content-block">
+                    <h3>Thời gian tuyển sinh:</h3>
+                    <ul>
+                        <li><strong style="font-family: font2;">Thời gian nhận hồ sơ:</strong> từ ngày ra thông báo.</li>
+                        <li><strong style="font-family: font2;">Thời gian khai giảng dự kiến:</strong>
+                            <ul>
+                                <li>Lớp Thứ 7, Chủ nhật: ngày 01/06/2025</li>
+                                <li>Lớp các buổi tối: ngày 02/06/2025</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="note"><strong>Ghi chú:</strong> Các đợt xét tuyển tiếp theo sẽ thường xuyên cập nhật trên website của nhà trường qua <a href="https://sgc.edu.vn/" target="_blank">https://sgc.edu.vn/</a></p>
+                </div>
+                <div id="register-section" class="content-block">
+                    <h3>Hồ sơ đăng ký xét tuyển:</h3>
+                    <p>Để nộp hồ sơ, thí sinh cần chuẩn bị các giấy tờ sau:</p>
+                    <ul class="document-list">
+                        <li><i class="far fa-file-alt"></i> Phiếu đăng ký (theo mẫu).</li>
+                        <li><i class="far fa-address-card"></i> Lý lịch HSSV (theo mẫu và xác nhận địa phương).</li>
+                        <li><i class="fas fa-id-card"></i> Bản sao hợp lệ Căn cước công dân, Giấy khai sinh.</li>
+                        <li><i class="fas fa-graduation-cap"></i> Bản sao hợp lệ Bằng tốt nghiệp và học bạ THPT.</li>
+                        <li><i class="fas fa-award"></i> Bản sao hợp lệ Bảng điểm toàn khóa và Bằng tốt nghiệp trung cấp hoặc cao đẳng hoặc đại học.</li>
+                        <li><i class="fas fa-exchange-alt"></i> Bản sao hợp lệ Chứng chỉ chuyển đổi (nếu có).</li>
+                        <li><i class="fas fa-camera"></i> 04 ảnh thẻ 2x3 (ghi rõ họ tên và ngày tháng năm sinh mặt sau).</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3>Hình thức nhận hồ sơ:</h3>
+                    <p>Thí sinh chọn 1 trong 2 cách sau để nộp hồ sơ xét tuyển:</p>
+                    <ol class="submission-methods">
+                        <li>
+                            <i class="fas fa-building"></i> Nộp hồ sơ trực tiếp tại Phòng Công tác HSSV và Tuyển sinh – Trường Cao đẳng Sài Gòn Gia Định.
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope-open-text"></i> Gửi hồ sơ bằng hình thức qua bưu điện về địa chỉ nhà trường.
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            
+        </div>
+    </main>
+    
+
+    <script>
+        // Script để xử lý việc cố định thanh điều hướng và điều chỉnh padding-top cho body
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainNav = document.querySelector('.main-nav');
+            const header = document.querySelector('.header');
+            const mainContent = document.querySelector('.main-content');
+            let headerHeight = header.offsetHeight;
+            let navHeight = mainNav.offsetHeight;
+
+            // Cập nhật padding-top cho body và main-content khi thanh nav cố định
+            function updatePadding() {
+                if (mainNav.classList.contains('fixed')) {
+                    document.body.style.paddingTop = navHeight + 'px';
+                    // mainContent.style.marginTop = navHeight + 20 + 'px'; // Điều chỉnh thêm nếu cần
+                } else {
+                    document.body.style.paddingTop = '0px';
+                    // mainContent.style.marginTop = '20px'; // Giá trị mặc định
+                }
+            }
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > headerHeight) {
+                    mainNav.classList.add('fixed');
+                    updatePadding();
+                } else {
+                    mainNav.classList.remove('fixed');
+                    updatePadding();
+                }
+            });
+
+            // Gọi lần đầu để thiết lập padding nếu trang được tải ở vị trí cuộn xuống
+            updatePadding();
+
+            // Xử lý menu dropdown cho di động
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navList = document.querySelector('.nav-list');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-menu-open');
+                });
+            }
+
+            const dropdownToggles = document.querySelectorAll('.nav-list .dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) { // Chỉ hoạt động trên di động
+                        e.preventDefault();
+                        const dropdownMenu = this.nextElementSibling;
+                        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                            dropdownMenu.classList.toggle('show');
+                        }
+                    }
+                });
+            });
+
+            // Đóng menu khi click ra ngoài (chỉ cho mobile)
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && !navList.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navList.classList.remove('mobile-menu-open');
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                }
+            });
+
+            // Đóng menu khi thay đổi kích thước màn hình từ nhỏ sang lớn
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navList.classList.remove('mobile-menu-open');
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                    document.body.style.paddingTop = '0px'; // Đảm bảo bỏ padding khi không fixed
+                } else {
+                    // Cập nhật lại padding khi resize trên mobile và đang fixed
+                    updatePadding();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}
