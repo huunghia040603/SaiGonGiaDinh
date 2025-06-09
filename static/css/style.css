@@ -1,3 +1,9 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
+}
 /* Banner Slider */
 @font-face {
     font-family: font3;

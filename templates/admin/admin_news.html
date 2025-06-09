@@ -5,31 +5,31 @@
 <style>
     /* Reset và cơ bản */
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font hiện đại hơn */
-        margin: 0; /* Loại bỏ margin mặc định của body */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
         padding: 20px;
-        background-color: #eef2f7; /* Màu nền nhẹ nhàng hơn */
-        color: #34495e; /* Màu chữ đậm hơn một chút */
+        background-color: #eef2f7;
+        color: #34495e;
     }
 
     .container {
-        max-width: 1200px; /* Tăng chiều rộng tối đa */
-        margin: 20px auto; /* Tự động căn giữa và thêm margin trên/dưới */
-        background: #ffffff; /* Nền trắng */
-        padding: 30px; /* Tăng padding */
-        border-radius: 12px; /* Bo góc mềm mại hơn */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Bóng đổ nổi bật hơn */
+        max-width: 1200px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1, h2 {
         color: #0056b3;
-        margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
-        font-weight: 600; /* Tiêu đề đậm hơn */
+        margin-bottom: 20px;
+        font-weight: 600;
     }
 
     h1 {
-        font-size: 2.2em; /* Kích thước lớn hơn cho tiêu đề chính */
-        border-bottom: 2px solid #e0e0e0; /* Đường kẻ dưới tiêu đề */
+        font-size: 2.2em;
+        border-bottom: 2px solid #e0e0e0;
         padding-bottom: 10px;
         margin-bottom: 30px;
     }
@@ -41,18 +41,18 @@
 
     /* Form Styles */
     form {
-        margin-bottom: 40px; /* Tăng khoảng cách dưới form */
-        padding: 25px; /* Tăng padding của form */
-        border: 1px solid #e0e0e0; /* Viền nhẹ hơn */
-        border-radius: 8px; /* Bo góc cho form */
-        background-color: #fcfcfc; /* Nền form hơi khác một chút */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Bóng nhẹ cho form */
+        margin-bottom: 40px;
+        padding: 25px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fcfcfc;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     form label {
         display: block;
-        margin-bottom: 8px; /* Khoảng cách dưới label */
-        font-weight: 700; /* Label đậm hơn */
+        margin-bottom: 8px;
+        font-weight: 700;
         color: #555;
         font-size: 0.95em;
     }
@@ -61,69 +61,69 @@
     form input[type="url"],
     form textarea,
     form select {
-        width: calc(100% - 24px); /* Điều chỉnh width để bù padding */
-        padding: 12px; /* Tăng padding input */
-        margin-bottom: 15px; /* Tăng khoảng cách dưới input */
-        border: 1px solid #d0d0d0; /* Viền input */
-        border-radius: 6px; /* Bo góc input */
+        width: calc(100% - 24px);
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #d0d0d0;
+        border-radius: 6px;
         font-size: 1em;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     form input[type="text"]:focus,
     form input[type="url"]:focus,
     form textarea:focus,
     form select:focus {
-        border-color: #007bff; /* Màu viền khi focus */
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Bóng khi focus */
-        outline: none; /* Bỏ outline mặc định */
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        outline: none;
     }
 
     form textarea {
-        resize: vertical; /* Cho phép resize theo chiều dọc */
-        min-height: 80px; /* Chiều cao tối thiểu cho textarea */
+        resize: vertical;
+        min-height: 80px;
     }
 
     form select {
-        appearance: none; /* Bỏ style mặc định của select */
-        background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Icon mũi tên */
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
         background-repeat: no-repeat;
         background-position: right 10px center;
         background-size: 20px;
-        padding-right: 30px; /* Để icon không đè lên text */
+        padding-right: 30px;
     }
 
     form input[type="checkbox"] {
         margin-right: 8px;
-        transform: scale(1.2); /* Phóng to checkbox */
-        vertical-align: middle; /* Căn giữa với label */
-        margin-top: -3px; /* Điều chỉnh vị trí nhỏ */
+        transform: scale(1.2);
+        vertical-align: middle;
+        margin-top: -3px;
     }
 
     /* Button Styles */
     .button-group {
-        margin-top: 20px; /* Khoảng cách trên nhóm nút */
+        margin-top: 20px;
     }
     form button {
         background-color: #007bff;
         color: white;
-        padding: 12px 20px; /* Tăng padding nút */
+        padding: 12px 20px;
         border: none;
-        border-radius: 6px; /* Bo góc nút */
+        border-radius: 6px;
         cursor: pointer;
         font-size: 1em;
         font-weight: 600;
-        transition: background-color 0.3s ease, transform 0.2s ease; /* Thêm hiệu ứng */
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
     form button:hover {
         background-color: #0056b3;
-        transform: translateY(-2px); /* Hiệu ứng nhấc nhẹ */
+        transform: translateY(-2px);
     }
 
     /* Style cho nút Hủy */
     #cancelFormBtn {
-        background-color: #6c757d; /* Màu xám */
-        margin-left: 10px; /* Khoảng cách với nút submit */
+        background-color: #6c757d;
+        margin-left: 10px;
     }
     #cancelFormBtn:hover {
         background-color: #5a6268;
@@ -151,20 +151,20 @@
     }
 
     .hidden {
-        display: none !important; /* Quan trọng để override các display khác */
+        display: none !important;
     }
 
     /* Nút thêm tin tức */
     #addNewsButton {
         background-color: #28a745;
         color: white;
-        padding: 12px 25px; /* Tăng padding */
+        padding: 12px 25px;
         border: none;
         border-radius: 6px;
         cursor: pointer;
-        font-size: 1.1em; /* Kích thước lớn hơn một chút */
+        font-size: 1.1em;
         font-weight: 600;
-        margin-bottom: 25px; /* Tăng khoảng cách dưới nút */
+        margin-bottom: 25px;
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
     #addNewsButton:hover {
@@ -173,49 +173,65 @@
     }
 
     /* News List Styles */
-    .news-list {
+    .news-category-section {
         margin-top: 30px;
-        border-top: 1px solid #e0e0e0; /* Đường kẻ phân cách */
+        border-top: 1px solid #e0e0e0;
         padding-top: 20px;
     }
+
+    .news-category-list {
+        margin-top: 20px;
+    }
+
     .news-item {
-        background: #f7f9fc; /* Nền item sáng hơn */
-        padding: 15px 20px; /* Tăng padding */
-        margin-bottom: 12px; /* Khoảng cách giữa các item */
-        border-radius: 8px; /* Bo góc item */
+        background: #f7f9fc;
+        padding: 15px 20px;
+        margin-bottom: 12px;
+        border-radius: 8px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Bóng nhẹ cho item */
+        gap: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .news-item:hover {
-        transform: translateY(-3px); /* Hiệu ứng nhấc nhẹ khi hover */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
     .news-item span {
-        flex-grow: 1; /* Cho phép text chiếm hết không gian */
-        margin-right: 20px; /* Khoảng cách giữa text và nút */
+        flex-grow: 1;
+        margin-left: 15px;
+        margin-right: 20px;
         font-size: 1.05em;
         line-height: 1.5;
         color: #333;
     }
+    .news-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
     .news-item strong {
-        color: #0056b3; /* Màu đậm cho tiêu đề */
+        color: #0056b3;
+    }
+    .news-item .news-meta {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 5px;
+        display: block;
+    }
+    .news-item .news-meta .tags {
+        font-weight: 400;
+        color: #007bff;
     }
     .news-item div {
-        display: flex; /* Đảm bảo các nút nằm trên cùng một hàng */
-        gap: 10px; /* Khoảng cách giữa các nút */
+        display: flex;
+        gap: 10px;
     }
     .news-item button {
         padding: 8px 15px;
         border: none;
-        border-radius: 5px; /* Bo góc nút hành động */
+        border-radius: 5px;
         cursor: pointer;
         font-size: 0.9em;
         font-weight: 600;
         transition: background-color 0.3s ease, transform 0.2s ease;
-        margin-left: 0; /* Bỏ margin-left cũ */
+        margin-left: 0;
     }
     .news-item button:hover {
         transform: translateY(-1px);
@@ -225,11 +241,127 @@
     .news-item .delete-btn { background-color: #dc3545; color: white; }
     .news-item .delete-btn:hover { background-color: #c82333; }
     .image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover; /* Giúp ảnh không bị biến dạng khi thay đổi kích thước */
-    border-radius: 8px; /* Tùy chọn: làm tròn các góc ảnh */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tùy chọn: thêm đổ bóng nhẹ */
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Pagination Styles */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        gap: 8px;
+    }
+
+    .pagination-container .page-link {
+        display: inline-block;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #007bff;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .pagination-container .page-link:hover:not(.active):not(.disabled) {
+        background-color: #e9ecef;
+        border-color: #0056b3;
+    }
+
+    .pagination-container .page-link.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+        cursor: default;
+    }
+
+    .pagination-container .page-link.disabled {
+        color: #6c757d;
+        cursor: not-allowed;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+     .image-upload-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px dashed #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .image-upload-section:hover {
+        background-color: #f0f0f0;
+    }
+    .image-upload-section input[type="file"] {
+        display: none;
+    }
+    .image-upload-section label {
+        display: block;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #007bff;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .image-upload-section p {
+        font-size: 0.9em;
+        color: #666;
+    }
+    #imagePreviewContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+        justify-content: center;
+    }
+    .image-preview-item {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .image-preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .image-preview-item .remove-image-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(220, 53, 69, 0.8);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 0.9em;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+    }
+    .image-preview-item .remove-image-btn:hover {
+        opacity: 1;
+    }
+    #uploadImagesBtn {
+        background-color: #17a2b8;
+        margin-top: 10px;
+        width: 100%;
+    }
+    #uploadImagesBtn:hover {
+        background-color: #138496;
     }
 </style>
 {% endblock %}
@@ -243,40 +375,60 @@
         <form id="newsForm" class="hidden">
             <h2>Tạo Tin tức Mới</h2>
             <input type="hidden" id="newsId">
-            <label for="title">Tiêu đề:</label>
+            <label for="title"> Tiêu đề:</label>
             <input type="text" id="title" required>
 
             <label for="short_description">Mô tả ngắn:</label>
             <textarea id="short_description" rows="3" required></textarea>
 
             <label for="content">Nội dung:</label>
-            <textarea id="content" rows="10" required></textarea>
+            <textarea id="content_textarea" rows="10" required></textarea>
 
-            <label for="featured_image">Ảnh đại diện (URL):</label>
-            <input type="url" id="featured_image" placeholder="http://example.com/image.jpg">
+            <label for="featured_image">Ảnh bìa:</label>
+            <div class="form-group">
+                <label for="featuredImageUpload">Ảnh Bìa:</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="file" id="featuredImageUpload" accept="image/*" class="form-control" style="flex-grow: 1;">
+                    <div id="featuredImagePreviewContainer" style="width: 100px; height: 100px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <img id="featuredImagePreview" src="" alt="Xem trước ảnh bìa" style="max-width: 100%; max-height: 100%; display: none;">
+                    </div>
+                </div>
+                <small class="form-text text-muted">Chọn một ảnh để làm ảnh bìa cho tin tức.</small>
+            </div>
+            <input type="hidden" id="featured_image_url_hidden">
 
+
+            <label for="albumImagesInput">Chọn ảnh cho Album Thư viện (nếu muốn tạo album mới):</label>
+            <div id="imageUploadArea" class="image-upload-section">
+               <input type="file" id="albumImagesInput" accept="image/*" multiple>
+                <label for="albumImagesInput">Kéo & thả ảnh vào đây hoặc click để chọn ảnh</label>
+                <p>(Hỗ trợ nhiều ảnh)</p>
+            </div>
+            <div id="imagePreviewContainer"></div>
+            <button type="button" id="uploadImagesBtn" class="hidden">Tải ảnh đã chọn lên Cloudinary</button>
             <label for="active">Kích hoạt:</label>
             <input type="checkbox" id="active" checked>
 
-            <label for="tags">Tags (Chọn nhiều):</label>
-            <select id="tags" multiple size="5" style="height: auto;"></select>
+            <label for="tags">Loại tin tức:</label> 
+            <select id="tags" size="1"></select> 
 
-            <label for="album_gallery">Album Thư viện ảnh:</label>
-            <select id="album_gallery">
-                <option value="">-- Chọn Album --</option>
-            </select>
-            <div class="button-group"> {# Thêm một nhóm div cho các nút #}
+           
+            <div class="button-group">
                 <button type="submit" id="submitBtn">Tạo Tin tức</button>
-                <button type="button" id="cancelFormBtn">Hủy</button> {# Nút hủy form #}
+                <button type="button" id="cancelFormBtn">Hủy</button>
             </div>
         </form>
 
         <div id="message" class="message"></div>
 
-        <h2>Danh sách Tin tức</h2>
-        <div class="news-list" id="newsList">
-            <p>Đang tải tin tức...</p>
+        <div class="news-category-section">
+            <h2>Tất cả Tin tức</h2>
+            <div class="news-category-list" id="news-list-all">
+                   <p style="text-align: center;">Đang tải tất cả tin tức...</p>
+            </div>
+            <div class="pagination-container" id="pagination-all"></div>
         </div>
+
     </div>
 {% endblock %}
 

@@ -16,6 +16,32 @@
 }
 
 /* Các thuộc tính khác của .main-nav */
+
+
+
+.nav-list > li > a {
+    color: #fff;
+    font-family: font2;
+    text-decoration: none;
+    padding: 12px 23px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+/* Lớp mới để đánh dấu tab đang hoạt động */
+.nav-list > li > a.nav-item-active { /* Đổi tên từ .home-link thành .nav-item-active */
+    background-color: #003366; /* Màu xanh dương bạn muốn */
+    border-radius: 8px;
+}
+
+.nav-list > li > a:hover,
+.nav-list > li:hover > a {
+    background-color: #c82333;
+}
   
 .container {
     max-width: 1200px;

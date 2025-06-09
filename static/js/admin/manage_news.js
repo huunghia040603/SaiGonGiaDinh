@@ -1,257 +1,624 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const API_BASE_URL = 'https://saigongiadinh.pythonanywhere.com/NewsListView/';
-    const TAGS_API_URL = 'https://saigongiadinh.pythonanywhere.com/TagView/';
-    const ALBUMS_API_URL = 'https://saigongiadinh.pythonanywhere.com/AlbumDetailView/';
+const CLOUDINARY_CLOUD_NAME = 'dftarzzfw';
+const CLOUDINARY_UPLOAD_PRESET = 'SGGDCollege';
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
-    function getAuthToken() {
+if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET || CLOUDINARY_CLOUD_NAME === 'your_cloudinary_cloud_name') {
+    alert("Lỗi cấu hình Cloudinary: Vui lòng cập nhật CLOUDINARY_CLOUD_NAME và CLOUDINARY_UPLOAD_PRESET trong manage_news.js!");
+}
+
+// --- API Endpoints ---
+
+const NEWS_API_URL = `https://saigongiadinh.pythonanywhere.com/news/`;
+const TAGS_API_URL = `https://saigongiadinh.pythonanywhere.com/TagView/`;
+const ALBUMS_API_URL = `https://saigongiadinh.pythonanywhere.com/albums/`;
+const IMAGES_API_URL = `https://saigongiadinh.pythonanywhere.com/images/`; // Endpoint để tạo Image model trong DB
+
+// --- DOM Elements ---
+const newsForm = document.getElementById('newsForm');
+const addNewsButton = document.getElementById('addNewsButton');
+const cancelFormBtn = document.getElementById('cancelFormBtn');
+const submitBtn = document.getElementById('submitBtn');
+const newsIdInput = document.getElementById('newsId');
+const titleInput = document.getElementById('title');
+const shortDescriptionInput = document.getElementById('short_description');
+const contentInput = document.getElementById('content_textarea');
+const featuredImageInput = document.getElementById('featured_image');
+const activeCheckbox = document.getElementById('active');
+const tagsSelect = document.getElementById('tags');
+// const albumGallerySelect = document.getElementById('album_gallery'); // Loại bỏ trường này vì không dùng cho việc gửi dữ liệu lồng ghép
+const messageDiv = document.getElementById('message');
+const newsListAllDiv = document.getElementById('news-list-all');
+const paginationAllDiv = document.getElementById('pagination-all');
+
+const featuredImageUploadInput = document.getElementById('featuredImageUpload'); // Input type="file"
+const featuredImagePreview = document.getElementById('featuredImagePreview'); // <img> tag for preview
+const featuredImageUrlHiddenInput = document.getElementById('featured_image_url_hidden'); // Hidden input to store the final URL
+
+
+// New elements for image upload
+const albumImagesInput = document.getElementById('albumImagesInput');
+const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+const uploadImagesBtn = document.getElementById('uploadImagesBtn');
+const imageUploadArea = document.getElementById('imageUploadArea');
+
+
+// --- Global Variables ---
+let availableTags = [];
+let currentPage = 1;
+const ITEMS_PER_PAGE = 5;
+let filesToUpload = []; // Array to store files selected by the user for album upload
+let uploadedImageUrls = []; // Array to store Cloudinary URLs for album
+let featuredImageFile = null; // New: Variable to store the selected featured image file
+let uploadedFeaturedImageUrl = ''; // New: Variable to store the Cloudinary URL for featured image
+
+
+// --- Utility Functions ---
+
+function showMessage(msg, type) {
+    messageDiv.textContent = msg;
+    messageDiv.className = `message ${type}`;
+    messageDiv.style.display = 'block';
+    console.log(`[showMessage] Loại: ${type}, Nội dung: ${msg}`); // CONSOLE LOG ĐÃ THÊM
+    setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 5000);
+}
+function displayFeaturedImagePreview(file) {
+    console.log("[displayFeaturedImagePreview] Hiển thị bản xem trước ảnh bìa.");
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            featuredImagePreview.src = e.target.result;
+            featuredImagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        featuredImagePreview.src = '';
+        featuredImagePreview.style.display = 'none';
+        featuredImageUrlHiddenInput.value = ''; // Clear hidden input if no file
+    }
+}
+
+function getDisplayTagName(rawName) {
+    return rawName.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// Function to get CSRF token (still needed for backend API calls)
+ function getAuthToken() {
         return localStorage.getItem('adminAuthToken');
     }
-    const AUTH_TOKEN = getAuthToken();
+ const authToken = getAuthToken();
 
-    const newsForm = document.getElementById('newsForm');
-    const newsIdInput = document.getElementById('newsId');
-    const titleInput = document.getElementById('title');
-    const shortDescriptionInput = document.getElementById('short_description');
-    const contentInput = document.getElementById('content');
-    const featuredImageInput = document.getElementById('featured_image');
-    const activeInput = document.getElementById('active');
-    const tagsSelect = document.getElementById('tags');
-    const albumGallerySelect = document.getElementById('album_gallery');
-    const submitBtn = document.getElementById('submitBtn');
-    const cancelFormBtn = document.getElementById('cancelFormBtn'); // Nút Hủy mới
-    const newsListDiv = document.getElementById('newsList');
-    const messageDiv = document.getElementById('message');
-    const addNewsButton = document.getElementById('addNewsButton'); // Nút thêm tin tức
+// --- Fetch Data Functions ---
 
-    // Hàm hiển thị thông báo
-    function showMessage(msg, type) {
-        messageDiv.textContent = msg;
-        messageDiv.className = `message ${type}`;
-        messageDiv.style.display = 'block'; // Đảm bảo thông báo hiển thị
-        setTimeout(() => {
-            messageDiv.style.display = 'none'; // Ẩn sau 5 giây
-        }, 5000);
-    }
+async function fetchTags() {
+    console.log("[fetchTags] Bắt đầu tải tags..."); // CONSOLE LOG ĐÃ THÊM
+    try {
+        const response = await fetch(TAGS_API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("[fetchTags] Dữ liệu tags nhận được:", data); // CONSOLE LOG ĐÃ THÊM
 
-    // Hàm ẩn form và nút hủy sửa
-    function hideForm() {
-        newsForm.classList.add('hidden');
-        cancelFormBtn.classList.remove('hidden'); // Đảm bảo nút "Hủy" không bị ẩn khi form bị ẩn (chỉ ẩn khi form hiển thị)
-        submitBtn.textContent = 'Tạo Tin tức'; // Đảm bảo nút trở lại trạng thái tạo
-        addNewsButton.classList.remove('hidden'); // Hiển thị lại nút "Thêm Tin tức Mới"
-        newsForm.reset(); // Reset form khi ẩn
-        newsIdInput.value = ''; // Đảm bảo ID trống
-        // Reset select tags và album
-        Array.from(tagsSelect.options).forEach(option => option.selected = false);
-        albumGallerySelect.value = '';
-    }
+        let tagsToProcess = [];
 
-    // Hàm hiển thị form
-    function showForm() {
-        newsForm.classList.remove('hidden');
-        addNewsButton.classList.add('hidden'); // Ẩn nút "Thêm Tin tức Mới" khi form hiển thị
-        cancelFormBtn.classList.remove('hidden'); // Đảm bảo nút "Hủy" được hiển thị cùng form
-    }
-
-    // Hàm fetch dữ liệu từ API
-    async function fetchData(url, method = 'GET', data = null) {
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${AUTH_TOKEN}`
-        };
-
-        const options = {
-            method: method,
-            headers: headers,
-        };
-
-        if (data) {
-            options.body = JSON.stringify(data);
+        if (Array.isArray(data)) {
+            tagsToProcess = data;
+        } else if (data && Array.isArray(data.results)) {
+            tagsToProcess = data.results;
+        } else {
+            console.warn("Tag API did not return expected array format (direct array or .results array):", data);
+            showMessage('Không thể tải danh sách tags: Định dạng dữ liệu không hợp lệ.', 'error');
+            return;
         }
 
-        try {
-            const response = await fetch(url, options);
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || JSON.stringify(errorData) || 'Có lỗi xảy ra!');
-            }
-            if (method === 'DELETE') {
-                return null;
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Lỗi khi fetch dữ liệu:', error);
-            showMessage(`Lỗi: ${error.message}`, 'error');
-            throw error;
-        }
-    }
-
-    // Hàm tải tags và albums vào dropdown
-    async function loadTagsAndAlbums() {
-        try {
-            const tagsResponse = await axios.get(TAGS_API_URL);
-        const tags = tagsResponse.data; // Lấy dữ liệu từ thuộc tính .data của response
-        tagsSelect.innerHTML = '';
-        tags.forEach(tag => {
+        availableTags = tagsToProcess;
+        tagsSelect.innerHTML = '<option value="">-- Chọn Tag --</option>';
+        tagsToProcess.forEach(tag => {
             const option = document.createElement('option');
             option.value = tag.id;
-            option.textContent = tag.name;
+            option.textContent = getDisplayTagName(tag.name);
             tagsSelect.appendChild(option);
         });
+        console.log("[fetchTags] Tags đã được tải và hiển thị thành công."); // CONSOLE LOG ĐÃ THÊM
 
-        // Tương tự, nếu ALBUMS_API_URL trả về response object, bạn cũng cần truy cập .data
-        const albumsResponse = await axios.get('https://saigongiadinh.pythonanywhere.com/AlbumDetailView/'); // Đảm bảo URL này là đúng để lấy danh sách album
-        const albums = albumsResponse.data; // Lấy dữ liệu từ thuộc tính .data của response
-        albumGallerySelect.innerHTML = '<option value="">-- Chọn Album --</option>';
-        albums.forEach(album => {
-            const option = document.createElement('option');
-            option.value = album.id;
-            option.textContent = album.title;
-            albumGallerySelect.appendChild(option);
+    } catch (error) {
+        console.error('Lỗi khi tải tags:', error);
+        showMessage('Không thể tải danh sách tags. Vui lòng kiểm tra kết nối hoặc API.', 'error');
+    }
+}
+
+async function fetchNews(page = 1) {
+    console.log(`[fetchNews] Bắt đầu tải tin tức, trang: ${page}`); // CONSOLE LOG ĐÃ THÊM
+    try {
+        const response = await fetch(`${NEWS_API_URL}?page=${page}&page_size=${ITEMS_PER_PAGE}`);
+        if (!response.ok) throw new Error('Không thể tải tin tức');
+        const data = await response.json();
+        console.log("[fetchNews] Dữ liệu tin tức nhận được:", data); // CONSOLE LOG ĐÃ THÊM
+        displayNews(data.results);
+        setupPagination(data.count, page);
+        currentPage = page; // Cập nhật trang hiện tại
+        console.log("[fetchNews] Tin tức và phân trang đã được cập nhật."); // CONSOLE LOG ĐÃ THÊM
+    } catch (error) {
+        console.error('Lỗi khi tải tin tức:', error);
+        newsListAllDiv.innerHTML = '<p style="text-align: center; color: red;">Không thể tải tin tức.</p>';
+        showMessage('Không thể tải tin tức.', 'error'); // CONSOLE LOG ĐÃ THÊM
+    }
+}
+
+// --- Display Functions ---
+
+function displayNews(newsItems) {
+    console.log("[displayNews] Hiển thị danh sách tin tức...");
+    newsListAllDiv.innerHTML = '';
+    if (newsItems.length === 0) {
+        newsListAllDiv.innerHTML = '<p style="text-align: center;">Chưa có tin tức nào.</p>';
+        console.log("[displayNews] Không có tin tức để hiển thị.");
+        return;
+    }
+    newsItems.forEach(news => {
+        const newsItemDiv = document.createElement('div');
+        newsItemDiv.className = 'news-item';
+        const tagsHtml = news.tags.map(tag => getDisplayTagName(tag.name)).join(', ');
+
+        const formattedDate = new Date(news.published_date || news.created_at).toLocaleDateString('vi-VN', {
+            day: '2-digit', month: '2-digit', year: 'numeric'
         });
 
-        } catch (error) {
-            console.error('Lỗi khi tải tags/albums:', error);
-            setTimeout(showMessage('Không thể tải danh sách Tags hoặc Album.', 'error'),1000)
+        // Xây dựng URL đầy đủ cho ảnh bìa khi hiển thị
+        const fullFeaturedImageUrl = news.featured_image ;
+
+        newsItemDiv.innerHTML = `
+            <img src="${fullFeaturedImageUrl}" alt="Ảnh bìa" class="image">
+            <span>
+                <strong>${news.title}</strong>
+                <span class="news-meta">
+                    Ngày đăng: ${formattedDate} | Loại tin tức: <span class="tags">${tagsHtml}</span>
+                </span>
+            </span>
+            <div>
+                <button class="edit-btn" data-id="${news.id}">Sửa</button>
+                <button class="delete-btn" data-id="${news.id}">Xóa</button>
+            </div>
+        `;
+        newsListAllDiv.appendChild(newsItemDiv);
+    });
+    addNewsEventListeners();
+    console.log("[displayNews] Danh sách tin tức đã được hiển thị.");
+}
+
+function setupPagination(totalItems, currentPage) {
+    console.log(`[setupPagination] Thiết lập phân trang: Tổng số mục = ${totalItems}, Trang hiện tại = ${currentPage}`); // CONSOLE LOG ĐÃ THÊM
+    paginationAllDiv.innerHTML = '';
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+    if (totalPages <= 1) return; // No pagination needed for 1 or fewer pages
+
+    const createPageLink = (page, text, isDisabled = false, isActive = false) => {
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = text;
+        link.classList.add('page-link');
+        if (isDisabled) link.classList.add('disabled');
+        if (isActive) link.classList.add('active');
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!isDisabled && !isActive) {
+                fetchNews(page);
+            }
+        });
+        return link;
+    };
+
+    // Previous button
+    paginationAllDiv.appendChild(createPageLink(currentPage - 1, 'Trước', currentPage === 1));
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        paginationAllDiv.appendChild(createPageLink(i, i, false, i === currentPage));
+    }
+
+    // Next button
+    paginationAllDiv.appendChild(createPageLink(currentPage + 1, 'Sau', currentPage === totalPages));
+    console.log("[setupPagination] Phân trang đã được thiết lập."); // CONSOLE LOG ĐÃ THÊM
+}
+
+async function uploadFeaturedImage(file) {
+    console.log(`[Cloudinary Upload] Đang tải lên ảnh bìa: ${file.name}`);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    try {
+        const cloudinaryResponse = await axios.post(
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+            formData
+        );
+
+        if (cloudinaryResponse.data && cloudinaryResponse.data.secure_url) {
+            const fullUrl = cloudinaryResponse.data.secure_url;
             
+            uploadedFeaturedImageUrl = fullUrl; // LƯU URL ĐẦY ĐỦ
+            console.log(`[Cloudinary Upload] Tải lên ảnh bìa thành công: ${fullUrl}`);
+            return fullUrl; // TRẢ VỀ URL ĐẦY ĐỦ
+        } else {
+            throw new Error(`Upload ảnh bìa ${file.name} lên Cloudinary thất bại.`);
+        }
+    } catch (error) {
+        console.error('Lỗi khi tải ảnh bìa lên Cloudinary:', error);
+        throw error;
+    }
+}
+
+// --- Form Handling ---
+
+function resetForm() {
+    console.log("[resetForm] Đặt lại biểu mẫu...");
+    newsForm.reset();
+    newsIdInput.value = '';
+    submitBtn.textContent = 'Tạo Tin tức';
+    newsForm.classList.add('hidden');
+    
+    // Clear album image upload related fields
+    filesToUpload = [];
+    uploadedImageUrls = [];
+    imagePreviewContainer.innerHTML = '';
+    uploadImagesBtn.classList.add('hidden');
+    uploadImagesBtn.textContent = 'Tải ảnh đã chọn lên Cloudinary';
+    uploadImagesBtn.disabled = false;
+
+    // New: Clear featured image related fields
+    featuredImageFile = null;
+    uploadedFeaturedImageUrl = '';
+    displayFeaturedImagePreview(null); // Clear featured image preview
+    featuredImageUploadInput.value = ''; // Reset file input
+
+    showMessage('', ''); // Clear any previous messages
+    currentNewsAlbumData = null;
+    console.log("[resetForm] Biểu mẫu đã được đặt lại hoàn toàn.");
+}
+
+async function populateFormForEdit(news) {
+    console.log("[populateFormForEdit] Điền dữ liệu vào form để chỉnh sửa tin tức:", news);
+    newsIdInput.value = news.id;
+    titleInput.value = news.title;
+    shortDescriptionInput.value = news.short_description;
+    contentInput.value = news.content;
+    
+    // New: Handle existing featured image for edit mode
+    uploadedFeaturedImageUrl = news.featured_image; // Lưu URL đã cắt của ảnh hiện có
+    if (news.featured_image) {
+        // Tạo URL đầy đủ để hiển thị preview
+        featuredImagePreview.src = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/${news.featured_image}`;
+        featuredImagePreview.style.display = 'block';
+    } else {
+        displayFeaturedImagePreview(null);
+    }
+    featuredImageUploadInput.value = ''; // Xóa giá trị của input file để người dùng có thể chọn ảnh mới
+    featuredImageFile = null; // Reset file đã chọn
+
+    activeCheckbox.checked = news.active;
+    
+    if (news.tags && news.tags.length > 0) {
+        tagsSelect.value = news.tags[0].id;
+        console.log("[populateFormForEdit] Tag đã chọn:", tagsSelect.value);
+    } else {
+        tagsSelect.value = '';
+        console.log("[populateFormForEdit] Không có tag nào được chọn.");
+    }
+    
+    currentNewsAlbumData = news.album_gallery;
+    console.log("[populateFormForEdit] Dữ liệu album hiện tại:", currentNewsAlbumData);
+
+    // Khi chỉnh sửa, xóa các trường chọn ảnh album mới để tránh nhầm lẫn
+    filesToUpload = [];
+    uploadedImageUrls = [];
+    imagePreviewContainer.innerHTML = '';
+    uploadImagesBtn.classList.add('hidden');
+    uploadImagesBtn.textContent = 'Tải ảnh đã chọn lên Cloudinary';
+    uploadImagesBtn.disabled = false;
+
+    submitBtn.textContent = 'Cập nhật Tin tức';
+    newsForm.classList.remove('hidden');
+    window.scrollTo(0, 0);
+    console.log("[populateFormForEdit] Form đã được điền đầy đủ và sẵn sàng chỉnh sửa.");
+}
+
+async function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log("[handleFormSubmit] Form đã được submit.");
+
+    const newsId = newsIdInput.value;
+    const method = newsId ? 'PUT' : 'POST';
+    const url = newsId ? `${NEWS_API_URL}${newsId}/` : NEWS_API_URL;
+    console.log(`[handleFormSubmit] Phương thức: ${method}, URL: ${url}`);
+
+    if (!titleInput.value || !shortDescriptionInput.value || !contentInput.value || !tagsSelect.value) {
+        showMessage('Vui lòng điền đầy đủ các trường bắt buộc (Tiêu đề, Mô tả ngắn, Nội dung, Loại tin tức).', 'error');
+        console.warn("[handleFormSubmit] Lỗi xác thực: Các trường bắt buộc bị thiếu.");
+        return;
+    }
+
+    // --- Xử lý upload ảnh bìa (Featured Image) ---
+    let finalFeaturedImageUrl = uploadedFeaturedImageUrl; // Mặc định là URL đã có (nếu sửa) hoặc rỗng
+    if (featuredImageFile) { // Nếu người dùng đã chọn một file ảnh bìa mới
+        showMessage('Đang tải ảnh bìa lên Cloudinary...', 'info');
+        try {
+            finalFeaturedImageUrl = await uploadFeaturedImage(featuredImageFile); // Upload và lấy URL đã cắt
+            showMessage('Ảnh bìa đã tải lên thành công. Đang xử lý tin tức...', 'info');
+            console.log("[handleFormSubmit] Ảnh bìa mới đã được tải lên Cloudinary.");
+        } catch (error) {
+            showMessage(`Lỗi khi tải ảnh bìa: ${error.message}. Vui lòng thử lại.`, 'error');
+            console.error("[handleFormSubmit] Lỗi tải ảnh bìa:", error);
+            return; // Dừng quá trình submit nếu có lỗi upload ảnh bìa
+        }
+    } else if (newsId && !uploadedFeaturedImageUrl) {
+        // Nếu đang sửa và không có ảnh bìa cũ, cũng không có ảnh bìa mới, thì báo lỗi hoặc để trống tùy nghiệp vụ
+        console.warn("[handleFormSubmit] Không có ảnh bìa được chọn cho tin tức đang sửa.");
+        // Bạn có thể đặt validation ở đây nếu ảnh bìa là bắt buộc
+    }
+    // featured_image_url_hidden.value = finalFeaturedImageUrl; // Cập nhật hidden input (tùy chọn, không bắt buộc nếu gửi trực tiếp)
+
+
+    let albumGalleryPayload = null;
+    console.log("[handleFormSubmit] uploadedImageUrls.length:", uploadedImageUrls.length);
+    console.log("[handleFormSubmit] newsId:", newsId);
+    console.log("[handleFormSubmit] currentNewsAlbumData:", currentNewsAlbumData);
+
+    // Priority 1: Nếu có ảnh mới được tải lên Cloudinary (cho album), tạo album mới hoặc thêm ảnh vào album hiện có
+    if (uploadedImageUrls.length > 0) {
+        albumGalleryPayload = {
+            title: titleInput.value ? `Album của ${titleInput.value}` : `Album Tin tức - ${new Date().toLocaleString()}`,
+            description: `Ảnh liên quan đến tin tức: ${titleInput.value || ''}`,
+            image_urls_for_creation: uploadedImageUrls.map(img => img.image_file)
+        };
+        if (newsId && currentNewsAlbumData && currentNewsAlbumData.id) {
+            albumGalleryPayload.id = currentNewsAlbumData.id;
+        }
+        console.log("[handleFormSubmit] Đã chuẩn bị albumGalleryPayload với ảnh mới:", albumGalleryPayload);
+    } else {
+        if (newsId && currentNewsAlbumData) {
+            albumGalleryPayload = {
+                id: currentNewsAlbumData.id,
+                title: currentNewsAlbumData.title,
+                description: currentNewsAlbumData.description,
+            };
+            console.log("[handleFormSubmit] Đã chuẩn bị albumGalleryPayload giữ nguyên album cũ:", albumGalleryPayload);
+        } else {
+            console.log("[handleFormSubmit] Không có ảnh mới nào được tải lên và không có album cũ để giữ lại. albumGalleryPayload = null.");
         }
     }
 
-    // Hàm tải danh sách tin tức
-    async function loadNews() {
-        try {
-            const news = await fetchData(API_BASE_URL);
-            newsListDiv.innerHTML = '';
-            if (news.length === 0) {
-                newsListDiv.innerHTML = '<p>Chưa có tin tức nào.</p>';
+    const newsData = {
+        title: titleInput.value,
+        short_description: shortDescriptionInput.value,
+        content: contentInput.value,
+        featured_image: finalFeaturedImageUrl, // <-- Gửi URL ảnh bìa đã được xử lý
+        active: activeCheckbox.checked,
+        tags: tagsSelect.value ? [parseInt(tagsSelect.value)] : [],
+        album_gallery: albumGalleryPayload
+    };
+
+    console.log("[handleFormSubmit] Dữ liệu NEWS_API_URL sẽ gửi:", newsData);
+    console.log("[handleFormSubmit] Headers sẽ gửi:", {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+    });
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${authToken}`
+            },
+            body: JSON.stringify(newsData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Lỗi API:', errorData);
+            let errorMessage = `Đã xảy ra lỗi khi ${newsId ? 'cập nhật' : 'tạo'} tin tức.`;
+            if (errorData && typeof errorData === 'object') {
+                errorMessage += ' Chi tiết: ' + Object.values(errorData).flat().join('; ');
+            }
+            throw new Error(errorMessage);
+        }
+
+        const result = await response.json();
+        console.log(`[handleFormSubmit] Phản hồi API thành công:`, result);
+        showMessage(`Tin tức đã được ${newsId ? 'cập nhật' : 'tạo'} thành công!`, 'success');
+        resetForm();
+        fetchNews(currentPage);
+    } catch (error) {
+        console.error('Lỗi:', error);
+        showMessage(error.message, 'error');
+    }
+}
+
+
+// --- Event Listeners ---
+
+addNewsButton.addEventListener('click', () => {
+    console.log("[EventListener] Nút 'Thêm Tin tức' được nhấp."); // CONSOLE LOG ĐÃ THÊM
+    resetForm();
+    newsForm.classList.remove('hidden');
+    window.scrollTo(0, 0);
+});
+
+cancelFormBtn.addEventListener('click', () => {
+    console.log("[EventListener] Nút 'Hủy' được nhấp."); // CONSOLE LOG ĐÃ THÊM
+    resetForm();
+});
+
+featuredImageUploadInput.addEventListener('change', (event) => {
+    console.log("[EventListener] Tệp ảnh bìa đã được chọn.");
+    const file = event.target.files[0];
+    featuredImageFile = file; // Lưu file đã chọn vào biến toàn cục
+    displayFeaturedImagePreview(file); // Hiển thị bản xem trước
+});
+newsForm.addEventListener('submit', handleFormSubmit); // Nút submit sẽ kích hoạt toàn bộ quy trình
+
+function addNewsEventListeners() {
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.onclick = async (e) => {
+            const newsId = e.target.dataset.id;
+            console.log(`[EventListener] Nút 'Sửa' cho tin tức ID ${newsId} được nhấp.`); // CONSOLE LOG ĐÃ THÊM
+            try {
+                const response = await fetch(`${NEWS_API_URL}${newsId}/`);
+                if (!response.ok) throw new Error('Không thể tải chi tiết tin tức');
+                const news = await response.json();
+                populateFormForEdit(news);
+            } catch (error) {
+                console.error('Lỗi khi tải tin tức để sửa:', error);
+                showMessage('Không thể tải chi tiết tin tức để sửa.', 'error');
+            }
+        };
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.onclick = async (e) => {
+            const newsId = e.target.dataset.id;
+            console.log(`[EventListener] Nút 'Xóa' cho tin tức ID ${newsId} được nhấp.`); // CONSOLE LOG ĐÃ THÊM
+            if (!confirm('Bạn có chắc chắn muốn xóa tin tức này?')) {
+                console.log("[EventListener] Xóa tin tức đã bị hủy."); // CONSOLE LOG ĐÃ THÊM
                 return;
             }
-            news.forEach(item => {
-                const newsItemDiv = document.createElement('div');
-                newsItemDiv.className = 'news-item';
-                newsItemDiv.innerHTML = `
-                     <div>
-                        <img class="image" src="https://res.cloudinary.com/dftarzzfw/${item.featured_image}" ></img>
-                    </div>
-                    <div>&nbsp;</div>
-                    <span><strong>${item.title}</strong> (${item.active ? 'Đang hoạt động' : 'Không hoạt động'})</span>
-                    <div>
-                        <button class="edit-btn" data-id="${item.id}">Sửa</button>
-                        <button class="delete-btn" data-id="${item.id}">Xóa</button>
-                    </div>
-                `;
-                newsListDiv.appendChild(newsItemDiv);
-            });
-            addEventListenerToButtons(); // Thêm event listeners sau khi load tin tức
-        } catch (error) {
-            newsListDiv.innerHTML = `<p>Lỗi khi tải tin tức: ${error.message}</p>`;
-        }
-    }
-
-    // Hàm xử lý tạo/cập nhật tin tức
-    newsForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const newsId = newsIdInput.value;
-        // Kiểm tra URL API: Nếu API_BASE_URL là danh sách, thì cho chi tiết sẽ là API_BASE_URL + id + '/'
-        const url = newsId ? `https://saigongiadinh.pythonanywhere.com/NewsDetailView/${newsId}/` : API_BASE_URL;
-        const method = newsId ? 'PUT' : 'POST'; // Sử dụng PUT cho cập nhật toàn bộ (nếu API hỗ trợ) hoặc PATCH
-
-        const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => parseInt(option.value)); // Chuyển sang số nguyên
-        const selectedAlbum = albumGallerySelect.value ? parseInt(albumGallerySelect.value) : null; // Chuyển sang số nguyên hoặc null
-
-        const newsData = {
-            title: titleInput.value,
-            short_description: shortDescriptionInput.value,
-            content: contentInput.value,
-            featured_image: featuredImageInput.value,
-            active: activeInput.checked,
-            tags: selectedTags,
-            album_gallery: selectedAlbum
-        };
-
-        try {
-            await fetchData(url, method, newsData);
-            showMessage(newsId ? 'Cập nhật tin tức thành công!' : 'Tạo tin tức thành công!', 'success');
-            hideForm(); // Ẩn form sau khi tạo/sửa thành công
-            loadNews(); // Tải lại danh sách
-        } catch (error) {
-            // Lỗi đã được show trong fetchData
-        }
-    });
-
-    // Hàm điền dữ liệu vào form để sửa
-    async function editNews(id) {
-        try {
-            // Kiểm tra URL API: Nếu API_BASE_URL là danh sách, thì cho chi tiết sẽ là API_BASE_URL + id + '/'
-            const news = await fetchData(`https://saigongiadinh.pythonanywhere.com/NewsDetailView/${id}/`);
             
-            newsIdInput.value = news.id;
-            titleInput.value = news.title;
-            shortDescriptionInput.value = news.short_description;
-            contentInput.value = news.content;
-            featuredImageInput.value = news.featured_image || '';
-            activeInput.checked = news.active;
+            try {
+                const response = await fetch(`${NEWS_API_URL}${newsId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                       'Authorization':  `Token ${authToken}`
+                    }
+                });
+                if (!response.ok) throw new Error('Không thể xóa tin tức');
+                showMessage('Tin tức đã được xóa thành công!', 'success');
+                fetchNews(currentPage);
+                console.log(`[EventListener] Tin tức ID ${newsId} đã được xóa thành công.`); // CONSOLE LOG ĐÃ THÊM
+            } catch (error) {
+                console.error('Lỗi khi xóa tin tức:', error);
+                showMessage('Không thể xóa tin tức.', 'error');
+            }
+        };
+    });
+}
 
-            // Chọn tags
-            Array.from(tagsSelect.options).forEach(option => {
-                // Đảm bảo so sánh đúng kiểu dữ liệu (số nguyên)
-                option.selected = news.tags.includes(parseInt(option.value));
-            });
+// --- Image Upload Logic (Frontend Direct Cloudinary Upload) ---
 
-            // Chọn album
-            albumGallerySelect.value = news.album_gallery || '';
+// Handle file selection
+albumImagesInput.addEventListener('change', (event) => {
+    console.log("[EventListener] Tệp ảnh đã được chọn."); // CONSOLE LOG ĐÃ THÊM
+    filesToUpload = Array.from(event.target.files);
+    displayImagePreviews();
+});
 
-            submitBtn.textContent = 'Cập nhật Tin tức';
-            showForm(); // Hiển thị form để sửa
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Cuộn lên đầu form
-        } catch (error) {
-            // Lỗi đã được show trong fetchData
-        }
+// Handle drag and drop
+imageUploadArea.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    imageUploadArea.style.backgroundColor = '#e0f7fa'; // Highlight on drag over
+});
+
+imageUploadArea.addEventListener('dragleave', (event) => {
+    event.preventDefault();
+    imageUploadArea.style.backgroundColor = '#f9f9f9'; // Reset on drag leave
+});
+
+imageUploadArea.addEventListener('drop', (event) => {
+    event.preventDefault();
+    imageUploadArea.style.backgroundColor = '#f9f9f9'; // Reset on drop
+    console.log("[EventListener] Ảnh đã được thả vào vùng tải lên."); // CONSOLE LOG ĐÃ THÊM
+    filesToUpload = Array.from(event.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+    displayImagePreviews();
+});
+
+
+function displayImagePreviews() {
+    console.log("[displayImagePreviews] Hiển thị các bản xem trước ảnh. Số lượng tệp đã chọn:", filesToUpload.length); // CONSOLE LOG ĐÃ THÊM
+    imagePreviewContainer.innerHTML = ''; // Xóa các bản xem trước hiện có
+    uploadedImageUrls = []; // Đặt lại các URL đã tải lên khi chọn tệp mới
+    if (filesToUpload.length > 0) {
+        uploadImagesBtn.classList.remove('hidden'); // Hiện nút upload
+        filesToUpload.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'image-preview-item';
+                previewItem.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview">
+                    <button class="remove-image-btn" data-index="${index}">&times;</button>
+                `;
+                imagePreviewContainer.appendChild(previewItem);
+            };
+            reader.readAsDataURL(file);
+        });
+    } else {
+        uploadImagesBtn.classList.add('hidden'); // Ẩn nút upload nếu không có tệp nào
+    }
+}
+
+// Remove image from preview
+imagePreviewContainer.addEventListener('click', (event) => {
+    if (event.target.classList.contains('remove-image-btn')) {
+        const indexToRemove = parseInt(event.target.dataset.index);
+        console.log(`[EventListener] Nút 'Xóa ảnh' cho ảnh index ${indexToRemove} được nhấp.`); // CONSOLE LOG ĐÃ THÊM
+        filesToUpload.splice(indexToRemove, 1); // Xóa khỏi mảng
+        displayImagePreviews(); // Hiển thị lại các bản xem trước
+    }
+});
+
+uploadImagesBtn.addEventListener('click', async () => {
+    console.log("[EventListener] Nút 'Tải ảnh lên Cloudinary' được nhấp."); // CONSOLE LOG ĐÃ THÊM
+    if (filesToUpload.length === 0) {
+        showMessage('Vui lòng chọn ảnh để tải lên.', 'error');
+        console.warn("[uploadImagesBtn] Không có ảnh để tải lên."); // CONSOLE LOG ĐÃ THÊM
+        return;
     }
 
-    // Hàm xóa tin tức
-    async function deleteNews(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa tin tức này không?')) {
-            try {
-                // Kiểm tra URL API: Nếu API_BASE_URL là danh sách, thì cho chi tiết sẽ là API_BASE_URL + id + '/'
-                await fetchData(`https://saigongiadinh.pythonanywhere.com/NewsDetailView/${id}/`, 'DELETE');
-                showMessage('Xóa tin tức thành công!', 'success');
-                loadNews(); // Tải lại danh sách
-            } catch (error) {
-                // Lỗi đã được show trong fetchData
+    showMessage('Đang tải ảnh lên Cloudinary...', 'info');
+    uploadImagesBtn.disabled = true; // Tắt nút trong khi tải lên
+    uploadedImageUrls = []; // Xóa các URL cũ
+
+    try {
+        for (const file of filesToUpload) {
+            console.log(`[Cloudinary Upload] Đang tải lên tệp: ${file.name}`); // CONSOLE LOG ĐÃ THÊM
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            // formData.append('folder', 'your_folder_name'); // Tùy chọn: Thêm folder nếu bạn muốn tổ chức ảnh trên Cloudinary
+
+            const cloudinaryResponse = await axios.post(
+                `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+                formData
+            );
+
+            if (cloudinaryResponse.data && cloudinaryResponse.data.secure_url) {
+                const fullUrl = cloudinaryResponse.data.secure_url;
+                
+                
+                uploadedImageUrls.push({
+                    image_file: fullUrl, // <-- Trở lại URL đầy đủ
+                    title: file.name
+                });
+                console.log(`[Cloudinary Upload] Tải lên thành công tệp ${file.name}: ${fullUrl}`); // Cập nhật console.log để hiển thị cả 2
+            } else {
+                throw new Error(`Upload ảnh ${file.name} lên Cloudinary thất bại.`);
             }
         }
+        showMessage('Tất cả ảnh đã được tải lên Cloudinary thành công. Sẵn sàng tạo album!', 'success');
+        uploadImagesBtn.textContent = 'Đã tải lên!';
+        console.log("[Cloudinary Upload] Tất cả ảnh đã tải lên Cloudinary thành công. uploadedImageUrls:", uploadedImageUrls); // CONSOLE LOG ĐÃ THÊM
+    } catch (error) {
+        console.error('Lỗi khi tải ảnh lên Cloudinary:', error);
+        showMessage(`Lỗi khi tải ảnh lên Cloudinary: ${error.message}`, 'error');
+        uploadImagesBtn.disabled = false; // Bật lại nút khi có lỗi
     }
+});
 
-    // Thêm event listeners cho các nút Sửa/Xóa sau khi tin tức được tải
-    function addEventListenerToButtons() {
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', (e) => editNews(e.target.dataset.id));
-        });
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => deleteNews(e.target.dataset.id));
-        });
-    }
-
-    // Xử lý nút "Hủy" mới
-    cancelFormBtn.addEventListener('click', () => {
-        hideForm(); // Gọi hàm hideForm để reset và ẩn form
-    });
-
-    // Xử lý nút "Thêm Tin tức Mới"
-    addNewsButton.addEventListener('click', () => {
-        showForm(); // Hiển thị form
-        newsForm.reset(); // Đảm bảo form trống
-        newsIdInput.value = ''; // Đảm bảo không có ID cũ
-        submitBtn.textContent = 'Tạo Tin tức'; // Đặt lại text nút
-        // Đảm bảo các select về trạng thái mặc định
-        Array.from(tagsSelect.options).forEach(option => option.selected = false);
-        albumGallerySelect.value = '';
-    });
-
-    // Tải dữ liệu ban đầu khi trang load
-    // Form sẽ được ẩn ban đầu qua CSS (class="hidden")
-    loadTagsAndAlbums();
-    loadNews();
+// --- Initial Load ---
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("[DOMContentLoaded] DOM đã tải. Bắt đầu tải dữ liệu ban đầu."); // CONSOLE LOG ĐÃ THÊM
+    fetchTags();
+    fetchNews();
 });

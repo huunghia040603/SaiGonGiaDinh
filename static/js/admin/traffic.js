@@ -1,4 +1,6 @@
 let trafficChart = null;
+let currentRawTrafficData = []; // Biến toàn cục mới để lưu trữ dữ liệu thô từ API
+let currentPeriod = 'day'; // Biến toàn cục mới để lưu trữ thời gian hiện tại ('day', 'month', 'year')
 
 // Hàm để lấy token xác thực, giống như trong admin_registrations.js
 function getAuthToken() {
@@ -8,6 +10,7 @@ function getAuthToken() {
 
 // Hàm để tải dữ liệu và vẽ biểu đồ
 async function loadTrafficData(period) {
+    currentPeriod = period; // Cập nhật biến toàn cục period
     // Kiểm tra xem trang hiện tại có phải là trang admin không
     // Nếu không phải trang admin, không cần kiểm tra token và thoát hàm
     if (!window.location.pathname.startsWith('/admin')) {
@@ -80,6 +83,9 @@ async function loadTrafficData(period) {
             });
             console.log('Dữ liệu sau khi lọc (từ 30/5):', data);
         }
+
+        // Lưu dữ liệu thô (đã lọc nếu có) vào biến toàn cục để xuất Excel
+        currentRawTrafficData = data;
 
         // Xử lý và chuẩn bị dữ liệu cho biểu đồ
         const labels = data.map(item => {
@@ -210,25 +216,23 @@ async function loadTrafficData(period) {
                         }
                     },
                     x: {
-                        title: {
-                            display: true,
-                            text: `Thời gian (${period === 'day' ? 'ngày' : period === 'month' ? 'tháng' : 'năm'})`
-                        },
-                        ticks: {
-                            autoSkip: false, // Không tự động bỏ qua nhãn
-                            maxRotation: 45,
-                            minRotation: 0,
-                            callback: function(value, index, values) {
-                                if (period === 'day') {
-                                    // Chuyển đổi chuỗi ngày sang đối tượng Date để lấy ngày trong tháng
-                                    const dateStr = this.getLabelForValue(value); // ví dụ: "30/5/2025"
-                                    // Bỏ qua logic hiển thị mỗi 7 ngày
-                                    return dateStr; // Trả về ngày trực tiếp
-                                }
-                                return this.getLabelForValue(value);
-                            }
-                        }
-                    }
+                        title: {
+                            display: true,
+                            text: `Thời gian (${period === 'day' ? 'ngày' : period === 'month' ? 'tháng' : 'năm'})`
+                        },
+                        ticks: {
+                            autoSkip: false, // Không tự động bỏ qua nhãn
+                            maxRotation: 45,
+                            minRotation: 0,
+                            callback: function(value, index, values) {
+                                if (period === 'day') {
+                                    const dateStr = this.getLabelForValue(value); // ví dụ: "30/5/2025"
+                                    return dateStr; // Trả về ngày trực tiếp
+                                }
+                                return this.getLabelForValue(value);
+                            }
+                        }
+                    }
 
                 },
                 plugins: {
@@ -250,7 +254,60 @@ async function loadTrafficData(period) {
     }
 }
 
+// Hàm mới: Xuất dữ liệu ra Excel
+function exportToExcel() {
+    if (!currentRawTrafficData || currentRawTrafficData.length === 0) {
+        alert('Không có dữ liệu để xuất Excel.');
+        return;
+    }
+
+    const ws_data = [
+        ['Thời gian', 'Tổng lượt truy cập', 'Lượt truy cập của khách', 'Lượt truy cập đã đăng nhập'] // Tiêu đề cột
+    ];
+
+    currentRawTrafficData.forEach(item => {
+        let timeLabel = item.date;
+        if (currentPeriod === 'day') {
+            const [year, month, day] = item.date.split('-').map(Number);
+            const date = new Date(year, month - 1, day);
+            timeLabel = date.toLocaleDateString('vi-VN'); // Định dạng ngày tháng cho dễ đọc
+        } else if (currentPeriod === 'month') {
+            timeLabel = `Tháng ${item.date.split('-')[1]}/${item.date.split('-')[0]}`;
+        }
+        // Đối với 'year', item.date đã là năm
+
+        ws_data.push([
+            timeLabel,
+            item.total_visits,
+            item.guest_visits,
+            item.logged_in_visits
+        ]);
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Thống kê lượt truy cập");
+
+    let fileName = `thong_ke_luot_truy_cap_theo_${currentPeriod}`;
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    fileName += `_${year}${month}${day}_${hours}${minutes}.xlsx`;
+
+    XLSX.writeFile(wb, fileName);
+    alert('Dữ liệu đã được xuất ra Excel thành công!');
+}
+
+
 // Tải dữ liệu ban đầu khi trang được load (mặc định theo ngày)
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => loadTrafficData('day'), 1000); // Thêm mũi tên hàm để gọi hàm sau 1s
+    // Để đảm bảo DOM đã sẵn sàng và tất cả các script đã tải,
+    // đặc biệt là thư viện Chart.js và XLSX, bạn có thể gọi
+    // loadTrafficData sau một khoảng trễ nhỏ hoặc đảm bảo
+    // rằng script này được đặt ở cuối body sau các thư viện.
+    // Dòng setTimeout ban đầu của bạn là một cách để làm điều này.
+    setTimeout(() => loadTrafficData('day'), 100); // Giảm thời gian trễ xuống 100ms
 });
