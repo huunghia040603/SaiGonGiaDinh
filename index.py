@@ -1,132 +1,3 @@
-# from flask import Flask, render_template
-
-# app = Flask(__name__)
-
-# # Trang chủ và đăng nhập
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
-
-# @app.route('/dangnhap')
-# def dangnhap():
-#     return render_template('dangnhap.html')
-
-# # Nhóm ngành Kinh tế - Quản trị
-# @app.route('/ketoan')
-# def ketoan():
-#     return render_template('nganh/ketoan.html')
-    
-# @app.route('/quantrikinhdoanh')
-# def quantrikinhdoanh():
-#     return render_template('nganh/quantrikinhdoanh.html')
-
-# @app.route('/taichinh')
-# def taichinh():
-#     return render_template('nganh/taichinh.html')
-
-# @app.route('/thuongmaidientu')
-# def thuongmaidientu():
-#     return render_template('nganh/thuongmaidientu.html')
-
-# @app.route('/logistics')
-# def logistics():
-#     return render_template('nganh/logistics.html')
-
-# # Nhóm ngành Công nghệ thông tin
-# @app.route('/congnghe')
-# def congnghe():
-#     return render_template('nganh/congnghe.html')
-
-# @app.route('/csdl')
-# def csdl():
-#     return render_template('nganh/csdl.html')
-
-# @app.route('/dohoa')
-# def dohoa():
-#     return render_template('nganh/dohoa.html')
-
-# @app.route('/laptrinh')
-# def laptrinh():
-#     return render_template('nganh/laptrinh.html')
-
-# # Nhóm ngành Công nghệ - Kỹ thuật
-# @app.route('/oto')
-# def oto():
-#     return render_template('nganh/oto.html')
-
-# @app.route('/thucpham')
-# def thucpham():
-#     return render_template('nganh/thucpham.html')
-
-# # Nhóm ngành Y - Dược
-# @app.route('/duoc')
-# def duoc():
-#     return render_template('nganh/duoc.html')
-
-# @app.route('/dieuduong')
-# def dieuduong():
-#     return render_template('nganh/dieuduong.html')
-
-# @app.route('/ysi')
-# def ysi():
-#     return render_template('nganh/ysi.html')
-
-# @app.route('/rang')
-# def rang():
-#     return render_template('nganh/rang.html')
-
-# @app.route('/phuchoi')
-# def phuchoi():
-#     return render_template('nganh/phuchoi.html')
-
-# @app.route('/yhct')
-# def yhct():
-#     return render_template('nganh/yhct.html')
-
-# # Nhóm ngành Du lịch
-# @app.route('/dulich')
-# def dulich():
-#     return render_template('nganh/dulich.html')
-
-# @app.route('/huongdan')
-# def huongdan():
-#     return render_template('nganh/huongdan.html')
-
-# @app.route('/nhahang')
-# def nhahang():
-#     return render_template('nganh/nhahang.html')
-
-# # Nhóm ngành mới thêm
-# @app.route('/ngoaingu')
-# def ngoaingu():
-#     return render_template('nganh/ngoaingu.html')
-
-# @app.route('/luat')
-# def luat():
-#     return render_template('nganh/luat.html')
-
-# @app.route('/mamnon')
-# def mamnon():
-#     return render_template('nganh/mamnon.html')
-
-# @app.route('/vanhoa')
-# def vanhoa():
-#     return render_template('nganh/vanhoa.html')
-
-# @app.route('/private_policy')
-# def private_policy():
-#     return render_template('private_policy.html')
-
-# @app.route('/profile')
-# def profile():
-#     return render_template('profile.html')
-
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-
-
 from flask import Flask, render_template, redirect, url_for, session, flash, request
 from admin_bp import admin_bp 
 
@@ -148,8 +19,6 @@ def dangnhap():
 
 # (Giữ nguyên các route thông thường khác của bạn ở đây)
 # Nhóm ngành Kinh tế - Quản trị
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 # 
 
 @app.route('/cntt')
@@ -159,98 +28,15 @@ def cntt():
 @app.route('/dichvuphaply')
 def dichvuphaply():
     return render_template('nganhhoc/dichvuphaply.html')
-=======
-=======
->>>>>>> Stashed changes
-@app.route('/ke-toan-doanh-nghiep')
-def ketoan():
-    return render_template('nganh/ketoan.html')
 
-@app.route('/quan-tri-kinh-doanh')
-def quantrikinhdoanh():
-    return render_template('nganh/quantrikinhdoanh.html')
-
-@app.route('/tai-chinh')
-def taichinh():
-    return render_template('nganh/taichinh.html')
-
-@app.route('/thuong-mai-dien-tu')
-def thuongmaidientu():
-    return render_template('nganh/thuongmaidientu.html')
-
-@app.route('/logistics')
-def logistics():
-    return render_template('nganh/logistics.html')
-
-# Nhóm ngành Công nghệ thông tin
-@app.route('/cong-nghe')
-def congnghe():
-    return render_template('nganh/congnghe.html')
-
-@app.route('/csdl')
-def csdl():
-    return render_template('nganh/csdl.html')
-
-@app.route('/do-hoa')
-def dohoa():
-    return render_template('nganh/dohoa.html')
-
-@app.route('/lap-trinh')
-def laptrinh():
-    return render_template('nganh/laptrinh.html')
-
-# Nhóm ngành Công nghệ - Kỹ thuật
-@app.route('/oto')
-def oto():
-    return render_template('nganh/oto.html')
-
-@app.route('/thuc-pham')
-def thucpham():
-    return render_template('nganh/thucpham.html')
-
-# Nhóm ngành Y - Dược
-@app.route('/duoc')
-def duoc():
-    return render_template('nganh/duoc.html')
->>>>>>> Stashed changes
-
-@app.route('/dieu-duong')
+@app.route('/dieuduong')
 def dieuduong():
     return render_template('nganhhoc/dieuduong.html')
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 @app.route('/dulich')
-=======
-=======
->>>>>>> Stashed changes
-@app.route('/y-si')
-def ysi():
-    return render_template('nganh/ysi.html')
-
-@app.route('/rang')
-def rang():
-    return render_template('nganh/rang.html')
-
-@app.route('/phuc-hoi')
-def phuchoi():
-    return render_template('nganh/phuchoi.html')
-
-@app.route('/y-hoc-co-truyen')
-def yhct():
-    return render_template('nganh/yhct.html')
-
-# Nhóm ngành Du lịch
-@app.route('/du-lich')
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 def dulich():
     return render_template('nganhhoc/dulich.html')
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 @app.route('/duoc')
 def duoc():
     return render_template('nganhhoc/duoc.html')
@@ -262,33 +48,11 @@ def ketoan():
 @app.route('/logistics')
 def logistics():
     return render_template('nganhhoc/logistics.html')
-=======
-=======
->>>>>>> Stashed changes
-@app.route('/huong-dan')
-def huongdan():
-    return render_template('nganh/huongdan.html')
 
-@app.route('/nha-hang')
-def nhahang():
-    return render_template('nganh/nhahang.html')
-
-# Nhóm ngành mới thêm
-@app.route('/ngoai-ngu')
-def ngoaingu():
-    return render_template('nganh/ngoaingu.html')
-
-@app.route('/luat')
-def luat():
-    return render_template('nganh/luat.html')
->>>>>>> Stashed changes
-
-@app.route('/mam-non')
+@app.route('/mamnon')
 def mamnon():
     return render_template('nganhhoc/mamnon.html')
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 @app.route('/ngonnguanh')
 def ngonnguanh():
     return render_template('nganhhoc/ngonnguanh.html')
@@ -336,13 +100,6 @@ def yhoccotruyen():
 @app.route('/ysi')
 def ysi():
     return render_template('nganhhoc/ysi.html')
-=======
-=======
->>>>>>> Stashed changes
-@app.route('/van-hoa')
-def vanhoa():
-    return render_template('nganh/vanhoa.html')
->>>>>>> Stashed changes
 
 @app.route('/private_policy')
 def private_policy():
@@ -363,78 +120,3 @@ def vechungtoi():
 @app.route('/vision')
 def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
-
-@app.route('/nganh')
-def  nganh():
-    return render_template('nganh.html')
-
-@app.route('/facilities')
-def cosovatchat():
-    return render_template('cosovatchat.html')
-
-@app.route('/lich')
-def lich():
-    return render_template('lich.html')
-
-@app.route('/admission')
-def tt_tuyensinh():
-    return render_template('tt-tuyensinh.html')
-
-@app.route('/hoatdongtuvan')
-def hoatdongtuvan():
-    return render_template('tintuctuyensinh.html')
-
-@app.route('/tintucgiaoduc')
-def tintucgiaoduc():
-    return render_template('tintucgiaoduc.html')
-
-@app.route('/phongtraosinhvien')
-def phongtraosinhvien():
-    return render_template('phongtraosinhvien.html')
-
-@app.route('/camnang')
-def camnang():
-    return render_template('camnang.html')
-
-@app.route('/contact')
-def lienhe():
-    return render_template('lienhe.html')
-
-@app.route('/cao-dang-chinh-quy')
-def caodangchinhquy():
-    return render_template('caodang.html')
-
-@app.route('/lien-thong-van-bang-2-cao-dang')
-def vanbang2caodang():
-    return render_template('vanbang2caodang.html')
-
-@app.route('/phothong-cao-dang-9')
-def phothong9plus():
-    return render_template('phothong9+.html')
-
-@app.route('/lien-thong-van-bang-2-dai-hoc')
-def vanbang2daihoc():
-    return render_template('vanbang2daihoc.html')
-
-@app.route('/KT-TC')
-def kinhtetaichinh():
-    return render_template('kinhte-taichinh.html')
-
-@app.route('/THUY-CHANNUOI')
-def thuychannuoi():
-    return render_template('thuy.html')
-
-@app.route('/CN-KT')
-def cnkt():
-    return render_template('congnghekithuat.html')
-
-@app.route('/Y-D')
-def yduoc():
-    return render_template('y-duoc.html')
-
-@app.route('/XH-DL-PL')
-def xhdlpl():
-    return render_template('xh-dl-pl.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
