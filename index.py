@@ -120,3 +120,7 @@ def vechungtoi():
 @app.route('/vision')
 def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
