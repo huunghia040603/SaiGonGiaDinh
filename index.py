@@ -148,106 +148,87 @@ def dangnhap():
 
 # (Giữ nguyên các route thông thường khác của bạn ở đây)
 # Nhóm ngành Kinh tế - Quản trị
-@app.route('/ketoan')
-def ketoan():
-    return render_template('nganh/ketoan.html')
+# 
 
-@app.route('/quantrikinhdoanh')
-def quantrikinhdoanh():
-    return render_template('nganh/quantrikinhdoanh.html')
-
-@app.route('/taichinh')
-def taichinh():
-    return render_template('nganh/taichinh.html')
-
-@app.route('/thuongmaidientu')
-def thuongmaidientu():
-    return render_template('nganh/thuongmaidientu.html')
-
-@app.route('/logistics')
-def logistics():
-    return render_template('nganh/logistics.html')
-
-# Nhóm ngành Công nghệ thông tin
-@app.route('/congnghe')
-def congnghe():
-    return render_template('nganh/congnghe.html')
-
-@app.route('/csdl')
-def csdl():
-    return render_template('nganh/csdl.html')
-
-@app.route('/dohoa')
-def dohoa():
-    return render_template('nganh/dohoa.html')
-
-@app.route('/laptrinh')
-def laptrinh():
-    return render_template('nganh/laptrinh.html')
-
-# Nhóm ngành Công nghệ - Kỹ thuật
-@app.route('/oto')
-def oto():
-    return render_template('nganh/oto.html')
-
-@app.route('/thucpham')
-def thucpham():
-    return render_template('nganh/thucpham.html')
-
-# Nhóm ngành Y - Dược
-@app.route('/duoc')
-def duoc():
-    return render_template('nganh/duoc.html')
+@app.route('/cntt')
+def cntt():
+    return render_template('nganhhoc/cntt.html')
+ 
+@app.route('/dichvuphaply')
+def dichvuphaply():
+    return render_template('nganhhoc/dichvuphaply.html')
 
 @app.route('/dieuduong')
 def dieuduong():
-    return render_template('nganh/dieuduong.html')
+    return render_template('nganhhoc/dieuduong.html')
 
-@app.route('/ysi')
-def ysi():
-    return render_template('nganh/ysi.html')
-
-@app.route('/rang')
-def rang():
-    return render_template('nganh/rang.html')
-
-@app.route('/phuchoi')
-def phuchoi():
-    return render_template('nganh/phuchoi.html')
-
-@app.route('/yhct')
-def yhct():
-    return render_template('nganh/yhct.html')
-
-# Nhóm ngành Du lịch
 @app.route('/dulich')
 def dulich():
-    return render_template('nganh/dulich.html')
+    return render_template('nganhhoc/dulich.html')
 
-@app.route('/huongdan')
-def huongdan():
-    return render_template('nganh/huongdan.html')
+@app.route('/duoc')
+def duoc():
+    return render_template('nganhhoc/duoc.html')
 
-@app.route('/nhahang')
-def nhahang():
-    return render_template('nganh/nhahang.html')
+@app.route('/ketoan')
+def ketoan():
+    return render_template('nganhhoc/ketoan.html')
 
-# Nhóm ngành mới thêm
-@app.route('/ngoaingu')
-def ngoaingu():
-    return render_template('nganh/ngoaingu.html')
-
-@app.route('/luat')
-def luat():
-    return render_template('nganh/luat.html')
+@app.route('/logistics')
+def logistics():
+    return render_template('nganhhoc/logistics.html')
 
 @app.route('/mamnon')
 def mamnon():
-    return render_template('nganh/mamnon.html')
+    return render_template('nganhhoc/mamnon.html')
 
-@app.route('/vanhoa')
-def vanhoa():
-    return render_template('nganh/vanhoa.html')
+@app.route('/ngonnguanh')
+def ngonnguanh():
+    return render_template('nganhhoc/ngonnguanh.html')
+
+@app.route('/oto')
+def oto():
+    return render_template('nganhhoc/oto.html')
+
+@app.route('/phuchoichucnang')
+def phuchoichucnang():
+    return render_template('nganhhoc/phuchoichucnang.html')
+
+@app.route('/phuchoirang')
+def phuchoirang():
+    return render_template('nganhhoc/phuchoirang.html')
+
+@app.route('/quantrikinhdoanh')
+def quantrikinhdoanh():
+    return render_template('nganhhoc/quantrikinhdoanh.html')
+
+@app.route('/taichinhnganhang')
+def taichinhnganhang():
+    return render_template('nganhhoc/taichinhnganhang.html')
+
+@app.route('/thpt9')
+def thpt9():
+    return render_template('nganhhoc/thpt9.html')
+
+@app.route('/thucpham')
+def thucpham():
+    return render_template('nganhhoc/thucpham.html')
+
+@app.route('/thuongmaidientu')
+def thuongmaidientu():
+    return render_template('nganhhoc/thuongmaidientu.html')
+
+@app.route('/thuy')
+def thuy():
+    return render_template('nganhhoc/thuy.html')
+
+@app.route('/yhoccotruyen')
+def yhoccotruyen():
+    return render_template('nganhhoc/yhoccotruyen.html')
+
+@app.route('/ysi')
+def ysi():
+    return render_template('nganhhoc/ysi.html')
 
 @app.route('/private_policy')
 def private_policy():
@@ -326,7 +307,7 @@ def kinhtetaichinh():
     return render_template('kinhte-taichinh.html')
 
 @app.route('/THUY-CHANNUOI')
-def thuy():
+def thuychannuoi():
     return render_template('thuy.html')
 
 @app.route('/CN-KT')

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/nganh/nganhhoc.css"> {# Vẫn có thể tái sử dụng CSS chung #}
+<style>
+    /* Thêm CSS tùy chỉnh cho trang Coming Soon */
+    #hero-banner-coming-soon {
+        background-image: url('/static/images/nganh/MamNon_ComingSoon_Banner.jpg'); /* Ảnh banner cho Coming Soon */
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        padding: 100px 20px;
+        position: relative;
+    }
+    #hero-banner-coming-soon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ tối */
+    }
+    #hero-banner-coming-soon .hero-banner-content {
+        position: relative;
+        z-index: 1;
+    }
+    #hero-banner-coming-soon h2 {
+        font-size: 3.5em;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        color: #FFD700; /* Màu vàng nổi bật */
+        font-family: 'font2' !important;
+    }
+    #hero-banner-coming-soon p {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+        font-family: 'font6' !important;
+    }
+    .coming-soon-section {
+        padding: 60px 20px;
+        text-align: center;
+    }
+    .coming-soon-section h3 {
+        font-size: 2.2em;
+        color: #004a8f; /* Màu xanh của trường */
+        margin-bottom: 30px;
+        font-family: 'font2' !important;
+    }
+    .coming-soon-section p {
+        font-size: 1.1em;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto 40px auto;
+        font-family: 'font6' !important;
+    }
+    .cta-button-coming-soon {
+        display: inline-block;
+        background-color: #e02424; /* Màu đỏ nổi bật */
+        color: #fff;
+        padding: 15px 35px;
+        font-size: 1.3em;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-family: 'font2' !important;
+    }
+    .cta-button-coming-soon:hover {
+        background-color: #c91f1f;
+    }
+    .image-placeholder {
+        margin: 40px auto;
+        max-width: 700px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .image-placeholder img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+
+    <main data-major-name="Ngành Giáo dục Mầm non (Sắp ra mắt)"> {# Đã thêm data-major-name #}
+
+        <section id="hero-banner-coming-soon" class="hero-banner">
+            <div class="hero-banner-content">
+                <h2>NGÀNH GIÁO DỤC MẦM NON</h2>
+                <p>Khai mở tương lai, ươm mầm thế hệ trẻ - SẮP RA MẮT TẠI CAO ĐẲNG SÀI GÒN GIA ĐỊNH!</p>
+            </div>
+        </section> 
+
+        <section id="announcement-section" class="coming-soon-section">
+            <h3>SẮP CÓ MẶT TẠI CAO ĐẲNG SÀI GÒN GIA ĐỊNH!</h3>
+            <p>Trong tương lai gần, Cao đẳng Sài Gòn Gia Định sẽ chính thức mở ngành  Giáo dục Mầm non  - một ngành học đầy ý nghĩa và tiềm năng, nhằm đào tạo những giáo viên mầm non chất lượng cao, đóng góp vào sự phát triển của thế hệ tương lai. Chúng tôi tin rằng đây sẽ là lựa chọn lý tưởng cho những bạn trẻ yêu trẻ thơ, mong muốn xây dựng sự nghiệp trong môi trường giáo dục đầy ắp tình yêu thương và sự sáng tạo.</p>
+            <p>Với định hướng đào tạo thực tiễn, chú trọng kỹ năng sư phạm và đạo đức nghề nghiệp, ngành Giáo dục Mầm non hứa hẹn sẽ mang đến cho sinh viên một môi trường học tập chuyên nghiệp, nơi các bạn được trang bị đầy đủ kiến thức và kinh nghiệm để trở thành những người “gieo hạt giống” cho tương lai đất nước.</p>
+
+            <div class="image-placeholder">
+                <img src="/static/images/nganh/MamNon_Future_Concept.jpg" alt="Ngành Giáo dục Mầm non - Tương lai">
+            </div>
+
+            <h3>VÌ SAO NGÀNH GIÁO DỤC MẦM NON LẠI QUAN TRỌNG?</h3>
+            <p>Giáo dục Mầm non là nền tảng đầu tiên và quan trọng nhất trong sự phát triển của trẻ nhỏ. Nhu cầu về giáo viên mầm non đạt chuẩn, có tâm huyết, có kiến thức chuyên môn vững vàng luôn rất lớn và ngày càng tăng cao. Đây là một ngành nghề không chỉ mang lại cơ hội việc làm ổn định mà còn đem lại niềm vui và ý nghĩa sâu sắc khi được chứng kiến sự trưởng thành của những mầm non tương lai.</p>
+            
+            <h3>ĐĂNG KÝ NHẬN THÔNG TIN SỚM NHẤT!</h3>
+            <p>Để không bỏ lỡ những thông tin đầu tiên về lộ trình tuyển sinh, chương trình đào tạo, cơ hội nghề nghiệp và các chính sách ưu đãi đặc biệt của ngành Giáo dục Mầm non, hãy đăng ký nhận thông tin ngay hôm nay!</p>
+            <a href="#registration-form-section" class="cta-button-coming-soon">ĐĂNG KÝ NHẬN THÔNG TIN SỚM</a>
+        </section>
+
+        <section id="registration-form-section" class="registration-section">
+            <div class="container">
+                {% include "dangkytuvan.html" %}
+            </div>
+        </section>
+
+    </main>
+
+<script src="/static/js/nganh/nganhhoc.js"></script>
+{% endblock %}
