@@ -171,6 +171,7 @@ def camnang():
 def lienhe():
     return render_template('lienhe.html')
 
+
 @app.route('/kinh-te-tai-chinh')
 def kinhtetaichinh():
     return render_template('kinhte-taichinh.html')
@@ -190,6 +191,7 @@ def yduoc():
 @app.route('/xa-hoi-du-lich-phap-luat')
 def xhdlpl():
     return render_template('xh-dl-pl.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

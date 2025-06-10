@@ -28,7 +28,36 @@ async function loadTrafficData(period) {
     // Kiểm tra nếu token không tồn tại (null hoặc undefined) và đang ở trang admin
     if (!token) {
         console.warn('Lỗi: Không tìm thấy token xác thực admin. Vui lòng đăng nhập lại.');
-        alert('Bạn cần đăng nhập để xem thống kê. Chuyển hướng đến trang đăng nhập.');
+        // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+        const messageBox = document.createElement('div');
+        messageBox.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                text-align: center;
+                max-width: 300px;
+            ">
+                <p>Bạn cần đăng nhập để xem thống kê. Chuyển hướng đến trang đăng nhập.</p>
+                <button onclick="this.parentNode.remove()" style="
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">OK</button>
+            </div>
+        `;
+        document.body.appendChild(messageBox);
+        
         // Chuyển hướng về trang đăng nhập nếu không có token
         setTimeout(() => {
             window.location.href = '/admin/login';
@@ -58,12 +87,69 @@ async function loadTrafficData(period) {
             if (response.status === 401 || response.status === 403) {
                 errorMessage = 'Phiên đăng nhập đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.';
                 localStorage.removeItem('adminAuthToken'); // Xóa token đã lưu
-                alert(errorMessage);
+                // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+                const messageBox = document.createElement('div');
+                messageBox.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: white;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        text-align: center;
+                        max-width: 300px;
+                    ">
+                        <p>${errorMessage}</p>
+                        <button onclick="this.parentNode.remove()" style="
+                            background-color: #007bff;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin-top: 10px;
+                        ">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+                
                 setTimeout(() => {
                     window.location.href = '/admin/login';
                 }, 500);
             } else {
-                alert(`Lỗi khi tải dữ liệu: ${errorMessage}`);
+                // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+                const messageBox = document.createElement('div');
+                messageBox.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: white;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        text-align: center;
+                        max-width: 300px;
+                    ">
+                        <p>Lỗi khi tải dữ liệu: ${errorMessage}</p>
+                        <button onclick="this.parentNode.remove()" style="
+                            background-color: #007bff;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin-top: 10px;
+                        ">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
             }
             console.error('Lỗi API:', response.status, response.statusText, errorMessage);
             throw new Error(`API Error: ${response.status} - ${response.statusText}`);
@@ -250,14 +336,70 @@ async function loadTrafficData(period) {
 
     } catch (error) {
         console.error('Lỗi khi tải dữ liệu thống kê:', error);
-        alert('Không thể tải dữ liệu thống kê. Vui lòng kiểm tra console của trình duyệt để biết chi tiết lỗi.');
+        // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+        const messageBox = document.createElement('div');
+        messageBox.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                text-align: center;
+                max-width: 300px;
+            ">
+                <p>Không thể tải dữ liệu thống kê. Vui lòng kiểm tra console của trình duyệt để biết chi tiết lỗi.</p>
+                <button onclick="this.parentNode.remove()" style="
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">OK</button>
+            </div>
+        `;
+        document.body.appendChild(messageBox);
     }
 }
 
 // Hàm mới: Xuất dữ liệu ra Excel
 function exportToExcel() {
     if (!currentRawTrafficData || currentRawTrafficData.length === 0) {
-        alert('Không có dữ liệu để xuất Excel.');
+        // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+        const messageBox = document.createElement('div');
+        messageBox.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                text-align: center;
+                max-width: 300px;
+            ">
+                <p>Không có dữ liệu để xuất Excel.</p>
+                <button onclick="this.parentNode.remove()" style="
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">OK</button>
+            </div>
+        `;
+        document.body.appendChild(messageBox);
         return;
     }
 
@@ -298,16 +440,40 @@ function exportToExcel() {
     fileName += `_${year}${month}${day}_${hours}${minutes}.xlsx`;
 
     XLSX.writeFile(wb, fileName);
-    alert('Dữ liệu đã được xuất ra Excel thành công!');
+    // Thay alert bằng một thông báo trên UI hoặc modal box thay vì alert()
+    const messageBox = document.createElement('div');
+    messageBox.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            max-width: 300px;
+        ">
+            <p>Dữ liệu đã được xuất ra Excel thành công!</p>
+            <button onclick="this.parentNode.remove()" style="
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+            ">OK</button>
+        </div>
+    `;
+    document.body.appendChild(messageBox);
 }
 
 
 // Tải dữ liệu ban đầu khi trang được load (mặc định theo ngày)
 document.addEventListener('DOMContentLoaded', () => {
-    // Để đảm bảo DOM đã sẵn sàng và tất cả các script đã tải,
-    // đặc biệt là thư viện Chart.js và XLSX, bạn có thể gọi
-    // loadTrafficData sau một khoảng trễ nhỏ hoặc đảm bảo
-    // rằng script này được đặt ở cuối body sau các thư viện.
-    // Dòng setTimeout ban đầu của bạn là một cách để làm điều này.
-    setTimeout(() => loadTrafficData('day'), 100); // Giảm thời gian trễ xuống 100ms
+    // Gọi hàm loadTrafficData trực tiếp mà không cần setTimeout
+    loadTrafficData('day');
 });
