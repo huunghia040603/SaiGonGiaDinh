@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const newsGridContainer = document.getElementById('news-grid-container');
     const loadingMessage = document.getElementById('loading-message');
     const paginationContainer = document.getElementById('pagination-container');
-    const API_URL = 'https://saigongiadinh.pythonanywhere.com/NewsListView/';
+    const API_URL = 'https://saigongiadinh.pythonanywhere.com/news/';
     const ITEMS_PER_PAGE = 6; // Số lượng bài viết mỗi trang
 
     let allNews = []; // Đảm bảo đây luôn là một mảng
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Extract image URL safely
         // Dựa trên cấu trúc JSON, featured_image là một đường dẫn tương đối hoặc cần tiền tố
         // Nếu API trả về "image/upload/v1749022077/Screenshot_...", thì cần tiền tố Cloudinary
-        const imageUrl = `https://res.cloudinary.com/dftarzzfw/${newsItem.featured_image}`; 
+        const imageUrl = `${newsItem.featured_image}`; 
         
         // Ensure category is not null and has a default
         // Dựa trên JSON, tags là một mảng, bạn có thể lấy tên tag đầu tiên
@@ -36,11 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Construct detail URL. Assuming your backend has a detail view, e.g., /news/<slug>
         const detailUrl = newsItem.slug ? `/news/${newsItem.slug}` : '#'; 
-
+        let displayCategory;
+        switch (`${category}`) {
+                    case "TU_VAN":
+                        displayCategory = "Tư vấn";
+                        break;
+                    case "GIAO_DUC": // Example of another category
+                        displayCategory = "Giáo dục";
+                        break;
+                    case "PHONG_TRAO": // Example of another category
+                        displayCategory = "Phong trào";
+                        break;
+                    }
         newsCard.innerHTML = `
             <div class="card-image-wrapper">
-                <img src="${imageUrl}" alt="${newsItem.title}" class="card-image">
-                <span class="card-category">${category}</span>
+                <img src="${imageUrl}" alt="Ảnh bìa" class="image">
+                
+                <span class="card-category">${displayCategory}</span>
             </div>
             <div class="card-content">
                 <h3 class="card-title">${truncatedTitle}</h3>
