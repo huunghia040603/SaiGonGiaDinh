@@ -121,8 +121,6 @@ def vechungtoi():
 def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 @app.route('/facilities')
 def facilities():
     return render_template('cosovatchat.html')
@@ -151,16 +149,10 @@ def lienthongvanbang2caodang():
 def lienthongvanbangdaihoc():
     return render_template('vanbang2daihoc.html')
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 @app.route('/hoatdongtuvan')
 def hoatdongtuvan():
     return render_template('tintuctuyensinh.html')
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 @app.route('/tintucgiaoduc')
 def tintucgiaoduc():
     return render_template('tintucgiaoduc.html')
@@ -177,19 +169,30 @@ def camnang():
 def lienhe():
     return render_template('lienhe.html')
 
+@app.route('/KT-TC')
+def kinhtetaichinh():
+    return render_template('kinhte-taichinh.html')
+
+@app.route('/THUY-CHANNUOI')
+def thuychannuoi():
+    return render_template('thuy.html')
+
+@app.route('/CN-KT')
+def cnkt():
+    return render_template('congnghekithuat.html')
+
+@app.route('/Y-D')
+def yduoc():
+    return render_template('y-duoc.html')
+
+@app.route('/XH-DL-PL')
+def xhdlpl():
+    return render_template('xh-dl-pl.html')
 
 
 
 
 
-
-
-
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 if __name__ == '__main__':
     app.run(debug=True)
