@@ -169,6 +169,26 @@ def camnang():
 def lienhe():
     return render_template('lienhe.html')
 
+@app.route('/KT-TC')
+def kinhtetaichinh():
+    return render_template('kinhte-taichinh.html')
+
+@app.route('/THUY-CHANNUOI')
+def thuychannuoi():
+    return render_template('thuy.html')
+
+@app.route('/CN-KT')
+def cnkt():
+    return render_template('congnghekithuat.html')
+
+@app.route('/Y-D')
+def yduoc():
+    return render_template('y-duoc.html')
+
+@app.route('/XH-DL-PL')
+def xhdlpl():
+    return render_template('xh-dl-pl.html')
+
 
 
 
