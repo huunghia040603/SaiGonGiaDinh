@@ -34,7 +34,7 @@
 
 /* Lớp mới để đánh dấu tab đang hoạt động */
 .nav-list > li > a.nav-item-active { /* Đổi tên từ .home-link thành .nav-item-active */
-    background-color: #003366; /* Màu xanh dương bạn muốn */
+    background-color: #dc3545; /* Màu xanh dương bạn muốn */
     border-radius: 8px;
 }
 

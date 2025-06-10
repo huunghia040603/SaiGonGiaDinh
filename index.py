@@ -121,6 +121,63 @@ def vechungtoi():
 def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
 
+@app.route('/facilities')
+def facilities():
+    return render_template('cosovatchat.html')
+
+@app.route('/lich')
+def lich():
+    return render_template('lich.html')
+
+@app.route('/admission')
+def admission():
+    return render_template('tt-tuyensinh.html')
+
+@app.route('/cao-dang-chinh-quy')
+def caodangchinhquy():
+    return render_template('caodang.html')
+
+@app.route('/phothong-cao-dang-9')
+def thptchinhquy():
+    return render_template('phothong9+.html')
+
+@app.route('/lien-thong-van-bang-2-cao-dang')
+def lienthongvanbang2caodang():
+    return render_template('vanbang2caodang.html')
+
+@app.route('/lien-thong-van-bang-2-dai-hoc')
+def lienthongvanbangdaihoc():
+    return render_template('vanbang2daihoc.html')
+
+@app.route('/hoatdongtuvan')
+def hoatdongtuvan():
+    return render_template('tintuctuyensinh.html')
+
+@app.route('/tintucgiaoduc')
+def tintucgiaoduc():
+    return render_template('tintucgiaoduc.html')
+
+@app.route('/phongtraosinhvien')
+def phongtraosinhvien():
+    return render_template('phongtraosinhvien.html')
+
+@app.route('/camnang')
+def camnang():
+    return render_template('camnang.html')
+
+@app.route('/contact')
+def lienhe():
+    return render_template('lienhe.html')
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
