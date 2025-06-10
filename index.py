@@ -21,31 +21,31 @@ def dangnhap():
 # Nhóm ngành Kinh tế - Quản trị
 # 
 
-@app.route('/cntt')
+@app.route('/cong-nghe-thong-tin')
 def cntt():
     return render_template('nganhhoc/cntt.html')
  
-@app.route('/dichvuphaply')
+@app.route('/luat-dich-vu-phap-ly')
 def dichvuphaply():
     return render_template('nganhhoc/dichvuphaply.html')
 
-@app.route('/dieuduong')
+@app.route('/dieu-duong')
 def dieuduong():
     return render_template('nganhhoc/dieuduong.html')
 
-@app.route('/dulich')
+@app.route('/du-lich')
 def dulich():
     return render_template('nganhhoc/dulich.html')
 
-@app.route('/duoc')
+@app.route('/y')
 def duoc():
     return render_template('nganhhoc/duoc.html')
 
-@app.route('/ketoan')
+@app.route('/ke-toan-doanh-nghiep')
 def ketoan():
     return render_template('nganhhoc/ketoan.html')
 
-@app.route('/logistics')
+@app.route('/logistic')
 def logistics():
     return render_template('nganhhoc/logistics.html')
 
@@ -53,27 +53,27 @@ def logistics():
 def mamnon():
     return render_template('nganhhoc/mamnon.html')
 
-@app.route('/ngonnguanh')
+@app.route('/ngon-ngu-anh')
 def ngonnguanh():
     return render_template('nganhhoc/ngonnguanh.html')
 
-@app.route('/oto')
+@app.route('/cong-nghe-o-to')
 def oto():
     return render_template('nganhhoc/oto.html')
 
-@app.route('/phuchoichucnang')
+@app.route('/ky-thuat-phuc-hoi-chuc-nang-vat-ly-tri-lieu')
 def phuchoichucnang():
     return render_template('nganhhoc/phuchoichucnang.html')
 
-@app.route('/phuchoirang')
+@app.route('/ky-thuat-phuc-hinh-rang-ham-mat')
 def phuchoirang():
     return render_template('nganhhoc/phuchoirang.html')
 
-@app.route('/quantrikinhdoanh')
+@app.route('/quan-tri-kinh-doanh')
 def quantrikinhdoanh():
     return render_template('nganhhoc/quantrikinhdoanh.html')
 
-@app.route('/taichinhnganhang')
+@app.route('/tai-chinh-ngan-hang')
 def taichinhnganhang():
     return render_template('nganhhoc/taichinhnganhang.html')
 
@@ -81,25 +81,27 @@ def taichinhnganhang():
 def thpt9():
     return render_template('nganhhoc/thpt9.html')
 
-@app.route('/thucpham')
+@app.route('/cong-nghe-thuc-pham')
 def thucpham():
     return render_template('nganhhoc/thucpham.html')
 
-@app.route('/thuongmaidientu')
+@app.route('/thuong-mai-dien-tu')
 def thuongmaidientu():
     return render_template('nganhhoc/thuongmaidientu.html')
 
-@app.route('/thuy')
+@app.route('/thu-y')
 def thuy():
     return render_template('nganhhoc/thuy.html')
 
-@app.route('/yhoccotruyen')
+@app.route('/y-hoc-co-truyen')
 def yhoccotruyen():
     return render_template('nganhhoc/yhoccotruyen.html')
 
-@app.route('/ysi')
+@app.route('/y-sy-da-khoa')
 def ysi():
     return render_template('nganhhoc/ysi.html')
+
+
 
 @app.route('/private_policy')
 def private_policy():
@@ -169,35 +171,25 @@ def camnang():
 def lienhe():
     return render_template('lienhe.html')
 
-@app.route('/KT-TC')
+@app.route('/kinh-te-tai-chinh')
 def kinhtetaichinh():
     return render_template('kinhte-taichinh.html')
 
-@app.route('/THUY-CHANNUOI')
+@app.route('/thu-y-chan-nuoi')
 def thuychannuoi():
     return render_template('thuy.html')
 
-@app.route('/CN-KT')
+@app.route('/cong-nghe-ky-thuat')
 def cnkt():
     return render_template('congnghekithuat.html')
 
-@app.route('/Y-D')
+@app.route('/y-duoc')
 def yduoc():
     return render_template('y-duoc.html')
 
-@app.route('/XH-DL-PL')
+@app.route('/xa-hoi-du-lich-phap-luat')
 def xhdlpl():
     return render_template('xh-dl-pl.html')
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
