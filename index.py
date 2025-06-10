@@ -122,6 +122,7 @@ def tamnhinsumenh():
     return render_template('tamnhinsumenh.html')
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 @app.route('/facilities')
 def facilities():
     return render_template('cosovatchat.html')
@@ -152,10 +153,13 @@ def lienthongvanbangdaihoc():
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 @app.route('/hoatdongtuvan')
 def hoatdongtuvan():
     return render_template('tintuctuyensinh.html')
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 @app.route('/tintucgiaoduc')
 def tintucgiaoduc():
@@ -182,6 +186,8 @@ def lienhe():
 
 
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
