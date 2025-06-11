@@ -18,6 +18,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     {# Đây là nơi bạn sẽ đặt CSS chung cho toàn bộ admin panel #}
     {% block extrastyle %} 
@@ -185,18 +186,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin.count_traffic') }}">
-                    <i class="bi bi-table me-2"></i>Thống kê lượt truy cập
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.count_registration') }}">
-                    <i class="bi bi-ui-checks me-2"></i>Thống kê lượt đăng ký
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-shadows me-2"></i>Shadow
+                    <i class="fa-solid fa-book"></i> &nbsp;Thống kê lượt đăng ký tư vấn
                 </a>
             </li>
             <li class="nav-item">
@@ -206,17 +197,22 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.manage_account_student') }}"> {# Thêm liên kết này #}
-                    <i class="bi bi-person-plus me-2"></i>Quản lý tài khoản sinh viên
+                    <i class="fa-solid fa-people-roof"></i> &nbsp;Quản lý tài khoản sinh viên
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.manage_account_faculty') }}"> {# Thêm liên kết này #}
-                    <i class="bi bi-person-plus me-2"></i>Quản lý tài khoản giảng viên
+                   <i class="fa-solid fa-people-group"></i> &nbsp;Quản lý tài khoản giảng viên
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.manage_news') }}"> {# Thêm liên kết này #}
-                    <i class="bi bi-person-plus me-2"></i>Quản lý tin tức
+                   <i class="fa-solid fa-newspaper"></i> &nbsp;Quản lý tin tức
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.locked_account') }}"> {# Thêm liên kết này #}
+                   <i class="fa-solid fa-newspaper"></i> &nbsp;Quản lý đóng/mở tài khoản sinh viên
                 </a>
             </li>
 
@@ -231,41 +227,34 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('admin.admin_login') }}">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    <i class="bi bi-box-arrow-in-right me-2"></i>&nbsp;Login
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-person-plus me-2"></i>Register
+            {# XÓA HOẶC CHUYỂN HAI LIÊN KẾT SAU RA KHỎI SIDEBAR NẾU CHÚNG ĐƯỢC HIỂN THỊ TRÊN TOP-NAVBAR #}
+            {# <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.admin_home') }}">
+                   <i class="fa-solid fa-toolbox"></i>&nbsp;Chào mừng, Admin
                 </a>
-            </li>
-
-            <li class="nav-item mt-3">
-                <span class="nav-link text-uppercase fw-bold text-muted" style="font-size: 0.75rem; padding: 5px 20px;">Extra</span>
-            </li>
+            </li> #}
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-star me-2"></i>Icons
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-file-earmark me-2"></i>Sample Page
+                <a class="nav-link" id="logoutBtn_sidebar" href="{{ url_for('admin.admin_login') }}"> {# Đổi ID để tránh trùng lặp #}
+                    <i class="fa-solid fa-door-closed"></i>&nbsp;Đăng xuất
                 </a>
             </li>
         </ul>
     </nav>
 
     <div id="content">
-        <nav class="top-navbar">
-            <a class="navbar-brand" href="{{ url_for('admin.admin_home') }}">Dashboard</a>
+        {# THÊM HEADER TOP-NAVBAR VÀO ĐÂY #}
+        <header class="top-navbar">
+            <a class="navbar-brand" href="{{ url_for('admin.admin_home') }}">Bảng điều khiển</a>
             <div class="profile-section">
-                <span class="welcome-text">Chào mừng, <span id="adminName">Admin</span>!</span> {# Added span with ID #}
-                <a href="#" id="logoutBtn" class="btn btn-outline-danger">Đăng xuất</a>
-                <div class="avatar" id="adminAvatar">AD</div> {# Added ID #}
+                <span class="welcome-text">Chào mừng, <span id="adminName"></span></span> 
+                <div class="avatar" id="adminAvatar"></div>
+                <button class="btn btn-outline-danger ms-2" id="logoutBtn_top_navbar">Đăng xuất</button> {# ID mới cho nút đăng xuất trên top-navbar #}
             </div>
-        </nav>
-
+        </header>
+    
         <main>
             {% block content %}
             {# Nội dung cụ thể của từng trang sẽ được đặt ở đây #}
@@ -275,7 +264,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   
+    
 
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}
@@ -283,25 +272,44 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const logoutBtn = document.getElementById('logoutBtn');
+            // Thay đổi ID của nút đăng xuất để chỉ tham chiếu đến nút trên top-navbar
+            const logoutBtnTopNavbar = document.getElementById('logoutBtn_top_navbar');
+            // Nếu bạn vẫn muốn có nút đăng xuất ở sidebar, hãy xử lý nó riêng
+            const logoutBtnSidebar = document.getElementById('logoutBtn_sidebar');
+
             const adminLoginPage = "{{ url_for('admin.admin_login') }}";
             const adminNameSpan = document.getElementById('adminName');
             const adminAvatarDiv = document.getElementById('adminAvatar');
-
+            
             function updateAdminInfo() {
                 const adminFullName = localStorage.getItem('adminFullName');
                 const adminEmail = localStorage.getItem('adminEmail');
-                if (adminFullName) {
-                    adminNameSpan.textContent = adminFullName;
-                    const initials = adminFullName.split(' ').map(n => n[0]).join('').toUpperCase();
-                    adminAvatarDiv.textContent = initials.substring(0, 2); // Show first two initials
-                } else if (adminEmail) {
-                    adminNameSpan.textContent = adminEmail;
-                    adminAvatarDiv.textContent = adminEmail.substring(0, 2).toUpperCase();
+
+                // Chỉ cập nhật nếu các phần tử tồn tại (chúng sẽ tồn tại sau khi bạn thêm HTML)
+                if (adminNameSpan && adminAvatarDiv) {
+                    if (adminFullName) {
+                        adminNameSpan.textContent = adminFullName;
+                        const initials = adminFullName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        adminAvatarDiv.textContent = initials.substring(0, 2); // Show first two initials
+                    } else if (adminEmail) {
+                        adminNameSpan.textContent = adminEmail;
+                        adminAvatarDiv.textContent = adminEmail.substring(0, 2).toUpperCase();
+                    } else {
+                        adminNameSpan.textContent = "Admin";
+                        adminAvatarDiv.textContent = "AD";
+                    }
                 } else {
-                    adminNameSpan.textContent = "Admin";
-                    adminAvatarDiv.textContent = "AD";
+                    console.warn("Không tìm thấy phần tử adminName hoặc adminAvatar. Vui lòng kiểm tra lại cấu trúc HTML.");
                 }
+            }
+
+            function clearAdminInfo() {
+                localStorage.removeItem('adminAuthToken');
+                localStorage.removeItem('adminUserId');
+                localStorage.removeItem('adminEmail');
+                localStorage.removeItem('adminFullName');
+                console.log('Đã đăng xuất. Xóa token.');
+                window.location.replace(adminLoginPage);
             }
 
             function checkAdminAuth() {
@@ -316,23 +324,25 @@
 
             checkAdminAuth();
 
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function(event) {
+            // Gán sự kiện click cho nút đăng xuất trên top-navbar
+            if (logoutBtnTopNavbar) {
+                logoutBtnTopNavbar.addEventListener('click', function(event) {
                     event.preventDefault();
+                    clearAdminInfo();
+                });
+            }
 
-                    localStorage.removeItem('adminAuthToken');
-                    localStorage.removeItem('adminUserId');
-                    localStorage.removeItem('adminEmail');
-                    localStorage.removeItem('adminFullName');
-
-                    console.log('Đã đăng xuất. Xóa token.');
-                    window.location.replace(adminLoginPage);
+            // Gán sự kiện click cho nút đăng xuất trên sidebar (nếu bạn vẫn muốn nó ở đó)
+            if (logoutBtnSidebar) {
+                logoutBtnSidebar.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    clearAdminInfo();
                 });
             }
 
             window.addEventListener('pageshow', function(event) {
                 if (event.persisted) {
-                    console.log('Trang được tải từ bộ nhớ cache của trình duyệt. Đang kiểm tra lại xác thực.');
+                   
                     checkAdminAuth();
                 }
             });

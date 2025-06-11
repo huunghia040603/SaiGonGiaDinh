@@ -4,6 +4,12 @@
 
 {% block page_styles %}
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Đảm bảo không có thanh cuộn ngang */
+        }
         .sggd-container {
             background-color: #ffffff;
             padding: 10px 20px;
@@ -153,7 +159,6 @@
             text-align: center;
         }
 
-
         .student-table tbody tr:hover {
             background-color: #fdfdff; /* Pastel lighter hover */
         }
@@ -196,7 +201,7 @@
             flex-direction: column; /* Xếp nút theo chiều dọc */
             gap: 5px; /* Khoảng cách giữa các nút */
             align-items: center; /* Căn giữa các nút */
-            margin-left: 80px;
+            margin-right: 10px;
         }
 
         .action-buttons button {
@@ -208,6 +213,7 @@
             font-weight: 500;
             transition: background-color 0.2s ease;
             width: 80px; /* Đặt chiều rộng cố định cho nút */
+            
         }
 
         .action-buttons .view-btn {
@@ -404,6 +410,7 @@
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box; /* Added for correct width calculation */
             font-size: 1em;
         }
 
@@ -433,6 +440,173 @@
             background-color: #5a6268;
         }
 
+        /* Modal Overlay for Edit/Add */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Đảm bảo nó nằm trên các nội dung khác */
+            display: none; /* Ẩn ban đầu */
+        }
+
+        /* Modal Content for Edit/Add */
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-width: 600px; /* Chiều rộng mặc định */
+            width: 90%;
+            max-height: 90vh; /* Giới hạn chiều cao */
+            overflow-y: auto; /* Cuộn nếu nội dung dài */
+        }
+
+        .large-modal-content {
+            max-width: 900px; /* Chiều rộng lớn hơn cho modal chỉnh sửa */
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .modal-content .close-button { /* Adjusted for general modal close button */
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #888;
+            background: none; /* Ensure no default button background */
+            border: none; /* Ensure no default button border */
+        }
+
+        .modal-content .close-button:hover {
+            color: #333;
+        }
+
+        /* Form Styling */
+        .edit-form .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 2 cột trở lên */
+            gap: 15px 20px; /* Khoảng cách hàng và cột */
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box; /* Bao gồm padding và border trong width */
+            font-size: 1em;
+        }
+
+        .form-group input[type="file"] {
+            padding: 5px;
+        }
+
+        .form-group .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 10px;
+            border: 1px solid #eee;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-actions {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .form-actions .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s ease;
+        }
+
+        .form-actions .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .form-actions .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .form-actions .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .form-actions .btn-secondary:hover {
+            background-color: #5c636a;
+        }
+
+        /* Responsive adjustments for forms */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ hơn */
+            }
+        }
+        .lock-icon-container {
+    display: inline-block; /* Để các phần tử bên trong nằm cùng hàng */
+    cursor: pointer; /* Thay đổi con trỏ chuột thành hình bàn tay khi di chuột qua */
+    font-size: 24px; /* Kích thước biểu tượng */
+    vertical-align: middle; /* Căn giữa theo chiều dọc với label */
+    margin-left: 10px; /* Khoảng cách với label */
+}
+
+.lock-icon-container i {
+    color: green; /* Màu mặc định cho ổ khóa mở */
+    transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+
+/* Định dạng khi ổ khóa bị khóa */
+.lock-icon-container i.fa-lock {
+    color: red;
+}
     </style>
 {% endblock %}
 
@@ -453,6 +627,7 @@
                         <th>Mã sinh viên</th>
                         <th>Khoa</th>
                         <th>Trạng thái</th>
+                        <th>TTTK</th>
                         <th>GPA</th>
                         <th>Hành động</th>
                     </tr>
@@ -463,7 +638,7 @@
             </table>
         </div>
 
-      
+       
 
         <div id="loadingOverlay" class="loading-overlay">
             <div class="spinner"></div>
@@ -493,21 +668,162 @@
                 <div class="detail-item"><strong>Địa chỉ:</strong> <span id="detailAddress"></span></div>
                 <div class="detail-item"><strong>Quận/Huyện:</strong> <span id="detailDistrict"></span></div>
                 <div class="detail-item"><strong>Tỉnh/Thành phố:</strong> <span id="detailCity"></span></div>
-                <div class="detail-item"><strong>Tên phụ huynh:</strong> <span id="detailParentName"></span></div>
-                <div class="detail-item"><strong>SĐT phụ huynh:</strong> <span id="detailParentPhone"></span></div>
+                <hr>
                 <div class="detail-item"><strong>Chương trình học:</strong> <span id="detailProgram"></span></div>
                 <div class="detail-item"><strong>Ngành học:</strong> <span id="detailMajor"></span></div>
                 <div class="detail-item"><strong>Niên khóa:</strong> <span id="detailAcademicYear"></span></div>
                 <div class="detail-item"><strong>Khoa:</strong> <span id="detailDepartment"></span></div>
                 <div class="detail-item"><strong>Trạng thái:</strong> <span id="detailStudentStatus"></span></div>
                 <div class="detail-item"><strong>GPA:</strong> <span id="detailGPA"></span></div>
-                <div class="detail-item"><strong>Ngày nhập học:</strong> <span id="detailEnrollmentDate"></span></div>
+                <div class="detail-item"><strong>Ngày nhập học:</strong> <span id="date_joined"></span></div>
+                <div class="detail-item"><strong>Trạng thái tài khoản:</strong> <span id="detailStudentLock"></span></div>
+                <hr>
+                <div class="detail-item"><strong>Tên phụ huynh:</strong> <span id="detailParentName"></span></div>
+                <div class="detail-item"><strong>SĐT phụ huynh:</strong> <span id="detailParentPhone"></span></div>
+               
             </div>
         </div>
     </div>
 
-    
+    {# Student ID Input Modal for Full Report #}
+    <div id="studentIdInputModalOverlay" class="student-id-input-modal-overlay">
+        <div class="student-id-input-modal-content">
+            <button class="close-button" id="closeStudentIdInputModal">&times;</button>
+            <h3>Nhập Mã Sinh Viên để xem Báo Cáo</h3>
+            <input type="text" id="reportStudentIdInput" placeholder="Nhập mã sinh viên">
+            <div id="reportMessage" class="sggd-message" style="display: none; margin-bottom: 15px;"></div>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirmReportStudentId">Xem Báo Cáo</button>
+                <button class="cancel-btn" id="cancelReportStudentId">Hủy</button>
+            </div>
+        </div>
+    </div>
 
+    {# Edit Student Modal #}
+    <div id="editStudentModalOverlay" class="modal-overlay">
+        <div class="modal-content large-modal-content">
+            <span class="close-button" id="closeEditStudentModal">&times;</span>
+            <h2>Chỉnh sửa thông tin sinh viên</h2>
+            <form id="editStudentForm" class="edit-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editUserPhoto">Ảnh đại diện:</label>
+                        <input type="file" id="editUserPhoto" name="user_photo" accept="image/*">
+                        <img id="currentEditUserPhoto" src="" alt="Ảnh đại diện" class="avatar-preview">
+                    </div>
+                    <div class="form-group">
+                        <label for="editFirstName">Tên:</label>
+                        <input type="text" id="editFirstName" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Họ:</label>
+                        <input type="text" id="editLastName" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email:</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUsername">Tên đăng nhập:</label>
+                        <input type="text" id="editUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStudentCode">Mã số sinh viên:</label>
+                        <input type="text" id="editStudentCode" name="student_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editNationalIdCard">Số CCCD:</label>
+                        <input type="text" id="editNationalIdCard" name="national_id_card">
+                    </div>
+                    <div class="form-group">
+                        <label for="editNationality">Quốc tịch:</label>
+                        <input type="text" id="editNationality" name="nationality">
+                    </div>
+                    <div class="form-group">
+                        <label for="editGender">Giới tính:</label>
+                        <select id="editGender" name="gender">
+                            <option value="M">Nam</option>
+                            <option value="F">Nữ</option>
+                            <option value="O">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDateOfBirth">Ngày sinh (tháng/ngày/năm):</label>
+                        <input type="date" id="editDateOfBirth" name="date_of_birth">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPlaceOfBirth">Nơi sinh:</label>
+                        <input type="text" id="editPlaceOfBirth" name="place_of_birth">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Số điện thoại:</label>
+                        <input type="tel" id="editPhone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddress">Địa chỉ:</label>
+                        <input type="text" id="editAddress" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDistrict">Quận/Huyện:</label>
+                        <input type="text" id="editDistrict" name="district">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCity">Thành phố:</label>
+                        <input type="text" id="editCity" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="editParentName">Tên phụ huynh:</label>
+                        <input type="text" id="editParentName" name="parent_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editParentPhone">SĐT phụ huynh:</label>
+                        <input type="tel" id="editParentPhone" name="parent_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="editProgram">Chương trình:</label>
+                        <select id="editProgram" name="program"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMajor">Chuyên ngành:</label>
+                        <select id="editMajor" name="major"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAcademicYear">Năm học:</label>
+                        <select id="editAcademicYear" name="academic_year"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDepartment">Khoa:</label>
+                        <select id="editDepartment" name="department"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStudentStatus">Trạng thái sinh viên:</label>
+                        <select id="editStudentStatus" name="student_status">
+                            <option value="DANG_HOC">Đang học</option>
+                            <option value="DA_TOT_NGHIEP">Đã tốt nghiệp</option>
+                            <option value="SAP_TOT_NGHIEP">Sắp tốt nghiệp</option>
+                            <option value="THOI_HOC">Thôi học</option>
+                            <option value="BUOC_THOI_HOC">Buộc thôi học</option>
+                            <option value="BAO_LUU">Bảo lưu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGPA">GPA:</label>
+                        <input type="number" step="0.01" id="editGPA" name="GPA">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDateJoined">Ngày nhập học (tháng/ngày/năm):</label>
+                        <input type="date" id="editDateJoined" name="date_joined">
+                    </div>
+                    
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditStudentModal">Hủy</button>
+                </div>
+                <input type="hidden" id="editStudentId">
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

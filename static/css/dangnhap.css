@@ -575,3 +575,132 @@ p {
         display: none; /* Hide characters in landscape mode */
     }
 }
+/* dangnhap.css */
+
+/* Keyframe cho hiệu ứng xoay */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Áp dụng hiệu ứng xoay cho icon spinner trong nút đăng nhập */
+.btn-login .fa-spinner {
+    animation: spin 1s linear infinite; /* Áp dụng hiệu ứng xoay vô hạn */
+    margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+}
+
+/* Đảm bảo nút đăng nhập sử dụng flexbox để căn chỉnh nội dung */
+.btn-login {
+    display: flex; /* Sử dụng flexbox để căn chỉnh nội dung bên trong */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    /* Giữ nguyên các thuộc tính CSS khác của nút đăng nhập */
+    background-color: #ee232b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
+}
+
+.btn-login:hover {
+    background-color: #d11e25;
+}
+
+.btn-login:disabled {
+    background-color: blue; /* Màu xám khi nút bị vô hiệu hóa */
+    cursor: not-allowed; /* Con trỏ "không cho phép" */
+}
+
+/* Căn chỉnh icon mặc định và text */
+.btn-login .fas {
+    margin-right: 8px; /* Thêm khoảng cách cho icon mặc định */
+}
+/* Đảm bảo chỉ icon spinner có animation */
+.btn-login .fas:not(.fa-spinner) {
+    animation: none; /* Đảm bảo các icon khác không xoay */
+}
+
+/* Các CSS hiện có của bạn sẽ ở đây */
+/* ... (các phần còn lại của dangnhap.css) ... */
+/* dangnhap.css */
+
+/* ... (các CSS hiện có của bạn) ... */
+
+/* CSS cho thông báo lỗi */
+.error-message-login {
+    display: none; /* Mặc định ẩn */
+    color: #ff3333; /* Màu đỏ cho lỗi */
+    background-color: #ffe6e6; /* Nền nhẹ nhàng */
+    border: 1px solid #ff9999;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 15px; /* Khoảng cách với ô input */
+    font-size: 14px;
+    text-align: center;
+    align-items: center; /* Để căn giữa icon và text */
+    justify-content: center; /* Để căn giữa icon và text */
+    gap: 8px; /* Khoảng cách giữa icon và text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.error-message-login .fas {
+    margin-right: 5px; /* Khoảng cách nhỏ giữa icon và văn bản lỗi */
+}
+
+/* Hiệu ứng mờ dần (tùy chọn) */
+.error-message-login.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Các CSS hiện có của bạn cho nút và spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-login .fa-spinner {
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ee232b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-login:hover {
+    background-color: #d11e25;
+}
+
+.btn-login:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.btn-login .fas {
+    margin-right: 8px;
+}
+.btn-login .fas:not(.fa-spinner) {
+    animation: none;
+}

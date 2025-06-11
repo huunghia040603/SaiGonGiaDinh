@@ -1,86 +1,208 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Đăng ký tư vấn - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vX5P/g/s/c/d/v/w/x/y/z/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/0/1/2/3/4/5/6/7/8/9/+ /=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Danh sách Đăng ký tư vấn - Admin{% endblock %}
+
+{% block page_styles %}
     <style>
+        /* General Body and Layout */
         body {
             display: flex;
             min-height: 100vh;
-            background-color: #f8f9fa;
+            background-color: #f0f2f5; /* Nền tổng thể vẫn hơi ngả xám nhẹ để có chiều sâu */
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #212529; /* Màu chữ đen đậm hơn cho dễ đọc trên nền sáng */
         }
+
+        /* Sidebar Styling */
         #sidebar {
             width: 250px;
-            background-color: #343a40;
-            color: white;
+            background-color: #ffffff; /* Sidebar nền trắng */
+            color: #343a40; /* Chữ trong sidebar màu đen đậm */
             padding-top: 20px;
             flex-shrink: 0;
+            box-shadow: 2px 0 6px rgba(0,0,0,0.1); /* Bóng nhẹ để phân biệt với content */
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid #e0e0e0; /* Đường kẻ phân cách sidebar */
         }
-        #sidebar .nav-link {
-            color: white;
-            padding: 10px 15px;
+
+        #sidebar .navbar-brand {
+            font-weight: 700;
+            color: #007bff; /* Tên thương hiệu màu xanh nổi bật */
+            padding: 15px 20px;
+            text-align: center;
             display: block;
-            text-decoration: none; /* Bỏ gạch chân mặc định */
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e9ecef; /* Đường kẻ dưới tên thương hiệu */
         }
-        #sidebar .nav-link:hover, #sidebar .nav-link.active {
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
+
+        #sidebar .nav-link {
+            color: #495057; /* Màu chữ xám đen cho các link */
+            padding: 12px 20px;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-left-color 0.3s ease;
+            border-left: 5px solid transparent;
+            margin-bottom: 5px;
+            border-radius: 4px;
         }
+
+        #sidebar .nav-link:hover {
+            background-color: #e9ecef; /* Nền xám nhạt khi hover */
+            color: #0056b3; /* Chữ xanh đậm hơn khi hover */
+            border-left-color: #007bff; /* Highlight màu xanh */
+        }
+
+        #sidebar .nav-link.active {
+            background-color: #007bff; /* Nền xanh cho link active */
+            color: white; /* Chữ trắng cho link active */
+            border-left-color: #007bff;
+            font-weight: bold;
+            box-shadow: inset 3px 0 8px rgba(0,123,255,0.2); /* Bóng trong nhẹ cho link active */
+        }
+
+        /* Content Area Styling */
         #content {
             flex-grow: 1;
-            padding: 20px;
+            padding: 30px;
+            background-color: #ffffff; /* Nền trắng cho khu vực nội dung chính */
+            border-radius: 8px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Bóng tinh tế hơn */
+            overflow-x: auto;
         }
-        .navbar-brand {
-            font-weight: bold;
+
+        h1 {
+            color: #212529;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
+
+        /* Table Styling */
         .table-responsive {
-            margin-top: 20px;
+            margin-top: 25px;
+            border: 1px solid #dee2e6; /* Border nhẹ xung quanh bảng */
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            min-width: 900px; /* Đảm bảo bảng không quá co lại */
+            box-shadow: none; /* Bỏ shadow riêng cho bảng để tổng thể gọn gàng hơn */
+        }
+
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            padding: 15px 18px;
+            border-bottom: none;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .table tbody tr {
+            background-color: #ffffff;
+            transition: background-color 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa; /* Nền xám nhạt hơn khi hover */
+        }
+
+        .table tbody td {
+            padding: 12px 18px;
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+            white-space: nowrap;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #343a40; /* Chữ đen cho nội dung bảng */
+        }
+
+        /* Adjust width for specific columns */
+        .table tbody td:nth-child(10) { /* Cột Ghi chú */
+            white-space: normal;
+            max-width: 300px;
+        }
+        .table tbody td:nth-child(2), /* Họ và tên */
+        .table tbody td:nth-child(4) { /* Email */
+            min-width: 150px;
+        }
+
+        /* --- Custom width for 'Trạng thái' column --- */
+        .table thead th:nth-child(9), /* Tiêu đề cột 'Trạng thái' */
+        .table tbody td:nth-child(9) {  /* Ô dữ liệu cột 'Trạng thái' */
+            width: 180px; /* Tăng chiều rộng cố định, có thể điều chỉnh thêm */
+            min-width: 180px; /* Đảm bảo chiều rộng tối thiểu */
+            max-width: 250px; /* Giới hạn chiều rộng tối đa */
+            white-space: normal; /* Cho phép nội dung xuống dòng nếu cần */
+        }
+        /* --- End custom width for 'Trạng thái' column --- */
+
+        /* Rounded corners for table */
+        .table thead th:first-child { border-top-left-radius: 8px; }
+        .table thead th:last-child { border-top-right-radius: 8px; }
+        /* Để tránh các góc dưới bị cong khi bảng có ít hàng */
+        .table tbody tr:last-child td:first-child { border-bottom-left-radius: 8px; }
+        .table tbody tr:last-child td:last-child { border-bottom-right-radius: 8px; }
+
+        /* Actions Column Specific Styling */
+        .table tbody td:last-child {
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 18px 25px;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .modal-body {
+            padding: 25px;
+            color: #343a40; /* Chữ đen trong modal body */
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 15px 25px;
+            background-color: #f1f3f5;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
         }
     </style>
-</head>
-<body>
+{% endblock %}
 
-    <nav id="sidebar" class="d-flex flex-column">
-        <a class="navbar-brand text-center mb-4" href="{{ url_for('admin.admin_home') }}">CollegeAdmin</a>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin.admin_home') }}">
-                    <i class="bi bi-house-door-fill me-2"></i>Tổng quan
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('admin.admin_advisory_registrations') }}">
-                    <i class="bi bi-file-earmark-text-fill me-2"></i>Quản lý Đăng ký
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-gear-fill me-2"></i>Cài đặt
-                </a>
-            </li>
-        </ul>
-    </nav>
-
+{% block content %}
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 rounded shadow-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('admin.admin_home') }}">Dashboard Admin</a>
-                <div class="d-flex ms-auto">
-                    <span class="navbar-text me-3">Chào mừng, Admin!</span>
-                    <a href="{{ url_for('admin.admin_login') }}" class="btn btn-outline-danger">Đăng xuất</a>
-                </div>
-            </div>
-        </nav>
-
         <div class="container-fluid">
             <h1 class="mb-4">Danh sách Đăng ký tư vấn</h1>
-            <p>Đây là nơi hiển thị và quản lý các lượt đăng ký tư vấn từ sinh viên/người quan tâm.</p>
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover shadow-sm">
@@ -94,7 +216,7 @@
                             <th scope="col">Ngành quan tâm</th>
                             <th scope="col">Tốt nghiệp</th>
                             <th scope="col">Ngày đăng ký</th>
-                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Trạng thái</th> {# Đây là cột thứ 9 #}
                             <th scope="col">Ghi chú</th>
                             <th scope="col">Hành động</th>
                         </tr>
@@ -130,8 +252,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/admin/admin_registrations.js') }}"></script>
-</body>
-</html>
+{% endblock %}

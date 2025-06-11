@@ -1,0 +1,399 @@
+{% extends "admin/base_admin.html" %} {# Điều chỉnh tên base template nếu khác #}
+
+{% block title %}Quản lý Khóa/Mở khóa Tài khoản Sinh viên - Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}
+
+{% block page_styles %}
+<style>
+    /* CSS riêng cho trang này */
+    .admin-card {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+    h1.page-title {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+        font-weight: 600;
+    }
+    .message {
+        padding: 12px 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        display: none;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    .message.show {
+        opacity: 1;
+        display: block; /* Ensure it's block when shown for fade effect */
+    }
+    .message.success {
+        background-color: #28a745;
+    }
+    .message.error {
+        background-color: #dc3545;
+    }
+    .message.info {
+        background-color: #17a2b8;
+    }
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.8em; /* Slightly larger text */
+        z-index: 1000;
+        display: none;
+        flex-direction: column; /* For spinner and text */
+        gap: 15px; /* Space between spinner and text */
+    }
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: .3em;
+        animation: spinner-border .75s linear infinite;
+        border-right-color: transparent;
+    }
+    @keyframes spinner-border {
+        to { transform: rotate(360deg); }
+    }
+    table {
+        width: 100%;
+        border-collapse: separate; /* Use separate for border-radius */
+        border-spacing: 0; /* Remove default spacing */
+        margin-top: 20px;
+        border-radius: 8px; /* Rounded corners for the table */
+        overflow: hidden; /* Ensures content respects border-radius */
+        
+    }
+    th, td {
+        border: 1px solid #e0e0e0; /* Lighter border */
+        padding: 15px; /* More padding */
+        text-align: left;
+        vertical-align: middle; /* Align text vertically */
+        height: 80px;
+        
+    }
+    th {
+        background-color: #f2f4f6; /* Lighter header background */
+        color: #333; /* Darker header text */
+        font-weight: 600;
+        text-transform: uppercase; /* Uppercase headers */
+        font-size: 0.9em;
+    }
+    th:first-child { border-top-left-radius: 8px; }
+    th:last-child { border-top-right-radius: 8px; }
+    tr:last-child td:first-child 
+    { border-bottom-left-radius: 8px; }
+    tr:last-child td:last-child 
+    { border-bottom-right-radius: 8px; }
+
+    tr:nth-child(even) {
+        background-color: #fcfcfc; /* Very light subtle stripe */
+    }
+    tr:hover {
+        background-color: #eef2f5; /* Subtle hover effect */
+    }
+    .lock-icon-container {
+        /* Điều chỉnh font-size ở đây để thay đổi kích thước icon */
+        font-size: 1.8em; /* Ví dụ: tăng lên 1.8 lần kích thước font mặc định */
+        display: flex;
+        align-items: center;
+        gap: 8px; /* Space between icon and text */
+        font-weight: 500;
+        
+    }
+    .lock-icon-container i.fa-lock-open {
+        color: #28a745; /* Green */
+        margin-left: 120px;
+    }
+    .lock-icon-container i.fa-lock {
+        color: #dc3545; /* Red */
+        margin-left: 120px;
+    }
+    .action-buttons {
+        text-align: center; /* Center the buttons */
+    }
+    .action-buttons button {
+        padding: 10px 20px; /* Larger buttons */
+        border: none;
+        border-radius: 25px; /* Pill-shaped buttons */
+        cursor: pointer;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+        font-size: 0.95em;
+        font-weight: 600;
+        min-width: 120px; /* Ensure consistent width */
+    }
+    .action-buttons .unlock-btn {
+        background-color: #28a745;
+        color: white;
+    }
+    .action-buttons .unlock-btn:hover {
+        background-color: #218838;
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    }
+    .action-buttons .lock-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+    .action-buttons .lock-btn:hover {
+        background-color: #c82333;
+        box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+    }
+    .refresh-button-container {
+        text-align: center;
+        margin-bottom: 25px; /* Space above table */
+    }
+    .refresh-button {
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px; /* Pill shape */
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 3px 8px rgba(0, 123, 255, 0.2);
+    }
+    .refresh-button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0, 123, 255, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Đang tải...</span>
+    </div>
+    <span id="loadingText">Đang tải...</span>
+</div>
+
+<div class="admin-card">
+    <h1 class="page-title">Quản lý Khóa/Mở khóa Tài khoản Sinh viên</h1>
+
+    <div id="message" class="message"></div>
+
+    <div class="refresh-button-container">
+        <button class="refresh-button" id="refreshButton">
+            <i class="fas fa-sync-alt me-2"></i>Tải lại danh sách
+        </button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Tên đầy đủ</th>
+                <th>Trạng thái Khóa</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userTableBody = document.getElementById('userTableBody');
+        const messageDiv = document.getElementById('message');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const refreshButton = document.getElementById('refreshButton');
+
+        // --- API Endpoints ---
+        // Vui lòng thay đổi địa chỉ API này cho phù hợp với backend của bạn
+        // API này cần trả về danh sách các sinh viên (User) với các trường id, email, first_name, last_name, is_locked
+        const USER_LIST_API = 'https://saigongiadinh.pythonanywhere.com/StudentList/'; // Ví dụ: API để lấy danh sách sinh viên
+        // API để khóa/mở khóa tài khoản
+       
+
+        // --- Utility Functions ---
+        function showMessage(msg, type) {
+            messageDiv.textContent = msg;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.add('show'); // Add 'show' class for fade-in
+            setTimeout(() => {
+                messageDiv.classList.remove('show'); // Remove 'show' for fade-out
+                setTimeout(() => {
+                    messageDiv.style.display = 'none'; // Hide after transition
+                }, 300); // Match transition duration
+            }, 5000);
+        }
+
+        function showLoading(text = 'Đang xử lý...') {
+            loadingText.textContent = text;
+            loadingOverlay.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+        }
+
+        function getAuthToken() {
+            // Lấy token từ localStorage. Đảm bảo Admin đã đăng nhập và token được lưu ở đây.
+            return localStorage.getItem('adminAuthToken');
+        }
+
+        // Function to load user data into the table
+        async function loadUsers() {
+            showMessage('', ''); // Clear previous messages
+            showLoading('Đang tải danh sách người dùng...');
+            userTableBody.innerHTML = ''; // Clear existing table rows
+
+            const authToken = getAuthToken();
+            if (!authToken) {
+                hideLoading();
+                showMessage('Bạn chưa đăng nhập hoặc không có quyền Admin. Vui lòng đăng nhập.', 'error');
+                return;
+            }
+
+            try {
+                const response = await axios.get(USER_LIST_API, {
+                    headers: { 'Authorization': `Token ${authToken}` }
+                });
+
+                const users = response.data;
+                if (users.length === 0) {
+                    showMessage('Không có tài khoản sinh viên nào để hiển thị.', 'info');
+                    return;
+                }
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    // Kiểm tra xem `user.first_name` và `user.last_name` có tồn tại không
+                    const fullName = (user.first_name || '') + ' ' + (user.last_name || '');
+                    const displayFullName = fullName.trim() === '' ? 'Chưa cập nhật' : fullName.trim();
+
+                    const lockStatusIcon = user.is_locked
+                        ? '<i class="fa-solid fa-lock"></i>'
+                        : '<i class="fa-solid fa-lock-open"></i>';
+                    
+                    const actionButton = user.is_locked
+                        ? `<button class="btn unlock-btn" data-id="${user.id}" data-action="unlock">Mở khóa</button>`
+                        : `<button class="btn lock-btn" data-id="${user.id}" data-action="lock">Khóa</button>`;
+
+                    row.innerHTML = `
+                        <td>${user.email}</td>
+                        <td>${displayFullName}</td>
+                        <td class="lock-icon-container">${lockStatusIcon}</td>
+                        <td class="action-buttons">${actionButton}</td>
+                    `;
+                    userTableBody.appendChild(row);
+                });
+
+                // Add event listeners for action buttons
+                userTableBody.querySelectorAll('.unlock-btn, .lock-btn').forEach(button => {
+                    button.addEventListener('click', handleLockUnlock);
+                });
+
+            } catch (error) {
+                console.error('Lỗi khi tải danh sách người dùng:', error);
+                let errorMessage = 'Đã xảy ra lỗi khi tải danh sách người dùng.';
+                if (error.response) {
+                    console.error('Dữ liệu lỗi từ server:', error.response.data);
+                    // Lấy message từ error.response.data nếu có
+                    if (error.response.data && error.response.data.detail) {
+                        errorMessage = `Lỗi: ${error.response.data.detail}`;
+                    } else if (error.response.data && typeof error.response.data === 'object') {
+                        errorMessage = `Lỗi từ server: ${error.response.status} - ${JSON.stringify(error.response.data)}`;
+                    } else {
+                        errorMessage = `Lỗi từ server: ${error.response.status} - ${error.response.statusText}`;
+                    }
+                } else if (error.request) {
+                    errorMessage = 'Không nhận được phản hồi từ server. Vui lòng kiểm tra kết nối mạng.';
+                } else {
+                    errorMessage = `Lỗi: ${error.message}`;
+                }
+                showMessage(errorMessage, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Function to handle lock/unlock actions
+        async function handleLockUnlock(event) {
+            const button = event.target;
+            const userId = button.dataset.id;
+            const action = button.dataset.action; // 'lock' or 'unlock'
+
+            const confirmMessage = action === 'lock'
+                ? `Bạn có chắc chắn muốn KHÓA tài khoản của sinh viên ID: ${userId} không?`
+                : `Bạn có chắc chắn muốn MỞ KHÓA tài khoản của sinh viên ID: ${userId} không?`;
+
+            if (!confirm(confirmMessage)) {
+                showMessage('Hủy thao tác.', 'info');
+                return;
+            }
+
+            showLoading(`Đang ${action === 'lock' ? 'khóa' : 'mở khóa'} tài khoản ID: ${userId}...`);
+            const authToken = getAuthToken();
+
+            if (!authToken) {
+                hideLoading();
+                showMessage('Bạn chưa đăng nhập hoặc không có quyền Admin. Vui lòng đăng nhập.', 'error');
+                return;
+            }
+
+            try {
+                const response = await axios.post(`https://saigongiadinh.pythonanywhere.com/api/admin/userslocked/${userId}/${action}/`, {}, {
+                    headers: { 'Authorization': `Token ${authToken}` }
+                });
+                showMessage(response.data.message, 'success');
+                loadUsers(); // Reload the list to reflect the change
+            } catch (error) {
+                console.error(`Lỗi khi ${action} tài khoản ID ${userId}:`, error);
+                let errorMessage = `Đã xảy ra lỗi khi ${action} tài khoản.`;
+                if (error.response) {
+                    console.error('Dữ liệu lỗi từ server:', error.response.data);
+                    // Lấy message từ error.response.data nếu có
+                    if (error.response.data && error.response.data.message) {
+                        errorMessage = `Lỗi: ${error.response.data.message}`;
+                    } else if (error.response.data && error.response.data.detail) {
+                        errorMessage = `Lỗi: ${error.response.data.detail}`;
+                    } else if (error.response.data && typeof error.response.data === 'string') {
+                        errorMessage = `Lỗi từ server: ${error.response.data}`;
+                    } else if (error.response.data && typeof error.response.data === 'object') {
+                        errorMessage = `Lỗi từ server: ${JSON.stringify(error.response.data)}`;
+                    } else {
+                        errorMessage = `Lỗi từ server: ${error.response.status} - ${error.response.statusText}`;
+                    }
+                } else if (error.request) {
+                    errorMessage = 'Không nhận được phản hồi từ server. Vui lòng kiểm tra kết nối mạng.';
+                } else {
+                    errorMessage = `Lỗi: ${error.message}`;
+                }
+                showMessage(errorMessage, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // --- Event Listeners ---
+        refreshButton.addEventListener('click', loadUsers);
+
+        // Initial load
+        loadUsers();
+    });
+</script>
+{% endblock %}
