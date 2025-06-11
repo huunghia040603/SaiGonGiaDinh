@@ -564,6 +564,9 @@ h2.counter {
         width: 100%;
         padding-right: 0;
     }
+    .worker-image{
+       display: none;
+    }
 
     .worker-image-container {
         transform: translateX(30px);
@@ -1494,6 +1497,7 @@ blockquote::after {
 
 @media (max-width: 768px) {
     .services-section {
+        display: none;
         padding: 80px 0;
         margin: 40px 0;
     }

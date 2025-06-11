@@ -360,58 +360,175 @@
         width: 150px;
     }
 }
-
+/* Responsive Styles for Mobile Menu - Cập nhật */
 @media (max-width: 768px) {
+
+
     .mobile-menu-btn {
-        display: block;
+        display: block; /* Đảm bảo nút 3 gạch luôn hiển thị trên mobile */
+        z-index: 1001; /* Đảm bảo nút nằm trên menu khi menu mở */
     }
 
     .nav-list {
-        display: none;
+        z-index: 1001;
+        position: fixed; /* Đặt vị trí cố định để menu trượt */
+        top: 0;
+        left: -100%; /* Ẩn menu ra ngoài màn hình bên trái */
+        width: 70%; /* Chiều rộng của menu khi mở */
+        height: 100vh; /* Chiều cao đầy đủ của màn hình */
+        background-color: #0118D8; /* Màu nền của menu khi mở */
+        padding-top: 60px; /* Khoảng cách từ trên xuống để tránh bị đè bởi top bar */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ */
+        transition: left 0.3s ease-in-out; /* Hiệu ứng trượt */
+        display: block; /* Đảm bảo hiển thị dưới dạng block để chiếm không gian */
+        overflow-y: auto; /* Thêm cuộn nếu nội dung quá dài */
+    }
+
+    .nav-list.active { /* Lớp được thêm bằng JS khi menu mở */
+        left: 0; /* Hiện menu bằng cách trượt vào */
+    }
+
+    .nav-list > li {
         width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Đường phân cách giữa các mục menu */
     }
 
-    .mobile-menu-open .nav-list {
-        display: block;
+    .nav-list > li:last-child {
+        border-bottom: none;
     }
 
-    .nav-list>li {
-        width: 100%;
+    .nav-list > li > a {
+        padding: 15px 20px; /* Tăng padding để dễ chạm hơn */
+        justify-content: flex-start; /* Căn lề trái các mục menu */
+        font-size: 16px; /* Điều chỉnh kích thước chữ */
     }
 
-    .nav-list>li>a {
-        padding: 12px 15px;
-        justify-content: space-between;
-    }
-
+    /* Đảm bảo dropdown menu hiển thị bình thường trong mobile */
     .dropdown-menu {
         position: static;
         width: 100%;
         box-shadow: none;
-        background-color: #f8f9fa;
-        display: none;
+        background-color: rgba(255, 255, 255, 0.1); /* Nền cho sub-menu trong mobile */
+        border-radius: 0;
+        animation: none; /* Tắt animation dropdown mặc định */
+        display: none; /* Ẩn mặc định, sẽ hiển thị bằng JS */
+        padding-left: 20px; /* Thụt vào cho sub-menu */
     }
 
     .dropdown-menu.show {
-        display: block;
+        display: block; /* Hiển thị sub-menu khi được kích hoạt */
     }
 
+    .dropdown-menu li a {
+        color: #fff; /* Màu chữ cho sub-menu */
+        padding: 10px 30px; /* Điều chỉnh padding cho sub-menu */
+        font-size: 15px;
+    }
+    
+    .dropdown-menu li a:hover {
+        background-color: rgba(255, 255, 255, 0.2); /* Màu hover cho sub-menu */
+        color: #fff;
+    }
+
+    /* Search Box - Cập nhật */
     .search-box {
-        width: 100%;
-        margin: 10px 15px;
+        background-color: transparent; /* Nền trong suốt mặc định */
+        width: auto; /* Chiều rộng tự động */
+        min-width: 0; /* Bỏ giới hạn min-width */
+        padding: 0; /* Bỏ padding mặc định */
+        margin: 0 15px; /* Giữ margin hai bên */
+        height: auto; /* Chiều cao tự động */
+        position: relative; /* Giữ vị trí tương đối */
+        border-radius: 0;
     }
 
-    .top-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        font-size: 12px;
+    .search-icon {
+        position: static; /* Đặt lại vị trí icon */
+        color: #fff;
+        font-size: 20px; /* Tăng kích thước icon */
+        cursor: pointer; /* Biến thành con trỏ khi di chuột qua */
+        padding: 10px; /* Thêm padding để dễ chạm */
+        pointer-events: auto; /* Cho phép click vào icon */
     }
 
-    .logo img {
-        height: 60px;
+    .search-box input {
+        display: none; /* Ẩn input mặc định */
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0; /* Chiều rộng ban đầu bằng 0 */
+        opacity: 0; /* Ẩn hoàn toàn */
+        padding: 8px 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        transition: width 0.3s ease-out, opacity 0.3s ease-out; /* Hiệu ứng mở rộng */
+    }
+
+    .search-box.active input { /* Lớp được thêm bằng JS khi search box active */
+        display: block; /* Hiển thị input */
+        width: 200px; /* Chiều rộng khi input hiển thị */
+        opacity: 1; /* Hiện rõ input */
+        padding-right: 35px; /* Giữ padding cho icon */
+    }
+
+    .search-box.active .search-icon {
+        color: #dc3545; /* Đổi màu icon khi search box mở */
     }
 
     .main-nav .container {
-        flex-direction: column;
+        flex-direction: row; /* Giữ các phần tử trên cùng một hàng */
+        justify-content: space-between; /* Đẩy các phần tử ra hai bên */
+        align-items: center; /* Căn giữa theo chiều dọc */
     }
+
+
+    .top-bar {
+        padding: 8px 0; /* Giữ padding vừa phải */
+    }
+
+    .top-links {
+        display: flex; /* Đảm bảo là flexbox */
+        flex-direction: row; /* Xếp các liên kết theo hàng ngang */
+        flex-wrap: wrap; /* Cho phép các liên kết tự động xuống dòng nếu không đủ chỗ */
+        justify-content: center; /* Căn giữa các liên kết theo chiều ngang */
+        align-items: center; /* Căn giữa các liên kết theo chiều dọc */
+        gap: 10px; /* Khoảng cách giữa các liên kết */
+        padding: 0 15px; /* Thêm padding hai bên để nội dung không chạm mép */
+    }
+
+    /* Đảm bảo logo nằm trên cùng hoặc biến mất nếu không cần thiết */
+    .top-links .logo {
+        display: none; /* Ẩn logo trong top-bar trên mobile để tiết kiệm diện tích */
+        /* Hoặc nếu bạn muốn giữ logo, hãy đặt nó ở một vị trí riêng hoặc làm cho nó nhỏ hơn nhiều */
+        /* position: static;
+           transform: none;
+           order: -1; // Đẩy logo lên đầu tiên nếu muốn giữ
+           margin-right: auto; // Đẩy logo sang trái nếu muốn giữ
+        */
+    }
+
+    .top-links a {
+        font-size: 12px; /* Giảm kích thước chữ nhỏ hơn để tiết kiệm không gian */
+        padding: 5px 8px; /* Giảm padding để gọn hơn */
+        white-space: nowrap; /* Giữ văn bản trên một dòng */
+        text-align: center;
+        /* Nếu muốn các liên kết có kích thước đều nhau, bạn có thể thêm: */
+        /* flex: 1 1 auto; */
+    }
+
+    .top-links a i {
+        font-size: 12px; /* Điều chỉnh icon phù hợp */
+    }
+
+    /* Điều chỉnh lại school-name và marquee text nếu cần */
+    .school-name h1 {
+        font-size: 22px; /* Điều chỉnh kích thước tiêu đề trường học */
+    }
+
+    .marquee-text h1 {
+        font-size: 28px; /* Điều chỉnh kích thước chữ chạy marquee */
+        padding-right: 25px;
+    }
+
 }

@@ -54,6 +54,12 @@ def manage_news():
     return render_template('admin/admin_news.html')
 
 
+@admin_bp.route('/manage_nganh/')
+def manage_nganh():
+    
+    return render_template('admin/manage_nganh.html')
+
+
 
 
 

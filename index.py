@@ -192,6 +192,10 @@ def yduoc():
 def xhdlpl():
     return render_template('xh-dl-pl.html')
 
+@app.route('/student-services')
+def dichvusv():
+    return render_template('dichvusv.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

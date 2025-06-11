@@ -102,6 +102,446 @@
     </div>
 </nav>
 
+<div class="mobile-taskbar8">
+    <div class="taskbar-item8">
+        <a href="tel:02835885558" class="taskbar-link8"> <i class="fas fa-phone-alt shake-phone"></i>
+            <span>Gọi điện</span>
+        </a>
+    </div>
+    <div class="taskbar-item8">
+        <a href="https://zalo.me/0971327840" target="_blank" class="taskbar-link8"> <i class="fas fa-comment-dots"></i>
+            <span>Zalo</span>
+        </a>
+    </div>
+    
+    
+    <div class="taskbar-item8">
+        <a href="https://m.me/107722380764300" target="_blank" class="taskbar-link8"> <i class="fab fa-facebook-messenger"></i>
+            <span>Facebook</span>
+        </a>
+    </div>
+    <div class="taskbar-item8">
+        <a href="/dangki" class="taskbar-link8">
+            <i class="fas fa-edit"></i>
+            <span>Đăng ký </span>
+        </a>
+    </div>
+   
+
+    <div class="taskbar-item8">
+        <a href="https://maps.app.goo.gl/horCJYZhgFefMmKY7" target="_blank" class="taskbar-link8"> <i class="fa-solid fa-location-dot"></i>
+            <span>Địa chỉ</span>
+        </a>
+    </div>
+    <!-- <div class="mobile-address8">
+        <p>514 Lê Quang Định, P.1, Gò Vấp, TPHCM</p>
+    </div> -->
+</div>
+
+
+<style>
+    @font-face {
+        font-family: font6;
+        src: url(/static/font/font6.ttf);
+      }
+    @font-face {
+        font-family: font2;
+        src: url(/static/font/font2.ttf);
+      }
+    /* Import Google Fonts for a modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* CSS Variables for easy theme customization */
+:root {
+    --primary-color8: #007bff; /* Màu xanh dương chủ đạo */
+    --secondary-color8: #6c757d; /* Màu xám phụ */
+    --accent-color8: #28a745; /* Màu điểm nhấn (ví dụ cho button/active) */
+    --bg-light8: #f8f9fa; /* Nền sáng */
+    --text-dark8: #212529; /* Chữ tối */
+    --text-light8: #f1f1f1; /* Chữ sáng */
+    --card-bg8: #ffffff; /* Nền card */
+    --card-shadow8: rgba(0, 0, 0, 0.08);
+    --hover-shadow8: rgba(0, 0, 0, 0.15);
+}
+
+/* Base Styles (áp dụng cho toàn bộ body) */
+
+
+/* Container để giới hạn chiều rộng và căn giữa nội dung */
+.container8 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    
+}
+
+/* Main Content Area Styles */
+.main-content8 {
+    padding: 40px 0; /* Giúp nội dung không bị dính vào header/footer */
+    background-color:#0118D8;
+}
+
+.page-title8 {
+    text-align: center;
+    font-size: 2.8em;
+    color: var(--primary-color8);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.page-description8 {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--secondary-color8);
+    margin-bottom: 50px;
+}
+
+/* Service Category Styles */
+.service-category8 {
+    background-color: var(--card-bg8); /* Nền cho khối danh mục */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--card-shadow8);
+    margin-bottom: 40px;
+    padding: 30px;
+}
+
+.category-title8 {
+    color: var(--text-dark8);
+    font-size: 2.2em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--primary-color8); /* Đường gạch chân nổi bật */
+    padding-bottom: 15px;
+    display: flex; /* Dùng flexbox để căn chỉnh icon và text */
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa icon và text */
+}
+
+.category-title8 .fas { /* Style cho icon trong tiêu đề danh mục */
+    color: var(--primary-color8);
+    font-size: 1.2em;
+}
+
+/* Service Grid Styles (Dùng CSS Grid để bố cục các thẻ dịch vụ) */
+.service-grid8 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid, giữ nguyên cho desktop/tablet lớn */
+    gap: 30px; /* Khoảng cách giữa các ô */
+}
+
+/* Service Card Styles (Thiết kế cho từng ô dịch vụ) */
+.service-card8 {
+    background-color: var(--bg-light8); /* Nền của từng thẻ dịch vụ */
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    /* Hiệu ứng chuyển động mượt mà khi hover */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex; /* Dùng flexbox để căn chỉnh nội dung trong thẻ */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-card8 .icon8 { /* Style cho icon bên trong thẻ dịch vụ */
+    font-size: 3.5em;
+    color: var(--primary-color8);
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.service-card8 h3 {
+    color: var(--text-dark8);
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.service-card8 p {
+    color: var(--secondary-color8);
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+/* Hover Effect for Service Cards */
+.service-card8:hover {
+    transform: translateY(-12px); /* Di chuyển lên trên và tạo hiệu ứng "nổi" */
+    box-shadow: 0 15px 30px var(--hover-shadow8); /* Bóng đổ lớn hơn khi hover */
+}
+
+.service-card8:hover .icon8 {
+    color: var(--accent-color8); /* Thay đổi màu icon khi hover */
+}
+
+/* Active Effect for Service Cards (khi click) */
+.service-card8:active {
+    transform: translateY(-6px); /* "Nhấn" xuống một chút khi click */
+    box-shadow: 0 8px 15px var(--card-shadow8);
+}
+
+/* Mobile Taskbar Styles - Mặc định ẩn */
+.mobile-taskbar8 {
+    display: none; /* Mặc định ẩn trên tất cả các màn hình */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-dark8);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 10px 0;
+    justify-content: space-around;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.taskbar-item8 {
+    flex: 1;
+    text-align: center;
+}
+
+.taskbar-link8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-light8);
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.taskbar-link8 i {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: var(--primary-color8);
+    transition: color 0.3s ease;
+}
+
+.taskbar-link8:hover {
+    color: var(--accent-color8);
+    transform: translateY(-3px);
+}
+
+.taskbar-link8:hover i {
+    color: var(--accent-color8);
+}
+
+/* Mobile Address Styles - Mặc định ẩn */
+.mobile-address8 {
+    display: none; /* Mặc định ẩn trên tất cả các màn hình */
+    position: fixed;
+    bottom: 80px; /* Nằm trên taskbar một chút */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    z-index: 999;
+    white-space: nowrap;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-20deg); } /* Lắc nhẹ sang trái */
+    50% { transform: rotate(5deg); }  /* Lắc nhẹ sang phải */
+    75% { transform: rotate(-20deg); } /* Lắc nhẹ lại sang trái */
+    100% { transform: rotate(0deg); }
+}
+        /* Styling for the taskbar item */
+        
+
+        /* Apply the animation to the icon */
+        .shake-phone {
+            animation: shake 0.8s infinite; /* Adjust duration and iteration as desired */
+            display: inline-block; /* Essential for transform to work correctly */
+            font-size: 30px; /* Make the icon a bit larger for better visibility */
+            color: #007bff; /* Example color */
+        }
+
+/* Show taskbar and address ONLY on mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+    .mobile-taskbar8 {
+        font-family: font6;
+        display: flex; /* HIỂN THỊ khi màn hình <= 768px */
+        padding-bottom: env(safe-area-inset-bottom);
+        
+        background-color:#0118d8db;
+    }
+    .mobile-address8 {
+        display: block; /* HIỂN THỊ khi màn hình <= 768px */
+        bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+
+    /* Đẩy nội dung lên để không bị taskbar che khuất trên mobile */
+    body {
+        padding-bottom: 90px; 
+    }
+
+    /* Các điều chỉnh responsive khác cho main content trên mobile */
+    .page-title8 {
+        font-size: 2.2em;
+    }
+
+    .page-description8 {
+        font-size: 1em;
+    }
+
+    .category-title8 {
+        font-size: 1.8em;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .service-grid8 {
+        grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ */
+        gap: 25px;
+    }
+
+    .service-category8 {
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+
+    .service-card8 {
+        padding: 25px;
+    }
+
+    .service-card8 .icon8 {
+        font-size: 3em;
+    }
+
+    .service-card8 h3 {
+        font-size: 1.3em;
+    }
+    .taskbar-link8 i {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color:#fff;
+    transition: color 0.3s ease;
+}
+}
+
+/* Các điều chỉnh cho màn hình cực nhỏ (ví dụ, dưới 480px) */
+@media (max-width: 480px) {
+    .main-content8 {
+        padding: 25px 15px;
+    }
+
+    .page-title8 {
+        font-size: 2em;
+    }
+}
+</style>
+
+<script>
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        // Xử lý Mobile Menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('.nav-list');
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        const body = document.body;
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navList.classList.toggle('active');
+            body.classList.toggle('no-scroll'); // Thêm lớp để ngăn cuộn trang khi menu mở
+        });
+
+        // Đóng menu khi nhấp vào bên ngoài
+        document.addEventListener('click', function(event) {
+            if (!navList.contains(event.target) && !mobileMenuBtn.contains(event.target) && navList.classList.contains('active')) {
+                navList.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+
+        // Xử lý Dropdown trên Mobile
+        dropdownToggles.forEach(function(toggle) {
+            toggle.addEventListener('click', function(e) {
+                // Chỉ xử lý dropdown trên mobile
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); // Ngăn chặn chuyển hướng mặc định của link
+                    const dropdownMenu = this.nextElementSibling;
+                    if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                        // Đóng tất cả các dropdown khác đang mở
+                        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                            if (menu !== dropdownMenu) {
+                                menu.classList.remove('show');
+                            }
+                        });
+                        dropdownMenu.classList.toggle('show');
+                    }
+                }
+            });
+        });
+
+        // Xử lý Search Box
+        const searchIcon = document.getElementById('searchIcon');
+        const searchInput = document.getElementById('searchInput');
+        const searchBox = document.querySelector('.search-box');
+
+        searchIcon.addEventListener('click', function() {
+            searchBox.classList.toggle('active'); // Thêm/xóa lớp active
+            if (searchBox.classList.contains('active')) {
+                searchInput.focus(); // Tự động focus vào input khi nó hiện ra
+            } else {
+                searchInput.value = ''; // Xóa nội dung input khi ẩn
+            }
+        });
+
+        // Đóng search box khi click ra ngoài
+        document.addEventListener('click', function(event) {
+            if (!searchBox.contains(event.target) && searchBox.classList.contains('active')) {
+                searchBox.classList.remove('active');
+                searchInput.value = '';
+            }
+        });
+
+        // Ngăn chặn sự kiện click lan truyền từ input search để không đóng search box
+        searchInput.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+        
+        // Ngăn chặn sự kiện click lan truyền từ icon search để không đóng search box
+        searchIcon.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+
+
+        // JavaScript để xử lý trạng thái đăng nhập và hiển thị menu sinh viên
+        function checkLoginStatus() {
+            // Đây là nơi bạn sẽ kiểm tra trạng thái đăng nhập của người dùng.
+            // Ví dụ: kiểm tra cookie, localStorage, hoặc một biến global từ server.
+            // Giả sử có một biến `isLoggedIn` được đặt bởi server hoặc từ phiên làm việc.
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; // Ví dụ kiểm tra từ localStorage
+
+            const loginStatusLink = document.getElementById('loginStatusLink');
+            const studentMenuLink = document.getElementById('studentMenuLink');
+
+            if (isLoggedIn) {
+                loginStatusLink.innerHTML = '<i class="fas fa-user"></i> XIN CHÀO SINH VIÊN';
+                loginStatusLink.href = '/thongtinsinhvien'; // Thay đổi link về trang thông tin sinh viên
+                studentMenuLink.style.display = 'block'; // Hiển thị menu SINH VIÊN
+            } else {
+                loginStatusLink.innerHTML = '<i class="fas fa-user"></i> ĐĂNG NHẬP SGC';
+                loginStatusLink.href = '/dangnhap'; // Giữ nguyên link đăng nhập
+                studentMenuLink.style.display = 'none'; // Ẩn menu SINH VIÊN
+            }
+        }
+
+        // Gọi hàm kiểm tra trạng thái đăng nhập khi trang tải
+        checkLoginStatus();
+    });
+
+</script>
 
 <script src="/static/js/auth_status.js"></script>
 <script src="/static/js/search_handle.js"></script>
