@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo cáo lượt đăng ký tư vấn theo tháng</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% extends "admin/base_admin.html" %} 
+{% block title %}Báo cáo lượt đăng ký tư vấn theo tháng{% endblock %} {# Tùy chỉnh tiêu đề trang #}
+
+    
+
+{% block page_styles %}  
     <style>
+        html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
+}
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -13,7 +18,7 @@
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: auto;
             background-color: #fff;
             padding: 20px;
@@ -38,8 +43,11 @@
             align-items: center;
         }
     </style>
-</head>
-<body>
+{%endblock%}
+
+
+{% block content %}  
+
     <div class="container">
         <h1>Báo cáo lượt đăng ký tư vấn</h1>
         <div class="chart-container">
@@ -102,5 +110,5 @@
             });
         });
     </script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{%endblock%}

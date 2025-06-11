@@ -4,6 +4,12 @@
 
 {% block page_styles %}
     <style>
+          html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
+}
         .sggd-container {
             background-color: #ffffff;
             padding: 30px 40px;
@@ -492,6 +498,12 @@
                 </div>
                 <div class="sggd-form-row three-columns">
                     <div class="sggd-form-group">
+                        <label for="department" class="sggd-label">Khoa:<span style="color: red;">*</span></label>
+                        <select id="department" name="department" class="sggd-select">
+                            <option value="">Chọn khoa </option>
+                        </select>
+                    </div>
+                     <div class="sggd-form-group">
                         <label for="major" class="sggd-label">Ngành học:<span style="color: red;">*</span></label>
                         <select id="major" name="major" class="sggd-select">
                             <option value="">Chọn ngành học</option>

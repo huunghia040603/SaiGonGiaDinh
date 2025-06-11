@@ -76,8 +76,15 @@
 
                 if (!response.ok) {
                     if (response.status === 401 || response.status === 403) {
-                        handleLogout("Phiên đăng nhập đã hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.");
-                        return;
+                        // Không gọi handleLogout trực tiếp ở đây để tránh lặp lại logic hiển thị
+                        // Thay vào đó, xóa token và chuyển hướng ngay lập tức
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('userId');
+                        localStorage.removeItem('userEmail');
+                        localStorage.removeItem('userRole');
+                        localStorage.removeItem('userFullName');
+                        window.location.href = LOGIN_PAGE_URL;
+                        return; // Quan trọng: dừng hàm sau khi chuyển hướng
                     }
                     const errorData = await response.json();
                     throw new Error(errorData.detail || `Lỗi khi tải thông tin: ${response.status} ${response.statusText}`);
@@ -111,7 +118,7 @@
 
             studentInfoDiv.innerHTML = `
                 <div class="profile-header7">
-                    <img src="https://res.cloudinary.com/dftarzzfw/${student.user_photo || 'default-avatar.png'}" 
+                    <img src="${student.user_photo || 'default-avatar.png'}" 
                          alt="${student.full_name || 'Ảnh đại diện'}" 
                          class="profile-avatar7" 
                          id="profile-avatar7"
@@ -184,29 +191,51 @@
             `;
         }
 
-        async function handleLogout(message = "Đã đăng xuất thành công.") {
+        async function handleLogout() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            const originalButtonText = logoutBtn.innerHTML; // Lưu trữ nội dung gốc của nút
+
+            // Thay đổi nội dung nút để hiển thị trạng thái "Đang đăng xuất..."
+            logoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng xuất...';
+            logoutBtn.disabled = true; // Vô hiệu hóa nút để tránh nhấp nhiều lần
+
+            const authToken = localStorage.getItem('authToken'); 
+            if (authToken) { 
+                try {
+                    const response = await fetch(LOGOUT_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', // Nên gửi header này nếu backend mong đợi
+                            'Authorization': `Token ${authToken}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        console.log('Đăng xuất thành công trên server.');
+                    } else {
+                        // Xử lý các lỗi từ server nếu có (ví dụ: token đã hết hạn trên server)
+                        const errorData = await response.json();
+                        console.error('Lỗi khi gửi yêu cầu logout tới server:', errorData.detail || 'Lỗi không xác định.');
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi gửi yêu cầu logout (mạng hoặc CORS):', error);
+                }
+            }
+
+            // Xóa tất cả các thông tin liên quan đến phiên đăng nhập khỏi localStorage
             localStorage.removeItem('authToken');
             localStorage.removeItem('userId');
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userRole');
             localStorage.removeItem('userFullName');
 
-            const authToken = localStorage.getItem('authToken'); 
-            if (authToken) { 
-                try {
-                    await fetch(LOGOUT_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Token ${authToken}`
-                        }
-                    });
-                    console.log('Token invalidated on server.');
-                } catch (error) {
-                    console.error('Lỗi khi gửi yêu cầu logout tới server:', error);
-                }
-            }
-            alert(message);
-            window.location.href = LOGIN_PAGE_URL;
+            // Chờ một chút để người dùng thấy thông báo "Đang đăng xuất..."
+            setTimeout(() => {
+                // Khôi phục trạng thái ban đầu của nút (tùy chọn, nếu bạn muốn nó hiển thị lại đúng)
+                logoutBtn.innerHTML = originalButtonText;
+                logoutBtn.disabled = false;
+                window.location.href = LOGIN_PAGE_URL; // Chuyển hướng về trang chủ
+            }, 1000); // 1 giây
         }
 
         document.addEventListener('DOMContentLoaded', () => {

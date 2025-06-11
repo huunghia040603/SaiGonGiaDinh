@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 
 # Tạo một Blueprint mới với tiền tố URL '/admin'
-admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
+admin_bp = Blueprint('admin', __name__, url_prefix='/sggd/qtv/admin')
 
 
 @admin_bp.route('/')
@@ -26,9 +26,9 @@ def count_traffic():
     
     return render_template('admin/stats.html')
 
-@admin_bp.route('/stats-traffic/')
+@admin_bp.route('/stats-registration/')
 def count_registration():
-    
+
     return render_template('admin/admin_stats_registration.html')
 
 @admin_bp.route('/create_account/')
@@ -52,6 +52,12 @@ def manage_account_faculty():
 def manage_news():
     
     return render_template('admin/admin_news.html')
+
+@admin_bp.route('/locked_account/')
+def locked_account():
+ 
+    return render_template('admin/admin_locked_account.html')
+
 
 
 

@@ -9,20 +9,21 @@
     <title>Đăng nhập - Cao Đẳng Sài Gòn Gia Định</title>
     <link rel="stylesheet" href="/static/css/dangnhap.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="login-container">
         <div class="illustration-section">
-            <!-- Illustration section is hidden on mobile -->
-        </div>
+            </div>
         <div class="login-section">
             <div class="logo">
                 <img src="/static/images/logoSGGD.png" alt="Logo Cao Đẳng Sài Gòn Gia Định">
             </div>
             <h2>Chào Mừng Đến Cao Đẳng Sài Gòn Gia Định!</h2>
             <p>Vui lòng nhập thông tin đăng nhập</p>
-            <form id="loginForm" method="POST"  autocomplete="off">
+            <form id="loginForm" method="POST" autocomplete="off">
                 <div class="input-group">
+                    <div id="errorMessageDisplay" class="error-message-login" style="display: none;"></div>
                     <label for="email">Email</label>
                     <input type="email" 
                            id="email" 
@@ -60,12 +61,12 @@
                     <a href="/forgot-password" class="forgot-password">Quên mật khẩu?</a>
                 </div>
 
-                <button type="submit" class="btn-login" id="loginBtn">Đăng Nhập</button>
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Đăng Nhập </button>
             </form>
         </div>
     </div>
 
-    <!-- Characters (hidden on mobile landscape) -->
     <div class="character character-purple">
         <div class="eye eye-left"></div>
         <div class="eye eye-right"></div>
@@ -78,42 +79,37 @@
     <script src="/static/js/dangnhap.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Form validation
         const form = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Quan trọng: Ngăn chặn submit form mặc định
 
-            // Simple email validation
+            // Client-side validation (giữ nguyên hoặc điều chỉnh tùy ý)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(emailInput.value)) {
                 alert('Vui lòng nhập email hợp lệ');
                 emailInput.focus();
                 return;
             }
-
-            // Password validation
-            if (passwordInput.value.length < 6) {
-                alert('Mật khẩu phải có ít nhất 6 ký tự');
+            if (passwordInput.value.length < 3) {
+                alert('Mật khẩu phải có ít nhất 3 ký tự');
                 passwordInput.focus();
                 return;
             }
 
-            // If validation passes, submit the form
-            this.submit();
+            // Nếu validation thành công, gọi hàm xử lý đăng nhập đã nằm trong dangnhap.js
+            // Logic chính đã được di chuyển vào dangnhap.js, không cần this.submit() ở đây
+            // hoặc trigger sự kiện click của nút (nó sẽ tự động xảy ra khi form được submit qua nút)
         });
 
-        // Improve mobile UX
+        // Improve mobile UX (giữ nguyên)
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
-            // Clear input on double tap (mobile)
             input.addEventListener('dblclick', function() {
                 this.value = '';
             });
-
-            // Scroll into view when focused (mobile)
             input.addEventListener('focus', function() {
                 setTimeout(() => {
                     this.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -121,11 +117,8 @@
             });
         });
 
-        // Handle orientation change
         window.addEventListener('orientationchange', function() {
-            // Reset scroll position
             window.scrollTo(0, 0);
-            // Refocus active element after orientation change
             document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
     });

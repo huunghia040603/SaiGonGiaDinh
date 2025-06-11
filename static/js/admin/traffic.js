@@ -13,7 +13,7 @@ async function loadTrafficData(period) {
     currentPeriod = period; // Cập nhật biến toàn cục period
     // Kiểm tra xem trang hiện tại có phải là trang admin không
     // Nếu không phải trang admin, không cần kiểm tra token và thoát hàm
-    if (!window.location.pathname.startsWith('/admin')) {
+    if (!window.location.pathname.startsWith('/sggd/qtv/admin')) {
         console.log('Không phải trang admin, bỏ qua kiểm tra xác thực.');
         return;
     }
@@ -23,7 +23,7 @@ async function loadTrafficData(period) {
 
     // Lấy token xác thực
     const token = getAuthToken();
-    console.log('Token từ localStorage (traffic.js):', token ? 'Có token' : 'Không có token');
+   
 
     // Kiểm tra nếu token không tồn tại (null hoặc undefined) và đang ở trang admin
     if (!token) {
@@ -156,7 +156,6 @@ async function loadTrafficData(period) {
         }
 
         const rawData = await response.json();
-        console.log('Dữ liệu API nhận được:', rawData);
 
         let data = rawData;
 
@@ -167,7 +166,6 @@ async function loadTrafficData(period) {
                 const itemDate = new Date(item.date + 'T00:00:00'); // Đảm bảo so sánh cùng múi giờ hoặc không có múi giờ
                 return itemDate >= startDate;
             });
-            console.log('Dữ liệu sau khi lọc (từ 30/5):', data);
         }
 
         // Lưu dữ liệu thô (đã lọc nếu có) vào biến toàn cục để xuất Excel
