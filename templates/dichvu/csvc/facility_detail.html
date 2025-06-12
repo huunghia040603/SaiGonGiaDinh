@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/csvc.css') }}"> {# Có thể dùng lại hoặc tạo Facility.css riêng #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+    <main class="container facility-detail-page">
+        <section class="facility-info">
+            <img src="{{ facility.imageUrl }}" alt="Hình ảnh của {{ facility.name }}" class="facility-detail-image">
+            <div class="overall-rating">
+                <span class="stars" id="overall-stars">{{ get_stars_html(facility.avgRating) | safe }}</span>
+                <span class="average-rating" id="overall-average-rating">{{ facility.avgRating|round(1) }}</span>
+                (Tổng &nbsp;<span id="total-reviews">{{ facility.totalReviews }}</span> &nbsp; đánh giá)
+            </div>
+            <h1 id="facility-name">{{ facility.name }}</h1>
+            
+            <p class="description" id="facility-description">
+                {{ facility.description }}
+            </p>
+           
+        </section>
+
+        <section class="review-section">
+            <h2>Đánh giá về {{ facility.name }}</h2>
+            <div class="review-list" id="review-list">
+                {% if reviews %}
+                    {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-stars">{{ get_stars_html(review.stars) | safe }}</span>
+                            <span class="review-date">{{ review.date }}</span>
+                        </div>
+                        <p class="review-comment">{{ review.comment }}</p>
+                        <p class="reviewer-name">- {{ review.reviewer }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="text-align: center; color: var(--secondary-color);">Chưa có đánh giá nào cho hạng mục này. Hãy là người đầu tiên!</p>
+                {% endif %}
+            </div>
+
+            <button class="btn-add-review" id="open-facility-review-modal">Thêm đánh giá của bạn</button>
+        </section>
+
+        <div id="facility-review-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Đánh giá {{ facility.name }}</h2>
+                <form id="facility-review-form">
+                    <div class="form-group">
+                        <label for="review-stars">Đánh giá sao:</label>
+                        <div class="star-rating" id="facility-star-rating">
+                            <span class="star" data-value="1">☆</span>
+                            <span class="star" data-value="2">☆</span>
+                            <span class="star" data-value="3">☆</span>
+                            <span class="star" data-value="4">☆</span>
+                            <span class="star" data-value="5">☆</span>
+                        </div>
+                        <input type="hidden" id="facility-selected-stars" name="stars" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="review-comment">Nhận xét của bạn:</label>
+                        <textarea id="facility-review-comment" name="comment" rows="5" placeholder="Viết nhận xét của bạn ở đây..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit-review">Gửi đánh giá</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/csvc.js') }}"></script> {# Sẽ tạo file JS riêng #}
+{% endblock %}

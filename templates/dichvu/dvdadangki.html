@@ -1,0 +1,544 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+
+@font-face {
+    font-family: font2;
+    src: url('/static/fonts/font2.ttf');
+}
+
+
+@font-face {
+    font-family: font6;
+    src: url('/static/font/font6.ttf');
+}
+
+  /* ... (Giữ nguyên toàn bộ CSS hiện có của bạn từ style8.css, bao gồm cả biến và các quy tắc cho main-nav, taskbar, v.v.) ... */
+
+/* CSS Variables for easy theme customization (Nếu bạn muốn có bộ biến màu riêng cho page này) */
+/* Nếu không, hãy bỏ qua phần này và dùng chung biến với page 8 */
+:root {
+    --primary-color9: #007bff; /* Màu xanh dương chủ đạo */
+    --secondary-color9: #6c757d; /* Màu xám phụ */
+    --accent-color9: #28a745; /* Màu điểm nhấn (ví dụ cho button/active) */
+    --bg-light9: #f8f9fa; /* Nền sáng */
+    --text-dark9: #212529; /* Chữ tối */
+    --text-light9: #f1f1f1; /* Chữ sáng */
+    --card-bg9: #ffffff; /* Nền card */
+    --card-shadow9: rgba(0, 0, 0, 0.08);
+    --hover-shadow9: rgba(0, 0, 0, 0.15);
+}
+
+/* Container để giới hạn chiều rộng và căn giữa nội dung */
+.container9 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'font2'; /* Nếu font2 là riêng của trang này */
+}
+
+/* Main Content Area Styles */
+.main-content9 {
+    padding: 40px 0; /* Giúp nội dung không bị dính vào header/footer */
+    background-color: var(--bg-light9); /* Nền của main content */
+}
+
+.page-title9 {
+    text-align: center;
+    font-size: 2.8em;
+    color: var(--primary-color9);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.page-description9 {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--secondary-color9);
+    margin-bottom: 50px;
+}
+
+/* Styles cho bảng dịch vụ đã đăng ký */
+.table-responsive9 {
+    overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá rộng */
+    margin-bottom: 40px;
+    border-radius: 12px; /* Bo góc cho vùng chứa bảng */
+    box-shadow: 0 8px 20px var(--card-shadow9);
+    background-color: var(--card-bg9);
+}
+
+.services-table9 {
+    width: 100%;
+    border-collapse: collapse; /* Gộp các đường viền của ô */
+    min-width: 600px; /* Đảm bảo bảng có chiều rộng tối thiểu để không bị quá hẹp */
+}
+
+.services-table9 th,
+.services-table9 td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0; /* Đường viền nhẹ giữa các hàng */
+}
+
+.services-table9 th {
+    background-color: var(--primary-color9);
+    color: var(--text-light9);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    position: sticky; /* Giữ tiêu đề cố định khi cuộn ngang */
+    top: 0;
+    z-index: 1; /* Đảm bảo tiêu đề nằm trên nội dung khi cuộn */
+}
+
+.services-table9 tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu nền xen kẽ cho các hàng */
+}
+
+.services-table9 tbody tr:hover {
+    background-color: #f1f1f1; /* Đổi màu khi di chuột qua hàng */
+    cursor: pointer;
+}
+
+/* Trạng thái thanh toán */
+.payment-status9 {
+    font-weight: 600;
+}
+
+.payment-status9.paid9 { /* Class mới */
+    color: var(--accent-color9); /* Màu xanh lá cho đã thanh toán */
+}
+
+.payment-status9.unpaid9 { /* Class mới */
+    color: #dc3545; /* Màu đỏ cho chưa thanh toán */
+}
+
+/* Nút chi tiết */
+.detail-btn9 {
+    background-color: var(--primary-color9);
+    color: var(--text-light9);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.detail-btn9:hover {
+    background-color: #0056b3;
+}
+
+/* Thông báo không có dịch vụ */
+.no-services-message9 {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--card-bg9);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 40px;
+}
+
+.no-services-message9 p {
+    font-size: 1.2em;
+    color: var(--secondary-color9);
+    margin-bottom: 20px;
+}
+
+.btn-primary9 {
+    display: inline-block;
+    background-color: var(--primary-color9);
+    color: var(--text-light9);
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary9:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive cho bảng trên di động */
+@media (max-width: 768px) {
+    .services-table9 th,
+    .services-table9 td {
+        padding: 10px; /* Giảm padding trên di động */
+        font-size: 0.9em;
+    }
+
+    .services-table9 th {
+        font-size: 0.8em;
+    }
+
+    .detail-btn9 {
+        padding: 6px 10px;
+        font-size: 0.85em;
+    }
+
+    .no-services-message9 {
+        padding: 30px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-table9 {
+        /* Không cần điều chỉnh min-width thêm vì table-responsive đã xử lý cuộn */
+    }
+}
+
+/* ... (Giữ nguyên toàn bộ CSS hiện có của bạn từ styles.css, bao gồm cả biến và các quy tắc cho main-nav, taskbar, v.v., và các class .9) ... */
+
+/* Thêm vào cuối file styles.css của bạn */
+
+/* Styles cho cột số tiền */
+.amount-due9 {
+    font-weight: 600;
+    color: var(--text-dark9);
+}
+
+/* Nút thanh toán */
+.pay-btn9 {
+    background-color: var(--accent-color9); /* Màu xanh lá cây cho nút thanh toán */
+    color: var(--text-light9);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Khoảng cách với nút chi tiết */
+    font-size: 0.9em;
+}
+
+.pay-btn9:hover {
+    background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
+
+/* MODAL STYLES */
+/* ... (các quy tắc CSS khác cho các thành phần khác, bao gồm cả các class .8 và .9) ... */
+.modal9 {
+    display: none; /* RẤT QUAN TRỌNG: Mặc định ẩn modal */
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Khi modal ẩn, không cần display: flex. JS sẽ thêm nó khi cần. */
+    /* justify-content: center; */ /* Bỏ comment ra khi bạn ẩn display:none */
+    /* align-items: center;   */ /* Bỏ comment ra khi bạn ẩn display:none */
+}
+
+/* Class để hiển thị modal (nếu bạn sử dụng phương pháp .is-visible) */
+.modal9.is-visible {
+    display: flex; 
+}
+
+
+.modal-content9 {
+    background-color: var(--card-bg9);
+    margin: auto; /* Để căn giữa khi display:block */
+    padding: 25px; /* GIẢM PADDING NÀY ĐI */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%; /* Chiều rộng mặc định */
+    max-width: 500px; /* GIẢM MAX-WIDTH CHO PHÙ HỢP HƠN */
+    max-height: 90vh; /* GIỚI HẠN CHIỀU CAO TỐI ĐA (90% của viewport height) */
+    overflow-y: auto; /* CHO PHÉP CUỘN DỌC NẾU NỘI DUNG VƯỢT QUÁ MAX-HEIGHT */
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    display: flex; /* Để nội dung bên trong modal có thể dùng flex-direction */
+    flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
+}
+
+/* Hiệu ứng mở modal */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.close-button9 {
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 10; /* Đảm bảo nút X luôn nằm trên cùng */
+}
+
+.close-button9:hover,
+.close-button9:focus {
+    color: var(--text-dark9);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-title9 {
+    text-align: center;
+    color: var(--primary-color9);
+    font-size: 1.8em; /* Giảm kích thước tiêu đề */
+    margin-bottom: 0px; /* Giảm khoảng cách */
+    border-bottom: 2px solid var(--primary-color9);
+    padding-bottom: 10px; /* Giảm padding dưới tiêu đề */
+    font-family: font2;
+    margin-top: 0;
+}
+
+.modal-body9 {
+    flex-grow: 1; /* Cho phép body chiếm hết không gian còn lại */
+    /* overflow-y: auto;  Nếu bạn muốn chỉ phần body cuộn, di chuyển overflow-y vào đây */
+    padding-right: 10px; /* Để tránh thanh cuộn dính sát nội dung */
+}
+
+.modal-body9 p {
+    font-size: 1em; /* Giảm kích thước chữ */
+    margin-bottom: 8px;
+    color: var(--text-dark9);
+    font-family: font6;
+}
+
+.bank-info9, .qr-code-section9 {
+    background-color: var(--bg-light9);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px; /* Giảm padding */
+    margin-top: 20px; /* Giảm margin-top */
+}
+
+.bank-info9 h3, .qr-code-section9 h3 {
+    color: var(--text-dark9);
+    font-size: 1.3em; /* Giảm kích thước tiêu đề con */
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-family: font2;
+}
+
+.bank-info9 p {
+    text-align: center;
+    font-size: 0.95em; /* Giảm kích thước chữ */
+    margin-bottom: 6px;
+}
+
+.qr-code-section9 img {
+    display: block;
+    max-width: 200px; /* Kích thước tối đa cho QR code */
+    height: auto;
+    margin: 15px auto; /* Giảm margin */
+    border: 3px solid var(--primary-color9); /* Giảm độ dày border */
+    border-radius: 5px;
+}
+
+.qr-note9 {
+    text-align: center;
+    font-size: 0.85em; /* Giảm kích thước chữ */
+    color: var(--secondary-color9);
+    margin-top: 10px;
+}
+
+/* Responsive cho modal */
+@media (max-width: 768px) {
+    .modal-content9 {
+        width: 95%; 
+        max-width: unset; /* Bỏ giới hạn max-width trên màn hình nhỏ để nó tự co giãn theo width: 95% */
+        max-height: 90vh; /* Giữ nguyên max-height */
+        padding: 15px; /* Giảm padding trên di động */
+    }
+    .modal-title9 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+    .modal-body9 p, .bank-info9 p, .qr-note9 {
+        font-size: 0.9em;
+    }
+    .bank-info9 h3, .qr-code-section9 h3 {
+        font-size: 1.2em;
+    }
+    .qr-code-section9 img {
+        max-width: 150px; /* Giảm kích thước QR code trên di động */
+    }
+    .pay-btn9{
+        margin-left: 0;
+    }
+}
+</style>
+
+<main class="main-content9 container9">
+    <h1 class="page-title9">Lịch Sử Dịch Vụ Đã Đăng Ký</h1>
+    <p class="page-description9">Xem lại các dịch vụ bạn đã đăng ký và trạng thái thanh toán.</p>
+
+    <div class="table-responsive9">
+        <table class="services-table9">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Dịch Vụ</th>
+                    <th>Mã Dịch Vụ</th>
+                    <th>Ngày Đăng Ký</th>
+                    <th>Trạng Thái Thanh Toán</th>
+                    <th>Số Tiền Cần TT</th> {# THÊM CỘT NÀY #}
+                    <th>Chi Tiết</th>
+                </tr>
+            </thead>
+            <tbody id="registeredServicesBody9">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="no-services-message9" style="display: none;">
+        <p>Bạn chưa đăng ký dịch vụ nào.</p>
+        <a href="/dang-ky-dich-vu" class="btn-primary9">Đăng ký dịch vụ mới</a>
+    </div>
+</main>
+
+{# THÊM CẤU TRÚC MODAL NÀY Ở ĐÂY #}
+<div id="paymentModal9" class="modal9">
+    <div class="modal-content9">
+        <span class="close-button9">&times;</span>
+        <h2 class="modal-title9">Thông Tin Thanh Toán</h2>
+        <div class="modal-body9">
+            <p style="font-weight: bold;"><strong>Dịch vụ:</strong> <span id="modalServiceName9"></span></p>
+            <p style="font-weight: bold; color:#dc3545;"><strong>Số tiền cần thanh toán:</strong> <span id="modalAmount9"></span></p>
+            <div class="qr-code-section9">
+                <h3>Quét Mã QR để Thanh Toán</h3>
+                <img id="qrCodeImage9" src="/static/images/qr.png" alt="Mã QR Thanh Toán" style="height: 100px; width: 100px; "> {# THAY BẰNG QR CỦA BẠN #}
+                <p class="qr-note9">Hãy đảm bảo nội dung chuyển khoản chính xác để giao dịch được ghi nhận.</p>
+            </div>
+            <div class="bank-info9">
+                <h3>Thông Tin Ngân Hàng</h3>
+                <p><strong>Ngân hàng:</strong> <span id="bankName9">VCB - VIETCOMBANK</span></p>
+                <p><strong>Chủ tài khoản:</strong> <span id="accountHolder9">TRUONG CAO DANG CNTT HUFI</span></p>
+                <p><strong>Số tài khoản:</strong> <span id="accountNumber9">123456789</span></p>
+                <p><strong>Nội dung chuyển khoản:</strong> <span id="transferContent9">MSSV_Họ Tên_Tên Dịch Vụ</span></p>
+            </div>
+
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const registeredServicesBody = document.getElementById('registeredServicesBody9');
+        const noServicesMessage = document.querySelector('.no-services-message9');
+
+        // Modal elements
+        const paymentModal = document.getElementById('paymentModal9');
+        const closeButton = document.querySelector('.close-button9');
+        const modalServiceName = document.getElementById('modalServiceName9');
+        const modalAmount = document.getElementById('modalAmount9');
+        const qrCodeImage = document.getElementById('qrCodeImage9'); // QR code image
+
+        // Dữ liệu mẫu (thực tế sẽ được tải từ server)
+        const sampleServices = [
+            { id: 1, name: 'Đăng ký cấp bảng điểm', code: 'BD001', date: '2023-10-26', amount: 50000, paid: false }, // Chưa thanh toán
+            { id: 2, name: 'Đăng ký chứng nhận Sinh Viên', code: 'CN005', date: '2023-11-15', amount: 0, paid: true }, // Đã thanh toán
+            { id: 3, name: 'Đăng ký thẻ sinh viên', code: 'TSV002', date: '2023-12-01', amount: 30000, paid: false }, // Chưa thanh toán
+            { id: 4, name: 'Đăng ký xác nhận vay vốn', code: 'VV003', date: '2024-01-10', amount: 0, paid: true }, // Đã thanh toán
+        ];
+
+        // Hàm định dạng tiền tệ
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        };
+
+        // Hàm để tải và hiển thị dữ liệu dịch vụ
+        const loadRegisteredServices = (services) => {
+            if (services.length === 0) {
+                noServicesMessage.style.display = 'block';
+                registeredServicesBody.innerHTML = '';
+                return;
+            }
+
+            noServicesMessage.style.display = 'none';
+            registeredServicesBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+            services.forEach((service, index) => {
+                const row = document.createElement('tr');
+                const displayAmount = service.paid ? formatCurrency(0) : formatCurrency(service.amount);
+                const paymentButton = service.amount > 0 && !service.paid ? 
+                    `<button class="pay-btn9" data-id="${service.id}" data-name="${service.name}" data-amount="${service.amount}">Thanh toán</button>` : '';
+
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${service.name}</td>
+                    <td>${service.code}</td>
+                    <td>${service.date}</td>
+                    <td class="payment-status9 ${service.paid ? 'paid9' : 'unpaid9'}">
+                        ${service.paid ? 'Đã thanh toán' : 'Chưa thanh toán'}
+                    </td>
+                    <td class="amount-due9">${displayAmount}</td> {# Cột số tiền #}
+                    <td>
+                        <button class="detail-btn9" data-id="${service.id}">Xem</button>
+                        ${paymentButton} {# Nút thanh toán #}
+                    </td>
+                `;
+                registeredServicesBody.appendChild(row);
+            });
+
+            // Gán sự kiện click cho các nút "Xem"
+            document.querySelectorAll('.detail-btn9').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const serviceId = e.target.dataset.id;
+                    alert(`Xem chi tiết dịch vụ có ID: ${serviceId}`);
+                    // window.location.href = `/chi-tiet-dich-vu/${serviceId}`;
+                });
+            });
+
+            // Gán sự kiện click cho các nút "Thanh toán"
+            document.querySelectorAll('.pay-btn9').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const serviceId = e.target.dataset.id;
+                    const serviceName = e.target.dataset.name;
+                    const amount = e.target.dataset.amount;
+
+                    // Điền thông tin vào modal
+                    modalServiceName.textContent = serviceName;
+                    modalAmount.textContent = formatCurrency(parseFloat(amount));
+                    // Cập nhật QR code nếu bạn có nhiều QR code khác nhau
+                    // qrCodeImage.src = `/static/images/qr_service_${serviceId}.png`; 
+                    
+                    paymentModal.style.display = 'block'; // Hiển thị modal
+                });
+            });
+        };
+
+        // Đóng modal khi click vào nút X
+        closeButton.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+        });
+
+        // Đóng modal khi click ra ngoài modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+        });
+
+        // Tải dữ liệu khi trang được nạp
+        loadRegisteredServices(sampleServices);
+
+        // Trong thực tế, bạn sẽ gọi một API để lấy dữ liệu:
+        /*
+        fetch('/api/registered-services') // Thay bằng endpoint API thực tế của bạn
+            .then(response => response.json())
+            .then(data => {
+                loadRegisteredServices(data);
+            })
+            .catch(error => {
+                console.error('Lỗi khi tải dịch vụ:', error);
+                noServicesMessage.style.display = 'block';
+                noServicesMessage.innerHTML = '<p>Không thể tải danh sách dịch vụ. Vui lòng thử lại sau.</p>';
+            });
+        */
+    });
+</script>
+
+{% endblock %}

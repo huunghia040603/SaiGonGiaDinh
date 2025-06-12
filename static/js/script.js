@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
             university: "Đại học Bách Khoa TP.HCM",
             avgRating: 4.8,
             totalReviews: 120,
-            description: "Chuyên gia về Trí tuệ nhân tạo và Học máy. Giảng viên có kinh nghiệm lâu năm, phương pháp giảng dạy hiện đại, luôn cập nhật kiến thức mới và khuyến khích sinh viên tư duy phản biện."
+            description: "Chuyên gia về Trí tuệ nhân tạo và Học máy. Giảng viên có kinh nghiệm lâu năm, phương pháp giảng dạy hiện đại, luôn cập nhật kiến thức mới và khuyến khích sinh viên tư duy phản biện.",
+            "imageUrl": "/static/images/giangvien/1.jpg"
+
         },
         {
             id: 2,
@@ -15,7 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
             university: "Đại học Khoa học Tự nhiên TP.HCM",
             avgRating: 4.2,
             totalReviews: 85,
-            description: "Giảng viên môn Lập trình Web và Phát triển Ứng dụng Di động. Cô B rất nhiệt tình, giải đáp mọi thắc mắc của sinh viên và có nhiều bài tập thực hành sát với thực tế."
+            description: "Giảng viên môn Lập trình Web và Phát triển Ứng dụng Di động. Cô B rất nhiệt tình, giải đáp mọi thắc mắc của sinh viên và có nhiều bài tập thực hành sát với thực tế.",
+            "imageUrl": "/static/images/giangvien/2.jpg"
+
         },
         {
             id: 3,
@@ -23,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
             university: "Đại học Kinh tế TP.HCM",
             avgRating: 4.5,
             totalReviews: 95,
-            description: "Chuyên ngành Tài chính và Đầu tư. Thầy C có phong cách giảng dạy lôi cuốn, cung cấp nhiều case study thú vị, giúp sinh viên hiểu rõ hơn về thị trường tài chính."
+            description: "Chuyên ngành Tài chính và Đầu tư. Thầy C có phong cách giảng dạy lôi cuốn, cung cấp nhiều case study thú vị, giúp sinh viên hiểu rõ hơn về thị trường tài chính.",
+            "imageUrl": "/static/images/giangvien/3.jpg"
+
         },
         {
             id: 4,
@@ -31,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             university: "Đại học Sư phạm TP.HCM",
             avgRating: 4.0,
             totalReviews: 70,
-            description: "Giảng viên môn Phương pháp giảng dạy và Tâm lý học giáo dục. Cô D rất tận tâm với sinh viên, truyền đạt kiến thức một cách dễ hiểu và luôn tạo không khí học tập thoải mái."
+            description: "Giảng viên môn Phương pháp giảng dạy và Tâm lý học giáo dục. Cô D rất tận tâm với sinh viên, truyền đạt kiến thức một cách dễ hiểu và luôn tạo không khí học tập thoải mái.",     
+            "imageUrl": "/static/images/giangvien/4.jpg"
         }
     ];
 
@@ -71,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             teacherCard.classList.add('teacher-card');
             // Cập nhật URL để khớp với định tuyến backend của bạn
             teacherCard.innerHTML = `
+                <img src="${teacher.imageUrl}" alt="Ảnh đại diện của ${teacher.name}" class="teacher-avatar-thumbnail">
                 <h3>${teacher.name}</h3>
                 <p class="university">${teacher.university}</p>
                 <div class="rating">

@@ -4,11 +4,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/GV.css') }}">
     <main class="container teacher-detail-page">
         <section class="teacher-info">
+            <img src="{{ teacher.imageUrl }}" alt="Ảnh đại diện của {{ teacher.name }}" class="teacher-avatar-detail">
+
             <h1 id="teacher-name">Tên Giảng viên</h1>
             <p class="university" id="teacher-university">Đại học ABC</p>
             <div class="overall-rating">
                 <span class="stars" id="overall-stars">★★★★☆</span>
-                <span class="average-rating" id="overall-average-rating">4.5</span> (Tổng <span id="total-reviews">150</span> đánh giá)
+                <span class="average-rating" id="overall-average-rating">4.5</span> (Tổng &nbsp;<span id="total-reviews"> 100 </span> &nbsp; đánh giá)
             </div>
             <p class="description" id="teacher-description">
                 Mô tả ngắn về giảng viên, lĩnh vực chuyên môn, kinh nghiệm giảng dạy, v.v.

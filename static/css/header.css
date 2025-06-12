@@ -253,6 +253,7 @@
     overflow: hidden;
     transform-origin: top;
     animation: dropdownFade 0.2s ease-in-out;
+    font-family: 'font6';
 }
 
 .dropdown:hover .dropdown-menu {
@@ -285,6 +286,9 @@
     padding: 5px 15px;
     height: 25px;
     position: relative;
+}
+:is(dir, menu, ol, ul) ul {
+    list-style: none;
 }
 
 .search-icon {

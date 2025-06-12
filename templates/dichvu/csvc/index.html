@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/csvc.css') }}"> {# Có thể dùng lại hoặc tạo Facility.css riêng #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+    <main class="container" style="margin-top: 20px;">
+        <section class="hero-section">
+            <h1>Đánh giá Chất lượng Cơ sở Vật chất</h1>
+            <p>Chia sẻ trải nghiệm của bạn về các hạng mục cơ sở vật chất của trường.</p>
+            <div class="search-bar">
+                <input type="text" id="facility-search-input" placeholder="Tìm kiếm hạng mục...">
+                <button id="facility-search-button">Tìm kiếm</button>
+            </div>
+        </section>
+
+        <section class="featured-facilities">
+            <h2>Các Hạng mục Cơ sở Vật chất</h2>
+            <div class="facility-list" id="facility-list">
+                
+                {% for facility in facilities %}
+                <div class="facility-card">
+                    <img src="{{ facility.imageUrl }}" alt="Hình ảnh {{ facility.name }}" class="facility-thumbnail">
+                    <h3>{{ facility.name }}</h3>
+                    <p class="description">{{ facility.description | truncate(100) }}</p> {# Hiển thị mô tả ngắn gọn #}
+                    <div class="rating">
+                        <span class="stars">{{ get_stars_html(facility.avgRating) | safe }}</span> &nbsp;
+                        <span class="average-rating">{{ facility.avgRating|round(1) }}</span> &nbsp; ({{ facility.totalReviews }} đánh giá)
+                    </div>
+                    <a href="{{ url_for('facility_detail', facility_id=facility.id) }}" class="btn-view-detail">Xem chi tiết & Đánh giá</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/csvc.js') }}"></script> {# Sẽ tạo file JS riêng #}
+{% endblock %}

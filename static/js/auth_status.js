@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const studentMenuLink = document.getElementById('studentMenuLink'); 
 
     // Thời gian hết hạn của phiên (10 phút = 10 * 60 * 1000 milliseconds)
-    const SESSION_EXPIRATION_TIME = 5 * 60 * 1000; // 5 phút
+    const SESSION_EXPIRATION_TIME = 60 * 60 * 1000; // 1 giờ
 
     // Hàm xử lý đăng xuất
     async function handleLogout(event) {
