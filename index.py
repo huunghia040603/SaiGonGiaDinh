@@ -97,7 +97,7 @@ def thuy():
 def yhoccotruyen():
     return render_template('nganhhoc/yhoccotruyen.html')
 
-@app.route('/y-sy-da-khoa')
+@app.route('/y-si-da-khoa')
 def ysi():
     return render_template('nganhhoc/ysi.html')
 
@@ -196,6 +196,84 @@ def xhdlpl():
 def dichvusv():
     return render_template('dichvusv.html')
 
+@app.route('/dang-ky-bang-diem')
+def dangkybangdiem():
+    return render_template('dichvu/dvbangdiem.html')
+
+@app.route('/dang-ky-chung-nhan')
+def dangkychungnhan():
+    return render_template('dichvu/dvchungnhansv.html')
+
+@app.route('/dang-ky-the-sinh-vien')
+def dangkythesinhvien():
+    return render_template('dichvu/dvthesv.html')
+
+@app.route('/dang-ky-xac-nhan-vay-von')
+def dangkyvayvon():
+    return render_template('dichvu/dvvayvon.html')
+
+@app.route('/dang-ky-ban-sao-bang-tot-nghiep')
+def dangkybansaobtn():
+    return render_template('dichvu/dvbansaobtn.html')
+
+# @app.route('/danh-gia-giang-vien')
+# def danhgiagv():
+#     return render_template('dichvu/gv/index.html')
+
+
+# index.py (hoặc app.py)
+     # Nếu bạn có thư mục static cho CSS/JS
+# Dữ liệu giảng viên mẫu (trong thực tế sẽ lấy từ database)
+teachers_data = [
+    {
+        "id": 1,
+        "name": "PGS. TS. Nguyễn Văn A",
+        "university": "Đại học Bách Khoa TP.HCM",
+        "avgRating": 4.8,
+        "totalReviews": 120,
+        "description": "Chuyên gia về Trí tuệ nhân tạo và Học máy. Giảng viên có kinh nghiệm lâu năm, phương pháp giảng dạy hiện đại, luôn cập nhật kiến thức mới và khuyến khích sinh viên tư duy phản biện."
+    },
+    {
+        "id": 2,
+        "name": "ThS. Trần Thị B",
+        "university": "Đại học Khoa học Tự nhiên TP.HCM",
+        "avgRating": 4.2,
+        "totalReviews": 85,
+        "description": "Giảng viên môn Lập trình Web và Phát triển Ứng dụng Di động. Cô B rất nhiệt tình, giải đáp mọi thắc mắc của sinh viên và có nhiều bài tập thực hành sát với thực tế."
+    },
+    # ... thêm các giảng viên khác
+]
+
+# Dữ liệu đánh giá mẫu
+reviews_data = [
+    {"id": 1, "teacherId": 1, "stars": 5, "comment": "Thầy A giảng bài rất dễ hiểu...", "date": "10/05/2024", "reviewer": "Sinh viên K20"},
+    {"id": 2, "teacherId": 1, "stars": 3, "comment": "Nội dung bài giảng hơi nặng...", "date": "01/03/2024", "reviewer": "Sinh viên K19"},
+    {"id": 3, "teacherId": 2, "stars": 4, "comment": "Cô B rất tận tâm...", "date": "22/04/2024", "reviewer": "Sinh viên K21"},
+]
+
+# ĐỊNH NGHĨA HÀM get_stars_html Ở ĐÂY
+def get_stars_html(rating):
+    full_stars = int(rating) # Chuyển đổi thành số nguyên
+    half_star = '&#9733;' if rating % 1 >= 0.5 else '' # Ký tự sao nửa, hoặc rỗng
+    empty_stars = 5 - full_stars - (1 if half_star else 0)
+    return '★' * full_stars + half_star + '☆' * empty_stars
+
+# ĐĂNG KÝ HÀM VỚI MÔI TRƯỜNG JINJA2 CỦA FLASK
+app.jinja_env.globals.update(get_stars_html=get_stars_html)
+
+# Định tuyến cho trang chủ
+@app.route('/dichvu/gv') # Nếu bạn có đường dẫn cụ thể
+def indexgv():
+    return render_template('dichvu/gv/index.html', teachers=teachers_data)
+
+# Định tuyến cho trang chi tiết giảng viên
+@app.route('/teacher/<int:teacher_id>')
+def teacher_detail(teacher_id):
+    teacher = next((t for t in teachers_data if t["id"] == teacher_id), None)
+    if teacher:
+        teacher_reviews = [r for r in reviews_data if r["teacherId"] == teacher_id]
+        return render_template('dichvu/gv/teacher-detail.html', teacher=teacher, reviews=teacher_reviews)
+    return "Giảng viên không tìm thấy", 404
 
 if __name__ == '__main__':
     app.run(debug=True)

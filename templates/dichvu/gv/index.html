@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+    <main class="container">
+        <section class="hero-section">
+            <h1>Tìm kiếm và đánh giá giảng viên</h1>
+            <p>Tìm hiểu kinh nghiệm của các sinh viên khác và đóng góp ý kiến của bạn.</p>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Tìm kiếm giảng viên...">
+                <button id="search-button">Tìm kiếm</button>
+            </div>
+        </section>
+
+        <section class="featured-teachers">
+            <h2>Giảng viên nổi bật</h2>
+            <div class="teacher-list" id="teacher-list">
+                <div class="teacher-card">
+                    <h3>PGS. TS. Nguyễn Văn A</h3>
+                    <p class="university">Đại học Bách Khoa TP.HCM</p>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="average-rating">4.8</span> (120 đánh giá)
+                    </div>
+                    <a href="/teacher/${teacher.id}" class="btn-view-detail">Xem chi tiết</a>
+                </div>
+                <div class="teacher-card">
+                    <h3>ThS. Trần Thị B</h3>
+                    <p class="university">Đại học Khoa học Tự nhiên TP.HCM</p>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="average-rating">4.2</span> (85 đánh giá)
+                    </div>
+                    <a href="/templates/dichvu/gv/teacher-detail.html?id=2" class="btn-view-detail">Xem chi tiết</a>
+                </div>
+                {% for teacher in teachers %}
+<div class="teacher-card">
+    <h3>{{ teacher.name }}</h3>
+    <p class="university">{{ teacher.university }}</p>
+    <div class="rating">
+        <span class="stars">{{ get_stars_html(teacher.avgRating) }}</span> {# Bạn sẽ cần định nghĩa get_stars_html trong backend #}
+        <span class="average-rating">{{ teacher.avgRating|round(1) }}</span> ({{ teacher.totalReviews }} đánh giá)
+    </div>
+    <a href="/teacher/${teacher.id}" class="btn-view-detail">Xem chi tiết</a>
+</div>
+{% endfor %}
+                </div>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+{% endblock %}

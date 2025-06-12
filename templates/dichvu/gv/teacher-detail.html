@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/GV.css') }}">
+    <main class="container teacher-detail-page">
+        <section class="teacher-info">
+            <h1 id="teacher-name">Tên Giảng viên</h1>
+            <p class="university" id="teacher-university">Đại học ABC</p>
+            <div class="overall-rating">
+                <span class="stars" id="overall-stars">★★★★☆</span>
+                <span class="average-rating" id="overall-average-rating">4.5</span> (Tổng <span id="total-reviews">150</span> đánh giá)
+            </div>
+            <p class="description" id="teacher-description">
+                Mô tả ngắn về giảng viên, lĩnh vực chuyên môn, kinh nghiệm giảng dạy, v.v.
+            </p>
+        </section>
+
+        <section class="review-section">
+            <h2>Đánh giá</h2>
+            <div class="review-list" id="review-list">
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-stars">★★★★★</span>
+                        <span class="review-date">10/05/2024</span>
+                    </div>
+                    <p class="review-comment">Thầy/Cô giảng bài rất dễ hiểu, nhiệt tình và luôn sẵn lòng giải đáp thắc mắc của sinh viên. Rất khuyến khích học môn này!</p>
+                    <p class="reviewer-name">- Sinh viên K20</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-stars">★★★☆☆</span>
+                        <span class="review-date">01/03/2024</span>
+                    </div>
+                    <p class="review-comment">Nội dung bài giảng hơi nặng, cần bổ sung thêm ví dụ thực tế. Giảng viên có kiến thức tốt nhưng đôi khi khó theo kịp.</p>
+                    <p class="reviewer-name">- Sinh viên K19</p>
+                </div>
+            </div>
+
+            <button class="btn-add-review" id="open-review-modal">Thêm đánh giá của bạn</button>
+        </section>
+
+        <div id="review-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Đánh giá Giảng viên</h2>
+                <form id="review-form">
+                    <div class="form-group">
+                        <label for="review-stars">Đánh giá sao:</label>
+                        <div class="star-rating" id="star-rating">
+                            <span class="star" data-value="1">☆</span>
+                            <span class="star" data-value="2">☆</span>
+                            <span class="star" data-value="3">☆</span>
+                            <span class="star" data-value="4">☆</span>
+                            <span class="star" data-value="5">☆</span>
+                        </div>
+                        <input type="hidden" id="selected-stars" name="stars" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="review-comment">Nhận xét của bạn:</label>
+                        <textarea id="review-comment" name="comment" rows="5" placeholder="Viết nhận xét của bạn ở đây..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit-review">Gửi đánh giá</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+{% endblock %}
