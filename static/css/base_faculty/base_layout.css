@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f2f5;
+    overflow-x: hidden; /* Ngăn scroll ngang không mong muốn */
+}
+
+.layout-wrapper {
+    display: flex; /* Quan trọng: Sidebar và main-content-wrapper sẽ nằm cạnh nhau */
+    min-height: 100vh; /* Đảm bảo wrapper chiếm toàn bộ chiều cao màn hình */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+}
+
+.main-content-wrapper {
+    display: flex;
+    flex-direction: column; /* Xếp header, main (nội dung & footer) theo chiều dọc */
+    flex-grow: 1; /* Cho phép nó chiếm hết không gian chiều ngang còn lại sau sidebar */
+    min-height: 100vh; /* Đảm bảo nó chiếm đủ chiều cao */
+    background-color: #f0f2f5; /* Nền cho khu vực này */
+}
+
+.content-and-footer-wrapper { /* Thẻ <main> mới */
+    display: flex;
+    flex-direction: column; /* Xếp content-area và footer theo chiều dọc */
+    flex-grow: 1; /* Cho phép nó chiếm hết không gian còn lại sau header */
+    padding: 20px; /* Khoảng cách tổng thể cho nội dung và footer */
+}
+
+.content-area {
+    background-color: white; /* Nền trắng cho nội dung */
+    border-radius: 8px; /* Bo góc nhẹ cho khu vực nội dung */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ nhàng */
+    padding: 20px; /* Padding bên trong content area */
+    flex-grow: 1; /* Cho phép content-area mở rộng để lấp đầy không gian */
+}

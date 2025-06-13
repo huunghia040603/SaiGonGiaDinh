@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}</title>
+    
+    {# Đảm bảo các file CSS quan trọng được tải trước #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_faculty/base_layout.css') }}"> {# File CSS mới cho bố cục base và header #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_faculty/sidebar.css') }}"> {# Sidebar CSS #}
+
+
+
+    {% block stylesheets %}
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
+        integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {# Các file CSS cụ thể cho từng trang/module khác #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylenganh.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/thongtintruong.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cauhoithuonggap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clb.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sv.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sansang.css') }}">
+    {% endblock %}
+
+    {% block page_styles %}{% endblock %}
+</head>
+
+<body>
+
+    <div class="layout-wrapper"> {# Bọc toàn bộ layout #}
+        <div class="sidebar">
+            {# Nội dung sidebar của bạn #}
+            <h2>QUẢN TRỊ</h2>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            </ul>
+            <div class="auth-section">
+                <h3>CÁC CHỨC NĂNG</h3>
+                <ul>
+                    <li><a href="/sggd/gv/manage/registration_faculty/"><i class="fas fa-chart-bar"></i> Xem đăng ký tư vấn</a></li>
+                    <li><a href="#"><i class="fas fa-user-plus"></i> Tạo tài khoản</a></li>
+                    <li><a href="#"><i class="fas fa-user-graduate"></i> Quản lý tài khoản sinh viên</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Quản lý tài khoản giảng viên</a></li>
+                    <li><a href="#"><i class="far fa-newspaper"></i> Quản lý tin tức</a></li>
+                    <li><a href="#"><i class="fas fa-user-lock"></i> Quản lý đóng/mở tài khoản sinh viên</a></li>
+                </ul>
+            </div>
+            <div class="auth-section">
+                <h3>AUTH</h3>
+            </div>
+        </div>
+
+        <div class="main-content-wrapper"> {# Đổi tên từ main-content-area để dễ phân biệt, đây là wrapper cho header và main content #}
+            {# Include the header section #}
+            {% include 'faculty/header_faculty.html' %}
+
+            <main class="content-and-footer-wrapper"> {# Đặt main và footer vào đây #}
+                <div class="content-area">
+                    {% block content %}
+                    {# Nội dung cụ thể của từng trang sẽ được đặt ở đây #}
+                    {% endblock %}
+                </div>
+                
+            </main>
+        </div>
+    </div>
+
+    {# Đặt các script ở cuối body để cải thiện tốc độ tải trang #}
+    <script src="{{ url_for('static', filename='js/jsbody.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jsfooter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/thongtintruong.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth_status.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cauhoithuonggap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/clb.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar_active.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notifications_badge.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/faculty/login.js') }}"></script>
+    
+    {% block scripts %}
+    {# Các script riêng của từng trang có thể được thêm ở đây #}
+    {% endblock %}
+</body>
+
+</html>

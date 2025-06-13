@@ -1,0 +1,83 @@
+{% extends 'faculty/base_faculty.html' %}
+
+{% block title %}Trang Chủ - Website Trường Cao Đẳng Sài Gòn Gia Định{% endblock %}
+
+{% block content %}
+   {% include 'faculty/stats_faculty.html' %} 
+    
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jsnganh.js') }}"></script>
+
+<script>
+// Add touch support for mobile devices
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle touch events for major cards
+    const majorCards = document.querySelectorAll('.major-card');
+    majorCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.classList.add('touched');
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.classList.remove('touched');
+        });
+    });
+
+    // Improve form usability on mobile
+    const form = document.getElementById('tourForm');
+    if (form) {
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                // Scroll to input when focused
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+        });
+    }
+
+    // Initialize AOS with mobile-friendly settings
+    AOS.init({
+        disable: 'mobile', // Disable animations on mobile
+        once: true, // Only animate once
+        duration: 600
+    });
+
+    // Improve slider performance on mobile
+    const slider = document.querySelector('.banner-slider');
+    if (slider) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        slider.addEventListener('touchmove', function(e) {
+            touchEndX = e.touches[0].clientX;
+        }, { passive: true });
+
+        slider.addEventListener('touchend', function() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    // Swipe right
+                    document.querySelector('.prev-btn').click();
+                } else {
+                    // Swipe left
+                    document.querySelector('.next-btn').click();
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

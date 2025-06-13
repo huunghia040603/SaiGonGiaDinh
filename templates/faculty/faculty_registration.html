@@ -1,0 +1,415 @@
+{% extends 'faculty/base_faculty.html' %}
+
+{% block title %}Xem các lượt đăng ký tư vấn{% endblock %}
+
+{% block page_styles %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            margin-top: 40px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+        .error {
+            text-align: center;
+            font-size: 18px;
+            color: red;
+        }
+
+        /* Styles for the Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        /* Thêm một class mới để điều khiển hiển thị modal */
+        .modal.is-visible {
+            display: flex; /* Chỉ hiện modal khi có class này */
+            align-items: center; /* Để căn giữa */
+            justify-content: center; /* Để căn giữa */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px; /* Max width for larger screens */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 10px 0;
+        }
+        .modal-body textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .modal-actions {
+            text-align: right;
+        }
+        .modal-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        .modal-actions .save-button {
+            background-color: #007bff;
+            color: white;
+        }
+        .modal-actions .save-button:hover {
+            background-color: #0056b3;
+        }
+        .modal-actions .cancel-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .modal-actions .cancel-button:hover {
+            background-color: #5a6268;
+        }
+
+        .notes-container {
+            display: flex;
+            flex-direction: column; /* Xếp chồng button và text */
+            align-items: flex-start; /* Căn chỉnh nội dung sang trái */
+            gap: 5px; /* Khoảng cách giữa button và text */
+        }
+
+        .view-notes-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px; /* Khoảng cách giữa icon và chữ (nếu có) */
+        }
+
+        .view-notes-button:hover {
+            background-color: #218838;
+        }
+
+        .notes-display-text {
+            font-size: 13px; /* Kích thước chữ cho ghi chú */
+            color: #555; /* Màu chữ cho ghi chú */
+            margin-top: 5px; /* Khoảng cách trên từ nút */
+            white-space: pre-wrap; /* Giữ nguyên các ngắt dòng và khoảng trắng */
+            word-break: break-word; /* Ngắt từ nếu quá dài */
+        }
+
+        /* Thêm CSS để chỉnh độ rộng cho cột Ghi chú */
+        #advisoryTable th:nth-child(10),
+        #advisoryTable td:nth-child(10) {
+            width: 150px; /* Tăng độ rộng cột để chứa cả nút và ghi chú */
+            min-width: 150px;
+            vertical-align: top; /* Căn trên để nút và ghi chú bắt đầu từ đầu ô */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2j+PxXp0DrzQXVyVInoxNTt7M+8mbbVqDOPXb+az0wD+6+f5gN0c6P0t8w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block content %}
+    <div id="loading" class="loading">Đang tải dữ liệu...</div>
+    <div id="error" class="error" style="display: none;"></div>
+    <table id="advisoryTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ và tên</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Ngành quan tâm</th>
+                <th>Trình độ</th>
+                <th>Ngày đăng ký</th>
+                <th>Trạng thái</th>
+                <th>Ghi chú</th> {# Đây là tiêu đề cột cho nút #}
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <div id="notesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Chỉnh sửa Ghi chú</h2>
+            <div class="modal-body">
+                <label for="notesTextarea">Nội dung ghi chú:</label>
+                <textarea id="notesTextarea"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="save-button" id="saveNotesButton">Lưu</button>
+                <button type="button" class="cancel-button" id="cancelNotesButton">Hủy</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/services-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jsnganh.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const apiUrl = 'https://saigongiadinh.pythonanywhere.com/api/admin/advisory-registrations/';
+            const updateNotesApiUrlBase = 'https://saigongiadinh.pythonanywhere.com/'; 
+            const authorizationToken = 'Token 7ff20e7b9370024f5f05c50506ccc79762f0039e'; // Thay thế bằng token của bạn
+
+            const loadingDiv = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+            const advisoryTable = document.getElementById('advisoryTable');
+            const tableBody = advisoryTable.querySelector('tbody');
+
+            const notesModal = document.getElementById('notesModal');
+            const closeButton = document.querySelector('.close-button');
+            const notesTextarea = document.getElementById('notesTextarea');
+            const saveNotesButton = document.getElementById('saveNotesButton');
+            const cancelNotesButton = document.getElementById('cancelNotesButton');
+
+            let currentRegistrationId = null;
+            let currentNotesCell = null;
+
+            function openModal(registrationId, currentNotes, cellElement) {
+                currentRegistrationId = registrationId;
+                currentNotesCell = cellElement;
+                notesTextarea.value = currentNotes || '';
+                notesModal.classList.add('is-visible'); // Thêm class để hiển thị modal
+            }
+
+            function closeModal() {
+                notesModal.classList.remove('is-visible'); // Xóa class để ẩn modal
+                notesTextarea.value = '';
+                currentRegistrationId = null;
+                currentNotesCell = null;
+            }
+
+            closeButton.onclick = function() {
+                closeModal();
+            }
+
+            cancelNotesButton.onclick = function() {
+                closeModal();
+            }
+
+            window.onclick = function(event) {
+                if (event.target == notesModal) {
+                    closeModal();
+                }
+            }
+
+            saveNotesButton.onclick = function() {
+                const newNotes = notesTextarea.value;
+                if (currentRegistrationId) {
+                    updateNotes(currentRegistrationId, newNotes);
+                }
+            };
+
+            // async function updateNotes(id, notes) {
+            //     const updateUrl = `https://saigongiadinh.pythonanywhere.com/update-notes-registrations/${id}`;
+                
+            //     try {
+            //         const response = await fetch(updateUrl, {
+            //             method: 'PATCH',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 'Authorization': authorizationToken
+            //             },
+            //             body: JSON.stringify({ notes: notes })
+            //         });
+
+            //         if (!response.ok) {
+            //             const errorData = await response.json();
+            //             throw new Error(`HTTP error! status: ${response.status} - ${JSON.stringify(errorData)}`);
+            //         }
+
+            //         closeModal();
+                    
+            //         alert('Ghi chú đã được cập nhật thành công!');
+            //         // Tải lại dữ liệu để hiển thị ghi chú mới nhất trên bảng
+            //         fetchAdvisoryRegistrations(); 
+            //     } catch (error) {
+            //         console.error('Lỗi khi cập nhật ghi chú:', error);
+            //         alert(`Không thể cập nhật ghi chú: ${error.message}`);
+            //     }
+            // }
+
+            async function updateNotes(id, notes) {
+    const updateUrl = `https://saigongiadinh.pythonanywhere.com/update-notes-registrations/${id}/`; // Đã thêm dấu /
+
+    try {
+        const response = await fetch(updateUrl, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authorizationToken
+            },
+            body: JSON.stringify({ notes: notes })
+        });
+
+        // Luôn đọc phản hồi để biết lý do lỗi, dù response.ok là true hay false
+        const responseText = await response.text(); // Đọc raw text response
+        console.log("Raw API Response:", responseText); // Log phản hồi thô
+
+        if (!response.ok) {
+            let errorMessage = `HTTP error! status: ${response.status}`;
+            try {
+                // Cố gắng parse JSON nếu có thể
+                const errorData = JSON.parse(responseText);
+                errorMessage += ` - ${JSON.stringify(errorData)}`;
+            } catch (parseError) {
+                // Nếu không phải JSON, hiển thị raw text
+                errorMessage += ` - Response was not JSON: ${responseText.substring(0, 200)}...`; // Giới hạn độ dài để dễ nhìn
+            }
+            throw new Error(errorMessage);
+        }
+
+        closeModal();
+        fetchAdvisoryRegistrations();
+
+    } catch (error) {
+        console.error('Lỗi khi cập nhật ghi chú:', error);
+        alert(`Không thể cập nhật ghi chú: ${error.message}`);
+    }
+}
+
+            async function fetchAdvisoryRegistrations() {
+                loadingDiv.style.display = 'block';
+                errorDiv.style.display = 'none';
+                advisoryTable.style.display = 'none';
+                tableBody.innerHTML = '';
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': authorizationToken
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+
+                    loadingDiv.style.display = 'none';
+                    advisoryTable.style.display = 'table';
+                    if (data.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Không có dữ liệu đăng ký nào.</td></tr>';
+                        return;
+                    }
+                    data.forEach(registration => {
+                        const row = tableBody.insertRow();
+                        row.insertCell().textContent = registration.id;
+                        row.insertCell().textContent = registration.full_name;
+                        row.insertCell().textContent = registration.phone_number;
+                        row.insertCell().textContent = registration.email;
+                        row.insertCell().textContent = registration.address;
+                        row.insertCell().textContent = registration.major_of_interest ? registration.major_of_interest.name : 'N/A';
+                        row.insertCell().textContent = registration.has_graduated_display;
+                        row.insertCell().textContent = new Date(registration.registration_date).toLocaleString('vi-VN');
+                        row.insertCell().textContent = registration.status_display;
+
+                        const notesCell = row.insertCell();
+                        
+                        // Tạo một container để chứa nút và ghi chú
+                        const notesContainer = document.createElement('div');
+                        notesContainer.classList.add('notes-container');
+
+                        const notesButton = document.createElement('button');
+                        notesButton.innerHTML = `<i class="fa-solid fa-clipboard" style="color: #ffffff;"></i> Sửa`; 
+                        notesButton.classList.add('view-notes-button');
+                        notesButton.addEventListener('click', () => openModal(registration.id, registration.notes, notesCell));
+                        notesContainer.appendChild(notesButton);
+
+                        // Tạo một span để hiển thị ghi chú
+                        const notesTextSpan = document.createElement('span');
+                        notesTextSpan.classList.add('notes-display-text');
+                        notesTextSpan.textContent = registration.notes || ''; // Hiển thị ghi chú hoặc để trống nếu không có
+                        notesContainer.appendChild(notesTextSpan);
+
+                        notesCell.appendChild(notesContainer);
+                    });
+                } catch (error) {
+                    loadingDiv.style.display = 'none';
+                    errorDiv.style.display = 'block';
+                    errorDiv.textContent = `Lỗi khi tải dữ liệu: ${error.message}. Vui lòng kiểm tra lại token hoặc kết nối mạng.`;
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            fetchAdvisoryRegistrations();
+        });
+    </script>
+{% endblock %}

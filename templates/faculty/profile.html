@@ -1,0 +1,489 @@
+{% extends 'faculty/base_faculty.html' %} {# Giả định bạn có base template cho khu vực giảng viên/cán bộ #}
+
+{% block title %}Hồ sơ giảng viên/cán bộ{% endblock %}
+
+{% block page_styles %}
+    <style>
+        /* CSS cho bố cục và kiểu dáng chung */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            color: #333;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Giữ top alignment */
+            min-height: calc(100vh - var(--header-height, 120px) - var(--footer-height, 250px) - 60px);
+            padding: 30px 20px;
+            background-color: #eef2f5;
+            box-sizing: border-box;
+        }
+        
+        .profile-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+            padding: 35px;
+            width: 100%;
+            max-width: 1200px; /* Tăng chiều rộng tối đa để chứa 4 cột tốt hơn */
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .profile-header h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .profile-header p {
+            color: #888;
+            font-size: 1em;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e0f2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+            overflow: hidden;
+            border: 5px solid #5d9cec;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-picture i {
+            font-size: 75px;
+            color: #5d9cec;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* --- CẬP NHẬT CSS CHO BỐ CỤC 4 CỘT --- */
+        .profile-info {
+            text-align: left;
+            margin-top: 25px;
+            display: grid; /* Sử dụng CSS Grid */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 4 cột, mỗi cột tối thiểu 280px */
+            gap: 20px; /* Khoảng cách giữa các ô */
+        }
+
+        .profile-info .info-item { /* Đổi tên div thành info-item để rõ ràng hơn */
+            display: flex;
+            align-items: flex-start; /* Căn chỉnh các item theo chiều dọc bắt đầu từ trên cùng */
+            padding: 12px 18px;
+            background-color: #f8fcfd;
+            border-radius: 10px;
+            border: 1px solid #e0e6eb;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước tổng */
+        }
+
+        .profile-info .info-item:hover {
+            background-color: #eef7fc;
+            border-color: #add8e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-info .info-item i {
+            color: #5d9cec;
+            margin-right: 15px; /* Giảm khoảng cách icon */
+            font-size: 1.3em;
+            width: 25px; /* Giảm kích thước icon */
+            text-align: center;
+            padding-top: 2px;
+            flex-shrink: 0; /* Ngăn icon bị co lại */
+        }
+
+        .profile-info .info-item strong {
+            color: #444;
+            flex-shrink: 0;
+            min-width: 100px; /* Giảm min-width cho label để dữ liệu có nhiều không gian hơn */
+            font-weight: 500;
+            margin-right: 10px; /* Khoảng cách giữa label và giá trị */
+        }
+
+        .profile-info .info-item span {
+            flex-grow: 1;
+            color: #333;
+            word-break: break-word; /* Tự động xuống dòng cho văn bản dài */
+            line-height: 1.5; /* Khoảng cách dòng để dễ đọc */
+            white-space: pre-wrap; /* Giữ các khoảng trắng và xuống dòng nếu có trong dữ liệu */
+        }
+        /* --- KẾT THÚC CẬP NHẬT CSS --- */
+
+        .edit-button {
+            background-color: #5d9cec;
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-top: 35px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 300px; /* Giới hạn chiều rộng nút */
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(93, 156, 236, 0.3);
+        }
+
+        .edit-button:hover {
+            background-color: #4a82d4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(93, 156, 236, 0.4);
+        }
+
+        .is-department-head-badge {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        /* Media Queries cho màn hình nhỏ hơn để đảm bảo hiển thị đẹp */
+        @media (max-width: 1200px) {
+            .profile-info {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 3 hoặc 4 cột tùy kích thước */
+                gap: 15px;
+            }
+        }
+        @media (max-width: 992px) { /* Medium screens (tablets) */
+            .profile-info {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 2 hoặc 3 cột tùy kích thước */
+                gap: 15px;
+            }
+            .profile-container {
+                padding: 30px 25px;
+            }
+            .edit-button {
+                max-width: 250px;
+            }
+        }
+        @media (max-width: 768px) { /* Small screens (larger phones) */
+            .profile-info {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 cột */
+                gap: 10px;
+            }
+            .profile-container {
+                padding: 25px 20px;
+            }
+            .profile-header h1 {
+                font-size: 1.8em;
+            }
+            .profile-picture {
+                width: 120px;
+                height: 120px;
+            }
+            .profile-picture i {
+                font-size: 60px;
+            }
+            .edit-button {
+                max-width: 100%; /* Nút full width trên mobile */
+            }
+        }
+        @media (max-width: 576px) { /* Extra small screens (phones) */
+            .profile-info {
+                grid-template-columns: 1fr; /* 1 cột trên điện thoại */
+                gap: 10px;
+            }
+            .profile-container {
+                padding: 20px 15px;
+            }
+            .profile-header h1 {
+                font-size: 1.6em;
+            }
+            .profile-picture {
+                width: 100px;
+                height: 100px;
+            }
+            .profile-picture i {
+                font-size: 50px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-picture">
+                    <img id="userProfilePicture" src="" alt="Ảnh đại diện">
+                    <i class="fas fa-user-circle" id="defaultUserIcon" style="display: none;"></i> 
+                </div>
+                <h1>Hồ sơ giảng viên/cán bộ</h1>
+                <p>Thông tin chi tiết về tài khoản của bạn</p>
+            </div>
+
+            <div class="profile-info">
+                {# Thay đổi div thành info-item để áp dụng CSS Grid #}
+                <div class="info-item">
+                    <i class="fas fa-id-card"></i>
+                    <strong>Mã số:</strong>
+                    <span id="facultyCode"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-id-badge"></i>
+                    <strong>Họ tên:</strong>
+                    <span id="userFullName"></span>
+                    <span id="isDepartmentHeadBadge" class="is-department-head-badge" style="display:none;">Trưởng khoa</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-venus-mars"></i>
+                    <strong>Giới tính:</strong>
+                    <span id="userGender"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-birthday-cake"></i>
+                    <strong>Ngày sinh:</strong>
+                    <span id="userDateOfBirth"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-globe-asia"></i>
+                    <strong>Nơi sinh:</strong>
+                    <span id="userPlaceOfBirth"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-flag"></i>
+                    <strong>Quốc tịch:</strong>
+                    <span id="userNationality"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-passport"></i>
+                    <strong>CMND/CCCD:</strong>
+                    <span id="userNationalIdCard"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <strong>Điện thoại:</strong>
+                    <span id="userPhone"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <strong>Email:</strong>
+                    <span id="userEmail"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <strong>Địa chỉ:</strong>
+                    <span id="userAddress"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user-tag"></i>
+                    <strong>Vai trò:</strong>
+                    <span id="userRole"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-briefcase"></i>
+                    <strong>Loại cán bộ:</strong>
+                    <span id="facultyType"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-university"></i>
+                    <strong>Khoa:</strong>
+                    <span id="facultyDepartmentName"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <strong>Chức vụ:</strong>
+                    <span id="facultyPosition"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <strong>Học vị:</strong>
+                    <span id="facultyDegree"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <strong>Vị trí văn phòng:</strong>
+                    <span id="facultyOfficeLocation"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <strong>Ngày vào làm:</strong>
+                    <span id="userEnrollmentDate"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <strong>Ngày tham gia hệ thống:</strong>
+                    <span id="userDateJoined"></span>
+                </div>
+            </div>
+
+            <button class="edit-button" id="logoutBtn">Đăng xuất</button> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy các phần tử HTML cần điền dữ liệu
+            const userProfilePicture = document.getElementById('userProfilePicture');
+            const defaultUserIcon = document.getElementById('defaultUserIcon');
+            const facultyCode = document.getElementById('facultyCode');
+            const userFullName = document.getElementById('userFullName');
+            const isDepartmentHeadBadge = document.getElementById('isDepartmentHeadBadge');
+            const userGender = document.getElementById('userGender');
+            const userDateOfBirth = document.getElementById('userDateOfBirth');
+            const userPlaceOfBirth = document.getElementById('userPlaceOfBirth');
+            const userNationality = document.getElementById('userNationality');
+            const userNationalIdCard = document.getElementById('userNationalIdCard');
+            const userPhone = document.getElementById('userPhone');
+            const userEmail = document.getElementById('userEmail');
+            const userAddress = document.getElementById('userAddress');
+            const userRole = document.getElementById('userRole');
+            const facultyType = document.getElementById('facultyType');
+            const facultyDepartmentName = document.getElementById('facultyDepartmentName');
+            const facultyPosition = document.getElementById('facultyPosition');
+            const facultyDegree = document.getElementById('facultyDegree');
+            const facultyOfficeLocation = document.getElementById('facultyOfficeLocation');
+            const userEnrollmentDate = document.getElementById('userEnrollmentDate');
+            const userDateJoined = document.getElementById('userDateJoined');
+
+            // Hàm format ngày tháng từ YYYY-MM-DD sang DD/MM/YYYY
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                // Xử lý cả định dạng YYYY-MM-DD và YYYY-MM-DDTHH:MM:SSZ
+                const dateOnly = dateString.split('T')[0];
+                const parts = dateOnly.split('-');
+                if (parts.length === 3) {
+                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
+                return dateString; // Trả về nguyên gốc nếu không đúng định dạng
+            }
+
+            // Hàm chuyển đổi gender code sang text hiển thị
+            function formatGender(genderCode) {
+                switch (genderCode) {
+                    case 'M': return 'Nam';
+                    case 'F': return 'Nữ';
+                    case 'O': return 'Khác'; // Thêm trường hợp 'O' nếu có
+                    default: return '';
+                }
+            }
+
+            // Hàm chuyển đổi type code sang text hiển thị (từ FACULTY_TYPE_CHOICES)
+            function formatFacultyType(typeCode) {
+                switch (typeCode) {
+                    case 'GIANG_VIEN': return 'Giảng viên';
+                    case 'NHAN_VIEN_HANH_CHINH': return 'Nhân viên hành chính';
+                    case 'NGHIEN_CUU_VIEN': return 'Nghiên cứu viên';
+                    case 'THINH_GIANG': return 'Thỉnh giảng';
+                    case 'KHAC': return 'Khác';
+                    default: return '';
+                }
+            }
+
+            // Lấy dữ liệu từ Local Storage và điền vào các phần tử HTML
+            const storedUserPhoto = localStorage.getItem('userPhoto');
+            if (userProfilePicture && defaultUserIcon) {
+                if (storedUserPhoto && storedUserPhoto !== 'null' && storedUserPhoto !== 'undefined' && storedUserPhoto.trim() !== '') {
+                    userProfilePicture.src = storedUserPhoto;
+                    userProfilePicture.style.display = 'block';
+                    defaultUserIcon.style.display = 'none';
+                } else {
+                    userProfilePicture.style.display = 'none';
+                    defaultUserIcon.style.display = 'block';
+                }
+            }
+            
+            // Sử dụng một hàm trợ giúp để gán giá trị hoặc 'N/A'
+            function setValue(element, value, formatter = null) {
+                if (element) {
+                    element.textContent = (formatter ? formatter(value) : value) || 'N/A';
+                }
+            }
+
+            setValue(facultyCode, localStorage.getItem('facultyCode'));
+            setValue(userFullName, localStorage.getItem('userFullName'));
+            
+            // Hiển thị badge trưởng khoa nếu có
+            const isDepartmentHead = localStorage.getItem('facultyIsDepartmentHead');
+            if (isDepartmentHeadBadge) {
+                if (isDepartmentHead === 'true') {
+                    isDepartmentHeadBadge.style.display = 'inline-block';
+                } else {
+                    isDepartmentHeadBadge.style.display = 'none';
+                }
+            }
+
+            setValue(userGender, localStorage.getItem('userGender'), formatGender);
+            setValue(userDateOfBirth, localStorage.getItem('userDateOfBirth'), formatDate);
+            setValue(userPlaceOfBirth, localStorage.getItem('userPlaceOfBirth'));
+            setValue(userNationality, localStorage.getItem('userNationality'));
+            setValue(userNationalIdCard, localStorage.getItem('userNationalIdCard'));
+            setValue(userPhone, localStorage.getItem('userPhone'));
+            setValue(userEmail, localStorage.getItem('userEmail'));
+            setValue(userAddress, localStorage.getItem('userAddress'));
+            
+            // Format vai trò để hiển thị thân thiện hơn
+            const storedRole = localStorage.getItem('userRole');
+            setValue(userRole, (storedRole === 'CBCNV' ? 'Cán bộ công nhân viên' : storedRole));
+
+            setValue(facultyType, localStorage.getItem('facultyType'), formatFacultyType);
+            setValue(facultyDepartmentName, localStorage.getItem('facultyDepartmentName'));
+            setValue(facultyPosition, localStorage.getItem('facultyPosition'));
+            setValue(facultyDegree, localStorage.getItem('facultyDegree'));
+            setValue(facultyOfficeLocation, localStorage.getItem('facultyOfficeLocation'));
+            setValue(userEnrollmentDate, localStorage.getItem('userEnrollmentDate'), formatDate);
+            // Chỉ lấy phần ngày từ chuỗi datetime (nếu có)
+            setValue(userDateJoined, localStorage.getItem('userDateJoined'), (dateString) => formatDate(dateString)); 
+        });
+
+        // --- BẮT ĐẦU PHẦN BỔ SUNG HÀM LOGOUT MỚI TRONG TRANG PROFILE ---
+        // Lấy nút đăng xuất
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        function handleLogout() {
+            // Xóa tất cả dữ liệu trong Local Storage
+            localStorage.clear();
+            console.log('Tất cả dữ liệu Local Storage đã được xóa.');
+
+            // Chuyển hướng người dùng về trang đăng nhập hoặc trang chính
+            // Đảm bảo URL này khớp với cấu hình Django của bạn
+            window.location.href = '/auth/faculty_login/'; // Chuyển về trang login
+        }
+
+        // Gán sự kiện click cho nút đăng xuất (đảm bảo nó tồn tại)
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', handleLogout);
+        }
+        // --- KẾT THÚC PHẦN BỔ SUNG HÀM LOGOUT MỚI ---
+    </script>
+{% endblock %}

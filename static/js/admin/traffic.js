@@ -4,8 +4,17 @@ let currentPeriod = 'day'; // Biến toàn cục mới để lưu trữ thời g
 
 // Hàm để lấy token xác thực, giống như trong admin_registrations.js
 function getAuthToken() {
-    // Lấy token từ localStorage, nơi login_admin.html đã lưu trữ
-    return localStorage.getItem('adminAuthToken');
+    // Kiểm tra xem URL hiện tại có phải là đường dẫn của giảng viên không
+    if (window.location.pathname.startsWith('/sggd/gv/manage')) {
+        // Nếu là trang quản lý giảng viên, lấy 'authToken' của giảng viên
+        return localStorage.getItem('authToken'); 
+    } 
+    // Nếu là trang admin, lấy 'adminAuthToken'
+    else if (window.location.pathname.startsWith('/sggd/qtv/admin')) {
+        return localStorage.getItem('adminAuthToken');
+    }
+    // Trường hợp khác, không có token mặc định nào được trả về (hoặc bạn có thể thêm logic khác)
+    return null; 
 }
 
 // Hàm để tải dữ liệu và vẽ biểu đồ
@@ -13,10 +22,14 @@ async function loadTrafficData(period) {
     currentPeriod = period; // Cập nhật biến toàn cục period
     // Kiểm tra xem trang hiện tại có phải là trang admin không
     // Nếu không phải trang admin, không cần kiểm tra token và thoát hàm
-    if (!window.location.pathname.startsWith('/sggd/qtv/admin')) {
-        console.log('Không phải trang admin, bỏ qua kiểm tra xác thực.');
-        return;
-    }
+    // if (!window.location.pathname.startsWith('/sggd/qtv/admin') || !window.location.pathname.startsWith('/sggd/gv/manage')) {
+    //     console.log('Không phải trang admin, bỏ qua kiểm tra xác thực.');
+    //     return;
+    // }
+    if (!window.location.pathname.startsWith('/sggd/qtv/admin') || !window.location.pathname.startsWith('/sggd/gv/manage')) {
+        console.log('Đường dẫn hợp lệ. Cho phép truy cập.');
+        
+    } 
 
     // Sử dụng URL tuyệt đối để nhất quán với admin_registrations.js
     const apiUrl = `https://saigongiadinh.pythonanywhere.com/api/admin/traffic-stats/?period=${period}`;
@@ -60,10 +73,14 @@ async function loadTrafficData(period) {
         
         // Chuyển hướng về trang đăng nhập nếu không có token
         setTimeout(() => {
-            window.location.href = '/admin/login';
-        }, 1000); // Đợi 1 giây trước khi chuyển hướng
-        return; // Ngừng thực thi nếu không có token
-    }
+            if (window.location.pathname.startsWith('/sggd/qtv/admin')) {
+                window.location.href = '/admin/login';
+       
+            } else {
+                window.location.href = '/sggd/gv/manage';}
+                }, 1000); // Đợi 1 giây trước khi chuyển hướng
+                return; // Ngừng thực thi nếu không có token
+            }
 
     try {
         const response = await fetch(apiUrl, {

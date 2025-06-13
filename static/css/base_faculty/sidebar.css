@@ -1,0 +1,71 @@
+.sidebar {
+    width: 250px; /* Chiều rộng cố định của sidebar */
+    background-color: #ffffff;
+    color: #343a40;
+    padding-top: 0; /* Đặt lại padding-top để nó tràn lên đầu */
+    flex-shrink: 0; /* Ngăn sidebar co lại */
+    box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+    position: sticky; /* Sticky để cuộn cùng trang */
+    top: 0; /* Luôn dính ở đầu trang */
+    height: 100vh; /* Chiếm toàn bộ chiều cao của viewport */
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung sidebar dài */
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar h2 {
+    background-color: #f8f9fa; /* Màu nền cho phần QUẢN TRỊ */
+    padding: 15px 20px;
+    margin: 0;
+    color: #007bff;
+    font-weight: 600;
+    font-size: 1.2em;
+    border-bottom: 1px solid #e9ecef;
+    position: sticky; /* Đặt sticky cho h2 nếu muốn nó dính khi cuộn sidebar */
+    top: 0;
+    z-index: 10; /* Đảm bảo h2 nằm trên các mục khác */
+    background-color: #ffffff; /* Hoặc một màu nền khác để nó nổi bật */
+}
+
+.sidebar h3 {
+    font-size: 1em;
+    color: #495057;
+    border-bottom: none;
+    padding-top: 25px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: #495057;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-left-color 0.3s ease;
+    border-left: 5px solid transparent;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+.sidebar ul li a:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+    border-left-color: #007bff;
+}
+
+.sidebar ul li a.active {
+    background-color: #007bff;
+    color: white;
+    border-left-color: #007bff;
+    font-weight: bold;
+    box-shadow: inset 3px 0 8px rgba(0,123,255,0.2);
+}
