@@ -1,0 +1,547 @@
+:root {
+    --primary-color: #007bff; /* Xanh dương */
+    --secondary-color: #6c757d; /* Xám */
+    --accent-color: #ffc107; /* Vàng (cho sao) */
+    --bg-light: #f8f9fa; /* Nền nhạt */
+    --text-dark: #343a40; /* Chữ đậm */
+    --border-color: #dee2e6; /* Màu viền */
+    --card-bg: #ffffff;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+}
+@font-face {
+    font-family: 'font2';
+    src: url('../fonts/font2.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'font6';
+    src: url('../fonts/font6.ttf') format('truetype');
+}
+
+
+
+.container {
+    max-width: 1200px;
+   
+    
+}
+/* static/css/GV.css */
+
+/* --- Định dạng Avatar trên trang danh sách (index.html) --- */
+.teacher-avatar-thumbnail {
+    width: 80px; /* Kích thước ảnh nhỏ */
+    height: 80px;
+    border-radius: 50%; /* Bo tròn thành hình tròn */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    margin-bottom: 15px; /* Khoảng cách dưới ảnh */
+    border: 3px solid var(--primary-color); /* Viền xung quanh ảnh */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: block; /* Để margin-bottom hoạt động tốt */
+    margin-left: auto; /* Căn giữa ảnh trong card */
+    margin-right: auto; /* Căn giữa ảnh trong card */
+}
+
+/* --- Định dạng Avatar trên trang chi tiết (teacher-detail.html) --- */
+.teacher-avatar-detail {
+    width: 150px; /* Kích thước ảnh lớn hơn */
+    height: 150px;
+    border-radius: 50%; /* Bo tròn thành hình tròn */
+    object-fit: cover;
+    margin: 0 auto 30px auto; /* Căn giữa và khoảng cách dưới */
+    display: block; /* Để căn giữa hoạt động */
+    border: 5px solid var(--accent-color); /* Viền màu nhấn */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Điều chỉnh lại layout cho teacher-info nếu ảnh avatar làm thay đổi vị trí của các text */
+.teacher-info {
+    text-align: center; /* Căn giữa các phần tử trong teacher-info nếu muốn */
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 20px var(--shadow-light);
+}
+
+.hero-section h1 {
+    font-size: 3em;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-family: 'font2';
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    font-family: 'font6';
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-bar input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'font6';
+}
+
+.search-bar input[type="text"]:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    font-family: 'font6';
+}
+
+.search-bar button {
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'font2';
+}
+
+.search-bar button:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+}
+
+/* --- Featured Teachers Section --- */
+.featured-teachers {
+    margin-bottom: 50px;
+}
+
+.featured-teachers h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+    font-family: 'font2';
+}
+
+.teacher-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.teacher-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.teacher-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-card h3 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-family: 'font2';
+}
+
+.teacher-card .university {
+    font-size: 1em;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-family: 'font6';
+}
+
+.teacher-card .rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-family: 'font6';
+}
+
+.teacher-card .stars {
+    color: var(--accent-color);
+    font-size: 1.3em;
+    margin-right: 8px;
+}
+
+.teacher-card .average-rating {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.teacher-card .btn-view-detail {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: flex-start; /* Để nút không bị giãn toàn bộ chiều rộng */
+    font-family: 'font6';
+}
+
+.teacher-card .btn-view-detail:hover {
+    background-color: #0056b3;
+}
+
+/* --- Teacher Detail Page --- */
+.teacher-detail-page {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    margin-top: 20px;
+}
+
+.teacher-info h1 {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-family: 'font2';
+}
+
+.teacher-info .university {
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-family: 'font6';
+}
+
+.overall-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-family: 'font6';
+    justify-content: center;
+}
+
+.overall-rating .stars {
+    color: var(--accent-color);
+    margin-right: 10px;
+    font-weight: bold;
+    
+}
+
+.overall-rating .average-rating {
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-right: 5px;
+    font-family: 'font6';
+}
+
+.teacher-info .description {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    color: #555;
+    font-family: 'font6';
+}
+
+/* --- Review Section --- */
+.review-section h2 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+    font-family: 'font2';
+}
+
+.review-list {
+    display: grid;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.review-card {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.review-card .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-card .review-stars {
+    color: var(--accent-color);
+    font-size: 1.2em;
+}
+
+.review-card .review-date {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+.review-card .review-comment {
+    font-size: 1.05em;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    font-family: 'font6';
+}
+
+.review-card .reviewer-name {
+    font-style: italic;
+    color: #666;
+    font-size: 0.95em;
+    text-align: right;
+}
+
+.btn-add-review {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'font2';
+
+}
+
+.btn-add-review:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+}
+
+/* --- Modal for adding review --- */
+.modal {
+    display: none; /* Ẩn mặc định */
+    position: fixed; /* Giữ nguyên vị trí khi cuộn */
+    z-index: 1000; /* Nằm trên tất cả các phần tử khác */
+    left: 0;
+    top: 0;
+    width: 100%; /* Chiều rộng đầy đủ */
+    height: 100%; /* Chiều cao đầy đủ */
+    overflow: auto; /* Cho phép cuộn nếu nội dung quá dài */
+    background-color: rgba(0,0,0,0.6); /* Nền mờ */
+    padding-top: 60px; /* Vị trí hộp thoại */
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto; /* 5% từ trên xuống và căn giữa */
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%; /* Chiều rộng */
+    max-width: 600px; /* Chiều rộng tối đa */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out; /* Hiệu ứng mở */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-button {
+    color: var(--secondary-color);
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.modal-content h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-family: 'font2';
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-dark);
+    font-family: 'font2';
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    font-size: 2.5em;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.star-rating .star {
+    color: var(--border-color); /* Sao rỗng */
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.star-rating .star.selected {
+    color: var(--accent-color); /* Sao đã chọn */
+}
+
+.star-rating .star:hover {
+    transform: scale(1.1);
+}
+
+textarea {
+    width: calc(100% - 24px); /* Trừ padding */
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    resize: vertical; /* Cho phép thay đổi kích thước theo chiều dọc */
+    min-height: 100px;
+    font-family: inherit; /* Kế thừa font từ body */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'font6';
+}
+
+textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    font-family: 'font6';
+}
+
+.btn-submit-review {
+    display: block;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'font2';
+}
+
+.btn-submit-review:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.2em;
+    }
+
+    .hero-section p {
+        font-size: 1em;
+    }
+
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar button {
+        margin-top: 10px;
+    }
+
+    .teacher-list {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-detail-page {
+        padding: 25px;
+    }
+
+    .teacher-info h1 {
+        font-size: 2.5em;
+    }
+
+    .overall-rating {
+        font-size: 1.2em;
+    }
+
+    .review-section h2 {
+        font-size: 1.8em;
+    }
+    .facility-detail-page {
+        padding: 20px;
+    }
+   
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-section {
+        padding: 30px 10px;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8em;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+    }
+    .facility-detail-page {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .teacher-detail-page {
+        padding: 20px;
+    }
+
+}

@@ -65,50 +65,6 @@
     }
 }
 
-@media (max-width: 768px) {
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .footer {
-        padding: 40px 0;
-    }
-
-    .zalo-btn img {
-        width: 25px;
-        height: 25px;
-    }
-
-    .floating-buttons {
-        left: 10px;
-        bottom: 10px;
-    }
-
-    .scroll-to-top {
-        right: 15px;
-        bottom: 15px;
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-column {
-        text-align: center;
-    }
-
-    .footer-column h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
 /* Footer Bottom Section */
 .footer-bottom {
     margin-top: 40px;
@@ -247,6 +203,10 @@
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+  
+    .footer-column h3 {
+        font-size: 16px;
+    }
     .partner-logos {
         flex-direction: column;
         gap: 20px;
@@ -319,5 +279,51 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .footer {
+        padding: 40px 0;
+    }
+
+    .zalo-btn img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .floating-buttons {
+        left: 10px;
+        bottom: 10px;
+        display: none;
+    }
+
+    .scroll-to-top {
+        right: 15px;
+        bottom: 75px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-column {
+        text-align: center;
+    }
+
+    .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
     }
 }

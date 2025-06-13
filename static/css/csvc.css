@@ -1,0 +1,168 @@
+/* static/css/GV.css */
+
+/* ... (Các quy tắc CSS hiện có của bạn) ... */
+
+/* --- Định dạng chung cho cơ sở vật chất --- */
+.featured-facilities h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+    font-family: 'font2';
+}
+
+.facility-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.facility-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.facility-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.facility-thumbnail {
+    width: 100px; /* Kích thước ảnh nhỏ */
+    height: 100px;
+    border-radius: 50%; /* Bo tròn */
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--accent-color); /* Viền màu nhấn */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.facility-card h3 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-family: 'font2';
+}
+
+.facility-card .description {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 15px;
+    font-family: 'font6';
+    min-height: 4.5em; /* Đảm bảo chiều cao đồng nhất */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Kế thừa .rating, .stars, .average-rating, .btn-view-detail từ giảng viên */
+.facility-card .rating,
+.facility-card .stars,
+.facility-card .average-rating,
+.facility-card .btn-view-detail {
+    text-decoration: none;
+    /* Đã định nghĩa trong CSS chung */
+}
+
+
+
+/* --- Trang chi tiết cơ sở vật chất --- */
+.facility-detail-page {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.facility-detail-image {
+    width: 200px; /* Ảnh lớn trên trang chi tiết */
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 10px auto 30px auto;
+    display: block;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+   
+
+}
+
+.facility-info h1 {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-family: 'font2';
+}
+
+.facility-info .description {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: #555;
+    font-family: 'font6';
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.facility-card .btn-view-detail {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    /* align-self: flex-start; */
+    font-family: 'font6';
+}
+
+.facility-card .btn-view-detail:hover {
+    background-color: #0d68c9;
+}
+
+.facility-card .stars {
+    color: var(--accent-color);
+    font-size: 1.3em;
+    margin-right: 8px;
+    justify-content: left;
+}
+
+.facility-card .rating {
+    display: flex;
+    margin-bottom: 15px;
+    font-family: 'font6';
+    align-items: center;
+}
+
+.review-section h2{
+    text-align: left;
+}
+
+.review-card .review-comment {
+    text-align: left;
+}
+
+/* Kế thừa .overall-rating, .review-section, .review-list, .review-card, .modal, .form-group, .star-rating, v.v. */
+/* vì chúng có cấu trúc HTML tương tự như đánh giá giảng viên */
+
+/* Đảm bảo ID cho modal và các phần tử trong form là duy nhất cho cơ sở vật chất */
+#facility-review-modal .modal-content h2 {
+    color: var(--primary-color);
+}
+#facility-star-rating .star.selected {
+    color: var(--accent-color);
+}

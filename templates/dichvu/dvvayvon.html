@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="facilities-section">
+    <div class="facilities-header">
+        <h2 class="facilities-title">Đăng Ký Giấy Xác Nhận Vay Vốn</h2>
+    </div>
+    
+    <div class="facilities-grid">
+        <div class="facility-item">
+            <img src="{{ url_for('static', filename='images/bannerdk1.jpg') }}" alt="Cơ sở Sala" class="facility-image">
+        </div>
+        
+        <div class="registration-form" id="form-dangky">
+            <h3 class="form-title">ĐĂNG KÝ GIẤY XÁC NHẬN VAY VỐN</h3>
+            <form id="tourForm" action="/register-tour" method="POST">
+
+                <div class="form-group">
+                    <label for="full_name_input" class="form-label">Người đại diện vay vốn (Cha/Mẹ)*</label>
+                    <input type="text" id="full_name_input" name="full_name" class="form-control" required placeholder="Nhập họ và tên">
+                </div>
+
+                <div class="form-group" id="address-group_vayvon">
+                    <label for="address_input_vayvon" class="form-label">Địa Chỉ người đại diện vay vốn *</label>
+                    <input type="text" id="address_input_vayvon" name="address_vayvon" class="form-control" required placeholder="Nhập địa chỉ liên lạc">
+                </div>
+
+                <div class="form-group" id="group_vayvon">
+                    <label for="input_vayvon" class="form-label">Vay vốn chính sách xã hội *</label>
+                    <input type="text" id="input_vayvon" name="vayvon" class="form-control" required placeholder="Nhập địa chỉ liên lạc">
+                </div>
+            
+
+             
+                <div class="form-group">
+                    <label for="phone_number_input" class="form-label">Số điện thoại liên lạc *</label>
+                    <input type="tel" id="phone_number_input" name="phone_number" class="form-control" required placeholder="Nhập số điện thoại">
+                </div>
+                <div class="form-group">
+                    <label for="email_input" class="form-label">Địa chỉ Email</label>
+                    <input type="email" id="email_input" name="email" class="form-control" placeholder="Nhập địa chỉ email">
+                </div>
+
+                <div class="form-group">
+                    <label for="number_input" class="form-label">Số tiền vay *</label>
+                    <input  id="number_input" name="number" class="form-control" required placeholder="Nhập số tiền (Vui lòng nhập chính xác)">
+                </div>
+
+                <div class="form-group">
+                    <label for="ship_select" class="form-label">Phương thức nhận </label>
+                    <select id="ship_select" name="ship" class="form-control" required style="font-weight: 800;">
+                        <option value="khongship" selected>Nhận kết quả tại trường 514 LQĐ</option>
+                        <option value="shiptrongnuoc">Ship trong nước VN POST (EMS)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="address-group">
+                    <label for="address_input" class="form-label">Địa Chỉ Ship *</label>
+                    <input type="text" id="address_input" name="address" class="form-control" required placeholder="Nhập địa chỉ liên lạc">
+                    <text style="font-size: 12px; color: red; padding-left: 10px;">Phí dịch vụ ship: 24.000đ</text>
+                </div>
+            
+                <div class="form-check">
+                    <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required>
+                    <label for="privacy" class="form-check-label">
+                        Tôi đã đọc và đồng ý cho Cao Đẳng Sài Gòn Gia Định xử lý dữ liệu cá nhân của tôi theo <a href="/private_policy">Chính sách bảo mật dữ liệu</a> cá nhân của chúng tôi.
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Gửi thông tin</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy các phần tử cần thiết
+    const shipSelect = document.getElementById('ship_select');
+    const addressGroup = document.getElementById('address-group');
+    const addressInput = document.getElementById('address_input');
+
+    // Hàm để kiểm tra và ẩn/hiện ô địa chỉ
+    function toggleAddressField() {
+        if (shipSelect.value === 'shiptrongnuoc') {
+            addressGroup.style.display = 'block'; // Hiển thị ô địa chỉ
+            addressInput.setAttribute('required', 'required'); // Đặt là trường bắt buộc
+        } else {
+            addressGroup.style.display = 'none'; // Ẩn ô địa chỉ
+            addressInput.removeAttribute('required'); // Bỏ yêu cầu bắt buộc
+            addressInput.value = ''; // Xóa giá trị đã nhập (tùy chọn)
+        }
+    }
+
+    // Gọi hàm một lần khi tải trang để thiết lập trạng thái ban đầu
+    toggleAddressField();
+
+    // Lắng nghe sự kiện 'change' trên dropdown 'Phương thức nhận'
+    shipSelect.addEventListener('change', toggleAddressField);
+});</script>
+
+<script src="{{ url_for('static', filename='js/dangkytuvan.js') }}"></script>
+
+
+{% endblock %}
+

@@ -979,8 +979,11 @@
     .nav-link,
     .form-control,
     .submit-btn {
-        min-height: 44px;
+        /* min-height: 44px; */
+        width: 90%;
     }
+
+    
 
     /* Fix for iOS form zoom */
     input[type="text"],

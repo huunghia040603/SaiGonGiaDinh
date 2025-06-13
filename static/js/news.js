@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
         newsCard.innerHTML = `
             <div class="card-image-wrapper">
-                <img src="${imageUrl}" alt="Ảnh bìa" class="image">
+                <img src="${imageUrl}" alt="Ảnh bìa" class="image" style="width: 100%; height: 100%; opacity: 0.9;">
                 
                 <span class="card-category">${displayCategory}</span>
             </div>

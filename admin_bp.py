@@ -64,6 +64,12 @@ def notifications():
     return render_template('admin/admin_notifications.html')
 
 
+@admin_bp.route('/manage_nganh/')
+def manage_nganh():
+    
+    return render_template('admin/manage_nganh.html')
+
+
 
 
 

@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="main-content8 container8" style="background-color: #f8f9fa;">
+    <h1 class="page-title8">Chào mừng đến với Cổng Dịch Vụ Sinh Viên</h1>
+    <p class="page-description8">Chọn dịch vụ bạn cần từ các danh mục bên dưới.</p>
+
+    <section class="service-category8">
+        <h2 class="category-title8"><i class="fas fa-globe"></i> Dịch vụ Online</h2>
+        <div class="service-grid8">
+            <a href="/dich-vu-da-dang-ky" style="text-decoration: none;">
+            <div class="service-card8" data-service="xem-bang-diem">
+                <i class="fa-solid fa-book icon8"></i>
+                <h3>Các dịch vụ đã đăng ký</h3>
+                <p>Xem lại các dịch vụ đã đăng ký.</p>
+            </div></a>
+            <a href="/dang-ky-bang-diem" style="text-decoration: none;">
+            <div class="service-card8" data-service="dang-ky-bang-diem">
+                <i class="fas fa-file-alt icon8"></i>
+                <h3>Đăng ký cấp bảng điểm</h3>
+                <p>Yêu cầu cấp bảng điểm chính thức.</p>
+            </div></a>
+
+            <a href="/dang-ky-chung-nhan" style="text-decoration: none;">
+            <div class="service-card8" data-service="dang-ky-chung-nhan">
+                <i class="fas fa-certificate icon8"></i>
+                <h3>Đăng ký chứng nhận Sinh Viên</h3>
+                <p>Yêu cầu cấp chứng nhận Sinh Viên.</p>
+            </div></a>
+            <a href="/dang-ky-the-sinh-vien" style="text-decoration: none;">
+            <div class="service-card8" data-service="dang-ky-the-sinh-vien">
+                <i class="fas fa-id-card icon8"></i>
+                <h3>Đăng ký thẻ sinh viên</h3>
+                <p>Yêu cầu cấp hoặc cấp lại thẻ sinh viên.</p>
+            </div></a>
+            <a href="/dang-ky-xac-nhan-vay-von" style="text-decoration: none;">
+            <div class="service-card8" data-service="dang-ky-xac-nhan-vay-von">
+                <i class="fas fa-hand-holding-usd icon8"></i>
+                <h3>Đăng ký xác nhận vay vốn</h3>
+                <p>Yêu cầu xác nhận cho mục đích vay vốn.</p>
+            </div></a>
+            <a href="/dang-ky-ban-sao-bang-tot-nghiep" style="text-decoration: none;">
+            <div class="service-card8" data-service="dang-ky-ban-sao-bang-tot-nghiep">
+                <i class="fas fa-copy icon8"></i>
+                <h3>Đăng ký bản sao bằng tốt nghiệp</h3>
+                <p>Yêu cầu cấp bản sao bằng tốt nghiệp.</p>
+            </div></a>  
+        </div>
+    </section>
+
+    <section class="service-category8">
+        <h2 class="category-title8"><i class="fas fa-tools"></i> Tiện ích</h2>
+        <div class="service-grid8">
+            <a href="/dichvu/gv" style="text-decoration: none;">
+            <div class="service-card8" data-service="danh-gia-giang-vien">
+                <i class="fas fa-star icon8"></i>
+                <h3>Đánh giá giảng viên</h3>
+                <p>Gửi ý kiến đóng góp về chất lượng giảng dạy.</p>
+            </div></a>
+            <a href="/dichvu/cosovatchat" style="text-decoration: none;">
+            <div class="service-card8" data-service="danh-gia-giang-vien">
+                <i class="fa-solid fa-city icon8"></i>
+                <h3>Đánh giá cơ sở vật chất</h3>
+                <p>Gửi ý kiến đóng góp về chất lượng cơ sở vật chất.</p>
+            </div></a>
+        </div>
+    </section>
+
+    <section class="service-category8">
+        <h2 class="category-title8"><i class="fas fa-ellipsis-h"></i> Khác</h2>
+        <div class="service-grid8">
+            <a href="/bangdiem" style="text-decoration: none;">
+            <div class="service-card8" data-service="xem-bang-diem">
+                <i class="fas fa-scroll icon8"></i>
+                <h3>Xem bảng điểm cá nhân</h3>
+                <p>Tra cứu kết quả học tập của bạn.</p>
+            </div></a>
+            <a href="/thoikhoabieu" style="text-decoration: none;">
+            <div class="service-card8" data-service="xem-tkb-ca-nhan">
+                <i class="fas fa-calendar-alt icon8"></i>
+                <h3>Xem TKB cá nhân</h3>
+                <p>Xem thời khóa biểu học tập của bạn.</p>
+            </div></a>
+        </div>
+    </section>
+</main>
+
+
+
+<style>
+/* Import Google Fonts for a modern look */
+@font-face {
+    font-family: 'font2';
+    src: url('/static/fonts/font2.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'font6';
+    src: url('/static/fonts/font6.ttf') format('truetype');
+}
+/* CSS Variables for easy theme customization */
+:root {
+--primary-color8: #007bff; /* Màu xanh dương chủ đạo */
+--secondary-color8: #6c757d; /* Màu xám phụ */
+--accent-color8: #28a745; /* Màu điểm nhấn (ví dụ cho button/active) */
+--bg-light8: #f8f9fa; /* Nền sáng */
+--text-dark8: #212529; /* Chữ tối */
+--text-light8: #f1f1f1; /* Chữ sáng */
+--card-bg8: #ffffff; /* Nền card */
+--card-shadow8: rgba(0, 0, 0, 0.08);
+--hover-shadow8: rgba(0, 0, 0, 0.15);
+}
+
+/* Base Styles (áp dụng cho toàn bộ body) */
+
+
+/* Container để giới hạn chiều rộng và căn giữa nội dung */
+.container8 {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 20px;
+font-family: 'font2';
+}
+
+/* Main Content Area Styles */
+.main-content8 {
+padding: 40px 0; /* Giúp nội dung không bị dính vào header/footer */
+}
+
+.page-title8 {
+text-align: center;
+font-size: 2.8em;
+color: var(--primary-color8);
+margin-bottom: 10px;
+font-weight: 700;
+}
+
+.page-description8 {
+text-align: center;
+font-size: 1.1em;
+color: var(--secondary-color8);
+margin-bottom: 50px;
+}
+
+/* Service Category Styles */
+.service-category8 {
+background-color: var(--card-bg8); /* Nền cho khối danh mục */
+border-radius: 12px;
+box-shadow: 0 8px 20px var(--card-shadow8);
+margin-bottom: 40px;
+padding: 30px;
+}
+
+.category-title8 {
+color: var(--text-dark8);
+font-size: 2.2em;
+margin-top: 0;
+margin-bottom: 30px;
+border-bottom: 3px solid var(--primary-color8); /* Đường gạch chân nổi bật */
+padding-bottom: 15px;
+display: flex; /* Dùng flexbox để căn chỉnh icon và text */
+align-items: center;
+gap: 15px; /* Khoảng cách giữa icon và text */
+}
+
+.category-title8 .fas { /* Style cho icon trong tiêu đề danh mục */
+color: var(--primary-color8);
+font-size: 1.2em;
+}
+
+/* Service Grid Styles (Dùng CSS Grid để bố cục các thẻ dịch vụ) */
+.service-grid8 {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+gap: 30px; /* Khoảng cách giữa các ô */
+}
+
+/* Service Card Styles (Thiết kế cho từng ô dịch vụ) */
+.service-card8 {
+background-color: var(--bg-light8); /* Nền của từng thẻ dịch vụ */
+border-radius: 10px;
+padding: 30px;
+text-align: center;
+cursor: pointer;
+/* Hiệu ứng chuyển động mượt mà khi hover */
+transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+display: flex; /* Dùng flexbox để căn chỉnh nội dung trong thẻ */
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.service-card8 .icon8 { /* Style cho icon bên trong thẻ dịch vụ */
+font-size: 3.5em;
+color: var(--primary-color8);
+margin-bottom: 15px;
+transition: color 0.3s ease;
+}
+
+.service-card8 h3 {
+color: var(--text-dark8);
+font-size: 1.5em;
+margin-top: 0;
+margin-bottom: 10px;
+font-weight: 600;
+}
+
+.service-card8 p {
+color: var(--secondary-color8);
+font-size: 1em;
+line-height: 1.5;
+font-family: 'font6';
+}
+
+/* Hover Effect for Service Cards */
+.service-card8:hover {
+transform: translateY(-12px); /* Di chuyển lên trên và tạo hiệu ứng "nổi" */
+box-shadow: 0 15px 30px var(--hover-shadow8); /* Bóng đổ lớn hơn khi hover */
+}
+
+.service-card8:hover .icon8 {
+color: var(--accent-color8); /* Thay đổi màu icon khi hover */
+}
+
+/* Active Effect for Service Cards (khi click) */
+.service-card8:active {
+transform: translateY(-6px); /* "Nhấn" xuống một chút khi click */
+box-shadow: 0 8px 15px var(--card-shadow8);
+}
+
+/* Responsive adjustments for smaller screens */
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .page-title8 {
+        font-size: 2.2em;
+    }
+
+    .page-description8 {
+        font-size: 1em;
+    }
+
+    .category-title8 {
+        font-size: 1.8em;
+        flex-direction: column; /* Icon và text xuống dòng trên màn hình nhỏ */
+        align-items: flex-start;
+        gap: 10px; /* Điều chỉnh khoảng cách cho màn hình nhỏ */
+    }
+
+    /* Quan trọng: Đảm bảo grid chỉ có 1 cột trên điện thoại */
+    .service-grid8 {
+        grid-template-columns: 1fr; /* Mỗi ô chiếm toàn bộ chiều rộng */
+        gap: 25px; /* Khoảng cách giữa các ô trên điện thoại */
+    }
+
+    .service-category8 {
+        padding: 25px;
+        margin-bottom: 30px; /* Giảm khoảng cách giữa các danh mục */
+    }
+
+    .service-card8 {
+        padding: 25px;
+    }
+
+    .service-card8 .icon8 {
+        font-size: 3em;
+    }
+
+    .service-card8 h3 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content8 {
+        padding: 25px 15px;
+    }
+
+    .page-title8 {
+        font-size: 2em;
+    }
+}
+</style>
+{% endblock %}
