@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/csvc.css') }}"> {# Có thể dùng lại hoặc tạo Facility.css riêng #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hoctap.css') }}">
+<main class="main-content8 container8" style="background-color: #f5f5f5;">
+    <h1 class="study-header" id="majorDetailTitle"></h1> {# Tiêu đề ngành #}
+
+    <div class="study-section">
+        <h2><i class="fas fa-info-circle"></i> Mô tả Ngành</h2>
+        <p id="majorDescription"></p> {# Mô tả ngành #}
+    </div>
+
+    <div class="study-section">
+        <h2><i class="fas fa-book-open"></i> Các Môn Học</h2>
+        <ul class="course-list" id="courseList">
+            </ul>
+        <div class="no-data-message" style="display: none; text-align: center; padding-top: 20px; color: var(--secondary-color8);">
+            <p>Chưa có môn học nào cho ngành này.</p>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const majorDetailTitle = document.getElementById('majorDetailTitle');
+        const majorDescription = document.getElementById('majorDescription');
+        const courseList = document.getElementById('courseList');
+        const noCourseMessage = courseList.nextElementSibling; // Lấy phần tử no-data-message sau courseList
+
+        // Lấy ID ngành từ URL (ví dụ: /hoc-tap/nganh/cntt -> majorId = 'cntt')
+        const pathSegments = window.location.pathname.split('/');
+        const majorId = pathSegments[pathSegments.length - 1]; // Lấy phần cuối cùng của URL
+
+        // Dữ liệu mẫu chi tiết ngành và môn học
+        const sampleMajorsData = {
+            'cntt': {
+                name: 'Công nghệ Thông tin',
+                description: 'Ngành Công nghệ Thông tin đào tạo các chuyên gia có kiến thức sâu rộng về phần mềm, phần cứng, mạng máy tính và an ninh thông tin. Sinh viên sẽ được học về lập trình, cơ sở dữ liệu, phát triển ứng dụng di động, trí tuệ nhân tạo và các công nghệ mới nhất. Mục tiêu là trang bị kỹ năng thực tế để đáp ứng nhu cầu thị trường lao động đang phát triển nhanh chóng.',
+                courses: [
+                    { id: 'ltcb', code: 'IT101', name: 'Lập trình Căn bản', description: 'Giới thiệu về các khái niệm lập trình cơ bản sử dụng ngôn ngữ C/C++.' },
+                    { id: 'ctdl', code: 'IT102', name: 'Cấu trúc Dữ liệu và Giải thuật', description: 'Nghiên cứu về các cấu trúc dữ liệu và giải thuật hiệu quả.' },
+                    { id: 'csdl', code: 'IT103', name: 'Cơ sở Dữ liệu', description: 'Tìm hiểu về thiết kế, quản lý và truy vấn cơ sở dữ liệu.' },
+                    { id: 'ptpm', code: 'IT104', name: 'Phân tích Thiết kế Phần mềm', description: 'Các phương pháp và công cụ để phân tích và thiết kế hệ thống phần mềm.' }
+                ]
+            },
+            'qtkd': {
+                name: 'Quản trị Kinh doanh',
+                description: 'Ngành Quản trị Kinh doanh cung cấp kiến thức toàn diện về cách vận hành và phát triển một tổ chức. Sinh viên sẽ được trang bị các kỹ năng về quản lý tài chính, marketing, quản trị nhân sự, chiến lược kinh doanh và logistics. Chương trình học tập trung vào việc phát triển tư duy lãnh đạo và giải quyết vấn đề trong môi trường kinh doanh đa dạng.',
+                courses: [
+                    { id: 'mkcb', code: 'BUS201', name: 'Marketing Căn bản', description: 'Giới thiệu các nguyên lý và chiến lược marketing.' },
+                    { id: 'qltc', code: 'BUS202', name: 'Quản lý Tài chính', description: 'Phân tích tài chính doanh nghiệp và quyết định đầu tư.' }
+                ]
+            },
+            // Thêm dữ liệu cho các ngành khác tương tự
+        };
+
+        const loadMajorDetail = (id) => {
+            const major = sampleMajorsData[id];
+            if (major) {
+                majorDetailTitle.textContent = major.name;
+                majorDescription.textContent = major.description;
+
+                if (major.courses.length === 0) {
+                    noCourseMessage.style.display = 'block';
+                    courseList.innerHTML = '';
+                    return;
+                }
+
+                noCourseMessage.style.display = 'none';
+                courseList.innerHTML = ''; // Clear existing courses
+
+                major.courses.forEach(course => {
+                    const courseItem = document.createElement('a');
+                    courseItem.href = `/hoc-tap/mon-hoc/${course.id}`; // Đường dẫn đến trang chi tiết môn học
+                    courseItem.classList.add('course-item');
+                    courseItem.innerHTML = `
+                        <div class="course-item-info">
+                            <h4>${course.name} <span class="course-code">(${course.code})</span></h4>
+                            <p>${course.description}</p>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    `;
+                    courseList.appendChild(courseItem);
+                });
+
+            } else {
+                majorDetailTitle.textContent = 'Ngành học không tìm thấy';
+                majorDescription.textContent = 'Không có thông tin chi tiết cho ngành này.';
+                noCourseMessage.style.display = 'block';
+                courseList.innerHTML = '';
+            }
+        };
+
+        loadMajorDetail(majorId);
+
+        // Trong môi trường thực tế, bạn sẽ fetch dữ liệu từ API:
+        /*
+        fetch(`/api/major-detail/${majorId}`)
+            .then(response => response.json())
+            .then(data => {
+                loadMajorDetailFromApi(data); // Hàm tương tự loadMajorDetail nhưng dùng data từ API
+            })
+            .catch(error => {
+                console.error('Error fetching major detail:', error);
+                majorDetailTitle.textContent = 'Lỗi tải dữ liệu';
+                majorDescription.textContent = 'Không thể tải thông tin ngành. Vui lòng thử lại sau.';
+            });
+        */
+    });
+</script>
+{% endblock %}

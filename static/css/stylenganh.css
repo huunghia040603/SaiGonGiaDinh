@@ -426,7 +426,7 @@
 /* Major Card Styles */
 .major-card {
     perspective: 1000px;
-    height: 400px;
+    height: 420px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -473,13 +473,15 @@
 }
 
 .major-content {
-    padding: 20px;
+    padding: 0px 5px 45px 20px;
 }
+
+
 
 .major-content h3 {
     font-size: 22px;
     color: #002147;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-family: font2;
 }
 
@@ -1061,4 +1063,9 @@
     .submit-btn:hover {
         opacity: 0.9;
     }
+
+   
+}
+text.text-do:hover {
+    color: #ee232b;
 }

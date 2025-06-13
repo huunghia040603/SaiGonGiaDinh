@@ -8,8 +8,17 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'font6';
+    src: url('../fonts/font6.ttf');
+}
+@font-face {
+    font-family: 'font2';
+    src: url('../fonts/font2.ttf');
+}
+
+
 body {
-    font-family: 'Poppins', sans-serif;
     background-color: #f5f8fa;
     color: #2d3748;
     line-height: 1.6;
@@ -29,6 +38,7 @@ body {
     margin-bottom: 30px;
     text-align: center;
     font-weight: 600;
+    font-family: 'font2';
 }
 
 /* Card Profile */
@@ -39,6 +49,7 @@ body {
     padding: 30px;
     margin-bottom: 30px;
     transition: transform 0.3s ease;
+    font-family: 'font2';
 }
 
 #student-info:hover {
@@ -113,6 +124,7 @@ body {
     color: #2d3748;
     font-weight: 500;
     font-size: 1.1rem;
+    font-family: 'font6';
 }
 
 /* Loading Animation */

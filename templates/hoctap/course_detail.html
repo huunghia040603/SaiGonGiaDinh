@@ -1,0 +1,495 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/csvc.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hoctap.css') }}">
+
+<main class="main-content8 container8" style="background-color: #f5f5f5;">
+    <h1 class="study-header" id="courseDetailTitle"></h1> {# Tiêu đề môn học #}
+
+    <div class="study-section">
+        <h2><i class="fas fa-info-circle"></i> Mô tả Môn học</h2>
+        <p id="courseDescription"></p> {# Mô tả môn học #}
+    </div>
+
+    <div class="study-section">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-comments"></i> Diễn đàn Thảo luận</span>
+            <button class="toggle-button" id="toggleForumBtn"> {# Xóa data-target ở đây, sẽ xử lý bằng ID trực tiếp #}
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </h2>
+        <div class="forum-discussion toggle-content" id="forumDiscussionSection"> {# THÊM CLASS `toggle-content` và ID NÀY #}
+            <div id="forumComments">
+                </div>
+            <div class="new-comment-area">
+                <textarea id="newCommentText" placeholder="Viết bình luận của bạn..."></textarea>
+                <button id="postCommentBtn">Gửi bình luận</button>
+            </div>
+            <div class="no-data-message" id="noCommentsMessage" style="display: none; text-align: center; padding-top: 20px; color: var(--secondary-color8);">
+                <p>Chưa có bình luận nào. Hãy là người đầu tiên!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="study-section">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-file-alt"></i> Thông tin Môn học & Giáo trình</span>
+            <button class="toggle-button" id="toggleMaterialsBtn"> {# Nút toggle cho phần này #}
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </h2>
+        <div class="materials-upload-section toggle-content" id="materialsSectionContent"> {# Thêm ID và class toggle-content #}
+            <p><strong>Giáo trình chính:</strong> <span id="textbookInfo"></span></p>
+            <p><strong>Thông tin giảng viên:</strong> <span id="lecturerInfo"></span></p>
+            <p><strong>Tài liệu tham khảo:</strong></p>
+            <ul class="uploaded-files-list" id="materialFilesList">
+                </ul>
+
+            <div class="file-upload-area" id="materialUploadArea">
+                <p><i class="fas fa-cloud-upload-alt"></i> Kéo & thả tài liệu hoặc click để tải lên</p>
+                <input type="file" id="materialFileInput" multiple accept=".pdf,.doc,.docx,.ppt,.pptx">
+            </div>
+            <div class="no-data-message" id="noMaterialsMessage" style="display: none; text-align: center; padding-top: 20px; color: var(--secondary-color8);">
+                <p>Chưa có tài liệu nào.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="study-section">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-graduation-cap"></i> Nội dung Bài học</span>
+            
+        </h2>
+        <div class="lesson-content-section toggle-content" id="lessonChaptersSectionContent"> {# Thêm ID và class toggle-content #}
+            <div id="lessonChapters">
+                </div>
+            <div class="no-data-message" id="noChaptersMessage" style="display: none; text-align: center; padding-top: 20px; color: var(--secondary-color8);">
+                <p>Chưa có nội dung bài học cho môn này.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="study-section">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-upload"></i> Nộp Bài tập</span>
+            <button class="toggle-button" id="toggleAssignmentsBtn"> {# Nút toggle cho phần này #}
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </h2>
+        <div class="assignment-submission-section toggle-content" id="assignmentSectionContent"> {# Thêm ID và class toggle-content #}
+            <p id="assignmentDueDate"><strong>Hạn chót nộp:</strong> <span id="dueDateText"></span></p>
+            <ul class="submitted-files-list" id="submittedAssignmentFiles">
+                </ul>
+
+            <div class="submission-area" id="assignmentUploadArea">
+                <p><i class="fas fa-folder-open"></i> Kéo & thả bài tập hoặc click để nộp</p>
+                <input type="file" id="assignmentFileInput" multiple accept=".pdf,.doc,.docx,.zip">
+            </div>
+            <div class="no-data-message" id="noSubmittedFilesMessage" style="display: none; text-align: center; padding-top: 20px; color: var(--secondary-color8);">
+                <p>Bạn chưa nộp bài tập nào.</p>
+            </div>
+            <button class="btn-primary8" style="margin-top: 20px; display: none;" id="submitAssignmentBtn">Nộp Bài Tập</button> {# Nút này chỉ mô phỏng #}
+        </div>
+    </div>
+</main>
+
+<script>
+    // ... (Giữ nguyên toàn bộ JavaScript hiện có của bạn) ...
+    document.addEventListener('DOMContentLoaded', () => {
+        // Lấy ID môn học từ URL
+        const pathSegments = window.location.pathname.split('/');
+        const courseId = pathSegments[pathSegments.length - 1];
+
+        // --- DOM Elements ---
+        const courseDetailTitle = document.getElementById('courseDetailTitle');
+        const courseDescription = document.getElementById('courseDescription');
+        const forumComments = document.getElementById('forumComments');
+        const newCommentText = document.getElementById('newCommentText');
+        const postCommentBtn = document.getElementById('postCommentBtn');
+        const noCommentsMessage = document.getElementById('noCommentsMessage');
+        const textbookInfo = document.getElementById('textbookInfo');
+        const lecturerInfo = document.getElementById('lecturerInfo');
+        const materialFilesList = document.getElementById('materialFilesList');
+        const materialUploadArea = document.getElementById('materialUploadArea');
+        const materialFileInput = document.getElementById('materialFileInput');
+        const noMaterialsMessage = document.getElementById('noMaterialsMessage');
+        const lessonChapters = document.getElementById('lessonChapters');
+        const noChaptersMessage = document.getElementById('noChaptersMessage');
+        const assignmentDueDate = document.getElementById('assignmentDueDate');
+        const dueDateText = document.getElementById('dueDateText');
+        const submittedAssignmentFiles = document.getElementById('submittedAssignmentFiles');
+        const assignmentUploadArea = document.getElementById('assignmentUploadArea');
+        const assignmentFileInput = document.getElementById('assignmentFileInput');
+        const noSubmittedFilesMessage = document.getElementById('noSubmittedFilesMessage');
+        const submitAssignmentBtn = document.getElementById('submitAssignmentBtn');
+
+        // --- DOM Elements for Toggle ---
+        const toggleForumBtn = document.getElementById('toggleForumBtn');
+        const forumDiscussionSection = document.getElementById('forumDiscussionSection');
+
+        const toggleMaterialsBtn = document.getElementById('toggleMaterialsBtn');
+        const materialsSectionContent = document.getElementById('materialsSectionContent');
+
+        const toggleChaptersBtn = document.getElementById('toggleChaptersBtn');
+        const lessonChaptersSectionContent = document.getElementById('lessonChaptersSectionContent');
+
+        const toggleAssignmentsBtn = document.getElementById('toggleAssignmentsBtn');
+        const assignmentSectionContent = document.getElementById('assignmentSectionContent');
+        
+        // --- Sample Data (Thực tế sẽ từ API) ---
+        const sampleCourseData = {
+            'ltcb': {
+                name: 'Lập trình Căn bản',
+                description: 'Môn học này cung cấp kiến thức nền tảng về lập trình, bao gồm các khái niệm về biến, kiểu dữ liệu, cấu trúc điều khiển, hàm và mảng. Sinh viên sẽ thực hành viết chương trình bằng ngôn ngữ C, làm quen với môi trường phát triển và debug code.',
+                textbook: 'Giáo trình Lập trình C căn bản, ThS. Nguyễn Văn A',
+                lecturer: 'TS. Trần Thị B (tranthib@example.edu.vn)',
+                materials: [
+                    { name: 'Bài giảng Chương 1.pdf', url: '#', size: '2.5MB' },
+                    { name: 'Thực hành Căn bản.docx', url: '#', size: '1.2MB' }
+                ],
+                forum: [
+                    { user: 'Nguyễn Văn C', date: '2024-06-10 10:30', text: 'Thầy cô cho em hỏi bài tập 1 chương 2 có cần nộp kèm mã nguồn không ạ?' },
+                    { user: 'Trần Thị D', date: '2024-06-10 11:00', text: 'Đúng rồi bạn, thầy có nói là nộp cả file .c và .exe.' }
+                ],
+                chapters: [
+                    {
+                        title: 'Chương 1: Giới thiệu Lập trình',
+                        content: `
+                            <p>Đây là nội dung bài học của chương 1. Bạn sẽ tìm hiểu về:</p>
+                            <ul>
+                                <li>Khái niệm lập trình và ngôn ngữ lập trình.</li>
+                                <li>Lịch sử phát triển của ngôn ngữ C.</li>
+                                <li>Môi trường phát triển tích hợp (IDE).</li>
+                            </ul>
+                            <p>Hãy đọc kỹ giáo trình và xem video bài giảng kèm theo.</p>
+                        `
+                    },
+                    {
+                        title: 'Chương 2: Cấu trúc cơ bản của chương trình C',
+                        content: `
+                            <p>Chương này bao gồm:</p>
+                            <ul>
+                                <li>Cấu trúc của một chương trình C đơn giản.</li>
+                                <li>Biến, kiểu dữ liệu và toán tử.</li>
+                                <li>Nhập xuất dữ liệu cơ bản.</li>
+                                <li>Nhập xuất dữ liệu cơ bản.</li>
+                            </ul>
+                            <p>Làm bài tập thực hành số 1 và 2 để củng cố kiến thức.</p>
+                        `
+                    }
+                ],
+                assignment: {
+                    dueDate: '2024-06-30',
+                    submittedFiles: [
+                        { name: 'BaiTap1_LT01_SV001.pdf', url: '#', uploadedDate: '2024-06-15' }
+                    ]
+                }
+            },
+            'ctdl': {
+                name: 'Cấu trúc Dữ liệu và Giải thuật',
+                description: 'Môn học chuyên sâu về các cấu trúc dữ liệu và giải thuật cơ bản và nâng cao, giúp sinh viên tối ưu hóa hiệu suất chương trình. Các chủ đề bao gồm: danh sách liên kết, cây, đồ thị, sắp xếp, tìm kiếm.',
+                textbook: 'Cấu trúc dữ liệu & Giải thuật, GS. Phạm Văn Z',
+                lecturer: 'PGS. Lê Thị G (lethig@example.edu.vn)',
+                materials: [],
+                forum: [],
+                chapters: [
+                    {
+                        title: 'Chương 1: Giới thiệu & Độ phức tạp giải thuật',
+                        content: `<p>Trong chương này, chúng ta sẽ xem xét cách đánh giá hiệu quả của giải thuật.</p>`
+                    }
+                ],
+                assignment: {
+                    dueDate: '2024-07-20',
+                    submittedFiles: []
+                }
+            }
+        };
+
+        // --- Render Functions ---
+        const renderCourseDetail = (course) => {
+            if (!course) {
+                courseDetailTitle.textContent = 'Môn học không tìm thấy';
+                courseDescription.textContent = 'Không có thông tin chi tiết cho môn học này.';
+                // Ẩn tất cả các phần khác nếu không tìm thấy môn học
+                document.querySelectorAll('.study-section').forEach(section => {
+                    if (section.querySelector('h2').textContent !== 'Mô tả Môn học') {
+                        section.style.display = 'none';
+                    }
+                });
+                return;
+            }
+
+            courseDetailTitle.textContent = course.name;
+            courseDescription.textContent = course.description;
+
+            // Render Forum
+            renderForum(course.forum);
+            postCommentBtn.addEventListener('click', () => postComment(course.forum, newCommentText.value));
+
+            // Render Materials
+            textbookInfo.textContent = course.textbook || 'Đang cập nhật';
+            lecturerInfo.textContent = course.lecturer || 'Đang cập nhật';
+            renderFilesList(materialFilesList, course.materials, 'material');
+
+            // Handle Material File Upload
+            materialUploadArea.addEventListener('click', () => materialFileInput.click());
+            materialFileInput.addEventListener('change', (e) => handleFileUpload(e.target.files, materialFilesList, 'material'));
+
+            // Render Chapters
+            renderChapters(course.chapters);
+
+            // Render Assignment
+            if (course.assignment) {
+                dueDateText.textContent = course.assignment.dueDate;
+                renderFilesList(submittedAssignmentFiles, course.assignment.submittedFiles, 'assignment');
+                submitAssignmentBtn.style.display = 'block'; // Show submit button
+
+                // Handle Assignment File Upload
+                assignmentUploadArea.addEventListener('click', () => assignmentFileInput.click());
+                assignmentFileInput.addEventListener('change', (e) => handleFileUpload(e.target.files, submittedAssignmentFiles, 'assignment'));
+                
+                // MOCK submission
+                submitAssignmentBtn.addEventListener('click', () => {
+                    alert('Bài tập của bạn đã được nộp thành công!');
+                    // In a real application, you'd send files to server and update UI
+                });
+
+            } else {
+                assignmentDueDate.style.display = 'none';
+                assignmentUploadArea.style.display = 'none';
+                submitAssignmentBtn.style.display = 'none';
+                noSubmittedFilesMessage.style.display = 'block';
+                noSubmittedFilesMessage.querySelector('p').textContent = 'Môn học này không có bài tập hoặc chưa được công bố.';
+            }
+        };
+
+        const renderForum = (comments) => {
+            if (comments.length === 0) {
+                noCommentsMessage.style.display = 'block';
+                forumComments.innerHTML = '';
+                return;
+            }
+            noCommentsMessage.style.display = 'none';
+            forumComments.innerHTML = '';
+            comments.forEach(comment => {
+                const commentCard = document.createElement('div');
+                commentCard.classList.add('forum-card');
+                commentCard.innerHTML = `
+                    <div class="user-info">${comment.user}</div>
+                    <p class="comment-text">${comment.text}</p>
+                    <div class="comment-date">${comment.date}</div>
+                `;
+                forumComments.appendChild(commentCard);
+            });
+        };
+
+        const postComment = (forumArray, commentText) => {
+            if (commentText.trim() === '') {
+                alert('Vui lòng nhập nội dung bình luận!');
+                return;
+            }
+            const newComment = {
+                user: 'Sinh Viên (Bạn)', // Replace with actual logged-in user
+                date: new Date().toLocaleString('vi-VN'),
+                text: commentText.trim()
+            };
+            forumArray.push(newComment); // Add to sample data
+            renderForum(forumArray); // Re-render forum
+            newCommentText.value = ''; // Clear textarea
+            alert('Bình luận của bạn đã được gửi!');
+            // In real app, send to server via API
+        };
+
+        const renderFilesList = (listElement, filesArray, type) => {
+            if (filesArray.length === 0) {
+                if (type === 'material') {
+                    noMaterialsMessage.style.display = 'block';
+                } else if (type === 'assignment') {
+                    noSubmittedFilesMessage.style.display = 'block';
+                }
+                listElement.innerHTML = '';
+                return;
+            }
+            if (type === 'material') {
+                noMaterialsMessage.style.display = 'none';
+            } else if (type === 'assignment') {
+                noSubmittedFilesMessage.style.display = 'none';
+            }
+            listElement.innerHTML = '';
+            filesArray.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>
+                        <i class="fas fa-file"></i> 
+                        <a href="${file.url}" target="_blank">${file.name}</a> 
+                        ${file.size ? `(${file.size})` : ''}
+                        ${file.uploadedDate ? ` - Nộp: ${file.uploadedDate}` : ''}
+                    </span>
+                    <i class="fas fa-trash-alt" data-file-name="${file.name}" data-file-type="${type}"></i>
+                `;
+                listElement.appendChild(listItem);
+            });
+
+            // Add event listener for trash icon (for sample data, just removes from UI)
+            listElement.querySelectorAll('.fa-trash-alt').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    const fileName = e.target.dataset.fileName;
+                    const fileType = e.target.dataset.fileType;
+                    const confirmDelete = confirm(`Bạn có chắc muốn xóa file "${fileName}"?`);
+                    if (confirmDelete) {
+                        // Remove from sample data array (this won't persist on refresh)
+                        if (fileType === 'material') {
+                            const index = sampleCourseData[courseId].materials.findIndex(f => f.name === fileName);
+                            if (index > -1) sampleCourseData[courseId].materials.splice(index, 1);
+                            renderFilesList(materialFilesList, sampleCourseData[courseId].materials, 'material');
+                        } else if (fileType === 'assignment') {
+                            const index = sampleCourseData[courseId].assignment.submittedFiles.findIndex(f => f.name === fileName);
+                            if (index > -1) sampleCourseData[courseId].assignment.submittedFiles.splice(index, 1);
+                            renderFilesList(submittedAssignmentFiles, sampleCourseData[courseId].assignment.submittedFiles, 'assignment');
+                        }
+                        // In real app, send delete request to server
+                    }
+                });
+            });
+        };
+
+        const handleFileUpload = (files, listElement, type) => {
+            if (files.length === 0) return;
+
+            // In a real application, you would send these files to a server
+            // For now, we'll just mock adding them to the list
+            Array.from(files).forEach(file => {
+                const mockFile = {
+                    name: file.name,
+                    url: URL.createObjectURL(file), // Tạo URL tạm thời cho file được chọn
+                    size: (file.size / (1024 * 1024)).toFixed(2) + 'MB',
+                    uploadedDate: new Date().toLocaleDateString('vi-VN')
+                };
+                if (type === 'material') {
+                    sampleCourseData[courseId].materials.push(mockFile);
+                } else if (type === 'assignment') {
+                    sampleCourseData[courseId].assignment.submittedFiles.push(mockFile);
+                }
+            });
+            renderFilesList(listElement, type === 'material' ? sampleCourseData[courseId].materials : sampleCourseData[courseId].assignment.submittedFiles, type);
+            alert(`Đã chọn ${files.length} file. (Trong ứng dụng thật sẽ được tải lên server)`);
+        };
+
+        const renderChapters = (chapters) => {
+            if (chapters.length === 0) {
+                noChaptersMessage.style.display = 'block';
+                lessonChapters.innerHTML = '';
+                return;
+            }
+            noChaptersMessage.style.display = 'none';
+            lessonChapters.innerHTML = '';
+            chapters.forEach((chapter, index) => {
+                const chapterItem = document.createElement('div');
+                chapterItem.classList.add('chapter-item');
+                chapterItem.innerHTML = `
+                    <div class="chapter-header" data-chapter-index="${index}">
+                        <span>${chapter.title}</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="chapter-content">${chapter.content}</div>
+                `;
+                lessonChapters.appendChild(chapterItem);
+            });
+
+            // Add toggle functionality for chapters
+            document.querySelectorAll('.chapter-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.fas');
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px"; // Mở rộng
+                    } else {
+                        content.style.maxHeight = null; // Đóng lại
+                    }
+                });
+            });
+        };
+
+        // --- Generic Toggle Function ---
+        // Function để quản lý việc ẩn/hiện các phần nội dung
+        const setupToggle = (buttonElement, targetElement) => {
+            const icon = buttonElement ? buttonElement.querySelector('.fas') : null;
+
+            if (!buttonElement || !targetElement) return; // Thoát nếu không tìm thấy phần tử
+
+            // Trạng thái ban đầu: ẩn nội dung và xoay icon
+            targetElement.classList.add('hidden');
+            targetElement.style.maxHeight = '0'; // Đặt max-height ban đầu để transition mượt mà hơn khi lần đầu mở ra
+            if (icon) icon.classList.add('rotated');
+
+            buttonElement.addEventListener('click', () => {
+                if (targetElement.classList.contains('hidden')) {
+                    // Hiển thị nội dung
+                    targetElement.classList.remove('hidden');
+                    if (icon) icon.classList.remove('rotated');
+                    // Đặt max-height thành scrollHeight để nội dung bung ra
+                    // Sử dụng setTimeout để đảm bảo class 'hidden' đã được loại bỏ trước khi tính scrollHeight và áp dụng transition
+                    setTimeout(() => {
+                        targetElement.style.maxHeight = targetElement.scrollHeight + 'px'; 
+                    }, 10); // Một độ trễ nhỏ (ví dụ 10ms)
+                    
+                } else {
+                    // Ẩn nội dung
+                    // Đặt max-height thành scrollHeight trước khi ẩn để transition từ height hiện tại về 0
+                    targetElement.style.maxHeight = targetElement.scrollHeight + 'px';
+                    requestAnimationFrame(() => { // Đảm bảo trình duyệt đã cập nhật max-height trước khi thay đổi
+                        targetElement.style.maxHeight = '0';
+                        targetElement.classList.add('hidden');
+                        if (icon) icon.classList.add('rotated');
+                    });
+                }
+            });
+        };
+
+        // Khởi tạo toggle cho từng phần
+        setupToggle(toggleForumBtn, forumDiscussionSection);
+        setupToggle(toggleMaterialsBtn, materialsSectionContent);
+        setupToggle(toggleChaptersBtn, lessonChaptersSectionContent);
+        setupToggle(toggleAssignmentsBtn, assignmentSectionContent);
+
+        // Load course data when the page loads
+        const currentCourseData = sampleCourseData[courseId];
+        renderCourseDetail(currentCourseData);
+
+        // Implement drag and drop for file upload areas
+        [materialUploadArea, assignmentUploadArea].forEach(area => {
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Sử dụng getComputedStyle để lấy giá trị biến CSS
+                area.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color8');
+                area.style.backgroundColor = '#e2e6ea';
+            });
+
+            area.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--upload-area-border');
+                area.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--upload-area-bg');
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--upload-area-border');
+                area.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--upload-area-bg');
+                const files = e.dataTransfer.files;
+                if (area.id === 'materialUploadArea') {
+                    handleFileUpload(files, materialFilesList, 'material');
+                } else if (area.id === 'assignmentUploadArea') {
+                    handleFileUpload(files, submittedAssignmentFiles, 'assignment');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

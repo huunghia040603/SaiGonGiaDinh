@@ -421,6 +421,22 @@ def dadangki():
     return render_template('/dichvu/dvdadangki.html')
 
 
+@app.route('/hoc-tap')
+def study_home():
+    return render_template('hoctap/study_majors.html')
+
+@app.route('/hoc-tap/nganh/<major_id>')
+def major_detail_page(major_id):
+    # Trong ứng dụng thực, bạn sẽ dùng major_id để lấy dữ liệu từ DB
+    return render_template('hoctap/major_detail.html', major_id=major_id) # Truyền major_id nếu cần ở backend
+
+@app.route('/hoc-tap/mon-hoc/<course_id>')
+def course_detail_page(course_id):
+    # Trong ứng dụng thực, bạn sẽ dùng course_id để lấy dữ liệu từ DB
+    return render_template('hoctap/course_detail.html', course_id=course_id) # Truyền course_id nếu cần ở backend
+
+
+
 
 
 if __name__ == '__main__':
