@@ -1,0 +1,191 @@
+{% extends "faculty/base_faculty.html" %}
+
+{% block title %}Thông báo{% endblock %}
+
+{% block page_styles %}
+    <style>
+        /* Định nghĩa màu sắc và font tùy chỉnh */
+        :root {
+            --pastel-blue: #ADD8E6; /* Light Blue */
+            --pastel-primary: #87CEEB; /* Sky Blue */
+            --pastel-dark: #6C757D; /* Soft dark for text */
+            --light-bg: #f5f7fa; /* Nền sáng hơn một chút */
+            --card-bg: #ffffff; /* Nền thẻ */
+            --border-color: #e0e6ed; /* Màu viền */
+            --header-bg: #E0F2F7; /* Màu nền tiêu đề bảng (sáng hơn một chút so với pastel primary) */
+            --text-body: #1a202c; /* Màu chữ chính cho body */
+            --text-heading-dark: #2d3748; /* Màu chữ cho tiêu đề H2 (tương đương gray-800) */
+            --text-heading-medium: #4a5568; /* Màu chữ cho tiêu đề H3 (tương đương gray-700) */
+            /* Định nghĩa bóng đổ tương đương shadow-lg của Tailwind */
+            --shadow-custom: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Quan trọng: Định nghĩa class 'hidden' để ẩn phần tử */
+        .hidden {
+            display: none !important; /* Sử dụng !important để đảm bảo nó ghi đè các thuộc tính display khác */
+        }
+
+        /* Chuyển đổi từ class Tailwind trên <body> */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-body);
+            background-color: var(--light-bg);
+            padding: 1.25rem; /* Tương đương p-5 */
+            min-height: 100vh; /* Tương đương min-h-screen */
+        }
+
+        /* Chuyển đổi từ class Tailwind trên .container */
+        .main-container {
+            max-width: 1200px;
+            margin-left: auto; /* Tương đương mx-auto */
+            margin-right: auto; /* Tương đương mx-auto */
+            padding-left: 1rem; /* Tương đương px-4 */
+            padding-right: 1rem; /* Tương đương px-4 */
+        }
+
+        /* Chuyển đổi từ div.flex.justify-between.items-center.mb-6 */
+        .header-flex-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem; /* Tương đương mb-6 */
+        }
+
+        /* Chuyển đổi từ h2.text-3xl.font-semibold.text-gray-800.mb-0 */
+        .page-main-title {
+            font-size: 1.875rem; /* Tương đương text-3xl */
+            font-weight: 600; /* Tương đương font-semibold */
+            color: var(--text-heading-dark); /* Tương đương text-gray-800 */
+            margin-bottom: 0; /* Tương đương mb-0 */
+        }
+
+        /* Chuyển đổi từ div.bg-white.p-6.rounded-lg.shadow-lg.border.border-gray-200 */
+        .content-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem; /* Tương đương p-6 */
+            border-radius: 0.5rem; /* Tương đương rounded-lg */
+            box-shadow: var(--shadow-custom); /* Tương đương shadow-lg */
+            border: 1px solid var(--border-color); /* Tương đương border border-gray-200 */
+        }
+
+        /* Chuyển đổi từ h3.text-2xl.font-semibold.text-gray-700.mb-6 */
+        .card-heading-title {
+            font-size: 1.5rem; /* Tương đương text-2xl */
+            font-weight: 600; /* Tương đương font-semibold */
+            color: var(--text-heading-medium); /* Tương đương text-gray-700 */
+            margin-bottom: 1.5rem; /* Tương đương mb-6 */
+        }
+
+        /* Chuyển đổi từ div.overflow-x-auto */
+        .table-responsive-wrapper {
+            overflow-x: auto;
+        }
+
+        /* Các kiểu cho bảng đã có sẵn và được tinh chỉnh thêm */
+        .table-custom {
+            table-layout: auto; /* Tương đương table-auto */
+            width: 100%; /* Tương đương w-full */
+            border-collapse: collapse; /* Tương đương border-collapse */
+        }
+
+        .table-custom thead th {
+            background-color: var(--header-bg);
+            color: #1e1c1c;
+            border-color: var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+            border-width: 1px; /* Thêm viền cho từng ô */
+            border-style: solid;
+        }
+
+        .table-custom tbody td {
+            vertical-align: middle;
+            padding: 10px 8px;
+            border-color: var(--border-color);
+            font-size: 0.9em;
+            word-wrap: break-word;
+            border-width: 1px; /* Thêm viền cho từng ô */
+            border-style: solid;
+        }
+
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.03); /* Hiệu ứng sọc nhẹ */
+        }
+
+         /* Chiều rộng cột cụ thể (điều chỉnh cho cột mới) */
+        .table-custom th:nth-child(1), /* ID */
+        .table-custom td:nth-child(1) {
+            width: 8%; /* Nhỏ hơn một chút */
+            text-align: center;
+        }
+        .table-custom th:nth-child(2), /* Tiêu đề */
+        .table-custom td:nth-child(2) {
+            width: 30%;
+        }
+        .table-custom th:nth-child(3), /* Nội dung */
+        .table-custom td:nth-child(3) {
+            width: 47%;
+        }
+        .table-custom th:nth-child(4), /* Xác nhận đọc */
+        .table-custom td:nth-child(4) {
+            width: 15%;
+            text-align: center; /* Để checkbox căn giữa */
+        }
+
+        /* Kiểu cho thông báo */
+        .alert-info-custom {
+            background-color: rgb(45, 123, 206);
+            color: #ffffff;
+            border-color: rgb(45, 123, 206);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1.5rem; /* Thêm khoảng cách với bảng bên dưới */
+        }
+
+        /* Style cho checkbox */
+        .read-checkbox {
+            transform: scale(1.2); /* Phóng to checkbox */
+            cursor: pointer;
+        }
+    </style>
+{%endblock%}
+{% block content %}
+<body>
+    <div class="main-container">
+        <div class="header-flex-wrapper">
+            <h2 class="page-main-title">Thông báo</h2>
+        </div>
+
+        <div class="content-card">
+            <h3 class="card-heading-title">Danh sách Thông báo</h3>
+            <div id="noNotificationsMessage" class="alert-info-custom hidden">
+                Chưa có thông báo nào.
+            </div>
+            <div class="table-responsive-wrapper">
+                <table class="table-custom" id="notificationsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tiêu đề</th>
+                            <th>Nội dung</th>
+                            <th>Xác nhận đọc</th> {# Cột mới #}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {# Dữ liệu sẽ được điền bởi JavaScript #}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/faculty/notifications.js') }}"></script>
+    {# Đảm bảo script notification_badge.js được load TRƯỚC để hàm của nó sẵn sàng #}
+    <script src="{{ url_for('static', filename='js/notification_badge.js') }}"></script> 
+{% endblock %}

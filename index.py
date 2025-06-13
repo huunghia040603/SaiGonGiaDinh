@@ -1,11 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, session, flash, request
 from admin_bp import admin_bp 
+from faculty import faculty
 
 app = Flask(__name__)
 app.secret_key = '78c4a1b0d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2' # Cần thiết cho session và flash messages
 
 # Đăng ký Blueprint admin
 app.register_blueprint(admin_bp)
+
+# Đăng ký Blueprint faculty
+app.register_blueprint(faculty)
 
 
 # Trang chủ và đăng nhập

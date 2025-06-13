@@ -58,6 +58,10 @@ def locked_account():
  
     return render_template('admin/admin_locked_account.html')
 
+@admin_bp.route('/notifications/')
+def notifications():
+ 
+    return render_template('admin/admin_notifications.html')
 
 
 

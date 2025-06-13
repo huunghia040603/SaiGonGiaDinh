@@ -1,0 +1,101 @@
+{% extends "faculty/base_faculty.html" %}
+
+{% block title %}Thông báo{% endblock %}
+
+{% block page_styles %}
+    <style>
+        /* Define custom colors and fonts */
+        :root {
+            --pastel-blue: #ADD8E6; /* Light Blue */
+            --pastel-primary: #87CEEB; /* Sky Blue */
+            --pastel-dark: #6C757D; /* Soft dark for text */
+            --light-bg: #f5f7fa; /* Slightly lighter background */
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+            --header-bg: #E0F2F7; /* Lighter shade of pastel primary for table header */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            color: #1a202c; /* Tailwind's default dark text color for better contrast */
+            background-color: var(--light-bg);
+        }
+
+        /* Override default styles for consistent look */
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Custom styles for table headers and cells to ensure proper spacing and alignment */
+        .table-custom thead th {
+            background-color: var(--header-bg);
+            color: #1e1c1c; /* Darker text for contrast */
+            border-color: var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .table-custom tbody td {
+            vertical-align: middle;
+            padding: 10px 8px;
+            border-color: var(--border-color);
+            font-size: 0.9em;
+            word-wrap: break-word;
+        }
+
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.03); /* Light stripe effect */
+        }
+
+        /* Specific column widths */
+        .table-custom th:nth-child(1), .table-custom td:nth-child(1) { width: 10%; } /* ID */
+        .table-custom th:nth-child(2), .table-custom td:nth-child(2) { width: 35%; } /* Tiêu đề */
+        .table-custom th:nth-child(3), .table-custom td:nth-child(3) { width: 55%; } /* Nội dung */
+
+        /* Alert styling */
+        .alert-info-custom {
+            background-color: rgb(45, 123, 206); /* Light cyan background */
+            color: #ffffff; /* White text for better contrast */
+            border-color: rgb(45, 123, 206);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+{%endblock%}
+{% block content %}
+
+<body class="p-5 bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-0">Thông báo</h2>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-6">Danh sách Thông báo</h3>
+            <div id="noNotificationsMessage" class="alert-info-custom hidden">
+                Chưa có thông báo nào.
+            </div>
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full border-collapse table-custom" id="notificationsTable">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">ID</th>
+                            <th class="border px-4 py-2">Tiêu đề</th>
+                            <th class="border px-4 py-2">Nội dung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/faculty/notifications.js') }}"></script>
+{% endblock %}
