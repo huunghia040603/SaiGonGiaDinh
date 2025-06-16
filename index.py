@@ -220,6 +220,10 @@ def dangkyvayvon():
 def dangkybansaobtn():
     return render_template('dichvu/dvbansaobtn.html')
 
+@app.route('/huong-dan')
+def huongdan():
+    return render_template('huong-dan.html')
+
 # @app.route('/danh-gia-giang-vien')
 # def danhgiagv():
 #     return render_template('dichvu/gv/index.html')

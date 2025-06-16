@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const result = await response.json();
                     console.log("Đăng ký tư vấn thành công:", result);
                     alert("Đăng ký tư vấn thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất.");
-                    tourForm.reset(); // Xóa dữ liệu form sau khi gửi thành công
+                    tourForm.reset();// Xóa dữ liệu form sau khi gửi thành công
                 } else {
                     const errorData = await response.json();
                     console.error("Lỗi khi đăng ký tư vấn:", response.status, errorData);

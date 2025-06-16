@@ -18,7 +18,6 @@
 /* Các thuộc tính khác của .main-nav */
 
 
-
 .nav-list > li > a {
     color: #fff;
     font-family: font2;
@@ -72,6 +71,8 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+
 
 .top-links .logo img {
     height: 40px;
@@ -254,10 +255,23 @@
     transform-origin: top;
     animation: dropdownFade 0.2s ease-in-out;
     font-family: 'font6';
+   
 }
+
+
+
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+
+.menuthem{
+    
+    left: -400px;
+    
+    margin-right: 50px;
+    padding-right: 100px;
 }
 
 .dropdown-menu li a {
@@ -535,4 +549,169 @@
         padding-right: 25px;
     }
 
+}
+
+
+
+/* --- Cập nhật CSS cho Mega Menu (NGÀNH ĐÀO TẠO) --- */
+
+/* 1. Điều chỉnh định kiểu cho container chính của Mega Menu */
+.dropdown-menu.mega-menu { 
+    display: none; 
+    position: absolute;
+    top: 100%;
+    left: 50%; 
+    transform: translateX(-50%); 
+    
+    /* THAY ĐỔI QUAN TRỌNG: Loại bỏ 'width' cố định hoặc điều chỉnh */
+    /* Thay vì width: 900px; hãy thử một trong các cách sau: */
+    /* width: auto;  */
+    /* Cho phép chiều rộng tự động theo nội dung */
+    /* Hoặc: */
+    /* width: max-content; */ /* Cố gắng rộng bằng nội dung dài nhất */
+    /* Hoặc: */
+    /* min-width: 700px; */ /* Đặt chiều rộng tối thiểu, vẫn cho phép mở rộng */
+    /* Hoặc: */
+    /* width: fit-content; */ /* Phù hợp với nội dung (cần hỗ trợ trình duyệt) */
+
+    /* Giữ nguyên max-width để không tràn màn hình */
+    max-width: calc(100% - 30px); /* Giữ 30px padding hai bên màn hình */
+    
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    /* overflow: hidden; /* Giữ cái này nếu bạn không muốn nội dung tràn ra khỏi border-radius */
+    padding: 20px; 
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+/* 2. Giữ nguyên quy tắc hiển thị Mega Menu khi hover */
+.dropdown:hover .dropdown-menu.mega-menu {
+    display: block; 
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%); 
+}
+
+/* 3. Giữ nguyên định kiểu cho container các cột bên trong Mega Menu */
+.mega-menu-content {
+
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around; 
+    align-items: flex-start; 
+    gap: 20px; 
+    padding: 0; 
+   
+}
+
+/* 4. Điều chỉnh định kiểu cho mỗi "cột" (Khoa) */
+.mega-menu-column {
+    /* ĐẢM BẢO KHÔNG CÓ flex-basis HOẶC width NÀO ĐÓ ĐANG GHI ĐÈ */
+    flex: 1; /* Cho phép mỗi cột tự giãn đều trong không gian có sẵn */
+    min-width: 120px; /* Chiều rộng tối thiểu cho mỗi cột. Nếu tên khoa/ngành dài,
+                       * tăng giá trị này hoặc để nó tự động theo nội dung */
+    padding: 0 10px; 
+    text-align: center; 
+    /* border-right: 1px solid #eee; */ 
+}
+.mega-menu-column:last-child {
+    border-right: none;
+}
+
+/* 5. Giữ nguyên định kiểu cho tiêu đề Khoa trong Mega Menu */
+.mega-menu-column h3 {
+    margin-top: 0;
+    margin-bottom: 10px; 
+    font-size: 16px;
+    font-weight: 700;
+    color: #0118D8; 
+    text-transform: uppercase;
+    white-space: nowrap; 
+    font-family: font2;
+}
+
+.mega-menu-column h3 a { 
+    color: inherit; 
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: font2;
+}
+
+.mega-menu-column h3 a:hover {
+    color: #dc3545; 
+}
+
+/* 6. Giữ nguyên định kiểu cho danh sách ngành trong mỗi cột */
+.mega-menu-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mega-menu-column ul li a {
+    color: #555;
+    text-decoration: none;
+    padding: 5px 0; 
+    display: block;
+    font-size: 14px;
+    transition: color 0.3s;
+    white-space: nowrap; 
+}
+
+.mega-menu-column ul li a:hover {
+    color: #dc3545; 
+}
+
+/* --- Responsive Styles cho Mobile Menu (giữ nguyên các điều chỉnh này) --- */
+@media (max-width: 768px) {
+    .dropdown-menu.mega-menu {
+        width: 60%;
+        left: 0;
+        transform: none; 
+        position: static; 
+        box-shadow: none;
+        border-radius: 0;
+        padding: 10px 15px; 
+        background-color: rgba(255, 255, 255, 0.1); 
+    }
+
+    .mega-menu-content {
+        flex-direction: column; 
+        gap: 0; 
+    }
+
+    .mega-menu-column {
+        min-width: auto;
+        padding: 10px 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+        text-align: left; 
+    }
+    .mega-menu-column:last-child {
+        border-bottom: none;
+    }
+
+    .mega-menu-column h3 {
+        font-size: 15px;
+        color: #fff; 
+        padding-left: 10px; 
+    }
+     .mega-menu-column h3 a {
+        color: inherit;
+     }
+
+    .mega-menu-column ul li a {
+        color: #fff; 
+        padding: 8px 25px; 
+        font-size: 13px;
+    }
+    .mega-menu-column ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
 }

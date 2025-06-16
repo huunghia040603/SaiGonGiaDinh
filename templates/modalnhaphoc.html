@@ -1,0 +1,603 @@
+
+<style>
+/* General Body Styles */
+
+
+/* --- Styles cho Modal --- */
+
+.modal_5 {
+    display: none; 
+    position: fixed; 
+    z-index: 1001; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal_5.active_5 { 
+    display: flex;
+}
+
+/* Hộp thoại chính của modal */
+.modal-content_5 {
+    background-color: #fefefe;
+    padding: 20px; /* Giảm padding một chút */
+    border-radius: 12px; /* Bo tròn nhiều hơn */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Bóng đổ rõ hơn */
+    position: relative; 
+    width: 90%; 
+    max-width: 1000px; /* Tăng max-width để có nhiều không gian hơn */
+    max-height: 90vh; 
+    overflow-y: auto; 
+    text-align: left; 
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* Hiệu ứng mượt hơn */
+}
+
+.modal_5.active_5 .modal-content_5 { 
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Nút đóng modal */
+.close-button_5 {
+    color: #888; /* Màu nhạt hơn một chút */
+    font-size: 36px; /* To hơn */
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    z-index: 10; 
+}
+
+.close-button_5:hover,
+.close-button_5:focus {
+    color: #555;
+    transform: rotate(90deg); /* Hiệu ứng xoay khi hover */
+}
+
+/* --- Styles cho nội dung "Hướng dẫn nhập học" bên trong modal --- */
+
+.guide-wrapper-in-modal_5 {
+    padding: 10px;
+    /* overflow: visible; đã được xử lý bởi modal-content_5 */
+}
+
+/* Header Section */
+.guide-header_5 {
+    text-align: center;
+    margin-bottom: 40px; /* Khoảng cách lớn hơn */
+    padding-bottom: 20px;
+    border-bottom: 3px solid #007bff; /* Viền đậm và màu chính */
+    position: relative; /* Dùng cho logo */
+}
+
+.guide-logo_5 {
+    max-width: 80px; /* Kích thước logo */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.guide-header_5 h1 {
+    color: #007bff; /* Màu chủ đạo */
+    font-size: 32px; /* Kích thước lớn hơn */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px; /* Giãn chữ */
+    font-family: font2;
+}
+
+.guide-header_5 h2 {
+    color: #555; /* Màu xám đậm */
+    font-size: 24px; /* Kích thước lớn hơn */
+    margin: 10px 0 0;
+    text-transform: uppercase;
+    font-weight: normal; /* Giảm độ đậm */
+    font-family: font2;
+}
+
+/* Steps Section */
+.guide-sections_5 {
+    position: relative;
+    padding-left: 0; /* Bỏ padding-left mặc định */
+    display: grid; /* Sử dụng Grid cho bố cục các bước */
+    grid-template-columns: 1fr; /* Mặc định 1 cột */
+    gap: 30px; /* Khoảng cách giữa các bước */
+}
+
+.guide-sections_5::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%; /* Căn giữa đường kẻ */
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    background-color: #ccc;
+    z-index: 0;
+    display: none; /* Ẩn đường kẻ dọc mặc định, sẽ hiển thị lại trên desktop */
+}
+
+.guide-step_5 {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1; /* Đảm bảo các bước nằm trên đường kẻ */
+    background-color: #fbfbfb; /* Nền nhẹ cho mỗi bước */
+    border-radius: 10px;
+    padding: 20px; /* Padding cho mỗi hộp bước */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Bóng nhẹ */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-step_5:hover {
+    transform: translateY(-5px); /* Hiệu ứng nhấc nhẹ lên khi hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.step-indicator_5 {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column; /* Xếp số và icon chồng lên nhau */
+    align-items: center;
+    margin-right: 25px; /* Khoảng cách với nội dung */
+    position: relative;
+}
+
+.step-num_5 {
+    width: 55px; /* Kích thước lớn hơn */
+    height: 55px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px; /* Kích thước số lớn hơn */
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); /* Bóng rõ hơn */
+    z-index: 2; /* Nằm trên biểu tượng */
+    border: 3px solid #fff; /* Viền trắng để nổi bật */
+}
+
+.step-icon-overlay_5 {
+    position: absolute;
+    top: 64px; /* Dịch xuống dưới số */
+    background-color: #dc3545; /* Màu đỏ nổi bật */
+    color: #fff;
+    width: 45px; /* Nhỏ hơn số */
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; /* Kích thước icon */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1; /* Nằm dưới số */
+    border: 2px solid #fff;
+}
+
+/* Căn chỉnh lại icon cho phù hợp với bố cục mới */
+/* Không cần left-icon/right-icon nữa vì đã chung một vị trí */
+
+.step-content-box_5 {
+    flex-grow: 1;
+    padding: 0; /* Bỏ padding ở đây vì đã có padding trên guide-step_5 */
+}
+
+.step-content-box_5 h3 {
+    color: #0056b3;
+    font-size: 22px; /* Kích thước lớn hơn */
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1.3;
+    font-family: font2;
+}
+
+.step-content-box_5 p {
+    font-size: 16px; /* Kích thước lớn hơn */
+    color: #555;
+    margin: 0 0 10px 0; /* Khoảng cách giữa các đoạn văn */
+    font-family: font6;
+}
+
+.step-content-box_5 ul {
+    list-style: none; /* Bỏ bullet mặc định */
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.step-content-box_5 ul li {
+    position: relative;
+    padding-left: 25px; /* Khoảng cách cho icon bullet */
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #444;
+    font-weight: 300;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.step-content-box_5 ul li::before {
+    content: "\f00c"; /* Font Awesome check icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #28a745; /* Màu xanh lá cây */
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+
+/* --- Styles cho nút "Tôi đã hiểu" --- */
+.understand-button-container_5 {
+    text-align: center;
+    margin-top: 40px; /* Khoảng cách từ nội dung hướng dẫn */
+    padding-top: 20px;
+    border-top: 1px solid #eee; /* Đường kẻ phân cách */
+}
+
+.understand-button_5 {
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Bo tròn vừa phải */
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex; /* Để icon và chữ nằm trên cùng 1 hàng */
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa chữ và icon */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-family: font2;
+}
+
+.understand-button_5:hover {
+    background-color: #218838; /* Xanh đậm hơn khi hover */
+    transform: translateY(-2px); /* Hiệu ứng nhấc nhẹ lên */
+}
+
+.understand-button_5 i {
+    font-size: 20px; /* Kích thước icon */
+    
+
+}
+
+/* Responsive cho thiết bị di động */
+@media (max-width: 992px) { /* breakpoint cho tablet/small desktop */
+    .modal-content_5 {
+        max-width: 90%;
+        padding: 15px;
+    }
+    .guide-header_5 h1 {
+        font-size: 28px;
+    }
+    .guide-header_5 h2 {
+        font-size: 20px;
+    }
+    .guide-sections_5 {
+        grid-template-columns: 1fr; /* Luôn 1 cột trên các màn hình nhỏ hơn */
+    }
+    .guide-sections_5::before {
+        display: block; /* Hiện đường kẻ trên mobile/tablet */
+    }
+    .guide-step_5 {
+        flex-direction: column; /* Xếp chồng số/icon và nội dung */
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+    }
+    .step-indicator_5 {
+        margin-right: 0;
+        margin-bottom: 20px; /* Khoảng cách dưới indicator */
+    }
+    .step-num_5 {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    .step-icon-overlay_5 {
+        top: 30px; /* Điều chỉnh vị trí icon */
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    .step-content-box_5 h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .step-content-box_5 p,
+    .step-content-box_5 ul li {
+        font-size: 15px;
+    }
+    .understand-button_5 {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) { /* breakpoint cho mobile */
+    .close-button_5 {
+        font-size: 30px;
+        top: 10px;
+        right: 15px;
+    }
+    .guide-header_5 h1 {
+        font-size: 22px;
+    }
+    .guide-header_5 h2 {
+        font-size: 18px;
+    }
+    .step-num_5 {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+    .step-icon-overlay_5 {
+        top: 28px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+    .step-content-box_5 h3 {
+        font-size: 16px;
+    }
+    .step-content-box_5 p,
+    .step-content-box_5 ul li {
+        font-size: 14px;
+    }
+    .understand-button_5 {
+        padding: 12px 25px;
+        font-size: 16px;}
+}
+
+/* Thêm hiệu ứng cho đường kẻ dọc trên desktop */
+@media (min-width: 993px) {
+    .guide-sections_5::before {
+        display: block; /* Hiển thị đường kẻ dọc trên desktop */
+    }
+    .guide-step_5:nth-child(even) { /* Các bước chẵn sẽ căn phải */
+        flex-direction: row-reverse;
+        justify-content: flex-end; /* Căn phải nội dung */
+        padding-left: 0; /* Bỏ padding trái mặc định */
+        padding-right: 20px; /* Thêm padding phải */
+    }
+    .guide-step_5:nth-child(even) .step-indicator_5 {
+        margin-right: 0; /* Bỏ margin phải */
+        margin-left: 25px; /* Thêm margin trái */
+    }
+    .guide-step_5:nth-child(even) .step-content-box_5 {
+        text-align: right; /* Căn phải văn bản */
+    }
+    .guide-step_5:nth-child(even) .step-content-box_5 ul li::before {
+        left: auto;
+        right: 0; /* Đổi vị trí icon bullet sang phải */
+    }
+    .guide-step_5:nth-child(even) .step-content-box_5 ul li {
+        padding-left: 0;
+        padding-right: 25px;
+    }
+}
+</style>
+<div id="myModal_5" class="modal_5">
+    <div class="modal-content_5">
+        <span class="close-button_5">&times;</span>
+        
+        <div class="guide-wrapper-in-modal_5">
+            <header class="guide-header_5">
+                <img src="/static/images/logoSGGD.png" alt="Logo Cao đẳng Sài Gòn Gia Định" class="guide-logo_5">
+                <h1>CAO ĐẲNG SÀI GÒN GIA ĐỊNH</h1>
+                <h2>HƯỚNG DẪN NHẬP HỌC CHI TIẾT</h2>
+            </header>
+
+            <section class="guide-sections_5">
+                <div class="guide-step_5">
+                    <div class="step-indicator_5">
+                        <div class="step-num_5">01</div>
+                        <div class="step-icon-overlay_5">
+                            <i class="fas fa-file-invoice"></i> 
+                        </div>
+                    </div>
+                    <div class="step-content-box_5">
+                        <h3>NHẬN GIẤY BÁO TRÚNG TUYỂN & THƯ MỜI NHẬP HỌC</h3>
+                        <p>Nhà trường sẽ gửi giấy báo trúng tuyển và thư mời nhập học chính thức tới địa chỉ bạn đã đăng ký khi nộp hồ sơ. Vui lòng kiểm tra kỹ thông tin.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step_5">
+                    <div class="step-indicator_5">
+                        <div class="step-num_5">02</div>
+                        <div class="step-icon-overlay_5">
+                            <i class="fas fa-laptop-code"></i> 
+                        </div>
+                    </div>
+                    <div class="step-content-box_5">
+                        <h3>LÀM THỦ TỤC NHẬP HỌC TRỰC TUYẾN</h3>
+                        <p>Bạn có thể xác nhận nhập học bằng cách đóng học phí trực tuyến. Vui lòng chuyển khoản học phí theo thông tin sau:</p>
+                        <ul>
+                            <li>**Ngân hàng:** Phát triển Việt Nam - BIDV</li>
+                            <li>**Tên tài khoản:** TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</li>
+                            <!-- <li>**Số tài khoản:** 21210002191968</li> -->
+                            <li>**Nội dung:** [Họ tên thí sinh] - [Mã số SV] - Học phí HK1</li>
+                        </ul>
+                        <p>Sau khi chuyển khoản, vui lòng giữ lại biên lai để đối chiếu khi cần.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step_5">
+                    <div class="step-indicator_5">
+                        <div class="step-num_5">03</div>
+                        <div class="step-icon-overlay_5">
+                            <i class="fas fa-building"></i> 
+                        </div>
+                    </div>
+                    <div class="step-content-box_5">
+                        <h3>HOẶC NHẬP HỌC TRỰC TIẾP TẠI TRƯỜNG</h3>
+                        <p>Nếu bạn muốn làm thủ tục trực tiếp, vui lòng đến Phòng Tuyển sinh tại:</p>
+                        <p><strong>Tầng 01, Toà nhà Amdi - Số 01, đường Trịnh Văn Bô, phường Phương Canh, quận Nam Từ Liêm, Tp. Hà Nội.</strong></p>
+                        <p>Hãy mang theo giấy báo nhập học để quy trình diễn ra nhanh chóng.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step_5">
+                    <div class="step-indicator_5">
+                        <div class="step-num_5">04</div>
+                        <div class="step-icon-overlay_5">
+                            <i class="fas fa-folder-open"></i> 
+                        </div>
+                    </div>
+                    <div class="step-content-box_5">
+                        <h3>CHUẨN BỊ HỒ SƠ NHẬP HỌC ĐẦY ĐỦ</h3>
+                        <p>Để hoàn tất thủ tục, bạn cần chuẩn bị các giấy tờ sau:</p>
+                        <ul>
+                            <li>Thư mời nhập học của trường.</li>
+                            <li>Giấy chứng nhận tốt nghiệp tạm thời hoặc bản sao bằng tốt nghiệp THPT (có công chứng).</li>
+                            <li>Học bạ THPT (photo công chứng).</li>
+                            <li>Bản sao căn cước công dân/CMND.</li>
+                            <li>4 ảnh thẻ kích thước 3x4 (ghi rõ họ tên, ngày tháng năm sinh ở mặt sau).</li>
+                            <li>Các giấy tờ ưu tiên khác (nếu có).</li>
+                            <li>Học phí nhập học - Học kỳ I (nếu chưa đóng trực tuyến).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-step_5">
+                    <div class="step-indicator_5">
+                        <div class="step-num_5">05</div>
+                        <div class="step-icon-overlay_5">
+                            <i class="fas fa-comments"></i> 
+                        </div>
+                    </div>
+                    <div class="step-content-box_5">
+                        <h3>CẬP NHẬT TRẠNG THÁI & HỖ TRỢ SINH VIÊN</h3>
+                        <p>Sau khi hoàn tất thủ tục, Nhà trường sẽ cập nhật trạng thái sinh viên xác nhận nhập học. Tiếp đó, bạn sẽ nhận được:</p>
+                        <ul>
+                            <li>Tài khoản email sinh viên.</li>
+                            <li>Thông báo lớp học và danh sách lớp.</li>
+                            <li>Hướng dẫn làm thẻ sinh viên.</li>
+                            <li>Thông tin nhận đồng phục.</li>
+                            <li>Lịch học chi tiết của học kỳ.</li>
+                        </ul>
+                        <p>Mọi thắc mắc trong quá trình này, vui lòng liên hệ Phòng Công tác Sinh viên.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="understand-button-container_5">
+                <button id="understandButton_5" class="understand-button_5">
+                    TÔI ĐÃ HIỂU <i class="fas fa-check-circle"></i>
+                </button>
+            </div>
+        </div>
+        </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('myModal_5'); 
+    const openModalBtn = document.getElementById('openModalBtn_5'); 
+    const closeButton = document.querySelector('.close-button_5');
+    const understandButton = document.getElementById('understandButton_5'); // Lấy nút "Tôi đã hiểu"
+    const body = document.body;
+
+    // --- Giả định form đăng ký tư vấn của bạn có ID là 'yourConsultationFormId' ---
+    const consultationForm = document.getElementById('yourConsultationFormId'); 
+
+    // Hàm mở modal (không thay đổi)
+    function openModal() {
+        modal.style.display = 'flex';
+        body.classList.add('modal-open_5'); 
+        setTimeout(() => {
+            modal.classList.add('active_5'); 
+        }, 10); 
+    }
+
+    // Hàm đóng modal (không thay đổi)
+    function closeModal() {
+        modal.classList.remove('active_5');
+        modal.addEventListener('transitionend', function handler() {
+            modal.style.display = 'none';
+            body.classList.remove('modal-open_5'); 
+            modal.removeEventListener('transitionend', handler);
+        }, { once: true });
+    }
+
+    // Gán sự kiện cho nút mở modal hướng dẫn nhập học
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', openModal);
+    }
+    
+    // Gán sự kiện cho nút đóng modal (x trên góc)
+    if (closeButton) {
+        closeButton.addEventListener('click', closeModal);
+    }
+
+    // Gán sự kiện cho nút "Tôi đã hiểu" (mới thêm)
+    if (understandButton) {
+        understandButton.addEventListener('click', closeModal);
+    }
+
+    // Gán sự kiện đóng modal khi nhấp ra ngoài
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Gán sự kiện đóng modal khi nhấn phím Esc
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.classList.contains('active_5')) {
+            closeModal();
+        }
+    });
+
+    // --- XỬ LÝ SỰ KIỆN GỬI FORM ĐĂNG KÝ TƯ VẤN CỦA BẠN ---
+    if (consultationForm) {
+        consultationForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log("Dữ liệu đăng ký tư vấn:", data);
+
+            try {
+                const response = await fetch('/api/your-consultation-endpoint', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Đăng ký tư vấn thành công:", result);
+                    alert("Đăng ký tư vấn thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất.");
+                    consultationForm.reset(); 
+                    
+                    openModal(); // HIỂN THỊ MODAL HƯỚNG DẪN SAU KHI ĐĂNG KÝ THÀNH CÔNG
+
+                } else {
+                    console.error("Lỗi đăng ký tư vấn:", response.status, response.statusText);
+                    alert("Đã xảy ra lỗi khi đăng ký tư vấn. Vui lòng thử lại sau.");
+                }
+            } catch (error) {
+                console.error("Lỗi mạng hoặc server:", error);
+                alert("Đã xảy ra lỗi kết nối. Vui lòng kiểm tra lại đường truyền.");
+            }
+        });
+    }
+});
+</script>
+
