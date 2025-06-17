@@ -1,0 +1,598 @@
+/* ... (Giữ nguyên toàn bộ CSS hiện có của bạn) ... */
+
+/* Thêm vào cuối file styles.css của bạn */
+
+/* Common Variables (can reuse existing .8 or .9 variables if preferred) */
+:root {
+    --module-bg-color: #f0f2f5;
+    --module-border-color: #dcdfe6;
+    --section-header-color: #0056b3;
+    --upload-area-bg: #e9ecef;
+    --upload-area-border: #ced4da;
+    --forum-card-bg: #ffffff;
+    --forum-card-shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* Common Styles for this section */
+.study-header {
+    background-color: var(--primary-color8); /* Sử dụng màu primary từ base */
+    color: var(--text-light8);
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    font-family: 'font2';
+}
+p{
+    font-family: 'font6';
+    font-size: 1.2em;
+}
+
+.study-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.study-card {
+    background-color: var(--card-bg8);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--card-shadow8);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px; /* Đảm bảo chiều cao tối thiểu */
+    text-decoration: none; /* Loại bỏ gạch chân cho thẻ a */
+    color: inherit; /* Kế thừa màu chữ */
+}
+
+.study-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px var(--hover-shadow8);
+}
+
+.study-card .icon {
+    font-size: 3.5em;
+    color: var(--primary-color8);
+    margin-bottom: 15px;
+}
+
+.study-card h3 {
+    font-size: 1.6em;
+    color: var(--text-dark8);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'font2';
+}
+
+.study-card p {
+    font-size: 1em;
+    color: var(--secondary-color8);
+    line-height: 1.5;
+    font-family: 'font6';
+}
+
+/* Section specific styling */
+.study-section {
+    background-color: var(--card-bg8);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--card-shadow8);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.study-section h2 {
+    color: var(--text-dark8);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--primary-color8);
+    padding-bottom: 10px;
+    font-family: 'font2';
+}
+
+/* Course List (in Ngành Detail) */
+.course-list {
+    list-style: none;
+    padding: 0;
+}
+
+.course-item {
+    padding: 20px;
+    border-bottom: 1px solid var(--module-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.course-item:last-child {
+    border-bottom: none;
+}
+
+.course-item:hover {
+    background-color: var(--bg-light8);
+}
+
+.course-item-info {
+    flex-grow: 1;
+}
+
+.course-item h4 {
+    font-size: 1.4em;
+    color: var(--text-dark8);
+    margin: 0;
+    font-family: 'font2';
+}
+
+.course-item .course-code {
+    font-size: 0.9em;
+    color: var(--secondary-color8);
+    margin-left: 15px;
+}
+
+.course-item .fas {
+    color: var(--primary-color8);
+    font-size: 1.2em;
+}
+
+
+/* Toggle Button Style */
+.toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2em;
+    color: var(--text-dark8); /* Hoặc màu primary-color8 nếu muốn */
+    /* transition: transform 0.3s ease; */ /* Bỏ dòng này, chuyển transition xuống icon */
+    display: flex; /* Đảm bảo icon nằm giữa nút */
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-button:hover {
+    color: var(--primary-color8);
+}
+
+.toggle-button .fas {
+    transition: transform 0.3s ease; /* Transition chỉ áp dụng cho icon */
+    transform: rotate(0deg); /* Mặc định mũi tên hướng xuống (icon ban đầu là chevron-down) */
+}
+
+/* Rotate icon when content is hidden */
+.toggle-button.rotated .fas {
+    transform: rotate(180deg); /* Xoay mũi tên lên khi nội dung ẩn */
+}
+
+/* Class for toggled content */
+.toggle-content {
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease-out;
+    overflow: hidden;
+    /* max-height sẽ được JS điều khiển */
+    opacity: 1;
+    /* Các padding và margin mặc định của các phần có thể cần được xử lý riêng để transition mượt mà */
+}
+
+.toggle-content.hidden {
+    max-height: 0 !important; /* Đảm bảo ẩn hoàn toàn */
+    opacity: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    /* Loại bỏ tất cả khoảng cách để không còn khoảng trống khi ẩn */
+}
+
+/* Adjust padding for specific sections when hidden */
+/* (Nếu các phần có padding riêng và bạn muốn loại bỏ khi ẩn) */
+/* Ví dụ: */
+.forum-discussion.toggle-content {
+    padding-top: 15px; /* Giữ nguyên padding mặc định */
+}
+.forum-discussion.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.materials-upload-section.toggle-content {
+    padding-top: 15px; /* Giữ nguyên padding mặc định */
+}
+.materials-upload-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.lesson-content-section.toggle-content {
+    padding-top: 15px; /* Giữ nguyên padding mặc định */
+}
+.lesson-content-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.assignment-submission-section.toggle-content {
+    padding-top: 15px; /* Giữ nguyên padding mặc định */
+}
+.assignment-submission-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Cập nhật lại màu cho drag and drop nếu cần */
+.file-upload-area:hover,
+.submission-area:hover {
+    background-color: #e2e6ea; /* Đã có trong CSS bạn gửi, giữ nguyên */
+    border-color: var(--primary-color8);
+}
+
+/* Adjust padding for specific sections when hidden */
+/* (Nếu các phần có padding riêng và bạn muốn loại bỏ khi ẩn) */
+/* Ví dụ: */
+.forum-discussion.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.materials-upload-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.lesson-content-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.assignment-submission-section.toggle-content.hidden {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Rotate icon when content is hidden */
+/* Khi nút có class 'rotated' (nội dung ẩn), icon sẽ xoay về 0 độ (mũi tên hướng xuống) */
+.toggle-button.rotated .fas {
+    transform: rotate(0deg); 
+}
+
+/* Forum Section */
+.forum-discussion {
+    padding-top: 15px;
+}
+
+.forum-discussion h3 {
+    font-size: 1.5em;
+    color: var(--section-header-color);
+    margin-bottom: 20px;
+    font-family: 'font2';
+}
+
+.forum-card {
+    background-color: var(--forum-card-bg);
+    border: 1px solid var(--module-border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px var(--forum-card-shadow);
+}
+
+.forum-card .user-info {
+    font-weight: 600;
+    color: var(--primary-color8);
+    margin-bottom: 5px;
+    font-family: 'font2';
+}
+
+.forum-card .comment-text {
+    font-size: 0.95em;
+    color: var(--text-dark8);
+    line-height: 1.4;
+}
+
+.forum-card .comment-date {
+    font-size: 0.8em;
+    color: var(--secondary-color8);
+    text-align: right;
+    margin-top: 10px;
+}
+
+.new-comment-area textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--module-border-color);
+    border-radius: 5px;
+    font-size: 1em;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+
+
+.new-comment-area button {
+    background-color: var(--accent-color8);
+    color: var(--text-light8);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'font2';
+}
+
+.btn-primary8{
+    background-color: var(--accent-color8);
+    color: var(--text-light8);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'font2';
+}
+
+.new-comment-area button:hover {
+    background-color: #218838;
+}
+
+/* Course Materials & Upload */
+.materials-upload-section {
+    padding-top: 15px;
+}
+
+.materials-upload-section h3 {
+    font-size: 1.5em;
+    color: var(--section-header-color);
+    margin-bottom: 20px;
+}
+
+.file-upload-area {
+    background-color: var(--upload-area-bg);
+    border: 2px dashed var(--upload-area-border);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-upload-area:hover {
+    background-color: #e2e6ea;
+    border-color: var(--primary-color8);
+}
+
+.file-upload-area p {
+    font-size: 1.1em;
+    color: var(--secondary-color8);
+    margin-bottom: 10px;
+}
+
+.file-upload-area input[type="file"] {
+    display: none; /* Ẩn input file mặc định */
+}
+
+.uploaded-files-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.uploaded-files-list li {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+}
+
+.uploaded-files-list li a {
+    color: var(--primary-color8);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.uploaded-files-list li .fas {
+    color: #dc3545; /* Màu đỏ cho icon xóa */
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Lesson Content (Chương trình học) */
+.lesson-content-section {
+    padding-top: 15px;
+}
+
+.lesson-content-section h3 {
+    font-size: 1.5em;
+    color: var(--section-header-color);
+    margin-bottom: 20px;
+}
+
+.chapter-item {
+    background-color: var(--module-bg-color);
+    border: 1px solid var(--module-border-color);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.chapter-header {
+    padding: 15px 20px;
+    background-color: var(--primary-color8);
+    color: var(--text-light8);
+    font-size: 1.3em;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'font2';
+}
+
+.chapter-header .fas {
+    transition: transform 0.3s ease;
+}
+
+.chapter-header.active .fas {
+    transform: rotate(90deg); /* Xoay icon khi mở rộng */
+}
+
+.chapter-content {
+    padding: 20px;
+    background-color: var(--card-bg8);
+    border-top: 1px solid var(--module-border-color);
+    display: none; /* Mặc định ẩn */
+}
+
+.chapter-content.active {
+    display: block; /* Hiển thị khi active */
+}
+
+.chapter-content p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: var(--text-dark8);
+    font-family: 'font6';
+}
+
+.chapter-content ul {
+    list-style: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.chapter-content ul li {
+    margin-bottom: 5px;
+}
+
+/* Assignment Submission */
+.assignment-submission-section {
+    padding-top: 15px;
+}
+
+.assignment-submission-section h3 {
+    font-size: 1.5em;
+    color: var(--section-header-color);
+    margin-bottom: 20px;
+    font-family: 'font2';
+}
+
+.submission-area {
+    background-color: var(--upload-area-bg);
+    border: 2px dashed var(--upload-area-border);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    font-family: 'font6';
+}
+
+.submission-area:hover {
+    background-color: #e2e6ea;
+    border-color: var(--primary-color8);
+}
+
+.submission-area p {
+    font-size: 1.1em;
+    color: var(--secondary-color8);
+    margin-bottom: 10px;
+    font-family: 'font6';
+}
+
+.submission-area input[type="file"] {
+    display: none; /* Ẩn input file mặc định */
+}
+
+.submitted-files-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.submitted-files-list li {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+}
+
+.submitted-files-list li a {
+    color: var(--primary-color8);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.submitted-files-list li .fas {
+    color: #dc3545; /* Màu đỏ cho icon xóa */
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .study-header {
+        font-size: 1.5em;
+        padding: 15px 20px;
+        margin-bottom: 30px;
+    }
+    .study-card {
+        padding: 20px;
+    }
+    .study-card h3 {
+        font-size: 1.4em;
+    }
+    .study-card .icon {
+        font-size: 3em;
+    }
+    .study-section {
+        padding: 20px;
+    }
+    .study-section h2, .forum-discussion h3, .materials-upload-section h3, 
+    .lesson-content-section h3, .assignment-submission-section h3 {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
+    .course-item h4 {
+        font-size: 1.2em;
+    }
+    .course-item .course-code {
+        font-size: 0.8em;
+    }
+    .file-upload-area, .submission-area {
+        padding: 20px;
+    }
+    .file-upload-area p, .submission-area p {
+        font-size: 1em;
+    }
+    .chapter-header {
+        font-size: 1.1em;
+        padding: 12px 15px;
+    }
+    .chapter-content {
+        padding: 15px;
+    }
+}

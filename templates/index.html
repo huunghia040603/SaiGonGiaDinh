@@ -3,6 +3,92 @@
 {% block title %}Trang Chủ - Website Trường Cao Đẳng Sài Gòn Gia Định{% endblock %}
 
 {% block content %}
+<style>
+    /* Phần chứa cả hai bộ đếm - Ghim vào góc màn hình */
+    .counters-container {
+        position: fixed; /* Ghim vào vị trí cố định trên màn hình */
+        bottom: 20px;    /* Cách đáy 20px */
+        right: 20px;     /* Cách lề phải 20px */
+        display: flex;   /* Sắp xếp các mục con */
+        flex-direction: column; /* Xếp chồng các bộ đếm lên nhau (tạo 2 dòng tổng) */
+        gap: 8px;        /* Khoảng cách nhỏ giữa các bộ đếm */
+        padding: 10px;   /* Khoảng đệm tổng thể */
+        background-color: rgba(255, 255, 255, 0.95); /* Nền trắng hơi trong suốt, rõ hơn */
+        border-radius: 8px; /* Góc bo tròn */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng rõ hơn */
+        z-index: 1000;   /* Đảm bảo nó luôn nằm trên cùng */
+        /*max-width: 180px; */ /* Bỏ max-width để nó tự co giãn theo nội dung đủ chỗ 2 dòng */
+        border: 1px solid #e0e0e0; /* Viền mỏng */
+    }
+
+    /* Mỗi phần bộ đếm riêng lẻ */
+    .counter-section {
+        background-color: #ffffff; /* Nền trắng */
+        border-radius: 6px; /* Góc bo tròn nhỏ hơn */
+        padding: 6px 12px; /* Giảm khoảng đệm cho nhỏ gọn hơn */
+        transition: transform 0.2s ease-in-out; /* Hiệu ứng khi di chuột */
+        line-height: 1.2; /* Tối ưu khoảng cách dòng */
+
+        /* <-- ĐÃ SỬA ĐỔI: Dùng Flexbox để đưa tiêu đề và số lên cùng một dòng */
+        display: flex;
+        /* justify-content: space-between;  */
+        /* Đẩy tiêu đề và số về hai phía */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        white-space: nowrap; /* Ngăn không cho nội dung bên trong xuống dòng */
+    }
+
+    .counter-section:hover {
+        transform: translateY(-3px); /* Nâng nhẹ lên khi di chuột vào */
+    }
+
+    /* Tiêu đề của bộ đếm (Ví dụ: "Truy cập hôm nay:") */
+    .counter-section p {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 0.9em; /* Kích thước chữ vừa phải */
+        color: #666; /* Màu chữ xám đậm hơn */
+        margin: 0; /* <-- ĐÃ SỬA ĐỔI: Bỏ tất cả margin mặc định */
+        padding-right: 8px; /* Khoảng cách giữa chữ và số */
+        font-weight: 500;
+    }
+
+    /* Giá trị của bộ đếm tổng lượt truy cập và online */
+    .counter-value, .online-value {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.6em; /* Kích thước số */
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        margin: 0; /* <-- ĐÃ SỬA ĐỔI: Bỏ tất cả margin mặc định */
+    }
+
+    /* Màu sắc cụ thể cho từng loại */
+    .counter-value {
+        color: #007bff; /* Màu xanh dương */
+    }
+
+    .online-value {
+        color: #28a745; /* Màu xanh lá cây */
+    }
+
+    /* Responsive adjustments - Thích ứng trên màn hình nhỏ hơn */
+    @media (max-width: 600px) {
+        .counters-container {
+            bottom: 10px; /* Cách đáy 10px trên di động */
+            right: 10px;  /* Cách lề phải 10px trên di động */
+            padding: 6px; /* Giảm padding tổng thể */
+            gap: 5px;     /* Giảm khoảng cách giữa các mục */
+        }
+        .counter-section {
+            padding: 5px 10px; /* Giảm padding từng mục */
+        }
+        .counter-section p {
+            font-size: 0.85em; /* Chữ nhỏ hơn một chút */
+        }
+        .counter-value, .online-value {
+            font-size: 1.4em; /* Số nhỏ hơn một chút */
+        }
+    }
+</style>
+
 <div class="banner-slider">
     <div class="slides">
         <div class="slide">
@@ -49,7 +135,7 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='/images/nganh/kt-tc/ke-toan.jpg') }}" alt="Kế toán">
+                        <img src="{{ url_for('static', filename='/images/nganhmoi/ketoan.jpg') }}" alt="Kế toán">
                         <div class="major-content">
                             <h3>Kế toán doanh nghiệp</h3>
                             <p>Đào tạo chuyên sâu về kế toán, kiểm toán và tài chính doanh nghiệp</p>
@@ -75,7 +161,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/kt-tc/quan-tri.jpg') }}"
+                        <img src="{{ url_for('static', filename='images/nganhmoi/quantri.jpg') }}"
 
 
                             alt="Quản trị kinh doanh">
@@ -104,7 +190,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/kt-tc/tai-chinh.jpg') }}"
+                        <img src="{{ url_for('static', filename='images/nganhmoi/nganhang.jpg') }}"
                             alt="Tài chính ngân hàng">
 
                         <div class="major-content">
@@ -132,7 +218,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/kt-tc/thuong-mai.jpg') }}" alt="Thương mại điện tử">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/thuongmaidientu.jpg') }}" alt="Thương mại điện tử">
 
                         <div class="major-content">
                             <h3>Thương mại điện tử</h3>
@@ -159,7 +245,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/kt-tc/logistics.jpg') }}" alt="Logistics">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/logistics.jpg') }}" alt="Logistics">
 
                         <div class="major-content">
                             <h3>Logistics</h3>
@@ -186,11 +272,11 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/thu-y/thu-y.jpg') }}" alt="Thú y">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/thuy.jpg') }}" alt="Thú y">
 
                         <div class="major-content">
                             <h3>Thú y</h3>
-                            <p>Đào tạo bác sĩ thú y chuyên nghiệp với kiến thức và kỹ năng toàn diện</p>
+                            <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo bác sĩ thú y chuyên nghiệp với kiến thức và kỹ năng toàn diện</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -213,7 +299,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/cntt/cong-nghe-thong-tin.jpg') }}" alt="Công nghệ thông tin">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/cntt.jpg') }}" alt="Công nghệ thông tin">
 
                         <div class="major-content">
                             <h3>Công nghệ thông tin</h3>
@@ -240,11 +326,11 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/cntt/o-to.jpg') }}" alt="Công nghệ ô tô">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/oto.jpg') }}" alt="Công nghệ ô tô">
 
                         <div class="major-content">
                             <h3>Công nghệ ô tô</h3>
-                            <p>Đào tạo kỹ thuật viên chuyên nghiệp trong lĩnh vực công nghệ ô tô</p>
+                            <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo kỹ thuật viên chuyên nghiệp trong lĩnh vực công nghệ ô tô</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -267,7 +353,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/cntt/thuc-pham.jpg') }}"
+                        <img src="{{ url_for('static', filename='images/nganhmoi/thucpham.jpg') }}"
                             alt="Công nghệ thực phẩm">
 
                         <div class="major-content">
@@ -295,11 +381,11 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/duoc.jpg') }}" alt="Dược">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/duoc.jpg') }}" alt="Dược">
 
                         <div class="major-content">
                             <h3>Dược</h3>
-                            <p>Đào tạo dược sĩ chuyên nghiệp với kiến thức chuyên môn cao</p>
+                                <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/> Đào tạo dược sĩ chuyên nghiệp với kiến thức chuyên môn cao</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -322,11 +408,11 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/dieu-duong.jpg') }}" alt="Điều dưỡng">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/dieuduong.jpg') }}" alt="Điều dưỡng">
 
                         <div class="major-content">
                             <h3>Điều dưỡng</h3>
-                            <p>Đào tạo điều dưỡng viên chuyên nghiệp với tâm huyết chăm sóc sức khỏe cộng đồng</p>
+                            <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo điều dưỡng viên chuyên nghiệp với tâm huyết chăm sóc sức khỏe cộng đồng</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -349,11 +435,11 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/Y-si.jpg') }}" alt="Y sĩ đa khoa">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/ysidakhoa.jpg') }}" alt="Y sĩ đa khoa">
 
                         <div class="major-content">
                             <h3>Y sĩ đa khoa</h3>
-                            <p>Đào tạo y sĩ với kiến thức tổng quát về y học và kỹ năng khám chữa bệnh</p>
+                            <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo y sĩ với kiến thức tổng quát về y học và kỹ năng khám chữa bệnh</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -376,7 +462,7 @@
                 <div class="major-card-inner">
                     <div class="major-front">
 
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/phuc-hinh-rang.jpg') }}"
+                        <img src="{{ url_for('static', filename='images/nganhmoi/phuchinhrang.jpg') }}"
                             alt="Kỹ thuật phục hình răng">
 
                         <div class="major-content">
@@ -403,7 +489,7 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/phuc-hoi-chuc-nang.jpg') }}"alt="Kỹ thuật phục hồi chức năng">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/phuchoichucnang.jpg') }}"alt="Kỹ thuật phục hồi chức năng">
                         <div class="major-content">
                             <h3>Kỹ thuật phục hồi chức năng</h3>
                             <p>Đào tạo chuyên viên vật lý trị liệu và phục hồi chức năng</p>
@@ -428,7 +514,7 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/y-duoc/co-truyen.jpg') }}" alt="Y học cổ truyền">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/yhoccotruyen.jpg') }}" alt="Y học cổ truyền">
                         <div class="major-content">
                             <h3>Y học cổ truyền</h3>
                             <p>Đào tạo y sĩ y học cổ truyền kết hợp với y học hiện đại</p>
@@ -453,10 +539,10 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/xh-dl-pl/du-lich.jpg') }}" alt="Du lịch">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/dulich.jpg') }}" alt="Du lịch">
                         <div class="major-content">
                             <h3>Du lịch</h3>
-                            <p>Đào tạo chuyên viên trong lĩnh vực du lịch và lữ hành</p>
+                            <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo chuyên viên trong lĩnh vực du lịch và lữ hành</p>
                         </div>
                     </div>
                     <div class="major-back">
@@ -478,7 +564,7 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/xh-dl-pl/NGON-NGU-ANH.jpg') }}" alt="Ngôn ngữ Anh">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/ngonguanh.jpg') }}" alt="Ngôn ngữ Anh">
                         <div class="major-content">
                             <h3>Ngôn ngữ Anh</h3>
                             <p>Đào tạo chuyên gia ngôn ngữ Anh với kỹ năng giao tiếp quốc tế</p>
@@ -503,7 +589,7 @@
             <div class="major-card">
                 <div class="major-card-inner">
                     <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/xh-dl-pl/luat-1.jpg') }}" alt="Luật">
+                        <img src="{{ url_for('static', filename='images/nganhmoi/luat.jpg') }}" alt="Luật">
                         <div class="major-content">
                             <h3>Luật - Dịch vụ pháp lý</h3>
                             <p>Đào tạo chuyên viên pháp lý với kiến thức luật thực tiễn</p>
@@ -525,29 +611,7 @@
             </div>
 
             <!-- Sư phạm mầm non -->
-            <div class="major-card">
-                <div class="major-card-inner">
-                    <div class="major-front">
-                        <img src="{{ url_for('static', filename='images/nganh/xh-dl-pl/SU-PHAM-MAM-NON-1.jpg') }}" alt="Sư phạm mầm non">
-                        <div class="major-content">
-                            <h3>Sư phạm mầm non</h3>
-                            <p>Đào tạo giáo viên mầm non chuyên nghiệp với tâm huyết giáo dục</p>
-                        </div>
-                    </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Giáo viên mầm non</li>
-                                <li>Quản lý trường mầm non</li>
-                                <li>Tư vấn giáo dục</li>
-                                <li>Chuyên gia giáo dục sớm</li>
-                            </ul>
-                            <a href="/mamnon" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <!-- Văn hóa THPT 9+ -->
             <div class="major-card">
@@ -680,6 +744,34 @@
 {% include 'clb.html' %}
 {% include 'sv.html' %}
 {% include 'sansang.html' %}
+
+        <div class="counter-section">
+            <p>Tổng số lượt truy cập :</p>
+            <div class="counter-value" id="totalVisitors">Đang tải...</div>
+        </div>
+        <div class="counter-section">
+            <p>Số người đang online:</p>
+            <div class="online-value" id="onlineUsers">Đang tải...</div>
+        </div>
+    </div>
+
+    <script>
+        function updateCounts() {
+            fetch('/get_counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalVisitors').innerText = data.total_visitors;
+                    document.getElementById('onlineUsers').innerText = data.online_users;
+                })
+                .catch(error => console.error('Lỗi khi lấy số liệu:', error));
+        }
+
+        // Cập nhật ngay khi tải trang
+        updateCounts();
+
+        // Cập nhật sau mỗi 10 giây để giữ số người online được cập nhật
+        setInterval(updateCounts, 10000); // 10000ms = 10 giây
+    </script>
 {% endblock %}
 
 {% block scripts %}

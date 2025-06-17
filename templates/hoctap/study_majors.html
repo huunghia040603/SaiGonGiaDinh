@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/csvc.css') }}"> {# Có thể dùng lại hoặc tạo Facility.css riêng #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hoctap.css') }}">
+<main class="main-content8 container8" style="background-color: #f5f5f5;">
+    <h1 class="study-header">Các Ngành Học Kỳ Này</h1>
+
+    <div class="study-card-grid" id="majorsGrid">
+        </div>
+
+    <div class="no-data-message" style="display: none; text-align: center; padding: 50px; color: var(--secondary-color8);">
+        <p>Không có ngành học nào được tìm thấy trong học kỳ này.</p>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const majorsGrid = document.getElementById('majorsGrid');
+        const noDataMessage = document.querySelector('.no-data-message');
+
+        // Dữ liệu mẫu các ngành học
+        const sampleMajors = [
+            { id: 'cntt', name: 'Công nghệ Thông tin', icon: 'fas fa-laptop-code', description: 'Ngành học về lập trình, phát triển phần mềm, mạng máy tính và an ninh mạng.' },
+            { id: 'qtkd', name: 'Quản trị Kinh doanh', icon: 'fas fa-chart-line', description: 'Nghiên cứu về các chiến lược quản lý, tài chính, marketing và vận hành doanh nghiệp.' },
+            { id: 'ketoan', name: 'Kế toán', icon: 'fas fa-file-invoice-dollar', description: 'Chuyên về ghi chép, phân tích và báo cáo các giao dịch tài chính.' },
+            { id: 'tkdt', name: 'Thiết kế Đồ họa', icon: 'fas fa-paint-brush', description: 'Phát triển kỹ năng thiết kế hình ảnh, video và các ấn phẩm đa phương tiện.' }
+        ];
+
+        const renderMajors = (majors) => {
+            if (majors.length === 0) {
+                noDataMessage.style.display = 'block';
+                majorsGrid.innerHTML = '';
+                return;
+            }
+
+            noDataMessage.style.display = 'none';
+            majorsGrid.innerHTML = ''; // Clear existing content
+
+            majors.forEach(major => {
+                const majorCard = document.createElement('a'); // Sử dụng <a> để dễ dàng chuyển trang
+                majorCard.href = `/hoc-tap/nganh/${major.id}`; // Đường dẫn đến trang chi tiết ngành
+                majorCard.classList.add('study-card');
+                majorCard.innerHTML = `
+                    <i class="${major.icon} icon"></i>
+                    <h3>${major.name}</h3>
+                    <p>${major.description}</p>
+                `;
+                majorsGrid.appendChild(majorCard);
+            });
+        };
+
+        // Gọi hàm render majors khi trang tải
+        renderMajors(sampleMajors);
+
+        // Trong môi trường thực tế, bạn sẽ fetch dữ liệu từ API:
+        /*
+        fetch('/api/majors')
+            .then(response => response.json())
+            .then(data => {
+                renderMajors(data);
+            })
+            .catch(error => {
+                console.error('Error fetching majors:', error);
+                noDataMessage.style.display = 'block';
+            });
+        */
+    });
+</script>
+{% endblock %}
