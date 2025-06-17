@@ -1,9 +1,14 @@
-from flask import Flask, render_template, redirect, url_for, session, flash, request
-from admin_bp import admin_bp 
+from flask import Flask, render_template, redirect, url_for, session, flash, request, jsonify
+from admin_bp import admin_bp
 from faculty import faculty
+import os
+import time
+import uuid
+import json
+from datetime import datetime # <-- ĐÃ THÊM: Import datetime
 
 app = Flask(__name__)
-app.secret_key = '78c4a1b0d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2' # Cần thiết cho session và flash messages
+app.secret_key = '78c4a1b0d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2'
 
 # Đăng ký Blueprint admin
 app.register_blueprint(admin_bp)
@@ -11,24 +16,112 @@ app.register_blueprint(admin_bp)
 # Đăng ký Blueprint faculty
 app.register_blueprint(faculty)
 
+# Đường dẫn đến tệp lưu trữ số lượt truy cập TỔNG (giờ sẽ là JSON)
+VISITOR_COUNT_FILE = 'visitor_count.json' # <-- ĐÃ SỬA: Thay đổi tên file cho rõ ràng hơn là JSON
+# Đường dẫn đến tệp lưu trữ người dùng ONLINE (tiếp tục là JSON)
+ACTIVE_USERS_FILE = 'active_users.json'
+
+# Thời gian hoạt động (ví dụ: 1 phút = 60 giây, hoặc 30 giây)
+ACTIVE_THRESHOLD = 10 # Điều chỉnh theo định nghĩa "online" của bạn
+
+# -- ĐÃ SỬA: Hàm để đọc/ghi dữ liệu lượt truy cập từ tệp JSON --
+def load_visitor_data():
+    if not os.path.exists(VISITOR_COUNT_FILE) or os.stat(VISITOR_COUNT_FILE).st_size == 0:
+        # Nếu file không tồn tại hoặc rỗng, tạo dữ liệu ban đầu
+        return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
+    with open(VISITOR_COUNT_FILE, 'r') as f:
+        try:
+            data = json.load(f)
+            # Đảm bảo cấu trúc dữ liệu đúng
+            if "count" not in data or "last_reset_date" not in data:
+                return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
+            return data
+        except json.JSONDecodeError:
+            # Xử lý nếu file bị hỏng hoặc không đúng định dạng JSON
+            return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
+
+def save_visitor_data(data):
+    with open(VISITOR_COUNT_FILE, 'w') as f:
+        json.dump(data, f)
+
+# Hàm để đọc/ghi người dùng ONLINE từ tệp JSON
+def load_active_users():
+    if not os.path.exists(ACTIVE_USERS_FILE) or os.stat(ACTIVE_USERS_FILE).st_size == 0:
+        return {}
+    with open(ACTIVE_USERS_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
+def save_active_users(users_dict):
+    with open(ACTIVE_USERS_FILE, 'w') as f:
+        json.dump(users_dict, f)
+
+active_users = load_active_users()
+
 
 # Trang chủ và đăng nhập
 @app.route('/')
 def index():
+    # -- ĐÃ SỬA: Logic đếm lượt truy cập theo ngày --
+    visitor_data = load_visitor_data()
+    today_str = datetime.now().strftime("%Y-%m-%d")
+
+    # Kiểm tra nếu đã sang ngày mới
+    if visitor_data["last_reset_date"] != today_str:
+        visitor_data["count"] = 0 # Reset bộ đếm
+        visitor_data["last_reset_date"] = today_str # Cập nhật ngày reset
+
+    # Tăng bộ đếm cho lượt truy cập hiện tại
+    visitor_data["count"] += 1
+    save_visitor_data(visitor_data) # Lưu lại dữ liệu đã cập nhật
+
+    # Đảm bảo mỗi phiên có một ID duy nhất để theo dõi người dùng online
+    if 'session_id_custom' not in session:
+        session['session_id_custom'] = str(uuid.uuid4())
+
     return render_template('index.html')
 
+@app.route('/get_counts')
+def get_counts():
+    global active_users
+
+    session_id_custom = session.get('session_id_custom')
+
+    if session_id_custom:
+        active_users[session_id_custom] = time.time()
+        save_active_users(active_users)
+
+    current_time = time.time()
+    users_to_remove = []
+    for sid, timestamp in list(active_users.items()):
+        if (current_time - timestamp) > ACTIVE_THRESHOLD:
+            users_to_remove.append(sid)
+
+    for sid in users_to_remove:
+        if sid in active_users:
+            del active_users[sid]
+
+    save_active_users(active_users)
+
+    # Lấy số lượt truy cập tổng từ file JSON
+    total_visitors_data = load_visitor_data()
+    total_visitors = total_visitors_data["count"] # Lấy 'count' từ dữ liệu JSON
+
+    online_users = len(active_users)
+
+    return jsonify(total_visitors=total_visitors, online_users=online_users)
+
+# ... (Giữ nguyên tất cả các route và dữ liệu khác của bạn bên dưới) ...
 @app.route('/dangnhap')
 def dangnhap():
     return render_template('dangnhap.html')
 
-# (Giữ nguyên các route thông thường khác của bạn ở đây)
-# Nhóm ngành Kinh tế - Quản trị
-# 
-
 @app.route('/cong-nghe-thong-tin')
 def cntt():
     return render_template('nganhhoc/cntt.html')
- 
+
 @app.route('/luat-dich-vu-phap-ly')
 def dichvuphaply():
     return render_template('nganhhoc/dichvuphaply.html')
@@ -104,7 +197,6 @@ def yhoccotruyen():
 @app.route('/y-si-da-khoa')
 def ysi():
     return render_template('nganhhoc/ysi.html')
-
 
 
 @app.route('/private_policy')
@@ -224,14 +316,6 @@ def dangkybansaobtn():
 def huongdan():
     return render_template('huong-dan.html')
 
-# @app.route('/danh-gia-giang-vien')
-# def danhgiagv():
-#     return render_template('dichvu/gv/index.html')
-
-
-# index.py (hoặc app.py)
-     # Nếu bạn có thư mục static cho CSS/JS
-# Dữ liệu giảng viên mẫu (trong thực tế sẽ lấy từ database)
 teachers_data = [
     {
         "id": 1,
@@ -264,39 +348,31 @@ teachers_data = [
             "id": 4,
             "name": "ThS. Phạm Ngọc D",
             "university": "Đại học Sư phạm TP.HCM",
-            "avgRating": 4.0, 
+            "avgRating": 4.0,
             "totalReviews": 70,
             "description": "Giảng viên môn Phương pháp giảng dạy và Tâm lý học giáo dục. Cô D rất tận tâm với sinh viên, truyền đạt kiến thức một cách dễ hiểu và luôn tạo không khí học tập thoải mái.",
             "imageUrl": "/static/images/giangvien/4.jpg"
         }
-    
-
-    # ... thêm các giảng viên khác
 ]
 
-# Dữ liệu đánh giá mẫu
 reviews_data = [
     {"id": 1, "teacherId": 1, "stars": 5, "comment": "Thầy A giảng bài rất dễ hiểu...", "date": "10/05/2024", "reviewer": "Sinh viên K20"},
     {"id": 2, "teacherId": 1, "stars": 3, "comment": "Nội dung bài giảng hơi nặng...", "date": "01/03/2024", "reviewer": "Sinh viên K19"},
     {"id": 3, "teacherId": 2, "stars": 4, "comment": "Cô B rất tận tâm...", "date": "22/04/2024", "reviewer": "Sinh viên K21"},
 ]
 
-# ĐỊNH NGHĨA HÀM get_stars_html Ở ĐÂY
 def get_stars_html(rating):
-    full_stars = int(rating) # Chuyển đổi thành số nguyên
-    half_star = '&#9733;' if rating % 1 >= 0.5 else '' # Ký tự sao nửa, hoặc rỗng
+    full_stars = int(rating)
+    half_star = '&#9733;' if rating % 1 >= 0.5 else ''
     empty_stars = 5 - full_stars - (1 if half_star else 0)
     return '★' * full_stars + half_star + '☆' * empty_stars
 
-# ĐĂNG KÝ HÀM VỚI MÔI TRƯỜNG JINJA2 CỦA FLASK
 app.jinja_env.globals.update(get_stars_html=get_stars_html)
 
-# Định tuyến cho trang chủ
-@app.route('/dichvu/gv') # Nếu bạn có đường dẫn cụ thể
+@app.route('/dichvu/gv')
 def indexgv():
     return render_template('dichvu/gv/index.html', teachers=teachers_data)
 
-# Định tuyến cho trang chi tiết giảng viên
 @app.route('/teacher/<int:teacher_id>')
 def teacher_detail(teacher_id):
     teacher = next((t for t in teachers_data if t["id"] == teacher_id), None)
@@ -306,7 +382,6 @@ def teacher_detail(teacher_id):
     return "Giảng viên không tìm thấy", 404
 
 
-
 facilities_data = [
     {
         "id": 1,
@@ -314,7 +389,7 @@ facilities_data = [
         "description": "Các phòng học và giảng đường hiện đại, trang bị đầy đủ máy chiếu, điều hòa và hệ thống âm thanh tốt. Sức chứa đa dạng.",
         "avgRating": 4.5,
         "totalReviews": 90,
-        "imageUrl": "/static/images/csvc/phoc.jpg" # Đảm bảo có ảnh
+        "imageUrl": "/static/images/csvc/phoc.jpg"
     },
     {
         "id": 2,
@@ -338,7 +413,7 @@ facilities_data = [
         "description": "Ký túc xá hiện đại, an toàn với nhiều loại phòng. Có đầy đủ tiện nghi như căng tin, phòng giặt, khu vực sinh hoạt chung.",
         "avgRating": 3.9,
         "totalReviews": 110,
-        "imageUrl": "/static/images/csvc/ktx.jpg"   
+        "imageUrl": "/static/images/csvc/ktx.jpg"
     },
     {
         "id": 5,
@@ -358,7 +433,6 @@ facilities_data = [
     }
 ]
 
-# Dữ liệu đánh giá cơ sở vật chất mẫu
 facility_reviews_data = [
     {"id": 101, "facilityId": 1, "stars": 5, "comment": "Phòng học rất mới và sạch sẽ, có điều hòa mát mẻ, học rất thoải mái.", "date": "05/06/2025", "reviewer": "SV K23"},
     {"id": 102, "facilityId": 1, "stars": 4, "comment": "Giảng đường lớn nhưng đôi khi loa hơi rè một chút. Tổng thể vẫn ổn.", "date": "01/06/2025", "reviewer": "SV K22"},
@@ -369,12 +443,6 @@ facility_reviews_data = [
     {"id": 107, "facilityId": 6, "stars": 5, "comment": "Sân thể thao đa dạng, sạch đẹp. Rất thích không gian này để tập luyện.", "date": "09/06/2025", "reviewer": "SV K24"},
 ]
 
-# ... (định nghĩa hàm get_stars_html và đăng ký Jinja2 globals) ...
-
-# --- Định tuyến các trang khác của bạn (giữ nguyên) ---
-# ... (các route hiện có) ...
-
-# --- ĐỊNH TUYẾN MỚI CHO CHỨC NĂNG ĐÁNH GIÁ CƠ SỞ VẬT CHẤT ---
 @app.route('/dichvu/cosovatchat')
 def facility_index():
     return render_template('dichvu/csvc/index.html', facilities=facilities_data)
@@ -387,7 +455,6 @@ def facility_detail(facility_id):
         return render_template('dichvu/csvc/facility_detail.html', facility=facility, reviews=current_facility_reviews)
     return "Hạng mục cơ sở vật chất không tìm thấy", 404
 
-# --- API Endpoint để gửi đánh giá cơ sở vật chất (placeholder) ---
 @app.route('/api/facility/<int:facility_id>/reviews', methods=['POST'])
 def add_facility_review(facility_id):
     if request.is_json:
@@ -398,12 +465,7 @@ def add_facility_review(facility_id):
         if not all([stars, comment]):
             return {"error": "Missing data"}, 400
 
-        # In thực tế, bạn sẽ lưu đánh giá này vào database
         print(f"Received review for facility {facility_id}: Stars={stars}, Comment='{comment}'")
-        # facility_reviews_data.append({"id": len(facility_reviews_data) + 1, "facilityId": facility_id,
-        #                               "stars": stars, "comment": comment,
-        #                               "date": "Hôm nay", "reviewer": "Bạn"})
-        # Cần logic tính toán lại avgRating và totalReviews cho facility_id
 
         return {"message": "Đánh giá cơ sở vật chất đã được tiếp nhận (chưa lưu vào DB)", "review": {"stars": stars, "comment": comment}}, 201
     return {"error": "Request must be JSON"}, 400
@@ -435,17 +497,22 @@ def study_home():
 
 @app.route('/hoc-tap/nganh/<major_id>')
 def major_detail_page(major_id):
-    # Trong ứng dụng thực, bạn sẽ dùng major_id để lấy dữ liệu từ DB
-    return render_template('hoctap/major_detail.html', major_id=major_id) # Truyền major_id nếu cần ở backend
+    return render_template('hoctap/major_detail.html', major_id=major_id)
 
 @app.route('/hoc-tap/mon-hoc/<course_id>')
 def course_detail_page(course_id):
-    # Trong ứng dụng thực, bạn sẽ dùng course_id để lấy dữ liệu từ DB
-    return render_template('hoctap/course_detail.html', course_id=course_id) # Truyền course_id nếu cần ở backend
-
-
-
+    return render_template('hoctap/course_detail.html', course_id=course_id)
 
 
 if __name__ == '__main__':
+    # Khởi tạo file visitor_count.json nếu chưa có
+    if not os.path.exists(VISITOR_COUNT_FILE):
+        # Tạo dữ liệu ban đầu với ngày hiện tại và số đếm 0
+        initial_data = {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
+        with open(VISITOR_COUNT_FILE, 'w') as f:
+            json.dump(initial_data, f)
+    # Khởi tạo file active_users.json nếu chưa có
+    if not os.path.exists(ACTIVE_USERS_FILE):
+        with open(ACTIVE_USERS_FILE, 'w') as f:
+            json.dump({}, f)
     app.run(debug=True)

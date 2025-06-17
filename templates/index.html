@@ -3,6 +3,92 @@
 {% block title %}Trang Chủ - Website Trường Cao Đẳng Sài Gòn Gia Định{% endblock %}
 
 {% block content %}
+<style>
+    /* Phần chứa cả hai bộ đếm - Ghim vào góc màn hình */
+    .counters-container {
+        position: fixed; /* Ghim vào vị trí cố định trên màn hình */
+        bottom: 20px;    /* Cách đáy 20px */
+        right: 20px;     /* Cách lề phải 20px */
+        display: flex;   /* Sắp xếp các mục con */
+        flex-direction: column; /* Xếp chồng các bộ đếm lên nhau (tạo 2 dòng tổng) */
+        gap: 8px;        /* Khoảng cách nhỏ giữa các bộ đếm */
+        padding: 10px;   /* Khoảng đệm tổng thể */
+        background-color: rgba(255, 255, 255, 0.95); /* Nền trắng hơi trong suốt, rõ hơn */
+        border-radius: 8px; /* Góc bo tròn */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng rõ hơn */
+        z-index: 1000;   /* Đảm bảo nó luôn nằm trên cùng */
+        /*max-width: 180px; */ /* Bỏ max-width để nó tự co giãn theo nội dung đủ chỗ 2 dòng */
+        border: 1px solid #e0e0e0; /* Viền mỏng */
+    }
+
+    /* Mỗi phần bộ đếm riêng lẻ */
+    .counter-section {
+        background-color: #ffffff; /* Nền trắng */
+        border-radius: 6px; /* Góc bo tròn nhỏ hơn */
+        padding: 6px 12px; /* Giảm khoảng đệm cho nhỏ gọn hơn */
+        transition: transform 0.2s ease-in-out; /* Hiệu ứng khi di chuột */
+        line-height: 1.2; /* Tối ưu khoảng cách dòng */
+
+        /* <-- ĐÃ SỬA ĐỔI: Dùng Flexbox để đưa tiêu đề và số lên cùng một dòng */
+        display: flex;
+        /* justify-content: space-between;  */
+        /* Đẩy tiêu đề và số về hai phía */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        white-space: nowrap; /* Ngăn không cho nội dung bên trong xuống dòng */
+    }
+
+    .counter-section:hover {
+        transform: translateY(-3px); /* Nâng nhẹ lên khi di chuột vào */
+    }
+
+    /* Tiêu đề của bộ đếm (Ví dụ: "Truy cập hôm nay:") */
+    .counter-section p {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 0.9em; /* Kích thước chữ vừa phải */
+        color: #666; /* Màu chữ xám đậm hơn */
+        margin: 0; /* <-- ĐÃ SỬA ĐỔI: Bỏ tất cả margin mặc định */
+        padding-right: 8px; /* Khoảng cách giữa chữ và số */
+        font-weight: 500;
+    }
+
+    /* Giá trị của bộ đếm tổng lượt truy cập và online */
+    .counter-value, .online-value {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.6em; /* Kích thước số */
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        margin: 0; /* <-- ĐÃ SỬA ĐỔI: Bỏ tất cả margin mặc định */
+    }
+
+    /* Màu sắc cụ thể cho từng loại */
+    .counter-value {
+        color: #007bff; /* Màu xanh dương */
+    }
+
+    .online-value {
+        color: #28a745; /* Màu xanh lá cây */
+    }
+
+    /* Responsive adjustments - Thích ứng trên màn hình nhỏ hơn */
+    @media (max-width: 600px) {
+        .counters-container {
+            bottom: 10px; /* Cách đáy 10px trên di động */
+            right: 10px;  /* Cách lề phải 10px trên di động */
+            padding: 6px; /* Giảm padding tổng thể */
+            gap: 5px;     /* Giảm khoảng cách giữa các mục */
+        }
+        .counter-section {
+            padding: 5px 10px; /* Giảm padding từng mục */
+        }
+        .counter-section p {
+            font-size: 0.85em; /* Chữ nhỏ hơn một chút */
+        }
+        .counter-value, .online-value {
+            font-size: 1.4em; /* Số nhỏ hơn một chút */
+        }
+    }
+</style>
+
 <div class="banner-slider">
     <div class="slides">
         <div class="slide">
@@ -658,6 +744,34 @@
 {% include 'clb.html' %}
 {% include 'sv.html' %}
 {% include 'sansang.html' %}
+
+        <div class="counter-section">
+            <p>Tổng số lượt truy cập :</p>
+            <div class="counter-value" id="totalVisitors">Đang tải...</div>
+        </div>
+        <div class="counter-section">
+            <p>Số người đang online:</p>
+            <div class="online-value" id="onlineUsers">Đang tải...</div>
+        </div>
+    </div>
+
+    <script>
+        function updateCounts() {
+            fetch('/get_counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalVisitors').innerText = data.total_visitors;
+                    document.getElementById('onlineUsers').innerText = data.online_users;
+                })
+                .catch(error => console.error('Lỗi khi lấy số liệu:', error));
+        }
+
+        // Cập nhật ngay khi tải trang
+        updateCounts();
+
+        // Cập nhật sau mỗi 10 giây để giữ số người online được cập nhật
+        setInterval(updateCounts, 10000); // 10000ms = 10 giây
+    </script>
 {% endblock %}
 
 {% block scripts %}
