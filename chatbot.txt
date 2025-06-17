@@ -1,0 +1,265 @@
+# Chủ đề: Chào hỏi và tương tác mở đầu
+hi::Chào bạn! Tôi có thể hỗ trợ gì cho bạn hôm nay?
+xin chào::Xin chào! Tôi có thể giúp bạn tìm thông tin về Cao đẳng Sài Gòn Gia Định không?
+chào bạn::Chào bạn! Rất vui được trò chuyện. Bạn đang muốn tìm hiểu điều gì về trường mình?
+hello::Hello! Tôi là chatbot của Cao đẳng Sài Gòn Gia Định. Bạn cần thông tin gì vậy?
+chao ban::Chào bạn! Tôi ở đây để giải đáp mọi thắc mắc của bạn về trường.
+có ai không::Chào bạn! Tôi là trợ lý ảo của Cao đẳng Sài Gòn Gia Định. Tôi có thể hỗ trợ bạn ngay đây.
+bạn có đó không::Tôi luôn sẵn sàng phục vụ! Bạn muốn tìm hiểu gì về trường?
+alo::Alo! Tôi nghe rõ đây. Bạn cần tôi giúp gì?
+có thể giúp gì::Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
+bạn có thể giúp tôi không::Chào bạn! Chắc chắn rồi, tôi có thể giúp bạn tìm kiếm thông tin về Cao đẳng Sài Gòn Gia Định. Bạn muốn hỏi gì?
+tôi muốn hỏi::Bạn cứ hỏi đi nhé! Tôi sẵn sàng giải đáp.
+tôi cần giúp đỡ::Đừng ngần ngại! Hãy cho tôi biết điều bạn cần giúp đỡ về Cao đẳng Sài Gòn Gia Định nhé.
+tôi có câu hỏi::Tuyệt vời! Hãy cho tôi biết câu hỏi của bạn.
+bạn khỏe không::Tôi là một chương trình máy tính, nên tôi luôn trong trạng thái tốt nhất để hỗ trợ bạn! Cảm ơn bạn đã hỏi.
+bạn có rảnh không::Tôi luôn sẵn sàng để hỗ trợ bạn 24/7. Bạn cứ hỏi nhé!
+có ai ở đó không::Chào bạn! Tôi là chatbot của trường. Bạn cần tôi hỗ trợ thông tin gì?
+tôi có thể nói chuyện với bạn không::Chắc chắn rồi! Tôi luôn sẵn lòng trò chuyện và cung cấp thông tin cho bạn.
+bạn đang làm gì::Tôi đang chờ để hỗ trợ bạn đây! Bạn có câu hỏi nào không?
+bạn online không::Tôi luôn online để hỗ trợ bạn bất cứ lúc nào.
+
+# Chủ đề: Thông tin chung về trường
+tên bạn là gì::Tôi là Chatbot hỗ trợ của Cao đẳng Sài Gòn Gia Định, được lập trình để cung cấp thông tin và giải đáp thắc mắc cho bạn.
+bạn là ai::Tôi là trợ lý ảo của Cao đẳng Sài Gòn Gia Định, rất vui được hỗ trợ bạn.
+bạn làm được gì::Tôi có thể cung cấp thông tin về 5 khoa, 18 ngành đào tạo, tuyển sinh, học phí, cơ sở vật chất, hoạt động sinh viên và nhiều thông tin khác về trường. Bạn muốn tìm hiểu gì?
+chào bạn::Chào bạn! Tôi có thể hỗ trợ bạn những thông tin gì về Cao đẳng Sài Gòn Gia Định hôm nay?
+xin chào::Xin chào! Tôi có thể giúp gì cho bạn?
+trường mình tên gì::Trường chúng tôi là  Cao đẳng Sài Gòn Gia Định .
+địa chỉ trường::Cao đẳng Sài Gòn Gia Định có 3 cơ sở chính:
+-  Cơ sở 1 (Cơ sở học chính): 514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM 
+- Cơ sở 2: 173-173A-173B, Hiền Vương, P.Phú Thạnh, Q. Tân Phú, TP.HCM
+- Cơ sở 3: 390/61 Hà Huy Giáp, P. Thạnh Lộc, Q.12, TP.HCM
+Bạn muốn biết địa chỉ cụ thể của cơ sở nào?
+trường ở đâu::Trường Cao đẳng Sài Gòn Gia Định có 3 cơ sở tại Quận Gò Vấp, Quận Tân Phú và Quận 12. Cơ sở chính là  514 Lê Quang Định, Gò Vấp .
+giới thiệu về trường::Cao đẳng Sài Gòn Gia Định là một trong những cơ sở giáo dục uy tín tại TP.HCM, đào tạo đa ngành với  5 khoa và 18 ngành nghề , mục tiêu cung cấp nguồn nhân lực chất lượng cao cho xã hội. Trường chú trọng thực hành, ứng dụng và liên kết chặt chẽ với doanh nghiệp.
+lịch sử trường::Để tìm hiểu lịch sử hình thành và phát triển của trường, bạn có thể truy cập mục 'Giới thiệu' trên website chính thức  www.sgc.edu.vn .
+tầm nhìn sứ mệnh::Tầm nhìn của trường là trở thành một trong những cơ sở đào tạo hàng đầu, cung cấp nguồn nhân lực chất lượng cao, hội nhập quốc tế. Sứ mệnh là đào tạo toàn diện, phát triển năng lực cá nhân và đóng góp vào sự phát triển kinh tế - xã hội.
+mục tiêu của trường::Mục tiêu của trường là không ngừng nâng cao chất lượng đào tạo, đa dạng hóa ngành nghề, tăng cường hợp tác doanh nghiệp và quốc tế, đảm bảo sinh viên ra trường có việc làm và phát triển bền vững.
+giá trị cốt lõi::Các giá trị cốt lõi của trường bao gồm:  Chất lượng, Sáng tạo, Hội nhập, Tận tâm và Trách nhiệm .
+ban giám hiệu::Thông tin về Ban Giám hiệu và các cán bộ lãnh đạo trường được cập nhật đầy đủ trên website chính thức của trường tại mục 'Giới thiệu' hoặc 'Cơ cấu tổ chức'.
+cơ cấu tổ chức::Bạn có thể xem chi tiết cơ cấu tổ chức của trường tại  www.sgc.edu.vn  trong phần 'Giới thiệu'.
+slogan của trường::Hiện tại tôi chưa có thông tin cụ thể về slogan của trường, bạn có thể kiểm tra trên website hoặc các tài liệu quảng bá của trường.
+thời gian làm việc::Thời gian làm việc của các phòng ban hành chính thường là từ Thứ Hai đến Thứ Sáu, Sáng: 7h30 - 11h30, Chiều: 13h30 - 17h00. Riêng phòng Tuyển sinh có thể làm việc cả thứ Bảy và Chủ Nhật trong mùa tuyển sinh.
+giờ làm việc::Giờ làm việc của trường là từ 7h30 sáng đến 5h chiều các ngày trong tuần (trừ thứ 7, chủ nhật và ngày lễ).
+có làm việc thứ 7 không::Một số phòng ban như Tuyển sinh có thể làm việc vào sáng thứ 7 trong mùa cao điểm. Các phòng ban hành chính khác thường nghỉ vào thứ 7 và chủ nhật.
+số điện thoại trường::Bạn có thể liên hệ trường qua số điện thoại:  028 3588 5558 .
+email trường::Email liên hệ chung của trường là:  tuyensinhsaigongiadinh@gmail.com .
+website trường::Bạn có thể truy cập website chính thức của trường tại  www.sgc.edu.vn .
+fanpage trường::Fanpage chính thức của trường trên Facebook là  Cao Đẳng Sài Gòn Gia Định .
+trường có wifi không::Trường có hệ thống wifi phủ sóng khắp các khu vực học tập và làm việc để sinh viên và cán bộ sử dụng.
+có căng tin không::Có, trường có căng tin và nhiều khu vực ăn uống với đa dạng món ăn, đảm bảo vệ sinh an toàn thực phẩm.
+có chỗ gửi xe không::Có, trường có bãi giữ xe rộng rãi và an toàn tại các cơ sở cho sinh viên và khách đến làm việc.
+trường có câu lạc bộ không::Trường có rất nhiều câu lạc bộ học thuật, văn hóa, văn nghệ, thể thao, tình nguyện... để sinh viên tham gia và phát triển kỹ năng.
+danh sách câu lạc bộ::Bạn có thể tìm danh sách và thông tin chi tiết về các câu lạc bộ tại trang 'Hoạt động sinh viên' trên website trường hoặc liên hệ phòng Công tác sinh viên.
+
+# Chủ đề: Địa chỉ cơ sở
+cơ sở chính ở đâu::Cơ sở học chính của trường là tại  514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM .
+địa chỉ cơ sở gò vấp::Cơ sở Gò Vấp nằm tại  514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM . Đây là cơ sở học chính của trường.
+cơ sở tân phú ở đâu::Cơ sở Tân Phú của trường đặt tại  173-173A-173B, Hiền Vương, P.Phú Thạnh, Q. Tân Phú, TP.HCM .
+địa chỉ cơ sở tân phú::Địa chỉ cơ sở Tân Phú là  173-173A-173B, Hiền Vương, P.Phú Thạnh, Q. Tân Phú, TP.HCM .
+cơ sở quận 12 ở đâu::Cơ sở Quận 12 của trường nằm tại  390/61 Hà Huy Giáp, P. Thạnh Lộc, Q.12, TP.HCM .
+địa chỉ cơ sở quận 12::Địa chỉ cơ sở Quận 12 là  390/61 Hà Huy Giáp, P. Thạnh Lộc, Q.12, TP.HCM .
+học ở cơ sở nào::Sinh viên sẽ học tại cơ sở chính ở  514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM . Các cơ sở khác có thể được sử dụng cho một số hoạt động thực hành hoặc các chương trình đặc biệt.
+cơ sở lê quang định::Cơ sở Lê Quang Định là cơ sở học chính của trường, địa chỉ  514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM .
+cơ sở hiền vương::Cơ sở Hiền Vương nằm ở Quận Tân Phú, địa chỉ  173-173A-173B, Hiền Vương, P.Phú Thạnh, Q. Tân Phú, TP.HCM .
+cơ sở hà huy giáp::Cơ sở Hà Huy Giáp nằm ở Quận 12, địa chỉ  390/61 Hà Huy Giáp, P. Thạnh Lộc, Q.12, TP.HCM .
+
+# Chủ đề: Tuyển sinh
+thông tin tuyển sinh::Để biết thông tin tuyển sinh mới nhất về các kỳ xét tuyển, điều kiện và hồ sơ, bạn vui lòng truy cập mục 'Tuyển sinh' trên website của trường tại  www.sgc.edu.vn/admission  hoặc liên hệ trực tiếp phòng Tuyển sinh qua hotline  028 3588 5558 .
+tuyển sinh năm 2024::Thông tin tuyển sinh năm 2024 đã được cập nhật trên website của trường. Bạn có thể xem chi tiết về các ngành, chỉ tiêu và phương thức xét tuyển tại  www.sgc.edu.vn/admission .
+khi nào có kết quả tuyển sinh::Thời gian công bố kết quả tuyển sinh sẽ được thông báo cụ thể trên website  www.sgc.edu.vn  và fanpage  Cao Đẳng Sài Gòn Gia Định  sau khi kỳ thi/xét tuyển kết thúc.
+điều kiện xét tuyển::Điều kiện xét tuyển chung là tốt nghiệp THPT hoặc tương đương. Tùy từng ngành và phương thức xét tuyển mà sẽ có các điều kiện cụ thể về điểm số hoặc môn học. Vui lòng xem chi tiết trên website.
+điểm chuẩn::Điểm chuẩn của các ngành có thể thay đổi theo từng năm và phương thức xét tuyển. Để có thông tin chính xác nhất, bạn vui lòng tham khảo trang tuyển sinh chính thức của trường tại  www.sgc.edu.vn/admission  hoặc liên hệ phòng tuyển sinh.
+hồ sơ nhập học::Hồ sơ nhập học bao gồm: Bằng tốt nghiệp THPT hoặc Giấy chứng nhận tốt nghiệp tạm thời, học bạ, căn cước công dân, ảnh 3x4, và các giấy tờ ưu tiên (nếu có). Chi tiết hơn có trên website tuyển sinh.
+thời gian nộp hồ sơ::Thời gian nộp hồ sơ được công bố rõ ràng trên thông báo tuyển sinh hàng năm tại  www.sgc.edu.vn/admission . Vui lòng theo dõi để không bỏ lỡ.
+các phương thức xét tuyển::Trường có các phương thức xét tuyển chính như: xét tuyển theo kết quả thi THPT Quốc gia, xét học bạ THPT (điểm trung bình lớp 10, 11, 12 hoặc điểm trung bình cả năm lớp 12), và xét tuyển thẳng (đối tượng ưu tiên).
+có tuyển sinh liên thông không::Có, trường có tuyển sinh liên thông từ Cao đẳng lên Đại học và từ Trung cấp lên Cao đẳng. Để biết thêm chi tiết, bạn vui lòng truy cập  www.sgc.edu.vn/lien-thong-van-bang-2-cao-dang  hoặc  www.sgc.edu.vn/lien-thong-van-bang-2-dai-hoc .
+tuyển sinh ngành nào::Trường tuyển sinh  18 ngành  thuộc 5 khoa chính. Để xem danh sách đầy đủ, bạn có thể truy cập mục 'Ngành Đào tạo' hoặc 'Tuyển sinh' trên website trường tại  www.sgc.edu.vn/admission .
+hướng dẫn nộp hồ sơ online::Bạn có thể đăng ký xét tuyển trực tuyến tại  www.sgc.edu.vn/dangki . Vui lòng truy cập đường link để được hướng dẫn chi tiết.
+lệ phí xét tuyển::Bạn vui lòng truy cập trang tuyển sinh  www.sgc.edu.vn/admission  để biết thông tin chi tiết về lệ phí xét tuyển của năm nay.
+chính sách ưu tiên tuyển sinh::Trường áp dụng các chính sách ưu tiên tuyển sinh theo quy định của Bộ Giáo dục và Đào tạo, bao gồm đối tượng ưu tiên và khu vực ưu tiên.
+có tổ chức thi tuyển không::Trường chủ yếu xét tuyển dựa trên kết quả học tập THPT hoặc thi THPT Quốc gia, không tổ chức thi tuyển riêng.
+tuyển sinh quốc tế::Hiện tại trường chưa có chương trình tuyển sinh quốc tế riêng biệt.
+khối xét tuyển::Mỗi ngành sẽ có các tổ hợp khối xét tuyển khác nhau. Bạn có thể tra cứu thông tin này trong đề án tuyển sinh hoặc trang tuyển sinh của trường tại  www.sgc.edu.vn/admission .
+kỳ thi đánh giá năng lực::Hiện tại trường chưa áp dụng kỳ thi đánh giá năng lực riêng. Các phương thức xét tuyển chính là học bạ và điểm thi THPT Quốc gia.
+ngành nào có tuyển::Bạn muốn hỏi về nhóm ngành hay một ngành cụ thể? Trường có 18 ngành thuộc 5 khoa.
+thông báo tuyển sinh::Các thông báo tuyển sinh mới nhất được đăng tải trên website  www.sgc.edu.vn/tintuctuyensinh .
+liên hệ tuyển sinh::Bạn có thể liên hệ phòng Tuyển sinh qua số điện thoại  028 3588 5558  hoặc email  tuyensinhsaigongiadinh@gmail.com .
+đăng ký xét tuyển::Để đăng ký xét tuyển, bạn có thể truy cập  www.sgc.edu.vn/dangki .
+xét học bạ::Phương thức xét học bạ của trường dựa trên điểm trung bình lớp 10, 11, 12 hoặc điểm trung bình cả năm lớp 12. Chi tiết về cách tính điểm và ngưỡng điểm sẽ có trong thông báo tuyển sinh.
+xét điểm thi thpt::Trường sử dụng kết quả thi THPT Quốc gia để xét tuyển cho các ngành.
+thời gian nhập học::Thời gian nhập học sẽ được thông báo cùng với kết quả tuyển sinh.
+
+# Chủ đề: Học phí và Học bổng
+học phí::Thông tin chi tiết về học phí và các khoản thanh toán có trên trang web chính thức của trường tại  www.sgc.edu.vn/hoc-bong  hoặc liên hệ phòng Kế hoạch - Tài chính.
+mức học phí::Mức học phí trung bình của các ngành tùy thuộc vào số tín chỉ và ngành học. Chi tiết bạn xem tại  www.sgc.edu.vn/hoc-bong .
+khi nào đóng học phí::Học phí thường được đóng vào đầu mỗi học kỳ. Lịch đóng cụ thể sẽ được thông báo qua cổng thông tin sinh viên và email sinh viên.
+chính sách miễn giảm học phí::Trường có các chính sách miễn, giảm học phí cho sinh viên thuộc diện chính sách xã hội, gia đình khó khăn theo quy định của nhà nước và của trường. Đặc biệt,  nhiều ngành được ưu đãi học phí 100% theo Nghị định 81  của Chính phủ. Bạn vui lòng liên hệ phòng Công tác sinh viên hoặc xem tại  www.sgc.edu.vn/hoc-bong  để biết thêm chi tiết.
+ưu đãi học phí::Có, trường có nhiều ngành được  ưu đãi học phí 100% theo Nghị định 81  của Chính phủ. Bạn nên tìm hiểu kỹ thông tin này trên website  www.sgc.edu.vn/hoc-bong  hoặc liên hệ phòng tuyển sinh để biết ngành nào áp dụng.
+học bổng::Trường có các chương trình  học bổng khuyến khích học tập , học bổng doanh nghiệp, và học bổng hỗ trợ sinh viên khó khăn. Thông tin chi tiết được cập nhật định kỳ tại  www.sgc.edu.vn/hoc-bong .
+vay vốn sinh viên::Sinh viên có thể làm hồ sơ vay vốn ngân hàng chính sách xã hội. Phòng Công tác sinh viên sẽ hướng dẫn bạn các thủ tục cần thiết.
+cách đóng học phí::Bạn có thể đóng học phí qua chuyển khoản ngân hàng hoặc đóng tiền mặt tại phòng Kế hoạch - Tài chính của trường. Thông tin tài khoản sẽ được cung cấp khi làm thủ tục nhập học hoặc trên cổng thông tin sinh viên.
+phí phát sinh khác::Ngoài học phí, có thể có các khoản phí phát sinh như phí bảo hiểm y tế, phí thẻ sinh viên, phí giáo trình (tùy chọn), v.v.
+hoàn học phí::Chính sách hoàn học phí được áp dụng theo quy định của trường trong các trường hợp đặc biệt. Bạn nên liên hệ phòng Kế hoạch - Tài chính để được tư vấn cụ thể.
+học phí ngành dược::Bạn có thể tìm mức học phí cụ thể cho ngành Dược tại trang  www.sgc.edu.vn/hoc-bong .
+học phí ngành điều dưỡng::Mức học phí ngành Điều dưỡng được niêm yết công khai trên website trường tại  www.sgc.edu.vn/hoc-bong .
+học phí công nghệ thông tin::Thông tin học phí của ngành Công nghệ thông tin có tại  www.sgc.edu.vn/hoc-bong .
+chính sách 81::Nghị định 81 có chính sách hỗ trợ học phí cho một số ngành đặc thù, trong đó có một số ngành của trường. Sinh viên theo học các ngành này có thể được miễn giảm 100% học phí nếu đủ điều kiện. Bạn tham khảo tại  www.sgc.edu.vn/hoc-bong .
+giảm học phí::Trường có chính sách giảm học phí cho các đối tượng ưu tiên và có các ngành được miễn giảm 100% theo Nghị định 81.
+
+# Chủ đề: Các Khoa và Ngành học (Chi tiết)
+các khoa của trường::Trường Cao đẳng Sài Gòn Gia Định có  5 khoa  chính:
+1.   Khoa Kinh tế - Tài chính 
+2.   Khoa Thú y - Chăn nuôi 
+3.   Khoa Công nghệ - Kỹ thuật 
+4.   Khoa Y - Dược 
+5.   Khoa Xã hội - Du lịch - Pháp luật 
+bạn có bao nhiêu khoa::Trường có 5 khoa.
+bao nhiêu ngành::Trường hiện đào tạo  18 ngành  chính thức.
+tất cả các ngành học::Trường có 18 ngành thuộc 5 khoa:
+-  Khoa Kinh tế - Tài chính:  Kế toán Doanh nghiệp, Quản trị Kinh doanh, Tài chính - Ngân hàng, Thương mại Điện tử, Logistics.
+-  Khoa Thú y - Chăn nuôi:  Thú y.
+-  Khoa Công nghệ - Kỹ thuật:  Công nghệ thông tin (Quản trị Cơ sở dữ liệu, Thiết kế Đồ họa, Lập trình Máy tính), Công nghệ Ô tô, Công nghệ Thực phẩm.
+-  Khoa Y - Dược:  Dược, Điều dưỡng, Y sĩ Đa khoa, Kỹ thuật Phục hình Răng (Răng - Hàm - Mặt), Kỹ thuật Phục hồi Chức năng (Vật lý trị liệu & Phục hồi chức năng), Y học Cổ truyền.
+-  Khoa Xã hội - Du lịch - Pháp luật:  Du lịch, Ngôn ngữ Anh, Luật - Dịch vụ Pháp lý.
+Bạn quan tâm đến nhóm ngành nào?
+
+---
+### Khoa Kinh tế - Tài chính
+khoa kinh tế tài chính gồm những ngành nào::Khoa Kinh tế - Tài chính của trường đào tạo các ngành:  Kế toán Doanh nghiệp, Quản trị Kinh doanh, Tài chính - Ngân hàng, Thương mại Điện tử, và Logistics .
+ngành kế toán::Ngành Kế toán Doanh nghiệp trang bị kiến thức chuyên sâu về nghiệp vụ kế toán, kiểm toán, phân tích tài chính trong các loại hình doanh nghiệp.
+học kế toán ra làm gì::Học Kế toán Doanh nghiệp bạn có thể làm kế toán tổng hợp, kế toán viên, kiểm toán viên, chuyên viên phân tích tài chính, thủ quỹ... tại các doanh nghiệp, ngân hàng, cơ quan nhà nước.
+cơ hội việc làm ngành kế toán::Cơ hội việc làm cho ngành Kế toán luôn rộng mở, đặc biệt trong bối cảnh các doanh nghiệp cần quản lý tài chính chặt chẽ.
+ngành quản trị kinh doanh::Ngành Quản trị Kinh doanh trang bị kiến thức về quản lý, marketing, tài chính, nhân sự, giúp sinh viên có thể làm việc ở nhiều vị trí trong các doanh nghiệp.
+quản trị kinh doanh làm gì::Với bằng Quản trị Kinh doanh, bạn có thể làm quản lý dự án, chuyên viên marketing, chuyên viên nhân sự, quản lý sản xuất, hoặc tự khởi nghiệp.
+ngành tài chính ngân hàng::Ngành Tài chính - Ngân hàng đào tạo kiến thức về tài chính doanh nghiệp, thị trường chứng khoán, ngân hàng, bảo hiểm, đầu tư.
+học tài chính ngân hàng ra làm gì::Tốt nghiệp ngành Tài chính - Ngân hàng, bạn có thể làm chuyên viên tín dụng, giao dịch viên, tư vấn tài chính, chuyên viên phân tích đầu tư tại ngân hàng, công ty chứng khoán, quỹ đầu tư.
+ngành thương mại điện tử::Ngành Thương mại Điện tử đào tạo kiến thức về kinh doanh trực tuyến, marketing số, quản lý website, logistics cho thương mại điện tử.
+học thương mại điện tử làm gì::Học Thương mại Điện tử bạn có thể làm chuyên viên marketing online, quản lý sàn thương mại điện tử, quản lý dự án e-commerce, chuyên viên logistics e-commerce.
+ngành logistics::Ngành Logistics đào tạo về quản lý chuỗi cung ứng, kho bãi, vận tải, xuất nhập khẩu, tối ưu hóa dòng chảy hàng hóa.
+học logistics ra làm gì::Sinh viên Logistics có thể làm chuyên viên xuất nhập khẩu, quản lý kho, điều phối vận tải, quản lý chuỗi cung ứng tại các công ty logistics, sản xuất, thương mại.
+
+---
+### Khoa Thú y - Chăn nuôi
+khoa thú y chăn nuôi::Khoa Thú y - Chăn nuôi của trường đào tạo ngành  Thú y .
+ngành thú y::Ngành Thú y đào tạo kiến thức và kỹ năng chăm sóc, phòng bệnh, chữa bệnh cho động vật, quản lý trang trại chăn nuôi, kiểm dịch động vật.
+học thú y làm gì::Học Thú y bạn có thể làm bác sĩ thú y tại phòng khám, bệnh viện thú y, chuyên viên dinh dưỡng vật nuôi, quản lý trang trại, kiểm dịch viên, nghiên cứu viên.
+cơ hội việc làm ngành thú y::Ngành Thú y có nhu cầu cao trong bối cảnh phát triển chăn nuôi và thú cưng ngày càng phổ biến.
+
+---
+### Khoa Công nghệ - Kỹ thuật
+khoa công nghệ kỹ thuật::Khoa Công nghệ - Kỹ thuật đào tạo các ngành:  Công nghệ thông tin (với các chuyên ngành: Quản trị Cơ sở dữ liệu, Thiết kế Đồ họa, Lập trình Máy tính), Công nghệ Ô tô, và Công nghệ Thực phẩm .
+ngành công nghệ thông tin::Ngành Công nghệ thông tin của trường đào tạo 3 chuyên ngành chính:  Quản trị Cơ sở dữ liệu, Thiết kế Đồ họa, và Lập trình Máy tính .
+cntt::Ngành Công nghệ thông tin của trường đào tạo 3 chuyên ngành chính: Quản trị Cơ sở dữ liệu, Thiết kế Đồ họa, và Lập trình Máy tính.
+học cntt làm gì::Tùy thuộc chuyên ngành bạn chọn, bạn có thể trở thành Quản trị viên cơ sở dữ liệu, Lập trình viên (web, mobile, phần mềm), Chuyên viên thiết kế đồ họa, hoặc chuyên gia an ninh mạng.
+chuyên ngành công nghệ thông tin::Ngành Công nghệ thông tin có 3 chuyên ngành: Quản trị Cơ sở dữ liệu, Thiết kế Đồ họa, Lập trình Máy tính.
+quản trị cơ sở dữ liệu::Chuyên ngành Quản trị Cơ sở dữ liệu đào tạo về thiết kế, triển khai, quản lý và bảo mật các hệ thống cơ sở dữ liệu lớn.
+thiết kế đồ họa::Chuyên ngành Thiết kế Đồ họa phát triển khả năng sáng tạo, sử dụng các phần mềm thiết kế chuyên nghiệp (Photoshop, Illustrator, InDesign...), tạo ra sản phẩm đồ họa đa dạng (logo, banner, ấn phẩm, giao diện web/app).
+lập trình máy tính::Chuyên ngành Lập trình Máy tính tập trung vào việc xây dựng phần mềm, ứng dụng (web, mobile, desktop) bằng các ngôn ngữ lập trình phổ biến.
+ngành công nghệ ô tô::Ngành Công nghệ Ô tô đào tạo kiến thức về cấu tạo, nguyên lý hoạt động, sửa chữa, bảo dưỡng và quản lý kỹ thuật ô tô hiện đại.
+học công nghệ ô tô làm gì::Học Công nghệ Ô tô bạn có thể làm kỹ sư, kỹ thuật viên bảo dưỡng, sửa chữa ô tô, chuyên viên thiết kế, lắp ráp, hoặc kinh doanh phụ tùng ô tô.
+ngành công nghệ thực phẩm::Ngành Công nghệ Thực phẩm đào tạo kiến thức về chế biến, bảo quản, kiểm soát chất lượng thực phẩm, phát triển sản phẩm mới và quản lý dây chuyền sản xuất.
+học công nghệ thực phẩm ra làm gì::Sinh viên Công nghệ Thực phẩm có thể làm chuyên viên kiểm soát chất lượng (QC), nghiên cứu phát triển sản phẩm (R&D), quản lý sản xuất, hoặc kinh doanh thực phẩm.
+
+---
+### Khoa Y - Dược
+khoa y dược gồm những ngành nào::Khoa Y - Dược của trường đào tạo các ngành:  Dược, Điều dưỡng, Y sĩ Đa khoa, Kỹ thuật Phục hình Răng (Răng - Hàm - Mặt), Kỹ thuật Phục hồi Chức năng (Vật lý trị liệu & Phục hồi chức năng), và Y học Cổ truyền .
+ngành dược::Ngành Dược cung cấp kiến thức về dược lý, bào chế thuốc, quản lý nhà thuốc, kiểm nghiệm thuốc và tư vấn sử dụng thuốc an toàn.
+học dược làm gì::Học Dược bạn có thể làm dược sĩ tại nhà thuốc, bệnh viện, công ty dược phẩm (sản xuất, kinh doanh), hoặc nghiên cứu dược phẩm.
+ngành điều dưỡng::Ngành Điều dưỡng đào tạo các điều dưỡng viên chuyên nghiệp, có kiến thức y khoa vững chắc và kỹ năng chăm sóc sức khỏe toàn diện cho bệnh nhân.
+học điều dưỡng ra làm gì::Tốt nghiệp Điều dưỡng, bạn có thể làm điều dưỡng viên tại bệnh viện, phòng khám, trung tâm y tế, viện dưỡng lão, hoặc chăm sóc sức khỏe tại nhà.
+ngành y sĩ đa khoa::Ngành Y sĩ Đa khoa đào tạo các y sĩ có khả năng khám, chữa bệnh thông thường, sơ cứu, cấp cứu ban đầu và tham gia công tác y tế cộng đồng.
+học y sĩ đa khoa làm gì::Y sĩ Đa khoa có thể làm việc tại trạm y tế xã/phường, phòng khám tư nhân, cơ sở y tế dự phòng, hoặc hỗ trợ bác sĩ tại bệnh viện.
+ngành kỹ thuật phục hình răng::Ngành Kỹ thuật Phục hình Răng (Răng - Hàm - Mặt) đào tạo kỹ thuật viên chế tạo các loại răng giả, hàm giả, khí cụ chỉnh nha theo yêu cầu của bác sĩ nha khoa.
+học kỹ thuật phục hình răng làm gì::Kỹ thuật viên phục hình răng làm việc tại các labo nha khoa, phòng khám răng hàm mặt.
+ngành kỹ thuật phục hồi chức năng::Ngành Kỹ thuật Phục hồi Chức năng (Vật lý trị liệu & Phục hồi chức năng) đào tạo kỹ thuật viên thực hiện các bài tập vật lý trị liệu, phục hồi chức năng cho bệnh nhân sau tai nạn, phẫu thuật hoặc người khuyết tật.
+học phục hồi chức năng làm gì::Chuyên viên phục hồi chức năng làm việc tại bệnh viện, trung tâm phục hồi chức năng, phòng khám vật lý trị liệu.
+ngành y học cổ truyền::Ngành Y học Cổ truyền đào tạo kiến thức về y học cổ truyền, các phương pháp chữa bệnh bằng thuốc Nam, thuốc Bắc, châm cứu, xoa bóp, bấm huyệt.
+học y học cổ truyền làm gì::Học Y học Cổ truyền bạn có thể làm y sĩ, lương y tại các bệnh viện, phòng khám y học cổ truyền, hoặc tự mở phòng khám.
+
+---
+### Khoa Xã hội - Du lịch - Pháp luật
+khoa xã hội du lịch pháp luật::Khoa Xã hội - Du lịch - Pháp luật đào tạo các ngành:  Du lịch, Ngôn ngữ Anh, và Luật - Dịch vụ Pháp lý .
+ngành du lịch::Ngành Du lịch đào tạo hướng dẫn viên du lịch, quản lý tour, quản lý khách sạn, nhà hàng, tổ chức sự kiện du lịch.
+học du lịch ra làm gì::Học Du lịch bạn có thể làm hướng dẫn viên, điều hành tour, quản lý khách sạn/nhà hàng, chuyên viên marketing du lịch, tổ chức sự kiện.
+ngành ngôn ngữ anh::Ngành Ngôn ngữ Anh đào tạo chuyên sâu về tiếng Anh (nghe, nói, đọc, viết), văn hóa các nước nói tiếng Anh, kỹ năng biên phiên dịch, giao tiếp quốc tế.
+học ngôn ngữ anh ra làm gì::Tốt nghiệp Ngôn ngữ Anh, bạn có thể làm biên dịch viên, phiên dịch viên, thư ký, trợ lý, chuyên viên đối ngoại, giáo viên tiếng Anh, hoặc làm việc trong các công ty quốc tế.
+ngành luật dịch vụ pháp lý::Ngành Luật - Dịch vụ Pháp lý trang bị kiến thức về luật pháp, quy định pháp luật, kỹ năng tư vấn pháp luật, giải quyết tranh chấp.
+học luật dịch vụ pháp lý làm gì::Sinh viên Luật - Dịch vụ Pháp lý có thể làm chuyên viên tư vấn pháp luật, chuyên viên pháp chế tại doanh nghiệp, thư ký luật, hỗ trợ tại văn phòng luật sư, công chứng.
+
+# Chủ đề: Cơ sở vật chất
+cơ sở vật chất::Trường có cơ sở vật chất hiện đại, đầy đủ tiện nghi với phòng học, giảng đường, thư viện, phòng máy tính, phòng thí nghiệm, sân thể thao, căng tin, v.v. để đảm bảo môi trường học tập và rèn luyện tốt nhất cho sinh viên.
+thư viện::Thư viện trường có hàng ngàn đầu sách, tài liệu học tập và nghiên cứu đa dạng các lĩnh vực, cũng như máy tính kết nối internet cho sinh viên sử dụng.
+phòng máy tính::Trường có nhiều phòng máy tính được trang bị cấu hình cao, phần mềm bản quyền, phục vụ cho việc học tập các môn tin học và chuyên ngành.
+phòng thí nghiệm::Các phòng thí nghiệm được trang bị đầy đủ dụng cụ, máy móc hiện đại phục vụ cho việc thực hành của sinh viên các ngành kỹ thuật, y dược.
+ký túc xá::Trường hiện không có ký túc xá riêng, nhưng có danh sách các nhà trọ, ký túc xá liên kết hoặc gợi ý gần khu vực trường. Bạn có muốn tham khảo không?
+chỗ ở cho sinh viên::Bạn có thể tham khảo danh sách nhà trọ/ký túc xá gợi ý do phòng Công tác sinh viên cung cấp hoặc tìm kiếm trên các nhóm cộng đồng sinh viên.
+sân thể thao::Trường có sân bóng đá, bóng chuyền, bóng rổ, cầu lông, phục vụ nhu cầu luyện tập thể dục thể thao của sinh viên và tổ chức các giải đấu thể thao.
+nhà ăn::Nhà ăn (canteen) của trường phục vụ đa dạng món ăn, đảm bảo vệ sinh và giá cả hợp lý, đáp ứng nhu cầu ăn uống hàng ngày của sinh viên và cán bộ.
+phòng học::Các phòng học được trang bị máy chiếu, điều hòa, bàn ghế hiện đại, hệ thống âm thanh, tạo môi trường học tập thoải mái và hiệu quả.
+nhà thi đấu::Trường có nhà thi đấu đa năng phục vụ các hoạt động thể dục thể thao và sự kiện lớn của trường.
+phòng thực hành::Các phòng thực hành chuyên ngành được trang bị đầy đủ thiết bị, dụng cụ cần thiết để sinh viên có thể áp dụng kiến thức vào thực tế.
+khu tự học::Trường có các khu vực tự học yên tĩnh, có bàn ghế và ổ cắm điện, tạo điều kiện thuận lợi cho sinh viên tự học và làm việc nhóm.
+phòng y tế::Trường có phòng y tế với đội ngũ y bác sĩ, điều dưỡng túc trực để chăm sóc sức khỏe ban đầu và xử lý các trường hợp khẩn cấp cho sinh viên.
+
+# Chủ đề: Hoạt động sinh viên & Đời sống
+hoạt động ngoại khóa::Trường thường xuyên tổ chức các hoạt động ngoại khóa đa dạng như: câu lạc bộ học thuật, văn nghệ, thể thao, tình nguyện, các sự kiện chào đón tân sinh viên, các buổi hội thảo chuyên đề... để sinh viên phát triển toàn diện.
+sự kiện sinh viên::Các sự kiện lớn của sinh viên thường là chào đón tân sinh viên, hội thao, cuộc thi học thuật, văn nghệ, các chiến dịch tình nguyện Mùa Hè Xanh, Xuân Tình Nguyện... Lịch sự kiện sẽ được thông báo trên website và fanpage trường.
+hội thao::Hội thao sinh viên được tổ chức định kỳ hàng năm với nhiều bộ môn thi đấu khác nhau, giúp sinh viên rèn luyện sức khỏe và tinh thần thể thao.
+tình nguyện::Sinh viên có thể tham gia các hoạt động tình nguyện do Đoàn Thanh niên - Hội Sinh viên trường tổ chức, góp phần xây dựng cộng đồng và rèn luyện kỹ năng mềm.
+đoàn hội::Đoàn Thanh niên và Hội Sinh viên là hai tổ chức chính trong trường, nơi sinh viên có thể tham gia các hoạt động cộng đồng, các phong trào thi đua và rèn luyện kỹ năng.
+phong trào sinh viên::Có nhiều phong trào sinh viên sôi nổi như hiến máu nhân đạo, bảo vệ môi trường, văn hóa văn nghệ, nghiên cứu khoa học, v.v.
+tư vấn tâm lý::Phòng Công tác sinh viên có thể hỗ trợ tư vấn tâm lý hoặc giới thiệu đến các chuyên gia tâm lý nếu sinh viên gặp khó khăn trong học tập hay cuộc sống.
+hỗ trợ sinh viên::Trường có nhiều chính sách và hoạt động hỗ trợ sinh viên như học bổng, vay vốn, tư vấn học tập, định hướng nghề nghiệp, giới thiệu việc làm, hỗ trợ chỗ ở.
+việc làm thêm::Phòng Quan hệ Doanh nghiệp hoặc phòng Công tác sinh viên có thể giới thiệu các cơ hội việc làm thêm phù hợp với sinh viên để các bạn vừa học vừa làm.
+y tế::Trường có phòng y tế với đội ngũ y bác sĩ, điều dưỡng túc trực để chăm sóc sức khỏe ban đầu và xử lý các trường hợp khẩn cấp.
+bảo hiểm y tế::Tất cả sinh viên đều phải tham gia bảo hiểm y tế theo quy định của nhà nước và của trường.
+an ninh trong trường::Trường có đội ngũ bảo vệ chuyên nghiệp, hệ thống camera giám sát và các quy định nghiêm ngặt để đảm bảo an ninh trật tự cho sinh viên trong khuôn viên trường.
+quy định sinh viên::Các quy định về học tập, rèn luyện, khen thưởng, kỷ luật sinh viên được công bố rõ ràng trong sổ tay sinh viên và trên website trường.
+lớp học kỹ năng mềm::Trường thường xuyên tổ chức các lớp học, hội thảo về kỹ năng mềm (giao tiếp, làm việc nhóm, tư duy phản biện, giải quyết vấn đề...) để bổ trợ cho sinh viên.
+hội nhập quốc tế::Trường có các hoạt động và chương trình nhằm thúc đẩy hội nhập quốc tế cho sinh viên, như trao đổi sinh viên, hội thảo với chuyên gia nước ngoài.
+
+# Chủ đề: Các dịch vụ hành chính
+cấp lại thẻ sinh viên::Bạn có thể làm thủ tục cấp lại thẻ sinh viên tại phòng Công tác sinh viên. Cần mang theo CMND/CCCD và điền đơn theo mẫu. Vui lòng kiểm tra trên website hoặc liên hệ phòng để biết chi tiết các giấy tờ cần thiết.
+xin cấp bảng điểm::Bạn có thể nộp đơn xin cấp bảng điểm tại phòng Đào tạo hoặc Phòng Khảo thí. Thời gian trả kết quả sẽ được thông báo cụ thể.
+xin giấy chứng nhận sinh viên::Giấy chứng nhận sinh viên có thể xin tại phòng Công tác sinh viên để làm các thủ tục liên quan đến vay vốn, hoãn nghĩa vụ quân sự, v.v. Mẫu đơn thường có sẵn trên website hoặc tại phòng.
+xin xác nhận vay vốn::Thủ tục xác nhận vay vốn sinh viên được thực hiện tại phòng Công tác sinh viên. Bạn cần chuẩn bị các giấy tờ theo yêu cầu của ngân hàng.
+cấp lại bằng tốt nghiệp::Quy trình cấp lại bằng tốt nghiệp (bản sao hoặc cấp lại do mất) rất chặt chẽ theo quy định của Bộ GD&ĐT và của trường. Bạn cần liên hệ phòng Đào tạo để được hướng dẫn chi tiết về hồ sơ và thủ tục.
+thủ tục chuyển ngành::Việc chuyển ngành học có thể được xem xét vào một số thời điểm nhất định trong năm học, tùy thuộc vào chỉ tiêu và điều kiện của ngành chuyển đến. Liên hệ phòng Đào tạo để được tư vấn cụ thể và biết các điều kiện.
+thủ tục bảo lưu kết quả::Sinh viên có thể bảo lưu kết quả học tập trong các trường hợp đặc biệt (ốm đau dài hạn, gia đình khó khăn, nghĩa vụ quân sự...). Cần làm đơn và nộp cho phòng Đào tạo để được xét duyệt.
+đăng ký học lại::Sinh viên có thể đăng ký học lại các môn chưa đạt hoặc muốn cải thiện điểm số trong các kỳ đăng ký môn học theo lịch của phòng Đào tạo.
+lịch đăng ký môn học::Lịch đăng ký môn học cho học kỳ mới sẽ được thông báo trên cổng thông tin sinh viên và website trường, thường vào cuối mỗi học kỳ.
+tra cứu điểm::Bạn có thể tra cứu điểm thi và điểm tổng kết học phần trên cổng thông tin sinh viên cá nhân của bạn bằng cách đăng nhập vào tài khoản.
+lịch thi::Lịch thi của các học phần sẽ được công bố trên cổng thông tin sinh viên hoặc thông báo tại các bảng tin của khoa/ngành. Bạn nên thường xuyên kiểm tra.
+phòng đào tạo::Phòng Đào tạo phụ trách các vấn đề liên quan đến chương trình học, đăng ký môn học, điểm số, bằng cấp, quy chế học vụ.
+phòng công tác sinh viên::Phòng Công tác sinh viên hỗ trợ các vấn đề về đời sống sinh viên, học bổng, chính sách, bảo hiểm y tế, tư vấn, và các hoạt động ngoại khóa.
+phòng tuyển sinh::Phòng Tuyển sinh cung cấp thông tin về các kỳ tuyển sinh, điều kiện, hồ sơ, hướng dẫn đăng ký, và tư vấn chọn ngành. Bạn có thể liên hệ số  028 3588 5558 .
+phòng kế hoạch tài chính::Phòng Kế hoạch - Tài chính phụ trách các vấn đề về học phí, các khoản thu chi, chế độ tài chính cho sinh viên, chính sách miễn giảm học phí.
+phòng quan hệ doanh nghiệp::Phòng Quan hệ Doanh nghiệp giúp sinh viên tìm kiếm cơ hội thực tập, việc làm sau tốt nghiệp, và liên kết trường với các đối tác doanh nghiệp để phát triển chương trình đào tạo.
+tải mẫu đơn::Các mẫu đơn hành chính (xin giấy chứng nhận, bảo lưu, chuyển ngành...) thường có sẵn trên website trường tại mục 'Dịch vụ sinh viên' hoặc tại các phòng ban liên quan.
+quy định về tốt nghiệp::Sinh viên cần hoàn thành đủ số tín chỉ, đạt chuẩn đầu ra tiếng Anh/Tin học và các điều kiện khác theo quy định của trường để được xét tốt nghiệp. Chi tiết có trong Quy chế đào tạo.
+cổng thông tin sinh viên::Cổng thông tin sinh viên là nơi bạn có thể tra cứu lịch học, lịch thi, điểm, thông báo, và quản lý hồ sơ cá nhân.
+
+# Chủ đề: Thông tin khác
+cảm ơn::Rất vui được phục vụ và giúp đỡ bạn! Nếu có bất kỳ câu hỏi nào khác, đừng ngần ngại hỏi tôi nhé.
+tạm biệt::Tạm biệt! Chúc bạn một ngày tốt lành. Hẹn gặp lại.
+hẹn gặp lại::Hẹn gặp lại! Chúc bạn mọi điều tốt đẹp.
+bạn có khỏe không::Tôi là một chương trình máy tính, nên tôi luôn trong trạng thái tốt nhất để hỗ trợ bạn. Cảm ơn bạn đã hỏi!
+bạn làm việc mấy giờ::Tôi làm việc 24/7 để có thể hỗ trợ bạn bất cứ lúc nào.
+bạn có biết tiếng anh không::Có, tôi có thể hiểu và trả lời các câu hỏi bằng tiếng Việt và tiếng Anh. Tuy nhiên, hiện tại tôi được tối ưu hóa cho tiếng Việt.
+bạn có thông minh không::Tôi luôn cố gắng học hỏi và cải thiện để trở nên thông minh hơn mỗi ngày, giúp bạn có trải nghiệm tốt nhất.
+bạn có thể nói chuyện không::Tôi là một chatbot văn bản, nên tôi giao tiếp qua tin nhắn.
+hướng dẫn đường đi::Bạn có thể tìm kiếm trên Google Maps hoặc bản đồ trực tuyến với địa chỉ của trường:  514 Lê Quang Định, P.1, Q. Gò Vấp, TP.HCM  hoặc các cơ sở khác mà bạn muốn đến.
+khu vực tuyển sinh::Trường tuyển sinh trên phạm vi cả nước.
+hỗ trợ học tập::Ngoài giảng viên, trường còn có các trung tâm hỗ trợ học tập, phòng tự học và các buổi phụ đạo để hỗ trợ sinh viên trong quá trình học.
+địa chỉ email tuyển sinh::Email tuyển sinh là  tuyensinhsaigongiadinh@gmail.com .
+hotline tuyển sinh::Hotline tuyển sinh là  028 3588 5558 .
+trang tin tức trường::Bạn có thể cập nhật các tin tức, hoạt động mới nhất của trường tại  www.sgc.edu.vn/tintucgiaoduc .
+có du học không::Trường đang có các chương trình liên kết hoặc hợp tác với các trường quốc tế, mở ra cơ hội du học cho sinh viên. Bạn có thể tìm hiểu thêm tại phòng Quan hệ Quốc tế.
+chương trình liên kết::Trường có các chương trình liên kết đào tạo với các trường đại học/tổ chức giáo dục khác, tạo điều kiện cho sinh viên chuyển tiếp hoặc học lên cao hơn.
+thông tin giảng viên::Bạn có thể xem thông tin về đội ngũ giảng viên của trường trên website  www.sgc.edu.vn  tại mục 'Đội ngũ'.
+chất lượng đào tạo::Trường cam kết chất lượng đào tạo thông qua chương trình chuẩn, đội ngũ giảng viên giàu kinh nghiệm, cơ sở vật chất hiện đại và liên kết chặt chẽ với doanh nghiệp.
+tuyển dụng giảng viên::Thông tin tuyển dụng giảng viên và nhân viên được đăng tải trên website  www.sgc.edu.vn/careers .
+sinh viên có cần mặc đồng phục không::Trường có quy định về đồng phục hoặc trang phục lịch sự khi đến trường. Bạn sẽ được thông báo cụ thể khi nhập học.
+giờ mở cửa thư viện::Giờ mở cửa thư viện sẽ được thông báo tại thư viện và trên website trường.

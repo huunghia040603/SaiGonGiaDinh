@@ -5,10 +5,101 @@ import os
 import time
 import uuid
 import json
-from datetime import datetime # <-- ĐÃ THÊM: Import datetime
+from datetime import datetime
+from flask_cors import CORS
+from fuzzywuzzy import process
 
 app = Flask(__name__)
 app.secret_key = '78c4a1b0d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2'
+CORS(app) # Đảm bảo CORS được kích hoạt cho toàn bộ ứng dụng nếu cần
+
+# --- Cập nhật phần Chatbot ---
+# Tên file chứa cơ sở kiến thức
+CHATBOT_KNOWLEDGE_BASE_FILENAME = 'chatbot.txt'
+# Xác định đường dẫn tuyệt đối đến file chatbot.txt
+# Điều này giúp đảm bảo Flask luôn tìm thấy file, bất kể bạn chạy script từ đâu.
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+KNOWLEDGE_BASE_FILE_PATH = os.path.join(BASE_DIR, CHATBOT_KNOWLEDGE_BASE_FILENAME)
+
+knowledge_base = {} # Khởi tạo dictionary rỗng
+
+# Hàm để tải cơ sở kiến thức từ file
+def load_knowledge_base(file_path):
+    kb = {}
+    print(f"Đang cố gắng tải cơ sở kiến thức từ: {file_path}") # Gỡ lỗi: In đường dẫn
+    if not os.path.exists(file_path):
+        print(f"Lỗi: Không tìm thấy file '{file_path}'. Vui lòng đảm bảo file tồn tại trong thư mục gốc của ứng dụng Flask.")
+        return kb
+
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line_num, line in enumerate(f, 1): # Thêm số dòng để dễ gỡ lỗi
+                line = line.strip() # Xóa khoảng trắng và ký tự xuống dòng
+                if not line or line.startswith('#'): # Bỏ qua dòng trống hoặc dòng comment bắt đầu bằng '#'
+                    continue
+                
+                if '::' in line: # Đảm bảo dòng có ký tự phân tách
+                    parts = line.split('::', 1) # Chỉ tách ở dấu '::' đầu tiên
+                    if len(parts) == 2:
+                        question = parts[0].strip().lower() # Chuyển câu hỏi về chữ thường để so sánh
+                        answer = parts[1].strip()
+                        kb[question] = answer
+                    else:
+                        print(f"Cảnh báo: Dòng {line_num} trong '{file_path}' không đúng định dạng 'câu hỏi::trả lời'. Bỏ qua dòng: '{line}'")
+                else:
+                    print(f"Cảnh báo: Dòng {line_num} trong '{file_path}' thiếu ký tự phân tách '::'. Bỏ qua dòng: '{line}'")
+        
+        if kb:
+            print(f"✅ Đã tải thành công {len(kb)} mục từ '{file_path}'.")
+            # In một vài mục để xác nhận
+            # for i, (q, a) in enumerate(kb.items()):
+            #     if i < 3: # In 3 mục đầu tiên
+            #         print(f"  - Q: '{q}', A: '{a[:50]}...'") # Chỉ in 50 ký tự đầu của câu trả lời
+            #     else:
+            #         break
+        else:
+            print(f"⚠️ Cơ sở kiến thức từ '{file_path}' đã được tải nhưng không chứa mục nào hoặc file rỗng.")
+
+    except Exception as e:
+        print(f"❌ Lỗi nghiêm trọng khi đọc file '{file_path}': {e}")
+        print("Vui lòng kiểm tra lại quyền truy cập file và định dạng mã hóa (UTF-8).")
+    return kb
+
+# Tải cơ sở kiến thức khi ứng dụng khởi động
+knowledge_base = load_knowledge_base(KNOWLEDGE_BASE_FILE_PATH)
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get('message', '').lower().strip() # Lấy tin nhắn an toàn hơn
+
+    if not user_message:
+        return jsonify({"response": "Bạn chưa nhập câu hỏi nào. Vui lòng nhập câu hỏi."})
+    
+    # Kiểm tra xem knowledge_base có dữ liệu không
+    if not knowledge_base:
+        return jsonify({"response": "Xin lỗi, cơ sở dữ liệu của tôi đang trống hoặc gặp lỗi khi tải. Vui lòng liên hệ quản trị viên."})
+
+    best_match_key = None
+    best_score = 0
+    
+    # Chỉ thực hiện tìm kiếm nếu có câu hỏi trong KB
+    if knowledge_base: 
+        # process.extractOne trả về tuple (matched_string, score)
+        result = process.extractOne(user_message, knowledge_base.keys())
+        if result:
+            best_match_key, best_score = result
+
+    bot_response = "Xin lỗi, tôi chưa hiểu câu hỏi của bạn. Bạn có thể thử hỏi lại theo cách khác hoặc hỏi về các chủ đề phổ biến như lịch học, học phí, ngành học, tuyển sinh, liên hệ, địa chỉ trường, v.v."
+
+    # Đặt ngưỡng điểm khớp để quyết định có trả lời hay không
+    # Ngưỡng 70 thường là tốt cho độ chính xác kha khá.
+    # Bạn có thể thử nghiệm với các giá trị khác như 60 (lỏng lẻo hơn) hoặc 80 (chính xác hơn).
+    if best_match_key and best_score >= 70:
+        bot_response = knowledge_base[best_match_key]
+    
+    return jsonify({"response": bot_response})
+
+# --- Giữ nguyên tất cả các phần còn lại của ứng dụng của bạn ---
 
 # Đăng ký Blueprint admin
 app.register_blueprint(admin_bp)
@@ -17,27 +108,24 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(faculty)
 
 # Đường dẫn đến tệp lưu trữ số lượt truy cập TỔNG (giờ sẽ là JSON)
-VISITOR_COUNT_FILE = 'visitor_count.json' # <-- ĐÃ SỬA: Thay đổi tên file cho rõ ràng hơn là JSON
+VISITOR_COUNT_FILE = 'visitor_count.json'
 # Đường dẫn đến tệp lưu trữ người dùng ONLINE (tiếp tục là JSON)
 ACTIVE_USERS_FILE = 'active_users.json'
 
 # Thời gian hoạt động (ví dụ: 1 phút = 60 giây, hoặc 30 giây)
-ACTIVE_THRESHOLD = 10 # Điều chỉnh theo định nghĩa "online" của bạn
+ACTIVE_THRESHOLD = 10
 
-# -- ĐÃ SỬA: Hàm để đọc/ghi dữ liệu lượt truy cập từ tệp JSON --
+# Hàm để đọc/ghi dữ liệu lượt truy cập từ tệp JSON
 def load_visitor_data():
     if not os.path.exists(VISITOR_COUNT_FILE) or os.stat(VISITOR_COUNT_FILE).st_size == 0:
-        # Nếu file không tồn tại hoặc rỗng, tạo dữ liệu ban đầu
         return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
     with open(VISITOR_COUNT_FILE, 'r') as f:
         try:
             data = json.load(f)
-            # Đảm bảo cấu trúc dữ liệu đúng
             if "count" not in data or "last_reset_date" not in data:
                 return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
             return data
         except json.JSONDecodeError:
-            # Xử lý nếu file bị hỏng hoặc không đúng định dạng JSON
             return {"count": 0, "last_reset_date": datetime.now().strftime("%Y-%m-%d")}
 
 def save_visitor_data(data):
@@ -60,24 +148,19 @@ def save_active_users(users_dict):
 
 active_users = load_active_users()
 
-
 # Trang chủ và đăng nhập
 @app.route('/')
 def index():
-    # -- ĐÃ SỬA: Logic đếm lượt truy cập theo ngày --
     visitor_data = load_visitor_data()
     today_str = datetime.now().strftime("%Y-%m-%d")
 
-    # Kiểm tra nếu đã sang ngày mới
     if visitor_data["last_reset_date"] != today_str:
-        visitor_data["count"] = 0 # Reset bộ đếm
-        visitor_data["last_reset_date"] = today_str # Cập nhật ngày reset
+        visitor_data["count"] = 0
+        visitor_data["last_reset_date"] = today_str
 
-    # Tăng bộ đếm cho lượt truy cập hiện tại
     visitor_data["count"] += 1
-    save_visitor_data(visitor_data) # Lưu lại dữ liệu đã cập nhật
+    save_visitor_data(visitor_data)
 
-    # Đảm bảo mỗi phiên có một ID duy nhất để theo dõi người dùng online
     if 'session_id_custom' not in session:
         session['session_id_custom'] = str(uuid.uuid4())
 
@@ -105,15 +188,14 @@ def get_counts():
 
     save_active_users(active_users)
 
-    # Lấy số lượt truy cập tổng từ file JSON
     total_visitors_data = load_visitor_data()
-    total_visitors = total_visitors_data["count"] # Lấy 'count' từ dữ liệu JSON
+    total_visitors = total_visitors_data["count"]
 
     online_users = len(active_users)
 
     return jsonify(total_visitors=total_visitors, online_users=online_users)
 
-# ... (Giữ nguyên tất cả các route và dữ liệu khác của bạn bên dưới) ...
+# Các route khác giữ nguyên như bạn đã cung cấp
 @app.route('/dangnhap')
 def dangnhap():
     return render_template('dangnhap.html')
