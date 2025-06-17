@@ -1,114 +1,162 @@
-{% extends "admin/base_admin.html" %} 
-{% block title %}Báo cáo lượt đăng ký tư vấn theo tháng{% endblock %} {# Tùy chỉnh tiêu đề trang #}
+{% extends "admin/base_admin.html" %}
 
-    
+{% block title %}Báo cáo thống kê lượt đăng ký tư vấn{% endblock %} {# Cập nhật tiêu đề trang #}
 
-{% block page_styles %}  
+{% block page_styles %}
     <style>
         html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
-}
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f4f7f6;
             color: #333;
         }
         .container {
             max-width: 1200px;
-            margin: auto;
+            margin: 30px auto;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center; /* Căn giữa nội dung */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
         }
-        h1, h2 {
-            color: #0056b3;
-            margin-bottom: 20px;
+        h1 {
+            color: #007bff;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        h1 i {
+            font-size: 2rem;
+            color: #28a745;
+        }
+        /* Flex container cho các biểu đồ */
+        .charts-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Cho phép các biểu đồ xuống dòng trên màn hình nhỏ */
+            justify-content: center; /* Căn giữa các biểu đồ */
+            gap: 30px; /* Khoảng cách giữa các biểu đồ */
+            margin-top: 30px;
         }
         .chart-container {
-            width: 100%;
+            width: 100%; /* Mặc định 100% chiều rộng */
+            max-width: 550px; /* Giới hạn chiều rộng cho từng biểu đồ trên màn hình lớn */
             height: 400px; /* Chiều cao cố định cho biểu đồ */
-            margin: 20px auto;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            display: flex; /* Dùng flexbox để căn giữa canvas */
+            margin: 0; /* Loại bỏ margin auto của từng container */
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            display: flex;
+            flex-direction: column; /* Sắp xếp nội dung theo cột */
             justify-content: center;
             align-items: center;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            position: relative; /* Để message/error message được định vị đúng */
+        }
+        #loading-message, #error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* Đảm bảo nằm trên canvas nếu có lỗi */
+        }
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .message-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            color: #333;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .message-box p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .message-box button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .message-box button:hover {
+            background-color: #0056b3;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .charts-wrapper {
+                flex-direction: column; /* Xếp chồng lên nhau trên màn hình nhỏ */
+                align-items: center;
+            }
+            .chart-container {
+                max-width: 90%; /* Điều chỉnh chiều rộng trên màn hình nhỏ */
+                height: 350px; /* Giảm chiều cao biểu đồ */
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
-{%endblock%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}
 
 
-{% block content %}  
-
+{% block content %}
     <div class="container">
-        <h1>Báo cáo lượt đăng ký tư vấn</h1>
-        <div class="chart-container">
-            <canvas id="monthlyAdvisoryChart"></canvas>
+        <h1><i class="bi bi-graph-up-arrow"></i> Báo cáo thống kê lượt đăng ký tư vấn</h1> {# Icon phù hợp hơn cho thống kê #}
+
+        <div class="charts-wrapper">
+            {# Biểu đồ lượt đăng ký theo tháng #}
+            <div class="chart-container">
+                <canvas id="monthlyRegistrationsChart"></canvas>
+                <p id="loading-message-monthly" class="text-muted">Đang tải dữ liệu báo cáo tháng...</p>
+                <p id="error-message-monthly" class="text-danger" style="display:none;"></p>
+            </div>
+
+            {# Biểu đồ lượt đăng ký theo trạng thái #}
+            <div class="chart-container">
+                <canvas id="statusRegistrationsChart"></canvas>
+                <p id="loading-message-status" class="text-muted">Đang tải dữ liệu báo cáo trạng thái...</p>
+                <p id="error-message-status" class="text-danger" style="display:none;"></p>
+            </div>
         </div>
     </div>
+{% endblock %}
 
-    <script>
-        // Dữ liệu được nhúng trực tiếp từ JSON bạn cung cấp
-        const monthlyData = {
-            "labels": [
-                "T1", "T2", "T3", "T4", "T5", "T6",
-                "T7", "T8", "T9", "T10", "T11", "T12"
-            ],
-            "data": [
-                0, 0, 0, 0, 1, 0,
-                0, 0, 0, 0, 0, 0
-            ],
-            "title": "Số lượt đăng ký tư vấn theo tháng năm 2025"
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctxMonthly = document.getElementById('monthlyAdvisoryChart').getContext('2d');
-            new Chart(ctxMonthly, {
-                type: 'bar', // Biểu đồ cột
-                data: {
-                    labels: monthlyData.labels,
-                    datasets: [{
-                        label: 'Lượt đăng ký',
-                        data: monthlyData.data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Quan trọng để điều chỉnh chiều cao
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: monthlyData.title,
-                            font: {
-                                size: 18
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1, // Hiển thị số nguyên
-                                callback: function(value) {
-                                    if (value % 1 === 0) return value;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+{% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{%endblock%}
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        // Đăng ký plugin datalabels toàn cục
+        Chart.register(ChartDataLabels);
+    </script>
+    <script src="{{ url_for('static', filename='js/admin/admin_advisory_stats.js') }}"></script> {# Tên file JS mới #}
+{% endblock %}

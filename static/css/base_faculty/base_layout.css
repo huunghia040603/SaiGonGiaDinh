@@ -1,35 +1,46 @@
-body {
+/* body {
     margin: 0;
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #f0f2f5;
-    overflow-x: hidden; /* Ngăn scroll ngang không mong muốn */
+    
+} */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
 }
 
 .layout-wrapper {
     display: flex; /* Quan trọng: Sidebar và main-content-wrapper sẽ nằm cạnh nhau */
-    min-height: 100vh; /* Đảm bảo wrapper chiếm toàn bộ chiều cao màn hình */
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    min-height: 100vh;
+    width: 100%;
 }
 
 .main-content-wrapper {
     display: flex;
-    flex-direction: column; /* Xếp header, main (nội dung & footer) theo chiều dọc */
+    flex-direction: column;
     flex-grow: 1; /* Cho phép nó chiếm hết không gian chiều ngang còn lại sau sidebar */
-    min-height: 100vh; /* Đảm bảo nó chiếm đủ chiều cao */
-    background-color: #f0f2f5; /* Nền cho khu vực này */
+    min-width: 0; /* Rất quan trọng với flexbox: cho phép flex item co lại */
+    background-color: #f0f2f5;
 }
 
-.content-and-footer-wrapper { /* Thẻ <main> mới */
+.content-and-footer-wrapper {
     display: flex;
-    flex-direction: column; /* Xếp content-area và footer theo chiều dọc */
-    flex-grow: 1; /* Cho phép nó chiếm hết không gian còn lại sau header */
-    padding: 20px; /* Khoảng cách tổng thể cho nội dung và footer */
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px;
+    /* Có thể thêm overflow-x: hidden; tại đây nếu bạn muốn đảm bảo không có gì tràn ra khỏi khu vực nội dung chính */
+    /* overflow-x: hidden; */
 }
 
 .content-area {
-    background-color: white; /* Nền trắng cho nội dung */
-    border-radius: 8px; /* Bo góc nhẹ cho khu vực nội dung */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ nhàng */
-    padding: 20px; /* Padding bên trong content area */
-    flex-grow: 1; /* Cho phép content-area mở rộng để lấp đầy không gian */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px; /* Giữ padding ở đây */
+    flex-grow: 1;
+    /* Đảm bảo content-area không bị tràn, nếu cần, thêm overflow-x: hidden; */
+    /* overflow-x: hidden; */
 }

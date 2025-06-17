@@ -26,13 +26,9 @@ def faculty_profile():
     return render_template('faculty/profile.html')
 
 
-@faculty.route('/stats_registration_faculty/')
-def faculty_stats():
-   
-    return render_template('faculty/stats_faculty.html')
-
-
-@faculty.route('/registration_faculty/')
+@faculty.route('/registrations/')
 def registration_faculty():
    
-    return render_template('faculty/faculty_registration.html')
+    return render_template('faculty/registrations_faculty.html')
+
+

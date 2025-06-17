@@ -10,7 +10,7 @@ def admin_login():
     return render_template('admin/login_admin.html')
 
 
-@admin_bp.route('/home')
+@admin_bp.route('/home/')
 def admin_home():
     
     return render_template('admin/home_admin.html')
@@ -25,6 +25,14 @@ def admin_advisory_registrations():
 def count_traffic():
     
     return render_template('admin/stats.html')
+
+
+
+
+@admin_bp.route('/IPDetail/')
+def ip_detail():
+    
+    return render_template('admin/admin_ip_detail.html')
 
 @admin_bp.route('/stats-registration/')
 def count_registration():

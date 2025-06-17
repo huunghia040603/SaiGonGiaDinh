@@ -1,7 +1,7 @@
 // /static/js/auth_status.js
 document.addEventListener('DOMContentLoaded', () => {
     const loginStatusLink = document.getElementById('loginStatusLink');
-    
+    // const loginStatus = document.getElementById('loginStatus');
     const studentMenuLink = document.getElementById('studentMenuLink'); 
 
     // Thời gian hết hạn của phiên (10 phút = 10 * 60 * 1000 milliseconds)
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (loginStatusLink) {
             // Người dùng chưa đăng nhập hoặc đã đăng xuất / phiên hết hạn
             loginStatusLink.innerHTML = `<i class="fas fa-user"></i> ĐĂNG NHẬP SGC`;
-            loginStatus.innerHTML = ``;
+            // loginStatus.innerHTML = ``;
             loginStatusLink.href = "/dangnhap";
 
             loginStatusLink.removeEventListener('click', (e) => e.preventDefault()); 

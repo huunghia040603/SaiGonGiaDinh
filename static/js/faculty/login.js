@@ -1,291 +1,72 @@
-// // /static/js/faculty_login.js
-// document.addEventListener('DOMContentLoaded', function() {
-//     const emailInput = document.getElementById('email');
-//     const passwordInput = document.getElementById('password');
-//     const loginBtn = document.getElementById('loginBtn');
-//     const loginStatusElement = document.getElementById('loginStatus'); // Đổi tên biến để rõ ràng hơn
-//     const messageDiv = document.getElementById('message');
 
-//     // URL của API đăng nhập giảng viên
-//     const loginApiUrl = 'https://saigongiadinh.pythonanywhere.com/auth/faculty_login/';
-
-//     /**
-//      * Hiển thị thông báo cho người dùng.
-//      * @param {string} msg - Nội dung thông báo.
-//      * @param {string} type - Loại thông báo ('success', 'error', 'warning').
-//      */
-//     function showMessage(msg, type) {
-//         if (messageDiv) {
-//             messageDiv.textContent = msg;
-//             messageDiv.className = `message ${type}`;
-//             messageDiv.style.display = msg ? 'block' : 'none'; // Ẩn div nếu không có tin nhắn
-//         }
-//     }
-
-//     /**
-//      * Cập nhật trạng thái đăng nhập trên giao diện (ví dụ: header/navbar).
-//      * @param {string|null} fullName - Tên đầy đủ của người dùng.
-//      * @param {string|null} role - Vai trò của người dùng.
-//      */
-//     function updateLoginStatusDisplay(fullName, role) {
-//         if (loginStatusElement) {
-//             if (fullName && role === 'CBCNV') {
-//                 // Hiển thị "Chào, [Tên đầy đủ]" và làm cho nó clickable đến trang profile
-//                 loginStatusElement.innerHTML = `<i class="fas fa-user-circle"></i> Chào, ${fullName}`;
-//                 loginStatusElement.href = "/sggd/gv/manage/profile_faculty";
-//                 loginStatusElement.style.display = 'block'; // Đảm bảo hiển thị
-//             } else {
-//                 // Hiển thị trạng thái chưa đăng nhập
-//                 loginStatusElement.innerHTML = `<i class="fas fa-sign-in-alt"></i> Đăng nhập`;
-//                 loginStatusElement.href = '/auth/faculty_login/'; // URL trang đăng nhập
-//                 // Có thể thêm logic ẩn/hiện các phần tử khác nếu cần
-//             }
-//         }
-//     }
-
-//     /**
-//      * Xử lý sự kiện đăng nhập khi người dùng nhấn nút hoặc Enter.
-//      * @param {Event} event - Đối tượng sự kiện.
-//      */
-//     async function handleLogin(event) {
-//         event.preventDefault(); // Ngăn chặn hành vi submit mặc định của form (nếu có)
-
-//         const email = emailInput.value.trim();
-//         const password = passwordInput.value.trim();
-
-//         if (!email || !password) {
-//             showMessage('Vui lòng nhập đầy đủ email và mật khẩu.', 'error');
-//             return;
-//         }
-
-//         if (loginBtn) { // Đảm bảo nút tồn tại trước khi thao tác
-//             loginBtn.disabled = true; // Vô hiệu hóa nút đăng nhập khi đang xử lý
-//             loginBtn.textContent = 'Đang đăng nhập...';
-//         }
-//         showMessage('', ''); // Xóa thông báo cũ
-
-//         try {
-//             const response = await fetch(loginApiUrl, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // Nếu bạn có CSRF token cho Django và view KHÔNG @csrf_exempt, hãy thêm vào đây
-//                     // 'X-CSRFToken': getCookie('csrftoken'),
-//                 },
-//                 body: JSON.stringify({ email: email, password: password })
-//             });
-
-//             const data = await response.json();
-
-//             if (response.ok) {
-//                 showMessage(data.message || 'Đăng nhập thành công!', 'success');
-
-//                 // --- BẮT ĐẦU PHẦN LƯU TRỮ LOCAL STORAGE ---
-//                 // Xóa tất cả dữ liệu cũ trước khi lưu dữ liệu mới để đảm bảo sạch sẽ
-//                 localStorage.clear();
-//                 console.log('Đã xóa Local Storage cũ trước khi lưu dữ liệu mới.');
-
-//                 // Lưu các trường cấp cao nhất của phản hồi
-//                 if (data.user_id) localStorage.setItem('userId', data.user_id);
-//                 if (data.token) localStorage.setItem('authToken', data.token);
-
-//                 // Lưu thông tin từ user_data object (các trường của User + Faculty)
-//                 if (data.user_data) {
-//                     const userData = data.user_data;
-
-//                     localStorage.setItem('userEmail', userData.email || '');
-//                     const userFullName = `${userData.last_name || ''} ${userData.first_name || ''}`.trim(); // Họ trước Tên sau
-//                     localStorage.setItem('userFullName', userFullName);
-
-//                     localStorage.setItem('userPhone', userData.phone || '');
-//                     localStorage.setItem('userGender', userData.gender || '');
-//                     localStorage.setItem('userGenderDisplay', userData.gender_display || ''); // Lưu cả giá trị hiển thị
-
-//                     const fullAddress = [
-//                         userData.address,
-//                         userData.district,
-//                         userData.city
-//                     ].filter(Boolean).join(', ');
-//                     localStorage.setItem('userAddress', fullAddress || '');
-
-//                     localStorage.setItem('userRole', userData.role || '');
-//                     localStorage.setItem('userRoleDisplay', userData.role_display || ''); // Lưu cả giá trị hiển thị
-
-//                     localStorage.setItem('userIsActive', userData.is_active ? 'true' : 'false');
-//                     localStorage.setItem('userDateJoined', userData.date_joined || '');
-//                     localStorage.setItem('userLastLogin', userData.last_login || '');
-//                     localStorage.setItem('userNationalIdCard', userData.national_id_card || '');
-//                     localStorage.setItem('userDateOfBirth', userData.date_of_birth || '');
-//                     localStorage.setItem('userPlaceOfBirth', userData.place_of_birth || '');
-//                     localStorage.setItem('userNationality', userData.nationality || '');
-//                     localStorage.setItem('userEnrollmentDate', userData.enrollment_date || '');
-//                     localStorage.setItem('userPhoto', userData.user_photo || '');
-
-//                     // Các thông tin đặc thù của Faculty (nếu có trong user_data)
-//                     localStorage.setItem('facultyCode', userData.faculty_code || '');
-//                     localStorage.setItem('facultyType', userData.type || '');
-//                     localStorage.setItem('facultyDepartmentName', userData.department_name || '');
-//                     localStorage.setItem('facultyPosition', userData.position || '');
-//                     localStorage.setItem('facultyDegree', userData.degree || '');
-//                     localStorage.setItem('facultyOfficeLocation', userData.office_location || '');
-//                     localStorage.setItem('facultyIsDepartmentHead', userData.is_department_head ? 'true' : 'false');
-
-//                     // Cập nhật hiển thị trạng thái đăng nhập ngay lập tức
-//                     updateLoginStatusDisplay(userFullName, userData.role);
-//                 }
-//                 // --- KẾT THÚC PHẦN LƯU TRỮ LOCAL STORAGE ---
-
-//                 // Chuyển hướng người dùng đến trang dashboard giảng viên/cán bộ
-//                 if (data.user_data && data.user_data.role === 'CBCNV') {
-//                     window.location.href = '/sggd/gv/manage/home_faculty/';
-//                 } else {
-//                     showMessage('Đăng nhập thành công nhưng tài khoản không có quyền truy cập giảng viên/cán bộ.', 'error');
-//                 }
-
-//             } else {
-//                 // Xử lý lỗi đăng nhập từ server
-//                 let errorMessage = 'Đăng nhập thất bại. Vui lòng thử lại.';
-//                 if (data.detail) {
-//                     errorMessage = data.detail;
-//                 } else if (data.email) { // Lỗi từ trường email
-//                     errorMessage = data.email[0];
-//                 } else if (data.password) { // Lỗi từ trường password
-//                     errorMessage = data.password[0];
-//                 } else if (data.non_field_errors) { // Lỗi chung không thuộc về trường cụ thể
-//                     errorMessage = data.non_field_errors[0];
-//                 }
-//                 showMessage(errorMessage, 'error');
-//             }
-//         } catch (error) {
-//             console.error('Lỗi khi gửi yêu cầu đăng nhập:', error);
-//             showMessage('Đã xảy ra lỗi kết nối. Vui lòng kiểm tra lại mạng.', 'error');
-//         } finally {
-//             if (loginBtn) {
-//                 loginBtn.disabled = false; // Kích hoạt lại nút đăng nhập
-//                 loginBtn.textContent = 'Đăng nhập';
-//             }
-//         }
-//     }
-
-//     // --- GẮN CÁC SỰ KIỆN ---
-//     if (loginBtn) {
-//         loginBtn.addEventListener('click', handleLogin);
-//     }
-
-//     if (emailInput) {
-//         emailInput.addEventListener('keypress', function(event) {
-//             if (event.key === 'Enter') {
-//                 handleLogin(event);
-//             }
-//         });
-//     }
-//     if (passwordInput) {
-//         passwordInput.addEventListener('keypress', function(event) {
-//             if (event.key === 'Enter') {
-//                 handleLogin(event);
-//             }
-//         });
-//     }
-
-//     // --- KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP KHI TẢI TRANG ---
-//     // Phần này đảm bảo hiển thị trạng thái đúng khi người dùng quay lại trang
-//     const storedUserFullName = localStorage.getItem('userFullName');
-//     const storedUserRole = localStorage.getItem('userRole');
-//     updateLoginStatusDisplay(storedUserFullName, storedUserRole);
-
-//     // (Tùy chọn) Hàm để lấy CSRF token từ cookie Django
-//     // Bạn chỉ cần hàm này nếu bạn đang sử dụng Session Authentication
-//     // VÀ view API của bạn không @csrf_exempt
-//     /*
-//     function getCookie(name) {
-//         let cookieValue = null;
-//         if (document.cookie && document.cookie !== '') {
-//             const cookies = document.cookie.split(';');
-//             for (let i = 0; i < cookies.length; i++) {
-//                 const cookie = cookies[i].trim();
-//                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                     break;
-//                 }
-//             }
-//         }
-//         return cookieValue;
-//     }
-//     */
-// });
-
-
-// /static/js/faculty_login.js
+// /static/js/login.js
 document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const loginBtn = document.getElementById('loginBtn');
     const messageDiv = document.getElementById('message');
 
-    // Thêm các element mới cho header
     const headerUserNameElement = document.getElementById('headerUserName');
     const headerUserAvatarElement = document.getElementById('headerUserAvatar');
-    const headerUserAvatarLink = document.getElementById('headerUserAvatarLink'); // Lấy link avatar
+    const headerUserAvatarLink = document.getElementById('headerUserAvatarLink');
 
-    // URL của API đăng nhập giảng viên
     const loginApiUrl = 'https://saigongiadinh.pythonanywhere.com/auth/faculty_login/';
 
-    /**
-     * Hiển thị thông báo cho người dùng.
-     * @param {string} msg - Nội dung thông báo.
-     * @param {string} type - Loại thông báo ('success', 'error', 'warning').
-     */
+    const SESSION_DURATION_MS = 10 * 60 * 1000; // 10 phút tính bằng mili giây
+
     function showMessage(msg, type) {
         if (messageDiv) {
             messageDiv.textContent = msg;
             messageDiv.className = `message ${type}`;
-            messageDiv.style.display = msg ? 'block' : 'none'; // Ẩn div nếu không có tin nhắn
+            messageDiv.style.display = msg ? 'block' : 'none';
         }
     }
 
-    /**
-     * Cập nhật trạng thái đăng nhập và thông tin người dùng trên header.
-     * @param {string|null} fullName - Tên đầy đủ của người dùng.
-     * @param {string|null} userPhotoUrl - URL ảnh đại diện của người dùng.
-     * @param {string|null} role - Vai trò của người dùng.
-     */
     function updateHeaderUserInfo(fullName, userPhotoUrl, role) {
-        // Cập nhật tên người dùng
         if (headerUserNameElement) {
             if (fullName && role === 'CBCNV') {
                 headerUserNameElement.textContent = `Chào, ${fullName}!`;
-                headerUserNameElement.style.display = 'inline'; // Đảm bảo hiển thị
+                headerUserNameElement.style.display = 'inline';
             } else {
-                headerUserNameElement.textContent = `Chào mừng!`; // Hoặc "Đăng nhập" tùy ý
-                // Có thể ẩn hoặc chuyển hướng nếu không phải là CBCNV
+                headerUserNameElement.textContent = `Chào mừng!`;
             }
         }
 
-        // Cập nhật ảnh đại diện và link
         if (headerUserAvatarElement) {
             if (userPhotoUrl && role === 'CBCNV') {
                 headerUserAvatarElement.src = userPhotoUrl;
                 headerUserAvatarElement.alt = `${fullName} Avatar`;
                 if (headerUserAvatarLink) {
-                    headerUserAvatarLink.style.display = 'block'; // Hiển thị avatar link
+                    headerUserAvatarLink.style.display = 'block';
                 }
             } else {
-                // Nếu không có ảnh hoặc không phải CBCNV, hiển thị ảnh mặc định hoặc ẩn
-                headerUserAvatarElement.src = "https://via.placeholder.com/40"; // Ảnh placeholder mặc định
+                headerUserAvatarElement.src = "https://via.placeholder.com/40";
                 headerUserAvatarElement.alt = "User Avatar";
                 if (headerUserAvatarLink) {
-                    headerUserAvatarLink.style.display = 'block'; // Vẫn hiển thị link đến profile mặc định
+                    headerUserAvatarLink.style.display = 'block';
                 }
             }
         }
     }
 
-    /**
-     * Xử lý sự kiện đăng nhập khi người dùng nhấn nút hoặc Enter.
-     * @param {Event} event - Đối tượng sự kiện.
-     */
+    function clearLocalStorageSession() {
+        const keysToRemove = [
+            'userId', 'authToken', 'userEmail', 'userFullName', 'userPhone',
+            'userGender', 'userGenderDisplay', 'userAddress', 'userRole',
+            'userRoleDisplay', 'userIsActive', 'userDateJoined', 'userLastLogin',
+            'userNationalIdCard', 'userDateOfBirth', 'userPlaceOfBirth',
+            'userNationality', 'userEnrollmentDate', 'userPhoto',
+            'facultyCode', 'facultyType', 'facultyDepartmentName',
+            'facultyPosition', 'facultyDegree', 'facultyOfficeLocation',
+            'facultyIsDepartmentHead',
+            'time_login'
+        ];
+        keysToRemove.forEach(key => localStorage.removeItem(key));
+        console.log('Đã xóa dữ liệu Local Storage của phiên đăng nhập.');
+    }
+
     async function handleLogin(event) {
-        event.preventDefault(); // Ngăn chặn hành vi submit mặc định của form (nếu có)
+        event.preventDefault();
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
@@ -295,19 +76,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        if (loginBtn) { // Đảm bảo nút tồn tại trước khi thao tác
-            loginBtn.disabled = true; // Vô hiệu hóa nút đăng nhập khi đang xử lý
+        if (loginBtn) {
+            loginBtn.disabled = true;
             loginBtn.textContent = 'Đang đăng nhập...';
         }
-        showMessage('', ''); // Xóa thông báo cũ
+        showMessage('', '');
 
         try {
             const response = await fetch(loginApiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Nếu bạn có CSRF token cho Django và view KHÔNG @csrf_exempt, hãy thêm vào đây
-                    // 'X-CSRFToken': getCookie('csrftoken'),
                 },
                 body: JSON.stringify({ email: email, password: password })
             });
@@ -317,26 +96,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.ok) {
                 showMessage(data.message || 'Đăng nhập thành công!', 'success');
 
-                // --- BẮT ĐẦU PHẦN LƯU TRỮ LOCAL STORAGE ---
-                // Xóa tất cả dữ liệu cũ trước khi lưu dữ liệu mới để đảm bảo sạch sẽ
-                localStorage.clear();
-                console.log('Đã xóa Local Storage cũ trước khi lưu dữ liệu mới.');
+                clearLocalStorageSession();
+                console.log('Đã xóa dữ liệu Local Storage cũ của người dùng trước khi lưu dữ liệu mới.');
 
-                // Lưu các trường cấp cao nhất của phản hồi
                 if (data.user_id) localStorage.setItem('userId', data.user_id);
                 if (data.token) localStorage.setItem('authToken', data.token);
 
-                // Lưu thông tin từ user_data object (các trường của User + Faculty)
+                localStorage.setItem('time_login', Date.now().toString()); // Lưu thời gian đăng nhập
+
                 if (data.user_data) {
                     const userData = data.user_data;
 
                     localStorage.setItem('userEmail', userData.email || '');
-                    const userFullName = `${userData.last_name || ''} ${userData.first_name || ''}`.trim(); // Họ trước Tên sau
+                    const userFullName = `${userData.last_name || ''} ${userData.first_name || ''}`.trim();
                     localStorage.setItem('userFullName', userFullName);
 
                     localStorage.setItem('userPhone', userData.phone || '');
                     localStorage.setItem('userGender', userData.gender || '');
-                    localStorage.setItem('userGenderDisplay', userData.gender_display || ''); // Lưu cả giá trị hiển thị
+                    localStorage.setItem('userGenderDisplay', userData.gender_display || '');
 
                     const fullAddress = [
                         userData.address,
@@ -346,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('userAddress', fullAddress || '');
 
                     localStorage.setItem('userRole', userData.role || '');
-                    localStorage.setItem('userRoleDisplay', userData.role_display || ''); // Lưu cả giá trị hiển thị
+                    localStorage.setItem('userRoleDisplay', userData.role_display || '');
 
                     localStorage.setItem('userIsActive', userData.is_active ? 'true' : 'false');
                     localStorage.setItem('userDateJoined', userData.date_joined || '');
@@ -356,11 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('userPlaceOfBirth', userData.place_of_birth || '');
                     localStorage.setItem('userNationality', userData.nationality || '');
                     localStorage.setItem('userEnrollmentDate', userData.enrollment_date || '');
-                    
-                    // LƯU Ý: Đảm bảo 'user_photo' tồn tại trong user_data từ API của bạn
-                    localStorage.setItem('userPhoto', userData.user_photo || ''); 
 
-                    // Các thông tin đặc thù của Faculty (nếu có trong user_data)
+                    localStorage.setItem('userPhoto', userData.user_photo || '');
+
                     localStorage.setItem('facultyCode', userData.faculty_code || '');
                     localStorage.setItem('facultyType', userData.type || '');
                     localStorage.setItem('facultyDepartmentName', userData.department_name || '');
@@ -369,28 +144,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('facultyOfficeLocation', userData.office_location || '');
                     localStorage.setItem('facultyIsDepartmentHead', userData.is_department_head ? 'true' : 'false');
 
-                    // Cập nhật hiển thị header ngay lập tức
                     updateHeaderUserInfo(userFullName, userData.user_photo, userData.role);
                 }
-                // --- KẾT THÚC PHẦN LƯU TRỮ LOCAL STORAGE ---
 
-                // Chuyển hướng người dùng đến trang dashboard giảng viên/cán bộ
                 if (data.user_data && data.user_data.role === 'CBCNV') {
                     window.location.href = '/sggd/gv/manage/home_faculty/';
                 } else {
                     showMessage('Đăng nhập thành công nhưng tài khoản không có quyền truy cập giảng viên/cán bộ.', 'error');
+                    clearLocalStorageSession();
                 }
 
             } else {
-                // Xử lý lỗi đăng nhập từ server
                 let errorMessage = 'Đăng nhập thất bại. Vui lòng thử lại.';
                 if (data.detail) {
                     errorMessage = data.detail;
-                } else if (data.email) { // Lỗi từ trường email
+                } else if (data.email) {
                     errorMessage = data.email[0];
-                } else if (data.password) { // Lỗi từ trường password
+                } else if (data.password) {
                     errorMessage = data.password[0];
-                } else if (data.non_field_errors) { // Lỗi chung không thuộc về trường cụ thể
+                } else if (data.non_field_errors) {
                     errorMessage = data.non_field_errors[0];
                 }
                 showMessage(errorMessage, 'error');
@@ -400,13 +172,84 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Đã xảy ra lỗi kết nối. Vui lòng kiểm tra lại mạng.', 'error');
         } finally {
             if (loginBtn) {
-                loginBtn.disabled = false; // Kích hoạt lại nút đăng nhập
+                loginBtn.disabled = false;
                 loginBtn.textContent = 'Đăng nhập';
             }
         }
     }
 
-    // --- GẮN CÁC SỰ KIỆN ---
+    // --- LOGIC KIỂM TRA PHIÊN HẾT HẠN TRÊN CLIENT ---
+    function checkFrontendSessionExpiry() {
+        const timeLogin = localStorage.getItem('time_login');
+        const authToken = localStorage.getItem('authToken');
+
+        if (!timeLogin || !authToken) {
+            console.log('%c[Phiên Đăng Nhập] Không có phiên hoặc token.', 'color: gray;');
+            return false;
+        }
+
+        const loginTimestamp = parseInt(timeLogin);
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - loginTimestamp; // Thời gian đã trôi qua
+
+        // Định dạng thời gian cho console
+        const formatTime = (timestamp) => {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ` (${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`;
+        };
+
+        const remainingTimeMs = SESSION_DURATION_MS - elapsedTime;
+
+        if (remainingTimeMs <= 0) {
+            console.log('%c[Phiên Đăng Nhập] Phiên đã hết hạn!', 'color: red; font-weight: bold;');
+            console.log(`%c[Phiên Đăng Nhập] Thời gian đăng nhập: ${formatTime(loginTimestamp)}`, 'color: orange;');
+            console.log(`%c[Phiên Đăng Nhập] Thời gian hiện tại: ${formatTime(currentTime)}`, 'color: orange;');
+            clearLocalStorageSession();
+
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+                const confirmLogout = confirm('Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.');
+                if (confirmLogout) {
+                    window.location.href = '/auth/login';
+                } else {
+                    window.location.href = '/auth/login';
+                }
+            }
+            return false;
+        } else {
+            const remainingMinutes = Math.floor(remainingTimeMs / (1000 * 60));
+            const remainingSeconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
+            console.log(`%c[Phiên Đăng Nhập] Thời gian còn lại: ${remainingMinutes} phút ${remainingSeconds} giây`, 'color: blue;');
+            return true;
+        }
+    }
+
+    // Kiểm tra ngay khi DOM được tải (trừ trang đăng nhập)
+    if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+        checkFrontendSessionExpiry();
+    }
+
+    // Kiểm tra khi người dùng quay lại tab hoặc cửa sổ trình duyệt (focus)
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            console.log('%c[Kiểm tra Phiên] Trang trở lại hiển thị, đang kiểm tra phiên...', 'color: purple;');
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+                checkFrontendSessionExpiry();
+            }
+        }
+    });
+
+    // Thêm kiểm tra định kỳ mỗi 5 giây (hoặc bất kỳ khoảng thời gian nào bạn muốn)
+    // Việc này giúp cập nhật thời gian còn lại trong console ngay cả khi không chuyển tab
+    setInterval(() => {
+        if (localStorage.getItem('authToken') && window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+            console.log('%c--- Kiểm tra phiên định kỳ ---', 'color: gray;');
+            checkFrontendSessionExpiry();
+        }
+    }, 5000); // Kiểm tra mỗi 5 giây
+
+    // --- KẾT THÚC LOGIC KIỂM TRA PHIÊN HẾT HẠN TRÊN CLIENT ---
+
+
     if (loginBtn) {
         loginBtn.addEventListener('click', handleLogin);
     }
@@ -426,13 +269,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP KHI TẢI TRANG ---
-    // Phần này đảm bảo hiển thị trạng thái đúng khi người dùng quay lại trang
     const storedUserFullName = localStorage.getItem('userFullName');
-    const storedUserPhoto = localStorage.getItem('userPhoto'); // Lấy ảnh từ localStorage
+    const storedUserPhoto = localStorage.getItem('userPhoto');
     const storedUserRole = localStorage.getItem('userRole');
-    
-    // Cập nhật header ngay khi DOMContentLoaded
-    updateHeaderUserInfo(storedUserFullName, storedUserPhoto, storedUserRole);
 
+    if (checkFrontendSessionExpiry()) {
+        updateHeaderUserInfo(storedUserFullName, storedUserPhoto, storedUserRole);
+    } else {
+        updateHeaderUserInfo('', '', '');
+    }
 });

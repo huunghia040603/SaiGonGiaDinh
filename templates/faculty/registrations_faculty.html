@@ -1,78 +1,29 @@
-{% extends "admin/base_admin.html" %}
 
-{% block title %}Danh sách Đăng ký tư vấn - Admin{% endblock %}
+
+
+
+
+
+
+
+{% extends 'faculty/base_faculty.html' %}
+
+{% block title %}Quản lý lượt đăng ký{% endblock %}
 
 {% block page_styles %}
     <style>
         /* General Body and Layout */
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: #f0f2f5; /* Nền tổng thể vẫn hơi ngả xám nhẹ để có chiều sâu */
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: #212529; /* Màu chữ đen đậm hơn cho dễ đọc trên nền sáng */
-        }
+       
 
-        /* Sidebar Styling */
-        #sidebar {
-            width: 250px;
-            background-color: #ffffff; /* Sidebar nền trắng */
-            color: #343a40; /* Chữ trong sidebar màu đen đậm */
-            padding-top: 20px;
-            flex-shrink: 0;
-            box-shadow: 2px 0 6px rgba(0,0,0,0.1); /* Bóng nhẹ để phân biệt với content */
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-            border-right: 1px solid #e0e0e0; /* Đường kẻ phân cách sidebar */
-        }
+        
 
-        #sidebar .navbar-brand {
-            font-weight: 700;
-            color: #007bff; /* Tên thương hiệu màu xanh nổi bật */
-            padding: 15px 20px;
-            text-align: center;
-            display: block;
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #e9ecef; /* Đường kẻ dưới tên thương hiệu */
-        }
-
-        #sidebar .nav-link {
-            color: #495057; /* Màu chữ xám đen cho các link */
-            padding: 12px 20px;
-            display: block;
-            text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease, border-left-color 0.3s ease;
-            border-left: 5px solid transparent;
-            margin-bottom: 5px;
-            border-radius: 4px;
-        }
-
-        #sidebar .nav-link:hover {
-            background-color: #e9ecef; /* Nền xám nhạt khi hover */
-            color: #0056b3; /* Chữ xanh đậm hơn khi hover */
-            border-left-color: #007bff; /* Highlight màu xanh */
-        }
-
-        #sidebar .nav-link.active {
-            background-color: #007bff; /* Nền xanh cho link active */
-            color: white; /* Chữ trắng cho link active */
-            border-left-color: #007bff;
-            font-weight: bold;
-            box-shadow: inset 3px 0 8px rgba(0,123,255,0.2); /* Bóng trong nhẹ cho link active */
-        }
-
-        /* Content Area Styling */
         #content {
             flex-grow: 1;
-            padding: 30px;
-            background-color: #ffffff; /* Nền trắng cho khu vực nội dung chính */
+            background-color: #ffffff;
             border-radius: 8px;
-            margin: 20px;
+            
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Bóng tinh tế hơn */
-            overflow-x: auto;
+           
         }
 
         h1 {
@@ -90,11 +41,9 @@
         }
 
         .table {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
+            font-size: 15px;
             min-width: 900px; /* Đảm bảo bảng không quá co lại */
-            box-shadow: none; /* Bỏ shadow riêng cho bảng để tổng thể gọn gàng hơn */
+            /* Bỏ shadow riêng cho bảng để tổng thể gọn gàng hơn */
         }
 
         .table thead th {
@@ -117,19 +66,17 @@
         }
 
         .table tbody td {
-            padding: 12px 18px;
-            vertical-align: middle;
-            border-top: 1px solid #e9ecef;
-            white-space: nowrap;
+            white-space: nowrap; /* Đây có thể là nguyên nhân */
             max-width: 250px;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #343a40; /* Chữ đen cho nội dung bảng */
         }
 
         /* Adjust width for specific columns */
         .table tbody td:nth-child(10) { /* Cột Ghi chú */
-            white-space: normal;
+            /* white-space: normal;
+            max-width: 300px; */
+            white-space: normal; /* Đã được sửa cho ghi chú */
             max-width: 300px;
         }
         .table tbody td:nth-child(2), /* Họ và tên */
@@ -256,5 +203,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/admin/admin_registrations.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/faculty/faculty_registrations.js') }}"></script>
 {% endblock %}

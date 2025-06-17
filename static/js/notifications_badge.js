@@ -8,75 +8,91 @@ document.addEventListener('DOMContentLoaded', function() {
         notificationCountBadge.style.display = 'none'; 
     }
 
+    // Hàm lấy token được điều chỉnh để nhất quán với các script khác
     function getAuthToken() {
-        // Ưu tiên lấy token của giáo viên nếu có
-        const teacherToken = localStorage.getItem('teacherAuthToken');
-        if (teacherToken) {
-            console.log('DEBUG (JS): Đang sử dụng teacherAuthToken.');
-            return teacherToken;
+        const currentPath = window.location.pathname;
+        let token = null;
+
+        // Nếu đường dẫn là của giảng viên/cán bộ, lấy 'authToken'
+        if (currentPath.startsWith('/sggd/gv/manage')) {
+            token = localStorage.getItem('authToken');
+          
+        } 
+        // Nếu đường dẫn là của quản trị viên, lấy 'adminAuthToken'
+        else if (currentPath.startsWith('/sggd/qtv/admin')) {
+            token = localStorage.getItem('adminAuthToken');
+           
+        } 
+        // Nếu không khớp đường dẫn nào, log và trả về null
+        else {
+            console.log("DEBUG (JS - Notification): Không khớp đường dẫn, không lấy token cụ thể.");
         }
-        // Nếu không có token giáo viên, lấy token thông thường
-        console.log('DEBUG (JS): Không tìm thấy teacherAuthToken, đang sử dụng authToken thông thường.');
-        return localStorage.getItem('authToken'); 
+        return token;
     }
 
     async function fetchNotificationCount() {
         try {
             const token = getAuthToken();
-            console.log('DEBUG (JS): Token Authorization:', token ? 'Exist' : 'Not Exist'); // Log token để kiểm tra
+           
             
+            // Nếu không có token, không thực hiện gọi API
+            if (!token) {
+                
+                if (notificationCountBadge) {
+                    notificationCountBadge.textContent = '0';
+                    notificationCountBadge.style.display = 'none';
+                }
+                return;
+            }
+
             const headers = {
                 'Content-Type': 'application/json',
-                // Chỉ thêm header Authorization nếu có token
-                ...(token && { 'Authorization': `Token ${token}` })
+                'Authorization': `Token ${token}` // Chỉ thêm header Authorization nếu có token
             };
-            console.log('DEBUG (JS): Request Headers:', headers); // Log headers
+            
 
             const response = await fetch(unreadNotificationsApiUrl, { headers: headers });
 
-            console.log('DEBUG (JS): Raw Response:', response); // Log đối tượng response thô
+            console.log('DEBUG (JS - Notification): Raw Response:', response);
 
             if (!response.ok) {
-                // Ném lỗi nếu phản hồi không thành công
-                const errorText = await response.text(); // Đọc nội dung lỗi nếu có
-                console.error('DEBUG (JS): Lỗi phản hồi API:', response.status, errorText); // Log lỗi chi tiết
+                const errorText = await response.text();
+                console.error('DEBUG (JS - Notification): Lỗi phản hồi API:', response.status, errorText);
                 throw new Error(`Lỗi HTTP! Trạng thái: ${response.status} - ${errorText}`);
             }
 
             const data = await response.json();
-            console.log('DEBUG (JS): Data từ API (JSON):', data);
-            console.log('DEBUG (JS): Data từ API (JSON)11:', data.count); // Log toàn bộ dữ liệu JSON
-            
+           
+            // Bạn có thể cần kiểm tra cấu trúc chính xác của `data` nếu `data.count` không phải lúc nào cũng là số
+           
             const count = data.count; // Lấy số lượng thông báo chưa đọc
-            console.log('DEBUG (JS): Số lượng thông báo chưa đọc (count):', count); // Log giá trị count
+            console.log('DEBUG (JS - Notification): Số lượng thông báo chưa đọc (count):', count);
 
-            // Cập nhật huy hiệu dựa trên số lượng thông báo
-            if (notificationCountBadge) { // Thêm kiểm tra này để tránh lỗi "Cannot read properties of null"
-                if (count > 0) { // Chỉ hiển thị nếu số lượng lớn hơn 0
+            if (notificationCountBadge) {
+                if (count > 0) {
                     notificationCountBadge.textContent = count;
-                    notificationCountBadge.style.display = 'flex'; // Hiển thị
+                    notificationCountBadge.style.display = 'flex'; // Sử dụng flex để căn giữa nếu cần
                 } else {
                     notificationCountBadge.textContent = '';
-                    notificationCountBadge.style.display = 'none'; // Ẩn
+                    notificationCountBadge.style.display = 'none';
                 }
             } else {
-                console.error("DEBUG (JS): Không tìm thấy phần tử 'notificationCountBadge' trong DOM.");
+                console.error("DEBUG (JS - Notification): Không tìm thấy phần tử 'notificationCountBadge' trong DOM.");
             }
 
         } catch (error) {
-            console.error('DEBUG (JS): Lỗi khi tải số lượng thông báo chưa đọc:', error);
-            // Trong trường hợp lỗi, đảm bảo huy hiệu bị ẩn
-            if (notificationCountBadge) { // Thêm kiểm tra này
+            
+            if (notificationCountBadge) {
                 notificationCountBadge.style.display = 'none';
             }
         }
     }
 
-    // Gọi hàm fetchNotificationCount sau 3 giây
+    // Tùy chỉnh độ trễ nếu cần thiết, 100ms thường là đủ sau khi DOM tải
     setTimeout(() => {
         fetchNotificationCount();
-    }, 100); // 3000 milliseconds = 3 giây
+    }, 100); 
 
-    // (Tùy chọn) Tự động làm mới số lượng thông báo định kỳ
-    // setInterval(fetchNotificationCount, 5 * 60 * 1000);
+    // (Tùy chọn) Tự động làm mới số lượng thông báo định kỳ (ví dụ: mỗi 5 phút)
+    // setInterval(fetchNotificationCount, 5 * 60 * 1000); 
 });
