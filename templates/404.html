@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang không tìm thấy - Lỗi 404</title>
+    <link rel="stylesheet" href="404_modern_styles.css"> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<style>
+    /* Custom properties for colors */
+:root {
+    --primary-color: #007bff; /* Blue */
+    --secondary-color: #6c757d; /* Grey */
+    --accent-color: #28a745; /* Green */
+    --background-light: #f0f2f5;
+    --text-dark: #333;
+    --text-light: #fff;
+    --error-red: #dc3545;
+    --gradient-start: #6dd5ed;
+    --gradient-end: #2193b0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif; /* Sử dụng font Open Sans */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: var(--background-light);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden; /* Hide overflow for background animation */
+    position: relative; /* For positioning background animation */
+}
+
+/* Background Animation (Subtle moving shapes) */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    opacity: 0.1; /* Very subtle */
+    z-index: -1; /* Send to back */
+    animation: moveBackground 30s linear infinite alternate; /* Slower, subtle movement */
+}
+
+@keyframes moveBackground {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-5%) translateX(-5%); }
+}
+
+
+.container-404-modern {
+    background-color: var(--text-light);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 50px 40px;
+    max-width: 700px;
+    width: 100%;
+    position: relative; /* Ensure it stays above background */
+    z-index: 1;
+    transform: translateY(0); /* Initial state for animation */
+    animation: fadeInScale 0.8s ease-out forwards; /* Entry animation */
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.error-visual {
+    font-family: 'Montserrat', sans-serif; /* Sử dụng font Montserrat cho số */
+    font-size: 10em; /* Kích thước lớn */
+    font-weight: 700; /* Dày hơn */
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    /* Add a subtle glow/shadow to the numbers */
+    text-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+.error-visual .digit {
+    animation: bounceIn 1s ease-out forwards;
+    opacity: 0; /* Hidden initially */
+}
+
+/* Delay animation for each digit */
+.error-visual .digit:nth-child(1) { animation-delay: 0.2s; }
+.error-visual .digit:nth-child(2) { animation-delay: 0.4s; }
+.error-visual .digit:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(-50px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.1) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+.error-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5em;
+    color: var(--error-red);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.error-text {
+    font-size: 1.1em;
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+    line-height: 1.7;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action-buttons {
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 30px; /* Rounded buttons */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: 2px solid var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+}
+
+.secondary-btn {
+    background-color: var(--text-light);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+}
+
+.help-section {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.help-section p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.help-section .contact-links a {
+    color: var(--accent-color); /* Green for contact links */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.help-section .contact-links a:hover {
+    color: #1e7e34; /* Darker green on hover */
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .error-visual {
+        font-size: 8em;
+    }
+    .error-heading {
+        font-size: 2em;
+    }
+    .error-text {
+        font-size: 1em;
+    }
+    .btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    .action-buttons {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 15px;
+    }
+    .container-404-modern {
+        padding: 40px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-visual {
+        font-size: 6em;
+    }
+    .error-heading {
+        font-size: 1.6em;
+    }
+    .error-text {
+        font-size: 0.9em;
+    }
+    .btn {
+        width: 100%; /* Full width buttons */
+    }
+}
+</style>
+<body>
+    <div class="background-animation"></div> <div class="container-404-modern">
+        <div class="error-visual">
+            <span class="digit">4</span>
+            <span class="digit">0</span>
+            <span class="digit">4</span>
+        </div>
+        <h1 class="error-heading">Rất tiếc! Trang này không tồn tại.</h1>
+        <p class="error-text">
+            Có vẻ như bạn đã lạc vào không gian số rồi! Trang bạn đang tìm kiếm có thể đã bị xóa, địa chỉ bị thay đổi hoặc chưa bao giờ tồn tại.
+        </p>
+        <div class="action-buttons">
+            <a href="/" class="btn primary-btn">Quay về Trang chủ</a>
+            <a href="#" class="btn secondary-btn" onclick="history.back(); return false;">Trở lại trang trước</a>
+        </div>
+        <div class="help-section">
+            <p>Nếu bạn nghĩ đây là một lỗi, vui lòng liên hệ với chúng tôi:</p>
+            <p class="contact-links">
+                <a href="mailto:info@yourcollege.edu.vn">huunghia040623@gmail.com</a> | 
+                <a href="tel:+84123456789">028 3588 5558</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,266 +1,432 @@
-<style>
-/* Chatbot nổi - CSS (Cập nhật và tinh chỉnh) */
 
-.sgdg-chatbot-container {
-    position: fixed;
-    bottom: 80px; /* Vị trí nút chatbot cách đáy */
-    right: 15px; /* Vị trí nút chatbot cách bên phải */
-    z-index: 1000;
-}
+    <style>
+        /* Chatbot nổi - CSS (Cập nhật và tinh chỉnh) */
 
-.sgdg-chatbot-toggle-button {
-    background-color: #0056b3; /* Màu xanh đặc trưng của trường */
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Tăng độ sâu bóng */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng mượt mà hơn */
-    outline: none;
-}
+        .sgdg-chatbot-container {
+            position: fixed;
+            bottom: 80px; /* Vị trí nút chatbot cách đáy */
+            right: 15px; /* Vị trí nút chatbot cách bên phải */
+            z-index: 1000;
+        }
 
-.sgdg-chatbot-toggle-button:hover {
-    background-color: #004085; /* Sẫm hơn một chút khi hover */
-    transform: scale(1.08); /* Phóng to nhẹ khi hover */
-}
+        .sgdg-chatbot-toggle-button {
+            background-color: #0056b3; /* Màu xanh đặc trưng của trường */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Tăng độ sâu bóng */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng mượt mà hơn */
+            outline: none;
+        }
 
-.sgdg-chatbot-icon {
-    width: 52px; /* Kích thước icon hợp lý hơn */
-    height: 52px;
-    /* filter: brightness(0) invert(1);  */
-    /* Biến icon màu trắng nếu icon gốc không phải màu trắng */
-}
+        .sgdg-chatbot-toggle-button:hover {
+            background-color: #004085; /* Sẫm hơn một chút khi hover */
+            transform: scale(1.08); /* Phóng to nhẹ khi hover */
+        }
 
-.sgdg-chat-window {
-    background-color: #fff;
-    border-radius: 12px; /* Bo góc mềm mại hơn */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Bóng sâu và mềm mại hơn */
-    width: 350px;
-    height: 480px; /* Tăng chiều cao một chút để có thêm không gian */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: absolute;
-    bottom: 80px; /* Vị trí so với nút toggle */
-    right: 0;
-    transform: translateY(100%) scale(0.9); /* Ẩn và thu nhỏ nhẹ ban đầu */
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease, visibility 0.3s; /* Hiệu ứng bật lên sống động hơn */
-}
+        .sgdg-chatbot-icon {
+            width: 52px; /* Kích thước icon hợp lý hơn */
+            height: 52px;
+            /* filter: brightness(0) invert(1);  */
+            /* Biến icon màu trắng nếu icon gốc không phải màu trắng */
+        }
 
-.sgdg-chat-window.sgdg-chat-window-active {
-    transform: translateY(0) scale(1); /* Hiện lên và phóng to về kích thước gốc */
-    opacity: 1;
-    visibility: visible;
-}
+        .sgdg-chat-window {
+            background-color: #fff;
+            border-radius: 12px; /* Bo góc mềm mại hơn */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Bóng sâu và mềm mại hơn */
+            width: 350px;
+            height: 480px; /* Tăng chiều cao một chút để có thêm không gian */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: absolute;
+            bottom: 80px; /* Vị trí so với nút toggle */
+            right: 0;
+            transform: translateY(100%) scale(0.9); /* Ẩn và thu nhỏ nhẹ ban đầu */
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease, visibility 0.3s; /* Hiệu ứng bật lên sống động hơn */
+        }
 
-.sgdg-chat-header {
-    background-color: #0056b3;
-    color: white;
-    padding: 15px 20px; /* Tăng padding */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.15em; /* Tăng kích thước chữ */
-    border-top-left-radius: 12px; /* Đồng bộ bo góc */
-    border-top-right-radius: 12px; /* Đồng bộ bo góc */
-    font-weight: bold; /* In đậm tiêu đề */
-}
+        .sgdg-chat-window.sgdg-chat-window-active {
+            transform: translateY(0) scale(1); /* Hiện lên và phóng to về kích thước gốc */
+            opacity: 1;
+            visibility: visible;
+        }
 
-.sgdg-chat-header h4 {
-    margin: 0;
-    font-size: 1em; /* Kích thước chữ trong h4 */
-}
+        .sgdg-chat-header {
+            background-color: #cb282ed8;
+            color: white;
+            padding: 15px 20px; /* Tăng padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.15em; /* Tăng kích thước chữ */
+            border-top-left-radius: 12px; /* Đồng bộ bo góc */
+            border-top-right-radius: 12px; /* Đồng bộ bo góc */
+            font-weight: bold; /* In đậm tiêu đề */
+        }
 
-.sgdg-close-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.9em; /* Kích thước nút đóng lớn hơn */
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 8px; /* Tăng padding nút đóng */
-    outline: none;
-    transition: color 0.2s ease;
-}
+        .sgdg-chat-header h4 {
+            margin: 0;
+            font-size: 1em; /* Kích thước chữ trong h4 */
+        }
 
-.sgdg-close-button:hover {
-    color: #e0e0e0; /* Màu nhạt hơn khi hover */
-}
+        .sgdg-close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.9em; /* Kích thước nút đóng lớn hơn */
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 8px; /* Tăng padding nút đóng */
+            outline: none;
+            transition: color 0.2s ease;
+        }
 
-.sgdg-chat-box {
-    flex-grow: 1;
-    padding: 20px; /* Tăng padding khung chat */
-    overflow-y: auto;
-    background-color: #f0f2f5; /* Nền khung chat màu xám nhạt hơn */
-    border-bottom: 1px solid #e0e0e0; /* Đường viền mỏng hơn */
-    display: flex; /* Cho phép flexbox để sắp xếp tin nhắn */
-    flex-direction: column; /* Sắp xếp tin nhắn theo cột */
-}
+        .sgdg-close-button:hover {
+            color: #e0e0e0; /* Màu nhạt hơn khi hover */
+        }
 
-.sgdg-message {
-    margin-bottom: 12px; /* Khoảng cách giữa các tin nhắn */
-    padding: 10px 15px; /* Tăng padding tin nhắn */
-    border-radius: 20px; /* Bo góc mềm mại hơn cho tin nhắn */
-    max-width: 80%;
-    word-wrap: break-word;
-    font-size: 0.95em; /* Kích thước chữ tin nhắn */
-    line-height: 1.4; /* Khoảng cách dòng */
-}
+        .sgdg-chat-box {
+            flex-grow: 1;
+            padding: 20px; /* Tăng padding khung chat */
+            overflow-y: auto;
+            background-color: #f0f2f5; /* Nền khung chat màu xám nhạt hơn */
+            border-bottom: 1px solid #e0e0e0; /* Đường viền mỏng hơn */
+            display: flex; /* Cho phép flexbox để sắp xếp tin nhắn */
+            flex-direction: column; /* Sắp xếp tin nhắn theo cột */
+        }
 
-.sgdg-user-message {
-    background-color: #d8f0f8; /* Màu xanh nhạt tươi hơn */
-    color: #333;
-    align-self: flex-end;
-    margin-left: auto;
-    text-align: right;
-    border-bottom-right-radius: 5px; /* Bo góc đặc biệt cho tin nhắn cuối cùng của người dùng */
-}
+        .sgdg-message {
+            margin-bottom: 12px; /* Khoảng cách giữa các tin nhắn */
+            padding: 10px 15px; /* Tăng padding tin nhắn */
+            border-radius: 20px; /* Bo góc mềm mại hơn cho tin nhắn */
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 0.95em; /* Kích thước chữ tin nhắn */
+            line-height: 1.4; /* Khoảng cách dòng */
+        }
 
-.sgdg-bot-message {
-    background-color: #f0f0f0; /* Màu xám nhạt */
-    color: #333;
-    align-self: flex-start;
-    margin-right: auto;
-    text-align: left;
-    border-bottom-left-radius: 5px; /* Bo góc đặc biệt cho tin nhắn cuối cùng của bot */
-}
+        .sgdg-user-message {
+            background-color: #d8f0f8; /* Màu xanh nhạt tươi hơn */
+            color: #333;
+            align-self: flex-end;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 5px; /* Bo góc đặc biệt cho tin nhắn cuối cùng của người dùng */
+        }
 
-.sgdg-chat-input {
-    display: flex;
-    padding: 15px; /* Tăng padding */
-    border-top: 1px solid #e0e0e0;
-    background-color: #fff;
-    align-items: center; /* Căn giữa theo chiều dọc */
-}
+        .sgdg-bot-message {
+            background-color: #f0f0f0; /* Màu xám nhạt */
+            color: #333;
+            align-self: flex-start;
+            margin-right: auto;
+            text-align: left;
+            border-bottom-left-radius: 5px; /* Bo góc đặc biệt cho tin nhắn cuối cùng của bot */
+        }
 
-.sgdg-chat-input input {
-    flex-grow: 1;
-    padding: 10px 18px; /* Tăng padding input */
-    border: 1px solid #ccc;
-    border-radius: 25px; /* Bo góc mềm mại hơn */
-    margin-right: 12px; /* Tăng khoảng cách với nút gửi */
-    outline: none;
-    font-size: 1em;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
+        .sgdg-chat-input {
+            display: flex;
+            padding: 15px; /* Tăng padding */
+            border-top: 1px solid #e0e0e0;
+            background-color: #fff;
+            align-items: center; /* Căn giữa theo chiều dọc */
+        }
 
-.sgdg-chat-input input:focus {
-    border-color: #007bff; /* Viền xanh khi focus */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Bóng xanh nhẹ khi focus */
-}
+        .sgdg-chat-input input {
+            flex-grow: 1;
+            padding: 10px 18px; /* Tăng padding input */
+            border: 1px solid #ccc;
+            border-radius: 25px; /* Bo góc mềm mại hơn */
+            margin-right: 12px; /* Tăng khoảng cách với nút gửi */
+            outline: none;
+            font-size: 1em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
 
-.sgdg-chat-input button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    padding: 10px 20px; /* Tăng padding nút gửi */
-    border-radius: 25px; /* Bo góc mềm mại hơn */
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    outline: none;
-    font-size: 1em;
-    font-weight: 500; /* In đậm vừa phải */
-}
+        .sgdg-chat-input input:focus {
+            border-color: #cb282ed8; /* Viền xanh khi focus */
+            box-shadow: 0 0 0 3px rgba(225, 116, 116, 0.25); /* Bóng xanh nhẹ khi focus */
+        }
 
-.sgdg-chat-input button:hover {
-    background-color: #004085;
-    transform: translateY(-1px); /* Nút nhích lên một chút khi hover */
-}
-</style>
+        .sgdg-chat-input button {
+            background-color: #cb282ed8;
+            color: white;
+            border: none;
+            padding: 10px 20px; /* Tăng padding nút gửi */
+            border-radius: 25px; /* Bo góc mềm mại hơn */
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            outline: none;
+            font-size: 1em;
+            font-weight: 500; /* In đậm vừa phải */
+        }
 
-<div class="sgdg-chatbot-container">
-    <button class="sgdg-chatbot-toggle-button" id="sgdg-chatbot-toggle">
-        <img src="/static/images/logoSGGD.png" alt="Chat" class="sgdg-chatbot-icon">
+        .sgdg-chat-input button:hover {
+            background-color: #7b1519d8;
+            transform: translateY(-1px); /* Nút nhích lên một chút khi hover */
+        }
+
+        /* CSS cho tin nhắn chào hỏi nổi */
+        .sgdg-welcome-popup {
+            position: fixed;
+            bottom: 150px; /* Cao hơn nút chat một chút */
+            right: 15px;
+            background-color: #cb282ed8; /* Màu nền của trường */
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px; /* Bo góc mềm mại */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            z-index: 999; /* Cao hơn nội dung trang nhưng thấp hơn cửa sổ chat chính */
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Khoảng cách giữa chữ và nút đóng */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%); /* Bắt đầu từ ngoài màn hình bên phải */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0.5s ease-out;
+            max-width: 250px; /* Giới hạn chiều rộng tin nhắn */
+        }
+
+        .sgdg-welcome-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0); /* Trượt vào từ bên phải */
+        }
+
+        .sgdg-welcome-popup.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%); /* Trượt ra ngoài màn hình bên phải */
+        }
+
+        .sgdg-welcome-text {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .sgdg-welcome-close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em; /* Kích thước nút đóng */
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 5px;
+            outline: none;
+            transition: color 0.2s ease;
+        }
+
+        .sgdg-welcome-close-button:hover {
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 576px) {
+
+            .sgdg-chatbot-container {
+      
+            bottom: 120px; /* Vị trí nút chatbot cách đáy */
+            right: 10px; /* Vị trí nút chatbot cách bên phải */
+          
+        }
+
+        .sgdg-welcome-close-button {
+            font-size: 0; /* Kích thước nút đóng */
+        }
+    
+    }
+
+        
+    </style>
+</head>
+<body>
+
+    <div class="sgdg-chatbot-container">
+        <button class="sgdg-chatbot-toggle-button" id="sgdg-chatbot-toggle">
+            <img src="/static/images/logoSGGD.png" alt="Chat" class="sgdg-chatbot-icon">
         </button>
 
-    <div class="sgdg-chat-window" id="sgdg-chat-window">
-        <div class="sgdg-chat-header">
-            <h4>Chatbot SGGD</h4>
-            <button class="sgdg-close-button" id="sgdg-close-chat">&times;</button>
-        </div>
-        <div class="sgdg-chat-box" id="sgdg-chat-box">
-            <div class="sgdg-message sgdg-bot-message">Chào mừng bạn đến với Cao đẳng Sài Gòn Gia Định. Tôi có thể giúp gì cho bạn?</div>
-        </div>
-        <div class="sgdg-chat-input">
-            <input type="text" id="sgdg-user-input" placeholder="Nhập câu hỏi của bạn...">
-            <button id="sgdg-send-button">Gửi</button>
+        <div class="sgdg-chat-window" id="sgdg-chat-window">
+            <div class="sgdg-chat-header">
+                <h4>Cao Đẳng Sài Gòn Gia Định</h4>
+                <button class="sgdg-close-button" id="sgdg-close-chat">&times;</button>
+            </div>
+            <div class="sgdg-chat-box" id="sgdg-chat-box">
+                <div class="sgdg-message sgdg-bot-message">Chào mừng bạn đến với Cao đẳng Sài Gòn Gia Định. Tôi có thể giúp gì cho bạn?</div>
+            </div>
+            <div class="sgdg-chat-input">
+                <input type="text" id="sgdg-user-input" placeholder="Nhập câu hỏi của bạn...">
+                <button id="sgdg-send-button">Gửi</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const chatToggle = document.getElementById('sgdg-chatbot-toggle');
-    const chatWindow = document.getElementById('sgdg-chat-window');
-    const closeChatButton = document.getElementById('sgdg-close-chat');
-    const chatBox = document.getElementById('sgdg-chat-box');
-    const userInput = document.getElementById('sgdg-user-input');
-    const sendButton = document.getElementById('sgdg-send-button');
+    <div class="sgdg-welcome-popup" id="sgdg-welcome-popup">
+        <span class="sgdg-welcome-text">Xin chào! Tôi có thể giúp bạn không?</span>
+        <button class="sgdg-welcome-close-button">&times;</button>
+    </div>
 
-    // Hàm để thêm tin nhắn vào khung chat
-    function addMessage(sender, text) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('sgdg-message');
-        messageDiv.classList.add(sender === 'user' ? 'sgdg-user-message' : 'sgdg-bot-message');
-        messageDiv.textContent = text;
-        chatBox.appendChild(messageDiv);
-        // Cuộn xuống cuối khung chat
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatToggle = document.getElementById('sgdg-chatbot-toggle');
+            const chatWindow = document.getElementById('sgdg-chat-window');
+            const closeChatButton = document.getElementById('sgdg-close-chat');
+            const chatBox = document.getElementById('sgdg-chat-box');
+            const userInput = document.getElementById('sgdg-user-input');
+            const sendButton = document.getElementById('sgdg-send-button');
+            const welcomePopup = document.getElementById('sgdg-welcome-popup'); // Lấy phần tử popup chào hỏi
+            const welcomeCloseButton = welcomePopup.querySelector('.sgdg-welcome-close-button'); // Nút đóng popup
 
-    // Hàm gửi tin nhắn đến backend
-    async function sendMessage() {
-        const message = userInput.value.trim();
-        if (message === '') return; // Không gửi tin nhắn rỗng
+            let welcomePopupInterval; // Biến lưu trữ interval cho popup chào hỏi
+            const WELCOME_POPUP_DISPLAY_TIME = 2000; // Thời gian chờ giữa các lần hiển thị popup (2 giây)
 
-        addMessage('user', message);
-        userInput.value = ''; // Xóa nội dung input sau khi gửi
+            // Hàm để thêm tin nhắn vào khung chat (không thay đổi nhiều, chỉ đảm bảo link hoạt động)
+            function addMessage(sender, text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('sgdg-message');
+                messageDiv.classList.add(sender === 'user' ? 'sgdg-user-message' : 'sgdg-bot-message');
+                
+                // Xử lý các đường link có thể nhấp được trong tin nhắn của bot
+                if (sender === 'bot') {
+                    const linkRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+                    const formattedText = text.replace(linkRegex, (url) => {
+                        let fullUrl = url;
+                        if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                            fullUrl = 'http://' + fullUrl; // Đảm bảo URL có protocol để href hoạt động
+                        }
+                        return `<a href="${fullUrl}" target="_blank" style="color: #007bff; text-decoration: underline;">${url}</a>`;
+                    });
+                    messageDiv.innerHTML = formattedText; // Dùng innerHTML vì có thẻ <a>
+                } else {
+                    messageDiv.textContent = text;
+                }
+                
+                chatBox.appendChild(messageDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
 
-        try {
-            // Địa chỉ của Flask server của bạn (giữ nguyên như phần trước)
-            const response = await fetch('http://127.0.0.1:5000/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: message })
+            // Hàm gửi tin nhắn đến backend
+            async function sendMessage() {
+                const message = userInput.value.trim();
+                if (message === '') return;
+
+                addMessage('user', message);
+                userInput.value = '';
+
+                // Ẩn popup chào hỏi ngay lập tức khi người dùng gửi tin nhắn
+                hideWelcomePopup();
+                // Dừng interval popup chào hỏi
+                clearInterval(welcomePopupInterval);
+
+                try {
+                    // Địa chỉ của Flask server của bạn
+                    const response = await fetch('http://127.0.0.1:5000/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ message: message })
+                    });
+                    const data = await response.json();
+                    addMessage('bot', data.response);
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('bot', 'Xin lỗi, tôi không thể kết nối với bot lúc này. Vui lòng thử lại sau.');
+                }
+            }
+
+            // Hàm hiển thị popup chào hỏi
+            function showWelcomePopup() {
+                // Chỉ hiển thị nếu cửa sổ chat đang đóng và popup chưa active
+                if (!chatWindow.classList.contains('sgdg-chat-window-active') && !welcomePopup.classList.contains('active')) {
+                    welcomePopup.classList.add('active');
+                    welcomePopup.classList.remove('hidden'); // Đảm bảo remove hidden class
+                }
+            }
+
+            // Hàm ẩn popup chào hỏi
+            function hideWelcomePopup() {
+                welcomePopup.classList.remove('active');
+                welcomePopup.classList.add('hidden'); // Thêm class hidden để kích hoạt hiệu ứng ẩn
+            }
+
+            // Hàm quản lý vòng lặp hiển thị popup chào hỏi
+            function startWelcomePopupLoop() {
+                // Dừng interval cũ để tránh trùng lặp
+                clearInterval(welcomePopupInterval);
+
+                welcomePopupInterval = setInterval(() => {
+                    // Kiểm tra nếu chat window đang đóng
+                    if (!chatWindow.classList.contains('sgdg-chat-window-active')) {
+                        showWelcomePopup();
+                        // Đặt hẹn giờ để ẩn popup sau một khoảng thời gian ngắn
+                        setTimeout(() => {
+                            hideWelcomePopup();
+                        }, 5000); // Ẩn sau 5 giây hiển thị
+                    } else {
+                        // Nếu chat window đang mở, đảm bảo popup bị ẩn
+                        hideWelcomePopup();
+                    }
+                }, WELCOME_POPUP_DISPLAY_TIME + 6000 + 2000); // Khoảng thời gian cho lần hiển thị tiếp theo
+                // Công thức: WELCOME_POPUP_DISPLAY_TIME (2s) + thời gian popup hiển thị (5s) + thời gian nghỉ trước lần hiển thị mới (1s)
+                // Tổng cộng mỗi ~8 giây, popup sẽ thử hiện lại nếu chat đóng
+            }
+
+            // --- Các sự kiện chính ---
+
+            // Khởi tạo tin nhắn đầu tiên trong khung chat
+            addMessage('bot', 'Chào mừng bạn đến với Cao đẳng Sài Gòn Gia Định. Tôi có thể giúp gì cho bạn?');
+            
+            // Bắt đầu vòng lặp hiển thị popup chào hỏi khi tải trang
+            startWelcomePopupLoop();
+
+            // Xử lý sự kiện khi click nút toggle để mở/đóng chatbot
+            chatToggle.addEventListener('click', () => {
+                chatWindow.classList.toggle('sgdg-chat-window-active');
+                if (chatWindow.classList.contains('sgdg-chat-window-active')) {
+                    userInput.focus();
+                    // Ẩn popup chào hỏi khi chat được mở
+                    hideWelcomePopup();
+                    // Dừng vòng lặp hiển thị popup
+                    clearInterval(welcomePopupInterval);
+                } else {
+                    // Bắt đầu lại vòng lặp khi chat đóng
+                    startWelcomePopupLoop();
+                }
             });
-            const data = await response.json();
-            addMessage('bot', data.response);
-        } catch (error) {
-            console.error('Error:', error);
-            addMessage('bot', 'Xin lỗi, tôi không thể kết nối với bot lúc này. Vui lòng thử lại sau.');
-        }
-    }
 
-    // Xử lý sự kiện khi click nút toggle để mở/đóng chatbot
-    chatToggle.addEventListener('click', () => {
-        chatWindow.classList.toggle('sgdg-chat-window-active');
-        if (chatWindow.classList.contains('sgdg-chat-window-active')) {
-            userInput.focus(); // Tự động focus vào ô nhập liệu khi mở
-        }
-    });
+            // Xử lý sự kiện khi click nút đóng chatbot
+            closeChatButton.addEventListener('click', () => {
+                chatWindow.classList.remove('sgdg-chat-window-active');
+                // Bắt đầu lại vòng lặp khi chat đóng
+                startWelcomePopupLoop();
+            });
 
-    // Xử lý sự kiện khi click nút đóng chatbot
-    closeChatButton.addEventListener('click', () => {
-        chatWindow.classList.remove('sgdg-chat-window-active');
-    });
+            // Xử lý sự kiện khi click nút đóng trên popup chào hỏi
+            welcomeCloseButton.addEventListener('click', () => {
+                hideWelcomePopup();
+                // Dừng interval hiện tại để nó không xuất hiện lại ngay lập tức
+                clearInterval(welcomePopupInterval);
+                // Bạn có thể đặt lại interval sau một thời gian dài hơn nếu muốn
+                // Ví dụ: setTimeout(startWelcomePopupLoop, 30000); // Sau 30 giây mới bắt đầu lại
+            });
 
-    // Gửi tin nhắn khi nhấn nút Gửi
-    sendButton.addEventListener('click', sendMessage);
+            // Gửi tin nhắn khi nhấn nút Gửi
+            sendButton.addEventListener('click', sendMessage);
 
-    // Gửi tin nhắn khi nhấn Enter trong ô nhập liệu
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-});
-</script>
+            // Gửi tin nhắn khi nhấn Enter trong ô nhập liệu
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>

@@ -293,6 +293,10 @@ def profile():
 def dangki():
     return render_template('dangki.html')
 
+@app.route('/dangkinhaphoc')
+def dangkinhaphoc():
+    return render_template('dangkynhaphoc.html')
+
 @app.route('/about')
 def vechungtoi():
     return render_template('vechungtoi.html')
@@ -397,6 +401,10 @@ def dangkybansaobtn():
 @app.route('/huong-dan')
 def huongdan():
     return render_template('huong-dan.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 teachers_data = [
     {
