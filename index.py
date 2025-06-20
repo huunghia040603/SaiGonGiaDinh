@@ -560,9 +560,9 @@ def add_facility_review(facility_id):
         return {"message": "Đánh giá cơ sở vật chất đã được tiếp nhận (chưa lưu vào DB)", "review": {"stars": stars, "comment": comment}}, 201
     return {"error": "Request must be JSON"}, 400
 
-@app.route('/events')
-def sukien():
-    return render_template('sukien.html')
+@app.route('/ktx')
+def ktx():
+    return render_template('ktx.html')
 
 @app.route('/careers')
 def tuyendung():

@@ -1,0 +1,939 @@
+/* Trong ktx.css */
+
+/* Custom Properties */
+:root {
+    --primary-color-02: #007bff; /* Blue */
+    --secondary-color-02: #6c757d; /* Grey */
+    --accent-color-02: #28a745; /* Green */
+    --background-light-02: #f8f9fa;
+    --text-dark-02: #343a40;
+    --text-light-02: #fff;
+    --border-color-02: #e9ecef;
+    --card-bg-02: #fff;
+    --shadow-02: rgba(0, 0, 0, 0.08);
+    --hover-shadow-02: rgba(0, 0, 0, 0.15);
+    --danger-color-02: #dc3545; /* Red for 'Hết phòng' */
+    --warning-color-02: #ffc107; /* Orange for rules */
+}
+
+/* Đảm bảo HTML và BODY có setup đúng để thanh cuộn không nhảy */
+html {
+    overflow-y: scroll; /* Vẫn giữ nguyên để thanh cuộn luôn hiển thị */
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* Đảm bảo font dự phòng hoặc font chính được tải */
+    color: #333;
+}
+
+/* Thêm class mới để ẩn roomListContainer02 mà vẫn giữ không gian */
+.room-list-hidden {
+    opacity: 0;
+    visibility: hidden;
+    /* transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Có thể thêm transition nếu muốn */
+    /* Quan trọng: giữ nguyên display: grid để nó vẫn chiếm không gian và không ảnh hưởng layout */
+    /* height: 0; /* Có thể thêm để loại bỏ chiều cao nếu không muốn chiếm không gian dọc */
+    /* overflow: hidden; /* Cũng có thể giúp */
+    /* Max-height 0 và overflow hidden là một lựa chọn tốt hơn cho chiều cao */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.room-list-visible {
+    opacity: 1;
+    visibility: visible;
+    max-height: 5000px; /* Một giá trị đủ lớn để hiển thị toàn bộ nội dung */
+    overflow: visible;
+    transition: max-height 0.5s ease-in, opacity 0.3s ease-in, visibility 0.3s ease-in;
+}
+
+/* Main Content Area */
+.main-content02 {
+    flex-grow: 1;
+    padding: 30px 0;
+}
+
+.container02 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Search Section */
+.search-section02 {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background-color: var(--card-bg-02);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow-02);
+    align-items: center;
+}
+
+#searchBar02 {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color-02);
+    border-radius: 8px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#searchBar02:focus {
+    border-color: var(--primary-color-02);
+}
+
+#searchButton02 {
+    background-color: var(--primary-color-02);
+    color: var(--text-light-02);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#searchButton02:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Favorite Toggle Section */
+.favorite-toggle-section02 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.btn-toggle-favorite02 {
+    background-color: var(--accent-color-02);
+    color: var(--text-light-02);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.05em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+.btn-toggle-favorite02:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+}
+
+#favoriteCount02 {
+    font-weight: bold;
+}
+
+/* Room List Section */
+.room-list-section02 {
+    /* Đảm bảo roomListContainer02 có ID là 'roomListContainer02' trong HTML */
+    /* Và áp dụng các class 'room-list-visible' mặc định khi tải trang */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    /* Các thuộc tính này sẽ được điều khiển bằng JavaScript thông qua class room-list-visible/hidden */
+}
+
+/* Room Card */
+.room-card02 {
+    background-color: var(--card-bg-02);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px var(--shadow-02);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.room-card02:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px var(--hover-shadow-02);
+}
+
+.room-card02 .card-image02 {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.room-card02 .card-image02 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.room-card02:hover .card-image02 img {
+    transform: scale(1.05);
+}
+
+.room-card02 .card-content02 {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.room-card02 .card-title02 {
+    font-family: font2;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--primary-color-02);
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.room-card02 .card-info02 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+    color: var(--secondary-color-02);
+}
+
+.room-card02 .card-info02 span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: font6;
+}
+
+.room-card02 .card-price02 {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--accent-color-02);
+    margin-bottom: 10px;
+    font-family: font2;
+}
+
+.room-card02 .status-badge02 {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--accent-color-02);
+    color: var(--text-light-02);
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.85em;
+    z-index: 10;
+    font-family: font6;
+}
+
+.room-card02 .status-badge02.out-of-stock02 {
+    background-color: var(--danger-color-02);
+}
+
+.room-card02 .favorite-button02 {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: #ccc;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 2px 5px var(--shadow-02);
+}
+
+.room-card02 .favorite-button02.active02 {
+    color: #ff4d4d; /* Red for active favorite */
+}
+
+.room-card02 .favorite-button02:hover {
+    color: #ff4d4d;
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.1);
+}
+
+.room-card02 .detail-button02 {
+    background-color: var(--primary-color-02);
+    color: var(--text-light-02);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: auto; /* Push to bottom */
+}
+
+.room-card02 .detail-button02:hover {
+    background-color: #0056b3;
+}
+
+/* Modal (Detail Page) */
+.modal02 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Blurry background */
+    -webkit-backdrop-filter: blur(5px); /* Safari support */
+    padding: 20px; /* Padding around modal content */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal02.show02 {
+    display: block;
+    opacity: 1;
+}
+
+.modal-content02 {
+    background-color: var(--card-bg-02);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px var(--shadow-02);
+    max-width: 900px;
+    position: relative;
+    animation: zoomIn02 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring-like animation */
+    transition: transform 0.3s ease;
+}
+
+@keyframes zoomIn02 {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-button02 {
+    color: var(--secondary-color-02);
+    font-size: 35px;
+    font-weight: bold;
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button02:hover,
+.close-button02:focus {
+    color: var(--danger-color-02);
+    text-decoration: none;
+}
+
+.modal-body02 {
+    max-height: 80vh; /* Limit height to enable scrolling inside modal */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+/* Detail Gallery */
+.detail-gallery02 {
+    margin-bottom: 30px;
+}
+
+.gallery-main-image02 {
+    position: relative;
+    height: 400px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow-02);
+}
+
+.gallery-main-image02 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-main-image02 button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--text-light-02);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
+}
+
+.gallery-main-image02 button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.gallery-main-image02 .prev-btn02 {
+    left: 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.gallery-main-image02 .next-btn02 {
+    right: 0;
+    border-radius: 8px 0 0 8px;
+}
+
+.gallery-thumbnails02 {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    overflow-x: auto; /* Enable horizontal scroll for many thumbnails */
+    padding-bottom: 5px; /* Space for scrollbar */
+}
+
+.gallery-thumbnails02 img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-thumbnails02 img.active-thumb02,
+.gallery-thumbnails02 img:hover {
+    border-color: var(--primary-color-02);
+    transform: scale(1.05);
+}
+
+/* Detail Content Styling */
+.detail-title02 {
+    font-family: font2;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--primary-color-02);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color-02);
+    padding-bottom: 15px;
+}
+
+.detail-info-group02 {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: #e6f3ff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px dashed #cce5ff;
+}
+
+.detail-info-group02 p {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--text-dark-02);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: font6;
+}
+
+.detail-info-group02 p i {
+    color: var(--primary-color-02);
+    font-size: 1.2em;
+}
+
+.detail-section02 {
+    margin-bottom: 30px;
+    border-bottom: 1px dashed var(--border-color-02);
+    padding-bottom: 25px;
+}
+
+.detail-section02:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-section02 h3 {
+    font-family: font2;
+    font-size: 1.5em;
+    color: var(--primary-color-02);
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-section02 h3 i {
+    color: var(--accent-color-02);
+}
+
+.detail-section02 p, .detail-section02 ul {
+    font-size: 1em;
+    color: var(--text-dark-02);
+    margin-left: 10px;
+}
+
+.feature-list02, .rule-list02 {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.feature-list02 li {
+    background-color: #eaf7ed;
+    border: 1px solid #c8e6c9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1b5e20;
+    font-weight: 500;
+    font-family: font6;
+}
+
+.feature-list02 li::before {
+    content: "\f00c"; /* Font Awesome check icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: var(--accent-color-02);
+}
+
+.rule-list02 li {
+    background-color: #ffe6e6;
+    border: 1px solid #ffccb3;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start; /* Align icon to top */
+    gap: 8px;
+    color: var(--danger-color-02);
+    font-weight: 500;
+    font-family: font6;
+}
+
+.rule-list02 li::before {
+    content: "\f06a"; /* Font Awesome exclamation circle */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: var(--danger-color-02);
+    margin-top: 2px; /* Adjust icon vertical align */
+}
+
+/* Contact links in detail modal */
+.contact-links a {
+    color: var(--primary-color-02);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.contact-links a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .room-list-section02 {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    .modal-content02 {
+        margin: 3% auto;
+        padding: 25px;
+    }
+    .gallery-main-image02 {
+        height: 350px;
+    }
+    .detail-title02 {
+        font-size: 1.8em;
+    }
+    .detail-section02 h3 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-section02 {
+        flex-direction: column;
+        padding: 15px;
+    }
+    #searchButton02 {
+        width: 100%;
+        justify-content: center;
+    }
+    .room-list-section02 {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        gap: 20px;
+    }
+    .modal-content02 {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 95%; /* Adjust width for very small screens */
+        z-index: 100002;
+    }
+    .gallery-main-image02 {
+        height: 250px;
+    }
+    .gallery-thumbnails02 img {
+        width: 80px;
+        height: 60px;
+    }
+    .detail-title02 {
+        font-size: 1.6em;
+    }
+    .detail-info-group02 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+    }
+    .detail-section02 h3 {
+        font-size: 1.2em;
+    }
+    .feature-list02, .rule-list02 {
+        grid-template-columns: 1fr; /* Single column for lists */
+    }
+}
+
+@media (max-width: 480px) {
+    .container02 {
+        padding: 0 10px;
+    }
+    .main-content02 {
+        padding: 20px 0;
+    }
+    .detail-title02 {
+        font-size: 1.4em;
+    }
+    .detail-section02 h3 {
+        font-size: 1.1em;
+    }
+}
+
+/* Styles for action buttons within the card */
+.card-actions02 {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: auto; /* Push to bottom */
+    padding-top: 15px;
+    border-top: 1px dashed var(--border-color-02);
+}
+
+.card-actions02 .detail-button02 {
+    flex: 1; /* Allow button to grow */
+    padding: 12px; /* Adjust padding for better look on card */
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+.book-room-card-btn02 {
+    flex: 1; /* Allow button to grow */
+    background-color: var(--accent-color-02); /* Green for booking */
+    color: var(--text-light-02);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.book-room-card-btn02:hover:not(:disabled) {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.book-room-card-btn02:disabled {
+    background-color: var(--secondary-color-02); /* Grey when disabled */
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Responsive adjustments for card buttons */
+@media (max-width: 480px) {
+    .card-actions02 {
+        flex-direction: column; /* Stack buttons vertically on very small screens */
+    }
+    .card-actions02 .detail-button02,
+    .card-actions02 .book-room-card-btn02 {
+        width: 100%; /* Full width */
+    }
+}
+
+/* New styles for Booking Modal */
+.booking-title02 {
+    font-family: font2;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--primary-color-02);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color-02);
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booking-title02 i {
+    color: var(--accent-color-02);
+}
+
+.form-group02 {
+    margin-bottom: 15px;
+}
+
+.form-group02 label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark-02);
+    font-family: font6;
+}
+
+.form-group02 input[type="text"],
+.form-group02 input[type="tel"],
+.form-group02 input[type="email"],
+.form-group02 input[type="date"],
+.form-group02 textarea {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid var(--border-color-02);
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group02 input:focus,
+.form-group02 textarea:focus {
+    border-color: var(--primary-color-02);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.form-group02 textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+.submit-booking-btn02 {
+    background-color: var(--accent-color-02);
+    color: var(--text-light-02);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submit-booking-btn02:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+/* Specific styles for the book button within the room card */
+.room-card02 .card-actions02 {
+    padding-top: 15px; /* Add some space above buttons */
+    border-top: 1px dashed var(--border-color-02);
+    margin-top: auto; /* Push buttons to the bottom of the card */
+}
+
+/* Ensure the book button aligns nicely with the detail button */
+.room-card02 .card-actions02 .book-room-card-btn02 {
+    flex: 1; /* Make it take equal space */
+}
+
+/* Responsive adjustments for booking modal */
+@media (max-width: 768px) {
+    .modal-content02 {
+        max-width: 80%;
+        z-index: 10002;
+        margin-left: 0px;
+       
+    }
+    .booking-title02 {
+        font-size: 1.6em;
+    }
+    .form-group02 label {
+        font-size: 0.95em;
+    }
+    .form-group02 input,
+    .form-group02 textarea {
+        font-size: 0.9em;
+    }
+    .submit-booking-btn02 {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+    .close-button02{
+        right: 10px;
+    }
+}
+/* --- CSS Hiện Đại cho Modal Đặt Phòng (ID: bookingModal03) --- */
+.modal03 {
+    display: none; /* Rất quan trọng: Ẩn ban đầu */
+    position: fixed; /* Giữ modal ở vị trí cố định trên màn hình */
+    z-index: 1001; /* Đảm bảo nó ở trên các phần tử khác */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Cho phép cuộn nếu nội dung lớn */
+    background-color: rgba(0, 0, 0, 0.6); /* Nền đen mờ */
+    backdrop-filter: blur(5px); /* Hiệu ứng làm mờ nền phía sau */
+    padding-top: 60px;
+    opacity: 0; /* Bắt đầu với opacity 0 để có hiệu ứng mờ dần */
+    transition: opacity 0.3s ease-in-out; /* Chuyển đổi mượt mà opacity */
+}
+
+/* Khi JavaScript thêm class 'show' vào .modal03 */
+.modal03.show {
+    opacity: 1; /* Hiện rõ dần */
+    display: block; /* Vô cùng quan trọng: Thay đổi từ 'none' sang 'block' để hiển thị */
+}
+
+.modal-content03 {
+    background-color: #fff; /* Nền trắng cho nội dung modal */
+    margin: 3% auto; /* Canh giữa và giảm khoảng cách trên/dưới */
+    padding: 30px; /* Tăng padding */
+    border-radius: 12px; /* Bo tròn góc */
+    width: 90%;
+    max-width: 600px; /* Chiều rộng tối đa */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Bóng đổ hiện đại */
+    position: relative; /* Để định vị nút đóng tuyệt đối */
+    transform: translateY(-50px); /* Bắt đầu từ trên 50px cho hiệu ứng trượt */
+    opacity: 0; /* Bắt đầu với opacity 0 cho nội dung */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Chuyển đổi mượt mà */
+}
+
+/* Khi .modal03 có class 'show', nội dung modal cũng được kích hoạt hiệu ứng */
+.modal03.show .modal-content03 {
+    transform: translateY(0); /* Trượt về vị trí ban đầu */
+    opacity: 1; /* Hiện rõ dần */
+}
+
+/* Nút đóng hiện đại */
+.close-button03 {
+    color: #aaa;
+    position: absolute; /* Định vị tuyệt đối trong modal-content03 */
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: normal;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.close-button03:hover,
+.close-button03:focus {
+    color: #555;
+    opacity: 1;
+}
+
+/* Tiêu đề modal */
+.modal-content03 h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Định kiểu cho form */
+.modal-content03 form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #555;
+}
+
+.modal-content03 form input,
+.modal-content03 form select,
+.modal-content03 form textarea {
+    width: calc(100% - 22px); /* Đảm bảo đủ width sau khi tính padding */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Quan trọng để padding không làm tràn width */
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-content03 form input:focus,
+.modal-content03 form select:focus,
+.modal-content03 form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Nút gửi form hiện đại */
+.modal-content03 form button {
+    background-color: #007bff;
+    color: white;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal-content03 form button:hover {
+    background-color: #0056b3;
+}
+
+.modal-content03 form button:active {
+    transform: translateY(1px); /* Hiệu ứng nhấn nút */
+}
