@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const response = await fetch(unreadNotificationsApiUrl, { headers: headers });
 
-            console.log('DEBUG (JS - Notification): Raw Response:', response);
+            
 
             if (!response.ok) {
                 const errorText = await response.text();

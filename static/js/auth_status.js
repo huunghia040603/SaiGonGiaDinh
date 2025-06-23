@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Authorization': `Token ${authToken}`
                     }
                 });
-                console.log('Successfully logged out from API.');
+             
             } catch (error) {
-                console.error('Error logging out from API:', error);
+                
                 // Vẫn tiếp tục xóa dữ liệu cục bộ ngay cả khi API lỗi
             }
         } else {
@@ -60,11 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const timeLeftMinutes = Math.floor(timeLeft / (60 * 1000));
             const timeLeftSeconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
 
-            if (timeLeft > 0) {
-                console.log(`Thời gian còn lại của phiên: ${timeLeftMinutes} phút ${timeLeftSeconds} giây.`);
-            } else {
-                console.warn('Phiên đã hết hạn.');
-            }
+            
 
             if (timeElapsed > SESSION_EXPIRATION_TIME) {
                 console.warn('Session expired. Clearing login data.');
@@ -78,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 authToken = null; // Đặt lại authToken để force hiển thị trạng thái chưa đăng nhập
             }
         } else {
-            console.log('Không có phiên đăng nhập hoặc thông tin thời gian đăng nhập.');
+            console.log('Không có phiên đăng nhập hoặc thông tin.');
         }
 
         if (authToken && userFullName && loginStatusLink) {
@@ -109,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginStatusLink.removeEventListener('click', (e) => e.preventDefault()); 
             loginStatusLink.removeEventListener('click', handleLogout); 
             
-            console.log('No user logged in. Header set to "ĐĂNG NHẬP SGC".');
+           
 
             if (studentMenuLink) {
                 studentMenuLink.style.display = 'none';
@@ -120,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scholarshipMenuLink.style.display = 'block';
             }
         } else {
-            console.warn('loginStatusLink element not found on this page.');
+            
         }
     }
 
@@ -139,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = document.getElementById('logoutButton'); 
     if (logoutButton) {
         logoutButton.addEventListener('click', handleLogout);
-        console.log('Logout button event listener attached.');
+        
     }
 
     // Xử lý thanh điều hướng cố định khi cuộn

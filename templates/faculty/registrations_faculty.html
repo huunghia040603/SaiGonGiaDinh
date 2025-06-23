@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 {% extends 'faculty/base_faculty.html' %}
 
 {% block title %}Quản lý lượt đăng ký{% endblock %}
@@ -13,23 +5,17 @@
 {% block page_styles %}
     <style>
         /* General Body and Layout */
-       
-
-        
-
         #content {
             flex-grow: 1;
             background-color: #ffffff;
             border-radius: 8px;
-            
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Bóng tinh tế hơn */
-           
         }
 
         h1 {
-            color: #212529;
+            color: #212540;
             margin-bottom: 30px;
-            font-weight: 600;
+            font-weight: 400;
         }
 
         /* Table Styling */
@@ -43,17 +29,17 @@
         .table {
             font-size: 15px;
             min-width: 900px; /* Đảm bảo bảng không quá co lại */
-            /* Bỏ shadow riêng cho bảng để tổng thể gọn gàng hơn */
         }
 
         .table thead th {
             background-color: #007bff;
             color: white;
-            font-weight: 600;
+            font-weight: 200;
             padding: 15px 18px;
             border-bottom: none;
             text-align: left;
             white-space: nowrap;
+            font-weight: bold;
         }
 
         .table tbody tr {
@@ -65,47 +51,29 @@
             background-color: #f8f9fa; /* Nền xám nhạt hơn khi hover */
         }
 
-        .table tbody td {
-            white-space: nowrap; /* Đây có thể là nguyên nhân */
+        /* Styling cho hàng cha - chỉ có hàng cha */
+        .master-row {
+            background-color: #e9ecef; /* Nền nhẹ cho hàng cha */
+        }
+        .master-row td {
+            white-space: nowrap; /* Mặc định giữ nowrap */
             max-width: 250px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
-        /* Adjust width for specific columns */
-        .table tbody td:nth-child(10) { /* Cột Ghi chú */
-            /* white-space: normal;
-            max-width: 300px; */
-            white-space: normal; /* Đã được sửa cho ghi chú */
-            max-width: 300px;
+        /* Cột số lượt đăng ký */
+        .master-row td:last-child {
+            text-align: center;
+            font-style: italic;
+            color: #393c3f;
+            font-size: 10px;
         }
-        .table tbody td:nth-child(2), /* Họ và tên */
-        .table tbody td:nth-child(4) { /* Email */
-            min-width: 150px;
-        }
-
-        /* --- Custom width for 'Trạng thái' column --- */
-        .table thead th:nth-child(9), /* Tiêu đề cột 'Trạng thái' */
-        .table tbody td:nth-child(9) {  /* Ô dữ liệu cột 'Trạng thái' */
-            width: 180px; /* Tăng chiều rộng cố định, có thể điều chỉnh thêm */
-            min-width: 180px; /* Đảm bảo chiều rộng tối thiểu */
-            max-width: 250px; /* Giới hạn chiều rộng tối đa */
-            white-space: normal; /* Cho phép nội dung xuống dòng nếu cần */
-        }
-        /* --- End custom width for 'Trạng thái' column --- */
 
         /* Rounded corners for table */
         .table thead th:first-child { border-top-left-radius: 8px; }
         .table thead th:last-child { border-top-right-radius: 8px; }
-        /* Để tránh các góc dưới bị cong khi bảng có ít hàng */
         .table tbody tr:last-child td:first-child { border-bottom-left-radius: 8px; }
         .table tbody tr:last-child td:last-child { border-bottom-right-radius: 8px; }
-
-        /* Actions Column Specific Styling */
-        .table tbody td:last-child {
-            white-space: nowrap;
-            text-align: center;
-        }
 
         /* Modal Styling */
         .modal-content {
@@ -141,10 +109,23 @@
         }
 
         .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
+            /* Điều chỉnh màu cho nút đóng (x) trên nền xanh */
+            filter: invert(1) grayscale(100%) brightness(200%); 
+        }
+
+        /* Styling cho bảng trong modal */
+        #registrationDetailsModal .modal-body .table {
+            font-size: 14px; /* Nhỏ hơn một chút trong modal */
+            margin-top: 15px; /* Khoảng cách với thông tin người đăng ký */
+        }
+        #registrationDetailsModal .modal-body .table thead th {
+            background-color: #6c757d; /* Màu tối hơn cho tiêu đề bảng trong modal */
+            color: white;
+        }
+        #registrationDetailsModal .modal-body .table tbody td {
+            white-space: normal; /* Cho phép xuống dòng trong modal */
         }
     </style>
-    
 {% endblock %}
 
 {% block content %}
@@ -156,17 +137,13 @@
                 <table class="table table-striped table-hover shadow-sm">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col" style="width: 50px;"></th> {# Cột cho nút mở modal #}
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Điện thoại</th>
                             <th scope="col">Email</th>
                             <th scope="col">Địa chỉ</th>
-                            <th scope="col">Ngành quan tâm</th>
                             <th scope="col">Tốt nghiệp</th>
-                            <th scope="col">Ngày đăng ký</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Ghi chú</th>
-                            <th scope="col">Hành động</th>
+                            <th scope="col" colspan="5" class="text-center">Số lượt đăng ký</th>
                         </tr>
                     </thead>
                     <tbody id="advisory-registrations-table-body">
@@ -179,6 +156,42 @@
         </div>
     </div>
 
+    {# Modal Hiển thị Chi tiết Đăng ký #}
+    <div class="modal fade" id="registrationDetailsModal" tabindex="-1" aria-labelledby="registrationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrationDetailsModalLabel">Chi tiết các lượt đăng ký</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Người đăng ký:</strong> <span id="modalFullName"></span> (<span id="modalPhoneEmail"></span>)</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ngành quan tâm</th>
+                                    <th>Ngày đăng ký</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ghi chú</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-registrations-table-body">
+                                {# Dữ liệu sẽ được chèn bởi JavaScript #}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Modal Chỉnh sửa Ghi chú #}
     <div class="modal fade" id="notesModal" tabindex="-1" aria-labelledby="notesModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -204,5 +217,6 @@
 
 {% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="{{ url_for('static', filename='js/faculty/faculty_registrations.js') }}"></script>
 {% endblock %}

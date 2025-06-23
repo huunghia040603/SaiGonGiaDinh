@@ -1,4 +1,3 @@
-
 // /static/js/login.js
 document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
@@ -24,26 +23,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateHeaderUserInfo(fullName, userPhotoUrl, role) {
         if (headerUserNameElement) {
-            if (fullName && role === 'CBCNV') {
+            if (fullName && role === 'CBCNV') { // Chỉ hiển thị nếu là CBCNV
                 headerUserNameElement.textContent = `Chào, ${fullName}!`;
                 headerUserNameElement.style.display = 'inline';
             } else {
-                headerUserNameElement.textContent = `Chào mừng!`;
+                headerUserNameElement.textContent = ''; // Xóa tên nếu không phải CBCNV
+                headerUserNameElement.style.display = 'none'; // Ẩn luôn
             }
         }
 
         if (headerUserAvatarElement) {
-            if (userPhotoUrl && role === 'CBCNV') {
+            if (userPhotoUrl && role === 'CBCNV') { // Chỉ hiển thị nếu là CBCNV
                 headerUserAvatarElement.src = userPhotoUrl;
                 headerUserAvatarElement.alt = `${fullName} Avatar`;
                 if (headerUserAvatarLink) {
                     headerUserAvatarLink.style.display = 'block';
                 }
             } else {
-                headerUserAvatarElement.src = "https://via.placeholder.com/40";
+                headerUserAvatarElement.src = "https://via.placeholder.com/40"; // Ảnh placeholder nếu không phải CBCNV hoặc không có ảnh
                 headerUserAvatarElement.alt = "User Avatar";
                 if (headerUserAvatarLink) {
-                    headerUserAvatarLink.style.display = 'block';
+                    headerUserAvatarLink.style.display = 'block'; // Vẫn hiển thị link ảnh placeholder
                 }
             }
         }
@@ -63,6 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
         keysToRemove.forEach(key => localStorage.removeItem(key));
         console.log('Đã xóa dữ liệu Local Storage của phiên đăng nhập.');
+    }
+
+    // Hàm mới để xử lý đăng xuất
+    function handleLogout() {
+        clearLocalStorageSession();
+        // Có thể thêm thông báo "Bạn đã đăng xuất thành công!" nếu muốn
+        alert('Bạn đã đăng xuất thành công!'); // Hoặc dùng showMessage
+        window.location.href = '/sggd/gv/manage/'; // Chuyển hướng về trang đăng nhập
     }
 
     async function handleLogin(event) {
@@ -94,64 +102,67 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (response.ok) {
-                showMessage(data.message || 'Đăng nhập thành công!', 'success');
-
-                clearLocalStorageSession();
-                console.log('Đã xóa dữ liệu Local Storage cũ của người dùng trước khi lưu dữ liệu mới.');
-
-                if (data.user_id) localStorage.setItem('userId', data.user_id);
-                if (data.token) localStorage.setItem('authToken', data.token);
-
-                localStorage.setItem('time_login', Date.now().toString()); // Lưu thời gian đăng nhập
-
-                if (data.user_data) {
-                    const userData = data.user_data;
-
-                    localStorage.setItem('userEmail', userData.email || '');
-                    const userFullName = `${userData.last_name || ''} ${userData.first_name || ''}`.trim();
-                    localStorage.setItem('userFullName', userFullName);
-
-                    localStorage.setItem('userPhone', userData.phone || '');
-                    localStorage.setItem('userGender', userData.gender || '');
-                    localStorage.setItem('userGenderDisplay', userData.gender_display || '');
-
-                    const fullAddress = [
-                        userData.address,
-                        userData.district,
-                        userData.city
-                    ].filter(Boolean).join(', ');
-                    localStorage.setItem('userAddress', fullAddress || '');
-
-                    localStorage.setItem('userRole', userData.role || '');
-                    localStorage.setItem('userRoleDisplay', userData.role_display || '');
-
-                    localStorage.setItem('userIsActive', userData.is_active ? 'true' : 'false');
-                    localStorage.setItem('userDateJoined', userData.date_joined || '');
-                    localStorage.setItem('userLastLogin', userData.last_login || '');
-                    localStorage.setItem('userNationalIdCard', userData.national_id_card || '');
-                    localStorage.setItem('userDateOfBirth', userData.date_of_birth || '');
-                    localStorage.setItem('userPlaceOfBirth', userData.place_of_birth || '');
-                    localStorage.setItem('userNationality', userData.nationality || '');
-                    localStorage.setItem('userEnrollmentDate', userData.enrollment_date || '');
-
-                    localStorage.setItem('userPhoto', userData.user_photo || '');
-
-                    localStorage.setItem('facultyCode', userData.faculty_code || '');
-                    localStorage.setItem('facultyType', userData.type || '');
-                    localStorage.setItem('facultyDepartmentName', userData.department_name || '');
-                    localStorage.setItem('facultyPosition', userData.position || '');
-                    localStorage.setItem('facultyDegree', userData.degree || '');
-                    localStorage.setItem('facultyOfficeLocation', userData.office_location || '');
-                    localStorage.setItem('facultyIsDepartmentHead', userData.is_department_head ? 'true' : 'false');
-
-                    updateHeaderUserInfo(userFullName, userData.user_photo, userData.role);
-                }
-
+                // Kiểm tra vai trò ngay lập tức sau khi đăng nhập thành công
                 if (data.user_data && data.user_data.role === 'CBCNV') {
+                    showMessage(data.message || 'Đăng nhập thành công!', 'success');
+
+                    clearLocalStorageSession();
+
+                    if (data.user_id) localStorage.setItem('userId', data.user_id);
+                    if (data.token) localStorage.setItem('authToken', data.token);
+
+                    localStorage.setItem('time_login', Date.now().toString()); // Lưu thời gian đăng nhập
+
+                    if (data.user_data) {
+                        const userData = data.user_data;
+
+                        localStorage.setItem('userEmail', userData.email || '');
+                        const userFullName = `${userData.last_name || ''} ${userData.first_name || ''}`.trim();
+                        localStorage.setItem('userFullName', userFullName);
+
+                        localStorage.setItem('userPhone', userData.phone || '');
+                        localStorage.setItem('userGender', userData.gender || '');
+                        localStorage.setItem('userGenderDisplay', userData.gender_display || '');
+
+                        const fullAddress = [
+                            userData.address,
+                            userData.district,
+                            userData.city
+                        ].filter(Boolean).join(', ');
+                        localStorage.setItem('userAddress', fullAddress || '');
+
+                        localStorage.setItem('userRole', userData.role || '');
+                        localStorage.setItem('userRoleDisplay', userData.role_display || '');
+
+                        localStorage.setItem('userIsActive', userData.is_active ? 'true' : 'false');
+                        localStorage.setItem('userDateJoined', userData.date_joined || '');
+                        localStorage.setItem('userLastLogin', userData.last_login || '');
+                        localStorage.setItem('userNationalIdCard', userData.national_id_card || '');
+                        localStorage.setItem('userDateOfBirth', userData.date_of_birth || '');
+                        localStorage.setItem('userPlaceOfBirth', userData.place_of_birth || '');
+                        localStorage.setItem('userNationality', userData.nationality || '');
+                        localStorage.setItem('userEnrollmentDate', userData.enrollment_date || '');
+
+                        localStorage.setItem('userPhoto', userData.user_photo || '');
+
+                        localStorage.setItem('facultyCode', userData.faculty_code || '');
+                        localStorage.setItem('facultyType', userData.type || '');
+                        localStorage.setItem('facultyDepartmentName', userData.department_name || '');
+                        localStorage.setItem('facultyPosition', userData.position || '');
+                        localStorage.setItem('facultyDegree', userData.degree || '');
+                        localStorage.setItem('facultyOfficeLocation', userData.office_location || '');
+                        localStorage.setItem('facultyIsDepartmentHead', userData.is_department_head ? 'true' : 'false');
+
+                        updateHeaderUserInfo(userFullName, userData.user_photo, userData.role);
+                    }
+                    // Chuyển hướng chỉ khi role là CBCNV
                     window.location.href = '/sggd/gv/manage/home_faculty/';
                 } else {
-                    showMessage('Đăng nhập thành công nhưng tài khoản không có quyền truy cập giảng viên/cán bộ.', 'error');
-                    clearLocalStorageSession();
+                    // Nếu đăng nhập thành công nhưng không phải CBCNV
+                    alert('Vui lòng đăng nhập bằng tài khoản CBCNV để truy cập khu vực này.');
+                    showMessage('Đăng nhập thành công nhưng tài khoản không có quyền truy cập giảng viên/cán bộ. Vui lòng đăng nhập lại với tài khoản CBCNV.', 'error');
+                    clearLocalStorageSession(); // Xóa session nếu không đúng role
+                    // Không chuyển hướng, giữ người dùng ở trang đăng nhập
                 }
 
             } else {
@@ -182,9 +193,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkFrontendSessionExpiry() {
         const timeLogin = localStorage.getItem('time_login');
         const authToken = localStorage.getItem('authToken');
+        const userRole = localStorage.getItem('userRole'); // Lấy role từ localStorage
 
-        if (!timeLogin || !authToken) {
-            console.log('%c[Phiên Đăng Nhập] Không có phiên hoặc token.', 'color: gray;');
+        if (!timeLogin || !authToken || userRole !== 'CBCNV') { // Thêm điều kiện kiểm tra role
+            console.log('%c[Phiên Đăng Nhập] Không có phiên, token hoặc role không đúng.', 'color: gray;');
+            if (userRole && userRole !== 'CBCNV') { // Nếu có role nhưng không phải CBCNV
+                clearLocalStorageSession();
+                if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
+                    alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại bằng tài khoản CBCNV.');
+                    window.location.href = '/sggd/gv/manage/';
+                }
+            }
             return false;
         }
 
@@ -192,58 +211,54 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentTime = Date.now();
         const elapsedTime = currentTime - loginTimestamp; // Thời gian đã trôi qua
 
-        // Định dạng thời gian cho console
-        const formatTime = (timestamp) => {
-            const date = new Date(timestamp);
-            return date.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ` (${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`;
-        };
-
         const remainingTimeMs = SESSION_DURATION_MS - elapsedTime;
 
         if (remainingTimeMs <= 0) {
-            console.log('%c[Phiên Đăng Nhập] Phiên đã hết hạn!', 'color: red; font-weight: bold;');
-            console.log(`%c[Phiên Đăng Nhập] Thời gian đăng nhập: ${formatTime(loginTimestamp)}`, 'color: orange;');
-            console.log(`%c[Phiên Đăng Nhập] Thời gian hiện tại: ${formatTime(currentTime)}`, 'color: orange;');
             clearLocalStorageSession();
 
-            if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+            // Kiểm tra nếu KHÔNG phải là trang đăng nhập, thì mới chuyển hướng
+            if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
                 const confirmLogout = confirm('Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.');
+                // Chuyển hướng về trang đăng nhập của bạn
                 if (confirmLogout) {
-                    window.location.href = '/auth/login';
+                    window.location.href = '/sggd/gv/manage/';
                 } else {
-                    window.location.href = '/auth/login';
+                    window.location.href = '/sggd/gv/manage/';
                 }
             }
             return false;
         } else {
             const remainingMinutes = Math.floor(remainingTimeMs / (1000 * 60));
             const remainingSeconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
-            console.log(`%c[Phiên Đăng Nhập] Thời gian còn lại: ${remainingMinutes} phút ${remainingSeconds} giây`, 'color: blue;');
             return true;
         }
     }
 
     // Kiểm tra ngay khi DOM được tải (trừ trang đăng nhập)
-    if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+    if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
         checkFrontendSessionExpiry();
     }
 
     // Kiểm tra khi người dùng quay lại tab hoặc cửa sổ trình duyệt (focus)
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'visible') {
-            console.log('%c[Kiểm tra Phiên] Trang trở lại hiển thị, đang kiểm tra phiên...', 'color: purple;');
-            if (window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
+            if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
                 checkFrontendSessionExpiry();
             }
         }
     });
 
     // Thêm kiểm tra định kỳ mỗi 5 giây (hoặc bất kỳ khoảng thời gian nào bạn muốn)
-    // Việc này giúp cập nhật thời gian còn lại trong console ngay cả khi không chuyển tab
     setInterval(() => {
-        if (localStorage.getItem('authToken') && window.location.pathname !== '/login' && window.location.pathname !== '/auth/login/') {
-            console.log('%c--- Kiểm tra phiên định kỳ ---', 'color: gray;');
+        const authToken = localStorage.getItem('authToken');
+        const userRole = localStorage.getItem('userRole'); // Lấy role
+        if (authToken && userRole === 'CBCNV' && window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
             checkFrontendSessionExpiry();
+        } else if (authToken && userRole !== 'CBCNV' && window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
+            // Nếu có token nhưng không phải CBCNV, xóa session và yêu cầu đăng nhập lại
+            clearLocalStorageSession();
+            alert('Bạn không có quyền truy cập. Vui lòng đăng nhập bằng tài khoản CBCNV.');
+            window.location.href = '/sggd/gv/manage/';
         }
     }, 5000); // Kiểm tra mỗi 5 giây
 
@@ -269,13 +284,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Gắn sự kiện click cho nút Đăng xuất
+    const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+    if (sidebarLogoutBtn) {
+        sidebarLogoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn hành vi mặc định của thẻ 'a'
+            handleLogout();
+        });
+    }
+
+
     const storedUserFullName = localStorage.getItem('userFullName');
     const storedUserPhoto = localStorage.getItem('userPhoto');
     const storedUserRole = localStorage.getItem('userRole');
 
-    if (checkFrontendSessionExpiry()) {
+    // Cần đảm bảo rằng `updateHeaderUserInfo` được gọi đúng cách khi tải trang
+    // Dựa trên trạng thái phiên và vai trò
+    if (checkFrontendSessionExpiry()) { // Hàm này giờ đã kiểm tra cả role
         updateHeaderUserInfo(storedUserFullName, storedUserPhoto, storedUserRole);
     } else {
+        // Nếu phiên không hợp lệ hoặc role không phải CBCNV, reset header
         updateHeaderUserInfo('', '', '');
     }
 });

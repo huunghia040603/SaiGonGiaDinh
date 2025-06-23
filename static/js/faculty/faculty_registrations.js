@@ -1,4 +1,4 @@
-// /static/js/faculty_registrations.js
+// /static/js/faculty/faculty_registrations.js
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('advisory-registrations-table-body');
     const notesModal = new bootstrap.Modal(document.getElementById('notesModal'));
@@ -6,47 +6,52 @@ document.addEventListener('DOMContentLoaded', function() {
     const notesRegistrationId = document.getElementById('notesRegistrationId');
     const saveNotesBtn = document.getElementById('saveNotesBtn');
 
-    console.log("FACULTY_REGISTRATIONS_DEBUG: DOMContentLoaded fired. Script started.");
+    // Khai báo modal chi tiết đăng ký và các phần tử bên trong nó
+    const registrationDetailsModal = new bootstrap.Modal(document.getElementById('registrationDetailsModal'));
+    const modalFullNameSpan = document.getElementById('modalFullName');
+    const modalPhoneEmailSpan = document.getElementById('modalPhoneEmail');
+    const modalRegistrationsTableBody = document.getElementById('modal-registrations-table-body');
+
+    let allRegistrationsData = []; // Biến để lưu trữ toàn bộ dữ liệu đăng ký gốc
+
+    
 
     // Hàm lấy token riêng cho giảng viên
     function getFacultyAuthToken() {
         const token = localStorage.getItem('authToken'); // Luôn lấy authToken cho giảng viên
-        console.log(`FACULTY_REGISTRATIONS_DEBUG: Fetched authToken: ${token ? 'Exists' : 'NULL'}`);
+        
         return token;
     }
 
     // URL đăng nhập dành riêng cho giảng viên
-    const facultyLoginUrl = '/sggd/gv/login';
+    const facultyLoginUrl = '/sggd/gv/manage/';
     // URL API dành riêng cho giảng viên (Cần đảm bảo API này có tồn tại và đúng quyền trên backend)
-    // Nếu bạn có một API riêng cho giảng viên, hãy thay đổi URL này.
-    // Ví dụ: '/api/faculty/advisory-registrations/'
-    // Nếu API admin hiện tại của bạn đã được cấu hình để hoạt động với token giảng viên, bạn có thể giữ nguyên.
     const facultyApiBaseUrl = 'https://saigongiadinh.pythonanywhere.com/api/admin/advisory-registrations/'; 
     const updateStatusApiUrl = 'https://saigongiadinh.pythonanywhere.com/update-status-registrations/';
     const updateNotesApiUrl = 'https://saigongiadinh.pythonanywhere.com/update-notes-registrations/';
 
 
     async function fetchAdvisoryRegistrations() {
-        console.log("FACULTY_REGISTRATIONS_DEBUG: fetchAdvisoryRegistrations started.");
-        tableBody.innerHTML = '<tr><td colspan="11" class="text-center">Đang tải dữ liệu...</td></tr>';
-        
+      
+        tableBody.innerHTML = '<tr><td colspan="11" class="text-center">Đang tải dữ liệu...</td></tr>'; 
+
         const token = getFacultyAuthToken();
         
-        console.log(`FACULTY_REGISTRATIONS_DEBUG: Inside fetchAdvisoryRegistrations. Token status: ${token ? 'Exists' : 'NULL'}.`);
+        
 
         if (!token) {
             console.error("FACULTY_REGISTRATIONS_ERROR: Authentication token not found for faculty. Redirecting to:", facultyLoginUrl);
             tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-danger">Lỗi: Không tìm thấy token xác thực. Vui lòng đăng nhập lại.</td></tr>';
             setTimeout(() => {
-                console.log(`FACULTY_REGISTRATIONS_DEBUG: Redirecting window to: ${facultyLoginUrl}`);
+                
                 window.location.href = facultyLoginUrl;
             }, 1000);
             return;
         }
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Token successfully retrieved for API call.");
+       
 
         try {
-            console.log(`FACULTY_REGISTRATIONS_DEBUG: Sending GET request to API: ${facultyApiBaseUrl}`);
+            
             const response = await fetch(facultyApiBaseUrl, {
                 method: 'GET',
                 headers: {
@@ -55,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Accept': 'application/json'
                 }
             });
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Received API response. Status:", response.status, response.statusText);
+            
 
             if (!response.ok) {
                 let errorMessage = `Lỗi ${response.status}: ${response.statusText}`;
@@ -72,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMessage = 'Bạn không có quyền truy cập hoặc phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
                     console.error(`FACULTY_REGISTRATIONS_ERROR: Authentication/Authorization error (${response.status}). Redirecting to: ${facultyLoginUrl}`);
                     setTimeout(() => {
-                        console.log(`FACULTY_REGISTRATIONS_DEBUG: Redirecting window to: ${facultyLoginUrl}`);
+                       
                         window.location.href = facultyLoginUrl;
                     }, 500);
                 }
@@ -80,8 +85,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Data fetched successfully:", data);
-            renderTable(data);
+            allRegistrationsData = data; // Lưu dữ liệu gốc
+            
+            renderTable(allRegistrationsData); // Truyền dữ liệu gốc để render bảng tổng quan
 
         } catch (error) {
             console.error('FACULTY_REGISTRATIONS_ERROR: Failed to fetch advisory registrations:', error);
@@ -89,108 +95,213 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Hàm để nhóm các đăng ký theo người dùng (điện thoại hoặc email)
+    function groupRegistrationsByUser(registrations) {
+        const grouped = new Map();
+
+        registrations.forEach(reg => {
+            // Sử dụng email làm khóa chính nếu có, nếu không thì dùng số điện thoại
+            // Đây là một giả định, bạn có thể cần điều chỉnh logic khóa nhóm tùy theo dữ liệu của bạn
+            const key = reg.email || reg.phone_number; 
+            if (!key) return; // Bỏ qua nếu không có cả email và số điện thoại
+
+            if (!grouped.has(key)) {
+                grouped.set(key, {
+                    full_name: reg.full_name,
+                    phone_number: reg.phone_number,
+                    email: reg.email,
+                    address: reg.address,
+                    has_graduated_display: reg.has_graduated_display,
+                    registrations: [], 
+                });
+            }
+            grouped.get(key).registrations.push(reg);
+        });
+
+        // Sắp xếp các đăng ký con trong mỗi nhóm theo ngày đăng ký (mới nhất lên đầu)
+        grouped.forEach(group => {
+            group.registrations.sort((a, b) => new Date(b.registration_date) - new Date(a.registration_date));
+        });
+
+        return Array.from(grouped.values());
+    }
+
     function renderTable(registrations) {
-        console.log("FACULTY_REGISTRATIONS_DEBUG: renderTable started.");
-        tableBody.innerHTML = '';
+      
+        tableBody.innerHTML = ''; // Xóa sạch nội dung cũ của bảng
         if (registrations.length === 0) {
-            console.log("FACULTY_REGISTRATIONS_DEBUG: No registrations to display.");
-            tableBody.innerHTML = '<tr><td colspan="11" class="text-center">Không có đăng ký tư vấn nào.</td></tr>';
+            
+            tableBody.innerHTML = '<tr><td colspan="11" class="text-center">Không có đăng ký tư vấn nào.</td></tr>'; 
             return;
         }
 
-        registrations.forEach((reg) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${reg.id}</td>
-                <td>${reg.full_name}</td>
-                <td>${reg.phone_number}</td>
-                <td>${reg.email}</td>
-                <td>${reg.address || 'N/A'}</td>
-                <td>${reg.major_of_interest ? reg.major_of_interest.name : 'Chưa xác định'}</td>
-                <td>${reg.has_graduated_display}</td>
-                <td>${new Date(reg.registration_date).toLocaleDateString('vi-VN')}</td>
+        const groupedRegistrations = groupRegistrationsByUser(registrations);
+        
+
+        groupedRegistrations.forEach((group, groupIndex) => {
+            // Hàng cha
+            const masterRow = document.createElement('tr');
+            masterRow.classList.add('master-row'); 
+            masterRow.innerHTML = `
                 <td>
-                    <select class="form-select status-select" data-id="${reg.id}" name="status">
-                        <option value="NEW" ${reg.status === 'NEW' ? 'selected' : ''}>Mới đăng ký</option>
-                        <option value="CONTACTED" ${reg.status === 'CONTACTED' ? 'selected' : ''}>Đã liên hệ</option>
-                        <option value="CONSULTED" ${reg.status === 'CONSULTED' ? 'selected' : ''}>Đã tư vấn</option>
-                    </select>
-                </td>
-                <td>
-                    <button class="btn btn-sm btn-info view-notes-btn" data-id="${reg.id}" data-notes="${reg.notes || ''}">
-                        <i class="bi bi-journal-text"></i>
+                    <button class="btn btn-sm btn-outline-primary view-details-btn" 
+                            data-full-name="${group.full_name}" 
+                            data-phone-number="${group.phone_number || ''}" 
+                            data-email="${group.email || ''}"
+                            data-group-index="${groupIndex}">
+                        <i class="bi bi-plus-lg"></i>
                     </button>
                 </td>
-                <td>
-                    <button class="btn btn-sm btn-danger delete-btn" data-id="${reg.id}">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
+                <td>${group.full_name}</td>
+                <td>${group.phone_number || 'N/A'}</td>
+                <td>${group.email || 'N/A'}</td>
+                <td>${group.address || 'N/A'}</td>
+                <td>${group.has_graduated_display}</td>
+                <td colspan="5">${group.registrations.length} lượt đăng ký</td>
             `;
-            tableBody.appendChild(row);
+            tableBody.appendChild(masterRow);
         });
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Table rendering complete. Attaching event listeners.");
+        
         attachEventListeners();
     }
 
     function attachEventListeners() {
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Attaching event listeners.");
-        tableBody.querySelectorAll('.status-select').forEach(select => {
-            select.addEventListener('change', async (event) => {
-                const registrationId = event.target.dataset.id;
-                const newStatus = event.target.value;
-                console.log(`FACULTY_REGISTRATIONS_DEBUG: Status select changed. ID: ${registrationId}, New Status: ${newStatus}`);
-                await updateRegistration(registrationId, { status: newStatus });
-            });
+        
+        // Event listener cho nút "Xem chi tiết" (dấu cộng) trên bảng chính
+        tableBody.querySelectorAll('.view-details-btn').forEach(button => {
+            button.removeEventListener('click', handleViewDetailsClick); // Gỡ bỏ listener cũ nếu có
+            button.addEventListener('click', handleViewDetailsClick); // Gắn listener mới
         });
 
-        tableBody.querySelectorAll('.view-notes-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const id = event.currentTarget.dataset.id;
-                const notes = event.currentTarget.dataset.notes;
-                console.log(`FACULTY_REGISTRATIONS_DEBUG: View notes button clicked. ID: ${id}, Current notes: "${notes}"`);
-                notesRegistrationId.value = id;
-                notesTextarea.value = notes;
-                notesModal.show();
-            });
-        });
+        // Event listeners cho các nút trong MODAL (cần ủy quyền sự kiện vì chúng được thêm động)
+        // Lưu ý: Các sự kiện này được gắn vào modal-registrations-table-body, không phải tableBody chính
+        modalRegistrationsTableBody.removeEventListener('change', handleModalStatusChange);
+        modalRegistrationsTableBody.addEventListener('change', handleModalStatusChange);
 
-        // Nút xóa chỉ hiển thị nhưng có thể không có quyền thực hiện
-        tableBody.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', async (event) => {
-                const registrationId = event.currentTarget.dataset.id;
-                console.log(`FACULTY_REGISTRATIONS_DEBUG: Delete button clicked. ID: ${registrationId}`);
-                if (confirm('Bạn có chắc chắn muốn xóa đăng ký này?')) {
-                    console.log(`FACULTY_REGISTRATIONS_DEBUG: Confirmed delete for registration ID: ${registrationId}.`);
-                    await deleteRegistration(registrationId);
-                } else {
-                    console.log(`FACULTY_REGISTRATIONS_DEBUG: Cancelled delete for registration ID: ${registrationId}.`);
-                }
-            });
-        });
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Event listeners attached.");
+        modalRegistrationsTableBody.removeEventListener('click', handleModalButtonClick);
+        modalRegistrationsTableBody.addEventListener('click', handleModalButtonClick);
+
+        // Event listener cho nút Lưu ghi chú trong modal ghi chú
+        saveNotesBtn.removeEventListener('click', handleSaveNotesClick);
+        saveNotesBtn.addEventListener('click', handleSaveNotesClick);
+
+        
     }
 
-    saveNotesBtn.addEventListener('click', async () => {
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Save notes button clicked.");
+    // --- Các hàm xử lý sự kiện ---
+
+    async function handleViewDetailsClick(event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ (nếu có, ví dụ nếu nó là <a>)
+        const groupIndex = event.currentTarget.dataset.groupIndex;
+        const fullName = event.currentTarget.dataset.fullName;
+        const phoneNumber = event.currentTarget.dataset.phoneNumber;
+        const email = event.currentTarget.dataset.email;
+
+        // Tìm nhóm đăng ký tương ứng
+        const groupedData = groupRegistrationsByUser(allRegistrationsData);
+        const currentGroup = groupedData[groupIndex];
+
+        if (currentGroup) {
+            displayRegistrationDetailsInModal(currentGroup, fullName, phoneNumber, email);
+        } else {
+            console.error("FACULTY_REGISTRATIONS_ERROR: Could not find group for index:", groupIndex);
+            alert("Không tìm thấy chi tiết đăng ký cho người này.");
+        }
+    }
+
+    async function handleModalStatusChange(event) {
+        if (event.target.classList.contains('status-select')) {
+            const registrationId = event.target.dataset.id;
+            const newStatus = event.target.value;
+            
+            await updateRegistration(registrationId, { status: newStatus });
+        }
+    }
+
+    async function handleModalButtonClick(event) {
+        if (event.target.closest('.view-notes-btn')) {
+            const button = event.target.closest('.view-notes-btn');
+            const id = button.dataset.id;
+            const notes = button.dataset.notes;
+          
+            notesRegistrationId.value = id;
+            notesTextarea.value = notes;
+            notesModal.show();
+        } else if (event.target.closest('.delete-btn')) {
+            const button = event.target.closest('.delete-btn');
+            const registrationId = button.dataset.id;
+           
+            if (confirm('Bạn có chắc chắn muốn xóa đăng ký này?')) {
+                
+                deleteRegistration(registrationId); // Gọi hàm xóa
+            } else {
+                
+            }
+        }
+    }
+
+    async function handleSaveNotesClick() {
+      
         const id = notesRegistrationId.value;
         const newNotes = notesTextarea.value;
-        console.log(`FACULTY_REGISTRATIONS_DEBUG: Notes to save. ID: ${id}, New notes: "${newNotes}"`);
+       
         await updateRegistration(id, { notes: newNotes });
-        notesModal.hide();
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Notes modal hidden.");
-    });
+        // notesModal.hide(); // Sẽ được ẩn sau khi fetchAdvisoryRegistrations() hoàn tất
+       
+    }
+
+    // Hàm hiển thị chi tiết đăng ký trong Modal
+    function displayRegistrationDetailsInModal(groupData, fullName, phoneNumber, email) {
+        modalFullNameSpan.textContent = fullName;
+        modalPhoneEmailSpan.textContent = (phoneNumber && email) ? `${phoneNumber} / ${email}` : (phoneNumber || email || 'N/A');
+        
+        modalRegistrationsTableBody.innerHTML = ''; // Xóa nội dung cũ
+
+        if (groupData.registrations.length === 0) {
+            modalRegistrationsTableBody.innerHTML = '<tr><td colspan="6" class="text-center">Không có đăng ký nào.</td></tr>';
+        } else {
+            groupData.registrations.forEach(reg => {
+                const row = document.createElement('tr');
+                row.dataset.registrationId = reg.id; // Để dễ dàng cập nhật hàng này
+                row.innerHTML = `
+                    <td>${reg.id}</td>
+                    <td>${reg.major_of_interest ? reg.major_of_interest.name : 'Chưa xác định'}</td>
+                    <td>${new Date(reg.registration_date).toLocaleDateString('vi-VN')}</td>
+                    <td>
+                        <select class="form-select status-select" data-id="${reg.id}" name="status">
+                            <option value="NEW" ${reg.status === 'NEW' ? 'selected' : ''}>Mới đăng ký</option>
+                            <option value="CONTACTED" ${reg.status === 'CONTACTED' ? 'selected' : ''}>Đã liên hệ</option>
+                            <option value="CONSULTED" ${reg.status === 'CONSULTED' ? 'selected' : ''}>Đã tư vấn</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-info view-notes-btn" data-id="${reg.id}" data-notes="${reg.notes || ''}">
+                            <i class="bi bi-journal-text"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${reg.id}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                modalRegistrationsTableBody.appendChild(row);
+            });
+        }
+        registrationDetailsModal.show(); // Hiển thị modal
+       
+    }
 
     async function updateRegistration(id, dataToUpdate) {
-        console.log(`FACULTY_REGISTRATIONS_DEBUG: updateRegistration started for ID: ${id}. Data to update:`, dataToUpdate);
+        
         const token = getFacultyAuthToken();
-        console.log("FACULTY_REGISTRATIONS_DEBUG: Token retrieved for update."); 
+       
 
         if (!token) {
             console.error("FACULTY_REGISTRATIONS_ERROR: Authentication token not found for update. Redirecting to:", facultyLoginUrl);
             alert('Lỗi: Không tìm thấy token xác thực. Vui lòng đăng nhập lại.');
             setTimeout(() => {
-                console.log(`FACULTY_REGISTRATIONS_DEBUG: Redirecting window to: ${facultyLoginUrl}`);
+               
                 window.location.href = facultyLoginUrl;
             }, 500);
             return;
@@ -201,10 +312,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (dataToUpdate.hasOwnProperty('status')) {
             apiUrl = `${updateStatusApiUrl}${id}/`;
-            console.log(`FACULTY_REGISTRATIONS_DEBUG: Updating status. Using API URL: ${apiUrl}`);
+         
         } else if (dataToUpdate.hasOwnProperty('notes')) {
             apiUrl = `${updateNotesApiUrl}${id}/`;
-            console.log(`FACULTY_REGISTRATIONS_DEBUG: Updating notes. Using API URL: ${apiUrl}`);
+           
         } else {
             console.error("FACULTY_REGISTRATIONS_ERROR: Không có dữ liệu hợp lệ để cập nhật.");
             alert('Lỗi: Không có dữ liệu hợp lệ để cập nhật.');
@@ -212,8 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            console.log(`FACULTY_REGISTRATIONS_DEBUG: Sending ${method} request to URL: ${apiUrl}`);
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Data sent:", JSON.stringify(dataToUpdate));
+           
 
             const response = await fetch(apiUrl, {
                 method: method,
@@ -224,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(dataToUpdate)
             });
 
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Received API response for update. Status:", response.status, response.statusText);
+           
 
             if (!response.ok) {
                 let errorMessage = `Lỗi ${response.status}: ${response.statusText} khi cập nhật.`;
@@ -240,15 +350,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMessage = 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
                     console.error(`FACULTY_REGISTRATIONS_ERROR: Authentication/Authorization error (${response.status}) during update. Redirecting to: ${facultyLoginUrl}`);
                     setTimeout(() => {
-                        console.log(`FACULTY_REGISTRATIONS_DEBUG: Redirecting window to: ${facultyLoginUrl}`);
+                      
                         window.location.href = facultyLoginUrl;
                     }, 500);
                 }
                 throw new Error(errorMessage);
             }
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Update successful!");
+          
             alert('Cập nhật thành công!');
-            fetchAdvisoryRegistrations(); // Tải lại dữ liệu sau khi cập nhật thành công
+            
+            // Cập nhật dữ liệu trong bộ nhớ và làm mới hiển thị
+            await fetchAdvisoryRegistrations(); // Tải lại toàn bộ dữ liệu để đảm bảo đồng bộ
+            notesModal.hide(); // Ẩn modal ghi chú nếu nó đang mở
+            registrationDetailsModal.hide(); // Ẩn modal chi tiết nếu nó đang mở (quan trọng để cập nhật lại)
+           
+
         } catch (error) {
             console.error('FACULTY_REGISTRATIONS_ERROR: Failed to update registration:', error);
             alert('Lỗi cập nhật: ' + error.message);
@@ -256,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function deleteRegistration(id) {
-        console.log(`FACULTY_REGISTRATIONS_DEBUG: deleteRegistration started for ID: ${id}.`);
+       
         const token = getFacultyAuthToken();
         if (!token) {
             console.error("FACULTY_REGISTRATIONS_ERROR: Authentication token not found for delete. Redirecting to:", facultyLoginUrl);
@@ -265,11 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         try {
-            // Lưu ý: API xóa có thể cần một endpoint riêng cho giảng viên,
-            // hoặc API admin hiện tại cần được cấu hình để cho phép giảng viên xóa.
-            // Nếu không, thao tác này có thể bị từ chối bởi backend.
-            const apiUrl = `${facultyApiBaseUrl}${id}/`; // Giả định API admin cho phép xóa bằng token giảng viên
-            console.log(`FACULTY_REGISTRATIONS_DEBUG: Sending DELETE request to URL: ${apiUrl}`);
+            const apiUrl = `${facultyApiBaseUrl}${id}/`; 
+           
 
             const response = await fetch(apiUrl, {
                 method: 'DELETE',
@@ -278,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Received API response for delete. Status:", response.status, response.statusText);
+           
 
             if (!response.ok) {
                 let errorMessage = `Lỗi ${response.status}: ${response.statusText} khi xóa.`;
@@ -286,23 +399,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     const errorData = await response.json();
                     errorMessage = errorData.detail || errorMessage;
-                    console.error("FACULTY_REGISTRATIONS_ERROR: Delete error details from server (JSON):", errorData);
+                   
                 } catch (jsonError) {
-                    console.warn('FACULTY_REGISTRATIONS_WARNING: Server did not return JSON for delete error response.', jsonError);
+                    
                 }
                 if (response.status === 401 || response.status === 403) {
                     errorMessage = 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
-                    console.error(`FACULTY_REGISTRATIONS_ERROR: Authentication/Authorization error (${response.status}) during delete. Redirecting to: ${facultyLoginUrl}`);
+                   
                     setTimeout(() => {
-                        console.log(`FACULTY_REGISTRATIONS_DEBUG: Redirecting window to: ${facultyLoginUrl}`);
+                        
                         window.location.href = facultyLoginUrl;
                     }, 500);
                 }
                 throw new Error(errorMessage);
             }
-            console.log("FACULTY_REGISTRATIONS_DEBUG: Delete successful!");
+           
             alert('Xóa đăng ký thành công!');
-            fetchAdvisoryRegistrations(); // Tải lại dữ liệu sau khi xóa thành công
+            // Sau khi xóa, tải lại toàn bộ dữ liệu để cập nhật bảng chính và đóng modal chi tiết
+            await fetchAdvisoryRegistrations();
+            registrationDetailsModal.hide(); // Đóng modal chi tiết
+           
+
         } catch (error) {
             console.error('FACULTY_REGISTRATIONS_ERROR: Failed to delete registration:', error);
             alert('Lỗi xóa đăng ký: ' + error.message);
@@ -310,6 +427,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Khởi tạo tải dữ liệu khi DOM đã sẵn sàng
-    console.log("FACULTY_REGISTRATIONS_DEBUG: Initializing fetchAdvisoryRegistrations on DOMContentLoaded.");
+    
     fetchAdvisoryRegistrations();
 });
