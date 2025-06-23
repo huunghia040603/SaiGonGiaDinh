@@ -4,19 +4,21 @@
 
 {% block page_styles %}
     <style>
-          html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Đảm bảo không có thanh cuộn ngang */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Nền nhẹ nhàng hơn */
+        }
         .sggd-container {
             background-color: #ffffff;
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            width: 1000px;
-            max-width: 95%;
+            width: 100%; /* Đặt lại width thành 100% và dùng max-width */
+            max-width: 1200px; /* Tăng max-width để chứa nhiều cột */
             box-sizing: border-box;
             margin: 50px auto;
         }
@@ -24,31 +26,35 @@
             text-align: center;
             color: #333;
             margin-bottom: 30px;
-            font-size: 2em;
-            font-weight: 600;
+            font-size: 2.2em; /* Tăng kích thước heading */
+            font-weight: 700;
         }
         .sggd-form-group {
             margin-bottom: 20px;
+            flex-grow: 1; /* Cho phép các nhóm form mở rộng */
+            flex-shrink: 1;
+            flex-basis: 0; /* Cho phép flexbox tính toán kích thước cơ sở */
         }
         .sggd-label {
             display: block;
             margin-bottom: 8px;
             color: #555;
-            font-weight: 500;
-            font-size: 0.95em;
+            font-weight: 600; /* In đậm hơn */
+            font-size: 0.98em; /* Tăng nhẹ font size */
         }
         .sggd-input,
         .sggd-select {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #dcdcdc; /* Màu border nhạt hơn */
             border-radius: 6px;
-            font-size: 1.05em;
+            font-size: 1em; /* Điều chỉnh font size cho input/select */
             box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
+            height: 47px; /* Đảm bảo chiều cao đồng nhất */
         }
         .sggd-input:focus,
         .sggd-select:focus {
@@ -67,7 +73,7 @@
         .sggd-button {
             width: 100%;
             padding: 14px 20px;
-            background-color:  #0056b3 ;
+            background-color: #007bff; /* Màu xanh chính */
             color: white;
             border: none;
             border-radius: 6px;
@@ -75,14 +81,14 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease;
-            margin-top: 15px;
+            margin-top: 25px; /* Tăng khoảng cách trên nút */
         }
         .sggd-button:hover {
-            background-color: #2c3e50;
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+            background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
         .sggd-button:active {
-            background-color: #2c3e50;
+            background-color: #004085;
             box-shadow: none;
         }
 
@@ -118,16 +124,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 120px; /* Adjusted min-height for larger preview */
-            max-width: 150px; /* Adjusted max-width for larger preview */
+            min-height: 140px; /* Tăng min-height để có không gian cho ảnh và text */
+            max-width: 180px; /* Tăng max-width */
             box-sizing: border-box;
             margin-left: auto;
             margin-right: auto;
+            align-self: center; /* Căn giữa trong flex container */
+            flex-basis: auto; /* Điều chỉnh lại flex-basis */
         }
 
         .photo-preview-wrapper {
-            width: 80px; /* Doubled from 40px */
-            height: 80px; /* Doubled from 40px */
+            width: 100px; /* Tăng kích thước ảnh preview */
+            height: 100px; /* Tăng kích thước ảnh preview */
             border-radius: 50%;
             overflow: hidden;
             margin-bottom: 5px;
@@ -146,52 +154,90 @@
         }
 
         #photoPreviewContainer p {
-            font-size: 0.9em; /* Slightly increased font size for better readability with larger image */
+            font-size: 0.95em; /* Tăng nhẹ font size */
             color: #777;
             margin-bottom: 5px;
         }
 
+        /* --- Flexbox Layout for Form Rows --- */
         .sggd-form-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 20px; /* Khoảng cách giữa các cột */
             margin-bottom: 20px;
-            align-items: flex-start;
+            align-items: flex-start; /* Căn chỉnh các mục theo đầu hàng */
         }
 
-        .sggd-form-group {
-            flex-grow: 1;
-            flex-shrink: 1;
-            flex-basis: auto;
-        }
-
+        /* Responsive column definitions */
         .sggd-form-row.five-columns .sggd-form-group {
-            flex-basis: calc((100% - (4 * 20px)) / 5);
+            flex-basis: calc(20% - 16px); /* 100% / 5 cột - (gap * 4/5) */
         }
         .sggd-form-row.four-columns .sggd-form-group {
-            flex-basis: calc((100% - (3 * 20px)) / 4);
+            flex-basis: calc(25% - 15px); /* 100% / 4 cột - (gap * 3/4) */
         }
         .sggd-form-row.three-columns .sggd-form-group {
-            flex-basis: calc((100% - (2 * 20px)) / 3);
+            flex-basis: calc(33.333% - 13.333px); /* 100% / 3 cột - (gap * 2/3) */
         }
         .sggd-form-row.two-columns .sggd-form-group {
-            flex-basis: calc((100% - (1 * 20px)) / 2);
+            flex-basis: calc(50% - 10px); /* 100% / 2 cột - (gap * 1/2) */
         }
         .sggd-form-row.one-column .sggd-form-group {
             flex-basis: 100%;
         }
 
+        /* File Upload Customization */
+        .custom-file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Khoảng cách giữa nút và tên tệp */
+            width: 100%;
+            flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+        }
+
+        .custom-upload-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff; /* Màu xanh */
+            color: white; /* Chữ trắng */
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            white-space: nowrap;
+            height: 44px; /* Đồng nhất chiều cao với input/select */
+            line-height: 24px; /* Căn chỉnh text trong nút */
+            box-sizing: border-box;
+        }
+
+        .custom-upload-button:hover {
+            background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
+        }
+
+        .file-name-display {
+            font-size: 0.95em;
+            color: #666;
+            flex-grow: 1; /* Cho phép tên tệp mở rộng */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Hiển thị dấu ... nếu tên quá dài */
+        }
+
+        /* --- Responsive Adjustments --- */
         @media (max-width: 1200px) {
             .sggd-container {
-                width: 95%;
+                max-width: 95%;
             }
+            /* Từ 5 và 4 cột xuống 3 cột */
             .sggd-form-row.five-columns .sggd-form-group,
             .sggd-form-row.four-columns .sggd-form-group {
-                flex-basis: calc((100% - (2 * 20px)) / 3);
+                flex-basis: calc(33.333% - 13.333px); /* 3 cột */
             }
+            /* Từ 3 và 2 cột xuống 2 cột */
             .sggd-form-row.three-columns .sggd-form-group,
             .sggd-form-row.two-columns .sggd-form-group {
-                flex-basis: calc((100% - (1 * 20px)) / 2);
+                flex-basis: calc(50% - 10px); /* 2 cột */
             }
         }
 
@@ -202,15 +248,26 @@
                 margin: 20px auto;
             }
             .sggd-form-group {
-                flex-basis: 100%;
+                flex-basis: 100%; /* Tất cả về 1 cột */
                 margin-bottom: 15px;
             }
             .sggd-form-row {
-                gap: 0;
+                gap: 0; /* Loại bỏ gap khi về 1 cột */
                 margin-bottom: 0;
+                flex-direction: column; /* Đảm bảo các mục xếp chồng lên nhau */
             }
             #photoPreviewContainer {
                 max-width: 100%;
+            }
+            .sggd-label {
+                margin-bottom: 5px; /* Giảm khoảng cách cho label trên di động */
+            }
+            .sggd-input, .sggd-select, .custom-upload-button {
+                height: 40px; /* Giảm nhẹ chiều cao trên di động */
+                padding: 10px 12px;
+            }
+            .sggd-heading {
+                font-size: 1.8em;
             }
         }
 
@@ -232,7 +289,7 @@
 
         .spinner {
             border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
+            border-top: 8px solid #007bff; /* Màu spinner */
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -250,144 +307,130 @@
             color: #333;
         }
 
+        /* Toggle Switch CSS */
         .toggle-container {
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             margin-bottom: 30px;
-             gap: 20px;
-         }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap; /* Cho phép wrap trên màn hình nhỏ */
+        }
 
-         .toggle-label {
-             font-size: 1.1em;
-             font-weight: 600;
-             color: #555;
-         }
+        .toggle-label {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #555;
+            white-space: nowrap; /* Ngăn không cho text bị xuống dòng */
+        }
 
-         .switch {
-             position: relative;
-             display: inline-block;
-             width: 90px;
-             height: 34px;
-         }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+        }
 
-         .switch input {
-             opacity: 0;
-             width: 0;
-             height: 0;
-         }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-         .slider {
-             position: absolute;
-             cursor: pointer;
-             top: 0;
-             left: 0;
-             right: 0;
-             bottom: 0;
-             background-color: #2c3e50; /* Màu xanh navy */
-             -webkit-transition: .4s;
-             transition: .4s;
-             border-radius: 34px;
-         }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #007bff; /* Màu xanh khi chưa chọn */
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+        }
 
-         .slider:before {
-             position: absolute;
-             content: "";
-             height: 26px;
-             width: 26px;
-             left: 4px;
-             bottom: 4px;
-             background-color: white;
-             -webkit-transition: .4s;
-             transition: .4s;
-             border-radius: 50%;
-         }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
 
-         input:checked + .slider {
-             background-color: #a7d1eb; /* Màu xanh nhạt hơn */
-         }
+        input:checked + .slider {
+            background-color: #2c3e50; /* Màu xanh navy khi chọn */
+        }
 
-         input:focus + .slider {
-             box-shadow: 0 0 1px #a7d1eb;
-         }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
 
-         input:checked + .slider:before {
-             -webkit-transform: translateX(56px); /* 90px - 34px = 56px */
-             -ms-transform: translateX(56px);
-             transform: translateX(56px);
-         }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(56px); /* 90px (width) - 34px (height) = 56px */
+            -ms-transform: translateX(56px);
+            transform: translateX(56px);
+        }
 
-         .slider.round {
-             border-radius: 34px;
-         }
+        .slider.round {
+            border-radius: 34px;
+        }
 
-         .slider.round:before {
-             border-radius: 50%;
-         }
+        .slider.round:before {
+            border-radius: 50%;
+        }
 
-         .slider-text {
-             position: absolute;
-             color: white;
-             font-weight: bold;
-             font-size: 0.9em;
-             line-height: 34px;
-             padding: 0 10px;
-             transition: all 0.4s ease;
-             user-select: none; /* Ngăn người dùng chọn chữ khi kéo */
-         }
+        .slider-text {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.9em;
+            line-height: 34px;
+            padding: 0 10px;
+            transition: all 0.4s ease;
+            user-select: none; /* Ngăn người dùng chọn chữ khi kéo */
+        }
 
-         .slider-text.student {
-             left: 8px;
-             color: white; /* Màu trắng khi ở trạng thái GV (checked) */
-         }
+        .slider-text.student {
+            left: 8px;
+            color: white; /* Màu trắng khi ở trạng thái SV (unchecked) */
+        }
 
-         .slider-text.faculty {
-             right: 8px;
-             color: #2c3e50; /* Màu xanh navy khi ở trạng thái GV (checked) */
-         }
+        .slider-text.faculty {
+            right: 8px;
+            color: #a7d1eb; /* Màu xanh nhạt khi ở trạng thái SV (unchecked) */
+        }
 
-         input:checked + .slider .slider-text.student {
-             color: #2c3e50; /* Màu xanh navy khi ở trạng thái SV (unchecked) */
-         }
+        input:checked + .slider .slider-text.student {
+            color: #a7d1eb; /* Màu xanh nhạt khi ở trạng thái GV (checked) */
+        }
 
-         input:checked + .slider .slider-text.faculty {
-             color: white; /* Màu trắng khi ở trạng thái SV (unchecked) */
-         }
-         .custom-upload-button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #0056b3 ; /* Màu xanh */
-    color: white; /* Chữ trắng */
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    white-space: nowrap;
-}
-
-.custom-upload-button:hover {
-    background-color: #2c3e50; /* Màu xanh đậm hơn khi hover */
-}
+        input:checked + .slider .slider-text.faculty {
+            color: white; /* Màu trắng khi ở trạng thái GV (checked) */
+        }
     </style>
 {% endblock %}
 
+
 {% block content %}
     <div class="sggd-container">
-         <h1 class="sggd-heading" id="formHeading">Tạo Tài Khoản Mới</h1>
+        <h1 class="sggd-heading" id="formHeading">Tạo Tài Khoản Mới</h1>
 
-         <div class="toggle-container">
-             <span class="toggle-label">Sinh viên</span>
-             <label class="switch">
-                 <input type="checkbox" id="accountTypeToggle">
-                 <span class="slider round">
-                     <span class="slider-text student"></span>
-                     <span class="slider-text faculty"></span>
-                 </span>
-             </label>
-             <span class="toggle-label">Giảng viên</span>
-         </div>
+        <div class="toggle-container">
+            <span class="toggle-label">Sinh viên</span>
+            <label class="switch">
+                <input type="checkbox" id="accountTypeToggle">
+                <span class="slider round">
+                    <span class="slider-text student"></span>
+                    <span class="slider-text faculty"></span>
+                </span>
+            </label>
+            <span class="toggle-label">Giảng viên</span>
+        </div>
 
         <form id="createAccountForm">
             {# COMMON FIELDS #}
@@ -417,7 +460,9 @@
             <div class="sggd-form-row five-columns">
                 <div class="sggd-form-group">
                     <label for="nationality" class="sggd-label">Quốc tịch:<span style="color: red;">*</span></label>
-                    <input type="text" id="nationality" name="nationality" class="sggd-input" required>
+                    <select id="nationality" name="nationality" class="sggd-select" required>
+                        <option value="">Chọn quốc tịch</option>
+                    </select>
                 </div>
                 <div class="sggd-form-group">
                     <label for="gender" class="sggd-label">Giới tính:<span style="color: red;">*</span></label>
@@ -434,47 +479,56 @@
                 </div>
                 <div class="sggd-form-group">
                     <label for="place_of_birth" class="sggd-label">Nơi sinh:<span style="color: red;">*</span></label>
-                    <input type="text" id="place_of_birth" name="place_of_birth" class="sggd-input" required>
+                    <select id="place_of_birth" name="place_of_birth" class="sggd-select" required>
+                        <option value="">Chọn tỉnh/thành</option>
+                    </select>
                 </div>
                 <div class="sggd-form-group">
                     <label for="phone" class="sggd-label">Số điện thoại:<span style="color: red;">*</span></label>
                     <input type="tel" id="phone" name="phone" class="sggd-input" required>
                 </div>
+            </div>
+            
+            <div class="sggd-form-row three-columns"> {# Thay đổi thành 3 cột cho 3 trường này #}
+                <div class="sggd-form-group">
+                    <label for="city" class="sggd-label">Tỉnh/Thành phố:<span style="color: red;">*</span></label>
+                    <select type="text" id="city" name="city" class="sggd-select" required>
+                        <option value="">Chọn tỉnh/thành</option>
+                    </select>
+                </div>
+                <div class="sggd-form-group">
+                    <label for="district" class="sggd-label">Quận/Huyện:<span style="color: red;">*</span></label>
+                    <select type="text" id="district" name="district" class="sggd-select" required>
+                        <option value="">Chọn quận/huyện</option>
+                    </select>
+                </div>
                 <div class="sggd-form-group">
                     <label for="address" class="sggd-label">Địa chỉ:<span style="color: red;">*</span></label>
                     <input type="text" id="address" name="address" class="sggd-input" required>
                 </div>
-                <div class="sggd-form-group">
-                    <label for="district" class="sggd-label">Quận/Huyện:<span style="color: red;">*</span></label>
-                    <input type="text" id="district" name="district" class="sggd-input" required>
-                </div>
-                <div class="sggd-form-group">
-                    <label for="city" class="sggd-label">Tỉnh/Thành phố:<span style="color: red;">*</span></label>
-                    <input type="text" id="city" name="city" class="sggd-input" required>
-                </div>
             </div>
 
-            <div class="sggd-form-row four-columns">
-                
+            <div class="sggd-form-row two-columns"> {# Sử dụng two-columns cho phần upload ảnh và preview #}
                 <div class="sggd-form-group">
                     <label for="user_photo" class="sggd-label">Ảnh đại diện:</label>
                     <div class="custom-file-upload-wrapper">
-                        <label for="user_photo" class="custom-upload-button">Choose File</label>
+                        <label for="user_photo" class="custom-upload-button">Chọn tệp</label>
                         <input type="file" id="user_photo" name="user_photo" accept="image/*" style="display: none;">
-                        <span id="fileNameDisplay" class="file-name-display">No file chosen</span>
+                        <span id="fileNameDisplay" class="file-name-display">Chưa có tệp nào được chọn</span>
                     </div>
                 </div>
-                  <div id="photoPreviewContainer" class="sggd-form-group" style="display: none;">
+                <div id="photoPreviewContainer" class="sggd-form-group" style="display: none;">
                     <div class="photo-preview-wrapper">
                         <img id="photoPreview" src="#" alt="Ảnh đại diện" style="display: none;">
                     </div>
+                    <p id="photoPreviewText">Ảnh đại diện</p>
                 </div>
             </div>
-           
+            
 
             {# STUDENT-SPECIFIC FIELDS #}
             <div id="studentFields" style="display: block;"> {# Default to student fields #}
-                <div class="sggd-form-row two-columns">
+                <div class="sggd-form-row three-columns"> {# Đổi sang 3 cột #}
                     <div class="sggd-form-group">
                         <label for="student_code" class="sggd-label">Mã sinh viên:<span style="color: red;">*</span></label>
                         <input type="text" id="student_code" name="student_code" class="sggd-input">
@@ -483,37 +537,42 @@
                         <label for="parent_name" class="sggd-label">Tên phụ huynh:<span style="color: red;">*</span></label>
                         <input type="text" id="parent_name" name="parent_name" class="sggd-input">
                     </div>
-                </div>
-                <div class="sggd-form-row two-columns">
                     <div class="sggd-form-group">
                         <label for="parent_phone" class="sggd-label">Số điện thoại phụ huynh:<span style="color: red;">*</span></label>
                         <input type="tel" id="parent_phone" name="parent_phone" class="sggd-input">
                     </div>
+                </div>
+                <div class="sggd-form-row three-columns"> {# Đổi sang 3 cột #}
                     <div class="sggd-form-group">
                         <label for="program" class="sggd-label">Chương trình học:<span style="color: red;">*</span></label>
                         <select id="program" name="program" class="sggd-select">
                             <option value="">Chọn chương trình học</option>
                         </select>
                     </div>
-                </div>
-                <div class="sggd-form-row three-columns">
                     <div class="sggd-form-group">
                         <label for="department" class="sggd-label">Khoa:<span style="color: red;">*</span></label>
                         <select id="department" name="department" class="sggd-select">
                             <option value="">Chọn khoa </option>
                         </select>
                     </div>
-                     <div class="sggd-form-group">
+                    <div class="sggd-form-group">
                         <label for="major" class="sggd-label">Ngành học:<span style="color: red;">*</span></label>
                         <select id="major" name="major" class="sggd-select">
                             <option value="">Chọn ngành học</option>
                         </select>
                     </div>
+                </div>
+                <div class="sggd-form-row two-columns"> {# Đổi sang 2 cột #}
                     <div class="sggd-form-group">
                         <label for="academic_year" class="sggd-label">Năm học:<span style="color: red;">*</span></label>
                         <select id="academic_year" name="academic_year" class="sggd-select">
                             <option value="">Chọn năm học</option>
-                            <option value="">2025</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
                         </select>
                     </div>
                     <div class="sggd-form-group">
@@ -529,12 +588,6 @@
                         </select>
                     </div>
                 </div>
-                <!-- <div class="sggd-form-row one-column">
-                    <div class="sggd-form-group">
-                        <label for="gpa" class="sggd-label">Điểm GPA:</label>
-                        <input type="number" step="0.01" id="gpa" name="gpa" class="sggd-input" placeholder="Ví dụ: 3.5">
-                    </div>
-                </div> -->
             </div>
 
             {# FACULTY-SPECIFIC FIELDS #}
@@ -595,4 +648,111 @@
 {% block scripts %}
     {# Liên kết đến file JavaScript chung #}
     <script src="{{ url_for('static', filename='js/admin/create_account.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountTypeToggle = document.getElementById('accountTypeToggle');
+            const studentFields = document.getElementById('studentFields');
+            const facultyFields = document.getElementById('facultyFields');
+            const formHeading = document.getElementById('formHeading');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const userPhotoInput = document.getElementById('user_photo');
+            const photoPreview = document.getElementById('photoPreview');
+            const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+            const photoPreviewText = document.getElementById('photoPreviewText');
+
+            // Set initial state based on toggle
+            function setFormFieldsVisibility() {
+                if (accountTypeToggle.checked) { // Giảng viên
+                    studentFields.style.display = 'none';
+                    facultyFields.style.display = 'block';
+                    formHeading.textContent = 'Tạo Tài Khoản Giảng Viên';
+                    setRequired(studentFields, false);
+                    setRequired(facultyFields, true);
+                } else { // Sinh viên
+                    studentFields.style.display = 'block';
+                    facultyFields.style.display = 'none';
+                    formHeading.textContent = 'Tạo Tài Khoản Sinh Viên';
+                    setRequired(studentFields, true);
+                    setRequired(facultyFields, false);
+                }
+            }
+
+            function setRequired(container, isRequired) {
+                const inputs = container.querySelectorAll('input[required], select[required]');
+                inputs.forEach(input => {
+                    if (isRequired) {
+                        input.setAttribute('required', 'required');
+                    } else {
+                        input.removeAttribute('required');
+                    }
+                });
+            }
+
+            accountTypeToggle.addEventListener('change', setFormFieldsVisibility);
+
+            // Initial call to set correct visibility
+            setFormFieldsVisibility();
+
+            // Handle file input changes for preview
+            userPhotoInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    fileNameDisplay.textContent = this.files[0].name;
+
+                    reader.onload = function(e) {
+                        photoPreview.src = e.target.result;
+                        photoPreview.style.display = 'block';
+                        photoPreviewContainer.style.display = 'flex'; // Show container
+                        photoPreviewText.style.display = 'none'; // Hide default text
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    fileNameDisplay.textContent = 'Chưa có tệp nào được chọn';
+                    photoPreview.src = '#';
+                    photoPreview.style.display = 'none';
+                    photoPreviewContainer.style.display = 'none'; // Hide container
+                    photoPreviewText.style.display = 'block'; // Show default text
+                }
+            });
+
+            // Populate select options (example for nationalities and provinces)
+            const nationalities = ["Việt Nam", "Mỹ", "Anh", "Pháp", "Đức", "Nhật Bản", "Hàn Quốc"];
+            const provinces = ["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ", "Huế", "Nha Trang"];
+            const departments = ["Công nghệ thông tin", "Kinh tế", "Ngoại ngữ", "Luật", "Y học", "Điện tử viễn thông"];
+            const programs = ["Đại học", "Cao đẳng", "Sau đại học"];
+            const majors = ["Khoa học máy tính", "Kỹ thuật phần mềm", "An toàn thông tin", "Quản trị kinh doanh", "Kinh tế quốc tế"];
+
+
+            function populateSelect(selectElement, options) {
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    selectElement.appendChild(opt);
+                });
+            }
+
+            populateSelect(document.getElementById('nationality'), nationalities);
+            populateSelect(document.getElementById('place_of_birth'), provinces);
+            populateSelect(document.getElementById('city'), provinces);
+            populateSelect(document.getElementById('department'), departments);
+            populateSelect(document.getElementById('program'), programs);
+            populateSelect(document.getElementById('major'), majors);
+            populateSelect(document.getElementById('department_faculty'), departments);
+
+            // Example for district based on city selection
+            document.getElementById('city').addEventListener('change', function() {
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>'; // Clear existing options
+                const selectedCity = this.value;
+                let districts = [];
+                if (selectedCity === "TP. Hồ Chí Minh") {
+                    districts = ["Quận 1", "Quận 3", "Quận 5", "Quận Bình Thạnh", "Quận Thủ Đức"];
+                } else if (selectedCity === "Hà Nội") {
+                    districts = ["Ba Đình", "Hoàn Kiếm", "Đống Đa", "Cầu Giấy", "Hà Đông"];
+                }
+                populateSelect(districtSelect, districts);
+            });
+        });
+    </script>
 {% endblock %}

@@ -26,23 +26,22 @@
                 </section>
 
                 <div id="bookingModal03" class="modal03">
-    <div class="modal-content03">
-        <span class="close-button03 close-booking-modal-button03">&times;</span>
-        <h2>Thông Tin Đặt Phòng</h2>
-        <form id="bookingForm03">
-            <label for="fullName03">Họ và Tên:</label>
-            <input type="text" id="fullName03" name="fullName" required>
+                    <div class="modal-content03">
+                        <span class="close-button03 close-booking-modal-button03">&times;</span>
+                        <h2>Thông Tin Đặt Phòng</h2>
+                        <form id="bookingForm03">
+                            <input type="hidden" id="bookingRoomId" name="id_room">
+                            
+                            <label for="fullName03">Họ và Tên:</label>
+                            <input type="text" id="fullName03" name="full_name" required>
+                            
+                            <label for="phone03">Số điện thoại:</label>
+                            <input type="tel" id="phone03" name="phone" required maxlength="11" pattern="[0-9]{10,11}" title="Số điện thoại phải có 10 hoặc 11 chữ số.">
 
-            <label for="email03">Số điện thoại:</label>
-            <input type="tel" id="email03" name="sodienthoai" required>
-
-            <!-- <label for="bookingDate03">Ngày Đặt:</label>
-            <input type="date" id="bookingDate03" name="bookingDate" required> -->
-
-            <button type="submit">Xác Nhận Đặt Phòng</button>
-        </form>
-    </div>
-</div>
+                            <button type="submit">Xác Nhận Đặt Phòng</button>
+                        </form>
+                    </div>
+                </div>
 
             <div id="roomDetailModal02" class="modal02">
                 <div class="modal-content02">
