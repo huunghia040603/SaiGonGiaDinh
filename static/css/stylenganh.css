@@ -826,8 +826,8 @@
 @media screen and (max-width: 768px) {
     /* General Layout */
     .container {
-        padding: 0 10px;
-        width: 100%;
+        padding: 0 ;
+       
         max-width: 100%;
     }
 
