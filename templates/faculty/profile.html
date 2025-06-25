@@ -247,7 +247,7 @@
                     <i class="fas fa-user-circle" id="defaultUserIcon" style="display: none;"></i> 
                 </div>
                 <h1>Hồ sơ giảng viên/cán bộ</h1>
-                <p>Thông tin chi tiết về tài khoản của bạn</p>
+            
             </div>
 
             <div class="profile-info">
@@ -338,11 +338,7 @@
                     <strong>Ngày vào làm:</strong>
                     <span id="userEnrollmentDate"></span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <strong>Ngày tham gia hệ thống:</strong>
-                    <span id="userDateJoined"></span>
-                </div>
+               
             </div>
 
             <button class="edit-button" id="logoutBtn">Đăng xuất</button> 
@@ -374,7 +370,7 @@
             const facultyDegree = document.getElementById('facultyDegree');
             const facultyOfficeLocation = document.getElementById('facultyOfficeLocation');
             const userEnrollmentDate = document.getElementById('userEnrollmentDate');
-            const userDateJoined = document.getElementById('userDateJoined');
+           
 
             // Hàm format ngày tháng từ YYYY-MM-DD sang DD/MM/YYYY
             function formatDate(dateString) {
@@ -463,7 +459,7 @@
             setValue(facultyOfficeLocation, localStorage.getItem('facultyOfficeLocation'));
             setValue(userEnrollmentDate, localStorage.getItem('userEnrollmentDate'), formatDate);
             // Chỉ lấy phần ngày từ chuỗi datetime (nếu có)
-            setValue(userDateJoined, localStorage.getItem('userDateJoined'), (dateString) => formatDate(dateString)); 
+            
         });
 
         // --- BẮT ĐẦU PHẦN BỔ SUNG HÀM LOGOUT MỚI TRONG TRANG PROFILE ---

@@ -1,71 +1,198 @@
+/* Sidebar chung */
 .sidebar {
-    width: 250px; /* Chiều rộng cố định của sidebar */
-    background-color: #ffffff;
-    color: #343a40;
-    padding-top: 0; /* Đặt lại padding-top để nó tràn lên đầu */
-    flex-shrink: 0; /* Ngăn sidebar co lại */
-    box-shadow: 2px 0 6px rgba(0,0,0,0.1);
-    position: sticky; /* Sticky để cuộn cùng trang */
-    top: 0; /* Luôn dính ở đầu trang */
-    height: 100vh; /* Chiếm toàn bộ chiều cao của viewport */
-    overflow-y: auto; /* Cho phép cuộn nếu nội dung sidebar dài */
-    border-right: 1px solid #e0e0e0;
-}
-
-.sidebar h2 {
-    background-color: #f8f9fa; /* Màu nền cho phần QUẢN TRỊ */
-    padding: 15px 20px;
-    margin: 0;
-    color: #007bff;
-    font-weight: 600;
-    font-size: 1.2em;
-    border-bottom: 1px solid #e9ecef;
-    position: sticky; /* Đặt sticky cho h2 nếu muốn nó dính khi cuộn sidebar */
+    width: 250px; /* Chiều rộng cố định */
+    background-color: #f7fafc; /* Nền màu trắng xám nhẹ */
+    padding: 20px 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05); /* Đổ bóng nhẹ bên phải */
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Giữ sidebar cố định khi cuộn */
+    height: 100vh; /* Chiếm toàn bộ chiều cao viewport */
     top: 0;
-    z-index: 10; /* Đảm bảo h2 nằm trên các mục khác */
-    background-color: #ffffff; /* Hoặc một màu nền khác để nó nổi bật */
+    left: 0;
+    z-index: 900;
+    border-right: 1px solid #e0e0e0; /* Viền mỏng bên phải */
+    font-family: 'Poppins', sans-serif; /* Sử dụng font Poppins */
+    transition: width 0.3s ease; /* Hiệu ứng khi thu gọn/mở rộng sidebar */
 }
 
-.sidebar h3 {
-    font-size: 1em;
-    color: #495057;
-    border-bottom: none;
-    padding-top: 25px;
+/* Header logo trong sidebar */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #4a5568;
 }
 
+.sidebar-header i {
+    color: #4299e1;
+    margin-right: 10px;
+}
+
+/* Menu items */
 .sidebar ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    flex-grow: 1; /* Cho phép menu chiếm không gian còn lại */
+}
+
+.sidebar ul li {
+    margin-bottom: 5px; /* Khoảng cách giữa các mục menu */
 }
 
 .sidebar ul li a {
     display: flex;
     align-items: center;
-    color: #495057;
-    padding: 12px 20px;
+    padding: 12px 20px; /* Padding cho các mục */
+    color: #4a5568;
     text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease, border-left-color 0.3s ease;
-    border-left: 5px solid transparent;
-    margin-bottom: 5px;
-    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 10px; /* Bo tròn góc */
+    margin: 0 10px; /* Tạo khoảng cách với cạnh sidebar */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .sidebar ul li a i {
-    margin-right: 10px;
     font-size: 1.1em;
+    margin-right: 15px; /* Khoảng cách giữa icon và chữ */
+    color: #a0aec0; /* Màu icon mặc định */
 }
 
 .sidebar ul li a:hover {
-    background-color: #e9ecef;
-    color: #0056b3;
-    border-left-color: #007bff;
+    background-color: #e2e8f0; /* Nền xám nhạt khi hover */
+    color: #2d3748; /* Màu chữ đậm hơn khi hover */
+    transform: translateX(5px); /* Dịch chuyển nhẹ sang phải */
 }
 
+/* Active menu item */
 .sidebar ul li a.active {
-    background-color: #007bff;
+    background-color: #e6fffa; /* Nền xanh nhạt hơn */
+    color: #2ac2b2; /* Màu chữ xanh lá cây */
+    font-weight: 600;
+}
+
+.sidebar ul li a.active i {
+    color: #2ac2b2; /* Icon màu xanh lá cây */
+}
+
+/* Footer / Settings Section trong sidebar */
+.sidebar-footer {
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #2ac2b2; /* Màu xanh lá như button đăng xuất */
     color: white;
-    border-left-color: #007bff;
-    font-weight: bold;
-    box-shadow: inset 3px 0 8px rgba(0,123,255,0.2);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-footer a:hover {
+    background-color: #24a899;
+    transform: translateY(-2px);
+}
+
+.sidebar-footer a i {
+    margin-right: 10px;
+}
+
+/* Các tiêu đề nhóm chức năng (Dashboard, Authentication) - giống mẫu */
+.sidebar h2, .sidebar h3 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #a0aec0; /* Màu chữ xám nhạt */
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Ẩn các tiêu đề Auth và chức năng khác trong sidebar nếu không cần thiết */
+.sidebar h2, .sidebar h3 {
+    /* Đảm bảo rằng bạn chỉ hiển thị các phần cần thiết.
+       Nếu bạn muốn loại bỏ "QUẢN TRỊ DÀNH CHO GIẢNG VIÊN", chỉ cần xóa thẻ <h2> đó trong HTML.
+       Tương tự với các tiêu đề "CÁC CHỨC NĂNG" và "AUTH" nếu chúng không khớp mẫu.
+    */
+}
+
+/* Responsive cho Sidebar */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 60px; /* Thu gọn sidebar trên màn hình nhỏ hơn */
+        padding: 10px 0;
+        align-items: center;
+    }
+
+    .sidebar-header {
+        justify-content: center;
+        padding: 10px 0;
+        margin-bottom: 10px;
+    }
+
+    .sidebar-header span {
+        display: none; /* Ẩn chữ "Travelgo." */
+    }
+
+    .sidebar-header i {
+        margin-right: 0; /* Loại bỏ margin-right */
+    }
+
+    .sidebar ul li a {
+        padding: 10px; /* Giảm padding */
+        margin: 0 5px;
+        justify-content: center; /* Canh giữa icon */
+    }
+
+    .sidebar ul li a span {
+        display: none; /* Ẩn chữ của các mục menu */
+    }
+
+    .sidebar ul li a i {
+        margin-right: 0; /* Loại bỏ margin-right */
+    }
+
+    .sidebar h2, .sidebar h3 {
+        display: none; /* Ẩn các tiêu đề khi sidebar thu gọn */
+    }
+
+    .sidebar-footer {
+        padding: 10px;
+    }
+
+    .sidebar-footer a span {
+        display: none; /* Ẩn chữ trong nút footer */
+    }
+    .sidebar-footer a i {
+        margin-right: 0;
+    }
+}
+
+/* Điều chỉnh lại layout-wrapper để account cho sidebar cố định */
+.layout-wrapper {
+    display: flex;
+}
+
+.main-content-wrapper {
+    margin-left: 250px; /* Đảm bảo nội dung chính không bị che bởi sidebar */
+    flex-grow: 1; /* Cho phép phần nội dung chính chiếm hết không gian còn lại */
+    padding: 20px; /* Padding cho nội dung chính */
+    transition: margin-left 0.3s ease; /* Hiệu ứng khi sidebar thu gọn/mở rộng */
+}
+
+@media (max-width: 992px) {
+    .main-content-wrapper {
+        margin-left: 60px; /* Điều chỉnh margin khi sidebar thu gọn */
+    }
 }

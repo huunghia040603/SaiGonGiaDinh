@@ -16,7 +16,7 @@ async function recordUserVisit() {
         user_agent: navigator.userAgent // Chuỗi User-Agent của trình duyệt
     };
 
-    console.log('Đang gửi dữ liệu lượt truy cập:', data);
+   
 
     try {
         const response = await fetch(apiUrl, {
