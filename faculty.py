@@ -31,4 +31,9 @@ def registration_faculty():
    
     return render_template('faculty/registrations_faculty.html')
 
+@faculty.route('/edit_score/')
+def edit_score():
+   
+    return render_template('faculty/edit_score.html')
+
 

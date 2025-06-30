@@ -316,7 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('userEmail', email);
         localStorage.setItem('userRole', role);
         localStorage.setItem('userFullName', `${user.first_name} ${user.last_name}`);
-        localStorage.setItem('userPhone', user.phone); // LƯU TRƯỜNG PHONE Ở ĐÂY
+        localStorage.setItem('userPhone', user.phone);
+        console.log("userPhone",userPhone) // LƯU TRƯỜNG PHONE Ở ĐÂY
         localStorage.setItem('loginTime', Date.now()); // Lưu thời điểm đăng nhập
 
         updateLoginStatusUI(); // Cập nhật giao diện người dùng

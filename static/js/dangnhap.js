@@ -191,6 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (data.user && data.user.full_name) {
                         localStorage.setItem('userFullName', data.user.full_name);
+                        localStorage.setItem('userPhone', data.user.phone);
+                        
                     }
 
                     if (loginTitle && data.user && data.user.full_name) {
@@ -204,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     setTimeout(() => {
                         window.location.href = '/';
-                    }, 1500);
+                    }, 1000);
 
                 } else {
                     console.error(`Login failed (Status: ${statusCode}):`, data);
