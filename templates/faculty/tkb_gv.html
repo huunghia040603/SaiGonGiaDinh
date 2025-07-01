@@ -1,0 +1,355 @@
+{% extends 'faculty/base_faculty.html' %}
+
+{% block title %}Thời Khóa Biểu Giảng Viên{% endblock %}
+
+{% block page_styles %}
+    <style>
+        /* Các CSS hiện có của bạn sẽ ở đây */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 20px;
+            line-height: 1.2;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 1300px;
+            margin: 20px auto;
+        }
+        h2 {
+            color: #212529;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.2rem;
+        }
+
+        /* --- SỬA ĐỔI HEADER SECTION --- */
+        .header-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Đẩy các nhóm phần tử ra hai phía */
+            align-items: flex-end; /* Căn chỉnh các mục theo đáy */
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            /* border-bottom: 1px solid #dee2e6; */ /* Có thể thêm border dưới nhẹ nhàng */
+            gap: 20px; /* Khoảng cách giữa các nhóm lớn */
+        }
+
+        .header-left-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; /* Khoảng cách giữa các dropdown */
+            align-items: center;
+        }
+
+        .header-right-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Khoảng cách giữa các nút */
+            align-items: center;
+        }
+
+        /* --- CÁC DROPDOWN --- */
+        .custom-select {
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #495057;
+            background-color: #fff;
+            appearance: none; /* Bỏ giao diện mặc định của select */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M128%20192L48%20112l16-16%2064%2064%2064-64%2016%2016z%22/%3E%3C/svg%3E'); /* Icon mũi tên xuống */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+            cursor: pointer;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            min-width: 270px; /* Đảm bảo đủ rộng */
+        }
+        .custom-select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        /* --- NÚT ĐIỀU HƯỚNG TUẦN --- */
+        .timetable-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Căn giữa các nút và thông tin tuần */
+            gap: 15px; /* Khoảng cách giữa các phần tử điều hướng */ /* Nền nhẹ nhàng cho khu vực điều hướng */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .nav-button {
+            background-color: #070163;
+            border: 1px solid #06023f;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-button:hover {
+            background-color: #0a5ed7;
+            border-color: #0a58ca;
+        }
+        .week-info {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #212529;
+            white-space: nowrap; /* Giữ thông tin tuần trên một dòng */
+        }
+        
+        /* Cập nhật button in */
+        .btn-print {
+            background-color: #6c757d; /* Màu xám trung tính */
+            border-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            white-space: nowrap;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-left-group, .header-right-group {
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column; /* Đặt các dropdown và nút xuống dòng trên màn hình nhỏ */
+                gap: 10px;
+            }
+            .custom-select, .btn-print {
+                width: 100%;
+                min-width: unset;
+            }
+            .timetable-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .week-info {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 15px;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .custom-select, .btn-print, .nav-button {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            .week-info {
+                font-size: 1rem;
+            }
+        }
+
+        /* Các style khác của bảng (timetable) giữ nguyên */
+        .timetable-container {
+            overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 900px;
+            table-layout: fixed;
+        }
+        .timetable thead {
+            background-color: #02014a;
+            color: white;
+        }
+        .timetable th {
+            padding: 15px 8px;
+            text-align: center;
+            border-right: 2px solid white;
+            border-top: 2px solid black;
+            vertical-align: middle;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        .timetable thead tr th:last-child {
+            border-right: 2px solid black;
+        }
+        .timetable th.session-column-header {
+            width: 70px;
+            background-color: #02014a;
+            border-right: 1px solid white;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            font-size: 1em;
+        }
+        .timetable th.time-column-header {
+            width: 110px;
+            background-color: #02014a;
+            border-right: 1px solid white;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            font-size: 1em;
+        }
+        .timetable th.day-header {
+            font-size: 1.05em;
+            text-transform: none;
+        }
+        .timetable th.date-header {
+            font-size: 0.85em;
+            font-weight: normal;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .timetable td {
+            border: 1px solid #201c1c;
+            padding: 0;
+            vertical-align: top;
+            position: relative;
+        }
+        .timetable td.session-label-body {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
+            border-right: 1px solid #201c1c;
+            border-bottom: 1px solid #201c1c;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            color: #495057;
+            font-size: 0.95em;
+        }
+        .timetable td.time-slot-label {
+            background-color: #f8f9fa;
+            font-weight: normal;
+            text-align: center;
+            padding: 10px 5px;
+            white-space: nowrap;
+            border-right: 1px solid #201c1c;
+            border-bottom: 1px solid #201c1c;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
+            color: #495057;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+        .timetable td.schedule-cell {
+            padding: 5px;
+            height: 50px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+        }
+        .schedule-entry {
+            background-color: #fffed6;
+            border: 1px solid #d8d770;
+            border-radius: 6px;
+            padding: 4px;
+            margin: 0;
+            font-size: 0.8em;
+            text-align: center;
+            word-wrap: break-word;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+            color: #3a1f1f;
+            transition: all 0.2s ease-in-out;
+        }
+        .schedule-entry:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+        .schedule-entry strong {
+            display: block;
+            font-size: 1.3em;
+            color: #bc0808;
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+        .schedule-entry span {
+            display: block;
+            color: #454a4f;
+            font-size: 0.85em;
+        }
+        .empty-cell {
+            background-color: #fdfdfd;
+        }
+        .timetable tbody tr:last-child td {
+            border-bottom: 1px solid #201c1c;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Thời Khóa Biểu Giảng Viên</h2>
+
+        <div class="header-section">
+            <div class="header-left-group">
+                <select id="semesterSelect" class="custom-select">
+                    </select>
+            </div>
+            <div class="header-right-group">
+                  <div class="timetable-navigation">
+            <button id="prevWeekBtn" class="nav-button">&larr; Trước</button>
+           <select id="weekSelect" class="custom-select">
+                <option value="">Chọn tuần</option>
+            </select>
+            <span id="weekInfo" class="week-info"></span>
+            <button id="nextWeekBtn" class="nav-button">Sau &rarr;</button>
+        </div>
+            </div>
+        </div>
+
+     
+
+        <div class="timetable-container">
+            <table class="timetable" id="facultyTimetable">
+                <thead>
+                    </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="{{ url_for('static', filename='js/faculty/thoikhoabieu.js') }}"></script>
+{% endblock %}

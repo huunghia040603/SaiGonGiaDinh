@@ -944,8 +944,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingFullNameInput = document.getElementById('fullName03'); 
 
     // --- Biến lưu trữ ID và Tên người dùng hiện tại ---
-    function getAuthToken() {
-        return localStorage.getItem('authToken'); // Lấy authToken
+    
+    function getAuthuserId() {
+        return localStorage.getItem('userId'); // Lấy authToken
     }
     function getFullName() {
         return localStorage.getItem('userFullName'); // Lấy authToken
@@ -961,14 +962,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // localStorage.setItem('currentUserId', response.user_id);
     // localStorage.setItem('currentUserName', response.full_name);
 
-    const currentUserId = getAuthToken();
+    
     const currentUserName = getFullName();
     const currentPhone = getPhone();
+    const currentUserId= getAuthuserId();
 
     
     console.log("currentUserId:", currentUserId); // Debugging
     console.log("currentUserName:", currentUserName);
-    console.log("currentPhone:", currentPhone); // Debugging
+    console.log("currentPhone:", currentPhone);
+   
 
     // --- Hàm Helper: Load dữ liệu yêu thích từ Local Storage ---
     const loadFavorites02 = () => {
@@ -1220,10 +1223,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // GÁN HỌ TÊN NẾU NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP
             if (bookingFullNameInput && currentUserName) {
                 bookingFullNameInput.value = currentUserName;
-                bookingFullNameInput.readOnly = true; // Không cho phép chỉnh sửa
+                // bookingFullNameInput.readOnly = true; // Bỏ dòng này để cho phép chỉnh sửa
             } else if (bookingFullNameInput) {
                 bookingFullNameInput.value = ''; // Xóa giá trị cũ nếu không có tên
-                bookingFullNameInput.readOnly = false; // Cho phép nhập
+                bookingFullNameInput.readOnly = false; // Đảm bảo cho phép nhập nếu ban đầu không có
+            }
+
+            if (bookingPhoneInput && currentPhone) {
+                bookingPhoneInput.value = currentPhone;
+                // bookingPhoneInput.readOnly = true; // Bỏ dòng này để cho phép chỉnh sửa
+            } else if (bookingPhoneInput) {
+                bookingPhoneInput.value = ''; // Xóa giá trị cũ nếu không có số điện thoại
+                bookingPhoneInput.readOnly = false; // Đảm bảo cho phép nhập nếu ban đầu không có
             }
             
             bookingModal03.style.display = 'block'; 
@@ -1293,7 +1304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     const result = await response.json();
                     console.log('Đặt phòng thành công:', result);
-                    alert('Yêu cầu đặt phòng của bạn đã được gửi thành công!');
+                    alert('Bạn đã đặt phòng thành công! Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất');
                     bookingForm03.reset();
                     hideBookingModal03();
                 } else {

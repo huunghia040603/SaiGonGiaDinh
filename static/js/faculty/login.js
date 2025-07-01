@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const loginApiUrl = 'https://saigongiadinh.pythonanywhere.com/auth/faculty_login/';
 
-    const SESSION_DURATION_MS = 10 * 60 * 1000; // 10 phút tính bằng mili giây
+    const SESSION_DURATION_MS = 1000 * 60 * 1000; // 10 phút tính bằng mili giây
 
     function showMessage(msg, type) {
         if (messageDiv) {
@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hàm mới để xử lý đăng xuất
     function handleLogout() {
         clearLocalStorageSession();
-        // Có thể thêm thông báo "Bạn đã đăng xuất thành công!" nếu muốn
         alert('Bạn đã đăng xuất thành công!'); // Hoặc dùng showMessage
         window.location.href = '/sggd/gv/manage/'; // Chuyển hướng về trang đăng nhập
     }
@@ -189,78 +188,80 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- LOGIC KIỂM TRA PHIÊN HẾT HẠN TRÊN CLIENT ---
+    // Biến cờ để tránh hiển thị nhiều alert cùng lúc
+    let isSessionExpiredAlertShown = false;
+
+    // Hàm kiểm tra và xử lý phiên hết hạn
     function checkFrontendSessionExpiry() {
         const timeLogin = localStorage.getItem('time_login');
         const authToken = localStorage.getItem('authToken');
-        const userRole = localStorage.getItem('userRole'); // Lấy role từ localStorage
+        const userRole = localStorage.getItem('userRole');
 
-        if (!timeLogin || !authToken || userRole !== 'CBCNV') { // Thêm điều kiện kiểm tra role
+        // Nếu người dùng đang ở trang đăng nhập, không cần kiểm tra phiên hết hạn
+        const isLoginPage = window.location.pathname === '/sggd/gv/manage/' || window.location.pathname === '/sggd/gv/manage';
+
+        if (!isLoginPage && (!timeLogin || !authToken || userRole !== 'CBCNV')) {
             console.log('%c[Phiên Đăng Nhập] Không có phiên, token hoặc role không đúng.', 'color: gray;');
-            if (userRole && userRole !== 'CBCNV') { // Nếu có role nhưng không phải CBCNV
+            // Nếu đã hiển thị alert rồi thì không hiển thị nữa
+            if (!isSessionExpiredAlertShown) {
+                isSessionExpiredAlertShown = true; // Đặt cờ
                 clearLocalStorageSession();
-                if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-                    alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại bằng tài khoản CBCNV.');
+                alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
+                // Đảm bảo chuyển hướng ngay sau khi alert được đóng hoặc người dùng cố gắng bỏ qua
+                setTimeout(() => {
                     window.location.href = '/sggd/gv/manage/';
-                }
+                }, 100); // Độ trễ nhỏ để đảm bảo alert kịp hiển thị
             }
             return false;
         }
 
+        if (isLoginPage) {
+            // Nếu đang ở trang đăng nhập, reset cờ để cho phép alert khi rời khỏi trang này
+            isSessionExpiredAlertShown = false; 
+            return true; // Không kiểm tra hết hạn nếu đang ở trang login
+        }
+
         const loginTimestamp = parseInt(timeLogin);
         const currentTime = Date.now();
-        const elapsedTime = currentTime - loginTimestamp; // Thời gian đã trôi qua
+        const elapsedTime = currentTime - loginTimestamp;
 
         const remainingTimeMs = SESSION_DURATION_MS - elapsedTime;
 
         if (remainingTimeMs <= 0) {
-            clearLocalStorageSession();
-
-            // Kiểm tra nếu KHÔNG phải là trang đăng nhập, thì mới chuyển hướng
-            if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-                const confirmLogout = confirm('Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.');
-                // Chuyển hướng về trang đăng nhập của bạn
-                if (confirmLogout) {
+            // Phiên hết hạn
+            if (!isSessionExpiredAlertShown) { // Chỉ hiển thị alert nếu chưa hiển thị
+                isSessionExpiredAlertShown = true; // Đặt cờ
+                clearLocalStorageSession();
+                alert('Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.');
+                // Bắt buộc chuyển hướng sau một khoảng thời gian ngắn
+                setTimeout(() => {
                     window.location.href = '/sggd/gv/manage/';
-                } else {
-                    window.location.href = '/sggd/gv/manage/';
-                }
+                }, 100); 
             }
             return false;
         } else {
             const remainingMinutes = Math.floor(remainingTimeMs / (1000 * 60));
             const remainingSeconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
+            // console.log(`[Phiên Đăng Nhập] Còn lại: ${remainingMinutes} phút ${remainingSeconds} giây.`); // Chỉ để debug
+            isSessionExpiredAlertShown = false; // Reset cờ nếu phiên vẫn còn hạn
             return true;
         }
     }
 
     // Kiểm tra ngay khi DOM được tải (trừ trang đăng nhập)
-    if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-        checkFrontendSessionExpiry();
-    }
+    checkFrontendSessionExpiry();
 
     // Kiểm tra khi người dùng quay lại tab hoặc cửa sổ trình duyệt (focus)
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'visible') {
-            if (window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-                checkFrontendSessionExpiry();
-            }
+            checkFrontendSessionExpiry();
         }
     });
 
-    // Thêm kiểm tra định kỳ mỗi 5 giây (hoặc bất kỳ khoảng thời gian nào bạn muốn)
+    // Thêm kiểm tra định kỳ mỗi 5 giây
     setInterval(() => {
-        const authToken = localStorage.getItem('authToken');
-        const userRole = localStorage.getItem('userRole'); // Lấy role
-        if (authToken && userRole === 'CBCNV' && window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-            checkFrontendSessionExpiry();
-        } else if (authToken && userRole !== 'CBCNV' && window.location.pathname !== '/sggd/gv/manage/' && window.location.pathname !== '/sggd/gv/manage') {
-            // Nếu có token nhưng không phải CBCNV, xóa session và yêu cầu đăng nhập lại
-            clearLocalStorageSession();
-            alert('Bạn không có quyền truy cập. Vui lòng đăng nhập bằng tài khoản CBCNV.');
-            window.location.href = '/sggd/gv/manage/';
-        }
-    }, 5000); // Kiểm tra mỗi 5 giây
+        checkFrontendSessionExpiry();
+    }, 5000);
 
     // --- KẾT THÚC LOGIC KIỂM TRA PHIÊN HẾT HẠN TRÊN CLIENT ---
 
@@ -293,14 +294,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
     const storedUserFullName = localStorage.getItem('userFullName');
     const storedUserPhoto = localStorage.getItem('userPhoto');
     const storedUserRole = localStorage.getItem('userRole');
 
     // Cần đảm bảo rằng `updateHeaderUserInfo` được gọi đúng cách khi tải trang
     // Dựa trên trạng thái phiên và vai trò
-    if (checkFrontendSessionExpiry()) { // Hàm này giờ đã kiểm tra cả role
+    if (localStorage.getItem('authToken') && localStorage.getItem('userRole') === 'CBCNV') {
         updateHeaderUserInfo(storedUserFullName, storedUserPhoto, storedUserRole);
     } else {
         // Nếu phiên không hợp lệ hoặc role không phải CBCNV, reset header

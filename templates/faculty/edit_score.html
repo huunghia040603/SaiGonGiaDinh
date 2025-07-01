@@ -1,0 +1,532 @@
+{% extends 'faculty/base_faculty.html' %}
+
+{% block title %}Quản lý điểm số{% endblock %}
+{% block page_styles %}
+    <style>
+        /* General Body and Container Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Equivalent to Tailwind bg-gray-100 */
+            color: #1f2937; /* Equivalent to Tailwind text-gray-800 */
+            padding: 1rem; /* Equivalent to Tailwind p-4 */
+        }
+        .container {
+            max-width: 80rem; /* Equivalent to Tailwind max-w-4xl */
+            margin-left: auto;
+            margin-right: auto; /* Equivalent to Tailwind mx-auto */
+            padding: 1.5rem; /* Equivalent to Tailwind p-6 */
+            background-color: #ffffff; /* Equivalent to Tailwind bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Equivalent to Tailwind shadow-lg */
+            border-radius: 0.75rem; /* Equivalent to Tailwind rounded-xl */
+            margin-top: 2rem; /* Equivalent to Tailwind mt-8 */
+        }
+        h1 {
+            font-size: 1.875rem; /* Equivalent to Tailwind text-3xl */
+            line-height: 2.25rem;
+            font-weight: 700; /* Equivalent to Tailwind font-bold */
+            text-align: center; /* Equivalent to Tailwind text-center */
+            margin-bottom: 2rem; /* Equivalent to Tailwind mb-8 */
+        }
+        h2 {
+            font-size: 1.5rem; /* Equivalent to Tailwind text-2xl */
+            line-height: 2rem;
+            font-weight: 600; /* Equivalent to Tailwind font-semibold */
+            margin-bottom: 1rem; /* Equivalent to Tailwind mb-4 */
+            color: #374151; /* Equivalent to Tailwind text-gray-700 */
+        }
+        form h2 {
+            color: #1d4ed8; /* Equivalent to Tailwind text-blue-700 */
+            grid-column: 1 / -1; /* Equivalent to Tailwind col-span-full */
+        }
+
+        /* Form Input and Label Styling */
+        label {
+            display: block; /* Equivalent to Tailwind block */
+            font-size: 0.8rem; /* Equivalent to Tailwind text-sm */
+            font-weight: 500; /* Equivalent to Tailwind font-medium */
+            color: #374151; /* Equivalent to Tailwind text-gray-700 */
+            margin-bottom: 0.25rem; /* Equivalent to Tailwind mb-1 */
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%; /* Equivalent to Tailwind w-full */
+            padding: 0.75rem; /* Equivalent to Tailwind p-3 */
+            border: 1px solid #d1d5db; /* Equivalent to Tailwind border border-gray-300 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: 2px solid #3b82f6; /* Equivalent to Tailwind focus:ring-blue-500 */
+            outline-offset: 2px;
+            border-color: #3b82f6; /* Equivalent to Tailwind focus:border-blue-500 */
+        }
+        /* New style for read-only display fields */
+        .display-field {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb; /* Light border */
+            border-radius: 0.375rem;
+            background-color: #f9fafb; /* Light background */
+            color: #374151;
+            font-weight: 500;
+            line-height: 1.5; /* Ensure text alignment */
+        }
+        
+        /* Button Styling */
+        button {
+            padding: 0.75rem 1.0rem; /* Equivalent to Tailwind px-6 py-3 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+            font-weight: 600; /* Equivalent to Tailwind font-semibold */
+            color: #ffffff; /* Equivalent to Tailwind text-white */
+            transition: all 0.2s ease-in-out; /* Equivalent to Tailwind transition-all duration-200 ease-in-out */
+            border: none;
+            cursor: pointer;
+        }
+        button.primary {
+            background-color: #2563eb; /* Equivalent to Tailwind bg-blue-600 */
+        }
+        button.primary:hover {
+            background-color: #1d4ed8; /* Equivalent to Tailwind hover:bg-blue-700 */
+        }
+        button.secondary {
+            background-color: #4b5563; /* Equivalent to Tailwind bg-gray-600 */
+        }
+        button.secondary:hover {
+            background-color: #374151; /* Equivalent to Tailwind hover:bg-gray-700 */
+        }
+        button.primary.flex, button.secondary.flex {
+            display: flex;
+            align-items: center; /* Equivalent to Tailwind items-center */
+        }
+        
+        /* Filter and Table Wrapper Styling */
+        div.p-6.border.border-gray-200.rounded-lg { /* The main div wrapping filter and table */
+            padding: 1.5rem; /* Equivalent to Tailwind p-6 */
+            border: 1px solid #e5e7eb; /* Equivalent to Tailwind border border-gray-200 */
+            border-radius: 0.5rem; /* Equivalent to Tailwind rounded-lg */
+        }
+        div.grid.grid-cols-1.md\:grid-cols-2.gap-4.mb-6 { /* Filter inputs div */
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1rem; /* Equivalent to Tailwind gap-4 */
+            margin-bottom: 1.5rem; /* Equivalent to Tailwind mb-6 */
+        }
+        @media (min-width: 768px) { /* Equivalent to Tailwind md:grid-cols-2 */
+            div.grid.grid-cols-1.md\:grid-cols-2.gap-4.mb-6 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        div.col-span-full.flex.justify-end { /* Filter button div */
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%; /* Equivalent to Tailwind w-full */
+            text-align: left; /* Equivalent to Tailwind text-left */
+            border-collapse: collapse; /* Equivalent to Tailwind border-collapse */
+            font-size: 15px; /* Custom font size */
+        }
+        th, td {
+            padding: 0.75rem; /* Equivalent to Tailwind p-3 */
+            border-bottom: 1px solid #e5e7eb; /* Equivalent to Tailwind border-b border-gray-200 */
+        }
+        th {
+            background-color: #f9fafb; /* Equivalent to Tailwind bg-gray-50 */
+            color: #4b5563; /* Equivalent to Tailwind text-gray-600 */
+            text-transform: uppercase; /* Equivalent to Tailwind uppercase */
+            font-size: 14px; /* Custom font size */ 
+        }
+        tr:hover {
+            background-color: #eff6ff; /* Equivalent to Tailwind bg-blue-50 */
+            cursor: pointer; /* Equivalent to Tailwind cursor-pointer */
+        }
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+        table td[colspan="11"], table td[colspan="5"], table td[colspan="4"] { /* Updated colspan to 11 to match table header */
+            text-align: center; /* Equivalent to Tailwind text-center */
+            color: #6b7280; /* Equivalent to Tailwind text-gray-500 */
+            padding-top: 1rem; /* Equivalent to Tailwind py-4 */
+            padding-bottom: 1rem; /* Equivalent to Tailwind py-4 */
+        }
+
+        /* Message Box Styling */
+        .message-box {
+            padding: 1rem; /* Equivalent to Tailwind p-4 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+            font-size: 0.875rem; /* Equivalent to Tailwind text-sm */
+            font-weight: 500; /* Equivalent to Tailwind font-medium */
+            margin-bottom: 1.5rem; /* Equivalent to Tailwind mb-6 */
+        }
+        .message-box.hidden {
+            display: none;
+        }
+        .message-box.success {
+            background-color: #d1fae5; /* Equivalent to Tailwind bg-green-100 */
+            color: #065f46; /* Equivalent to Tailwind text-green-700 */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* Equivalent to Tailwind bg-red-100 */
+            color: #991b1b; /* Equivalent to Tailwind text-red-700 */
+        }
+
+        /* Loading Spinner Styling */
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3B82F6; /* Blue-600 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px; /* Equivalent to Tailwind ml-2 */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner.hidden {
+            display: none;
+        }
+        .flex-center { /* Added this for centering loading spinner in table */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Specific Action Button Styling */
+        /* Group the buttons within a div in the TD to control their layout */
+        td.action-buttons-group {
+            display: flex; /* Make the container a flexbox */
+            flex-direction: column; /* Stack buttons vertically by default */
+            gap: 0.5rem; /* Add space between buttons */
+            align-items: flex-start; /* Align buttons to the start of the column */
+        }
+
+        @media (min-width: 640px) { /* On small screens and up, display buttons in a row */
+            td.action-buttons-group {
+                flex-direction: row; /* Display buttons horizontally */
+                align-items: center; /* Center them vertically in the row */
+                gap: 0.5rem; /* Space between buttons */
+            }
+        }
+
+        button.edit-grades-button, button.edit-individual-grade-button {
+            background-color: #f59e0b; /* Equivalent to Tailwind bg-yellow-500 */
+            color: #ffffff;
+            padding: 0.25rem 0.75rem; /* Equivalent to Tailwind py-1 px-3 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+            font-size: 0.75rem; 
+            width: fit-content; /* Allow button to size to content */
+        }
+        button.edit-grades-button:hover, button.edit-individual-grade-button:hover {
+            background-color: #d97706; /* Equivalent to Tailwind hover:bg-yellow-600 */
+        }
+        button.show-button {
+            background-color: #211899; /* Updated color for show button */
+            color: #ffffff;
+            padding: 0.25rem 0.75rem; /* Equivalent to Tailwind py-1 px-3 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+            font-size: 0.75rem; 
+            width: fit-content;
+        }
+        button.show-button:hover {
+            background-color: #07015f; /* Updated hover color for show button */
+        }
+        button.add-button {
+            background-color: #22c55e; /* Equivalent to Tailwind bg-green-500 */
+            color: #ffffff;
+            padding: 0.25rem 0.75rem; /* Equivalent to Tailwind py-1 px-3 */
+            border-radius: 0.375rem; /* Equivalent to Tailwind rounded-md */
+            font-size: 0.75rem; 
+            width: fit-content;/* Equivalent to Tailwind text-xs */
+        }
+        button.add-button:hover {
+            background-color: #16a34a; /* Equivalent to Tailwind hover:bg-green-600 */
+        }
+
+        /* Update Mode for Primary Button (e.g., in Modal) */
+        button.primary.update-mode {
+            background-color: #16a34a; /* Green for update */
+        }
+        button.primary.update-mode:hover {
+            background-color: #15803d; /* Darker green on hover */
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 40rem; /* Equivalent to Tailwind max-w-lg */
+            position: relative;
+            max-height: 90vh; /* Allow content to scroll if too tall */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1d4ed8;
+            text-align: center;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0.5rem;
+            line-height: 1;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        .modal-close-button:hover {
+            background-color: #f3f4f6;
+        }
+        .modal-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) { /* Equivalent to Tailwind sm:grid-cols-2 */
+            .modal-form {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        .modal-form label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+        .modal-form input[type="text"],
+        .modal-form input[type="number"],
+        .modal-form select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+        }
+        .modal-form input[type="text"]:focus,
+        .modal-form input[type="number"]:focus,
+        .modal-form select:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+            border-color: #3b82f6;
+        }
+        .modal-buttons {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .subject-display {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            margin-top: 5px; /* Khoảng cách với label */
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Đảm bảo có khoảng cách giữa các nhóm form */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<body class="p-4">
+    <div class="container">
+        <h1>Quản lý điểm của học sinh</h1>
+
+        <div id="messageBox" class="message-box hidden"></div>
+
+        <div>
+            <h2>Danh sách Điểm đã nhập</h2>
+            {% include 'faculty/search_score.html'%}
+
+            <div class="overflow-x-auto">
+                <table id="gradesTable" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã học sinh</th>
+                            <th>Họ tên học sinh</th>
+                            <th>Môn học</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- Dữ liệu điểm sẽ được tải vào đây -->
+                        <tr>
+                            <td colspan="5">Chưa có dữ liệu điểm.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    {# MODAL THÊM ĐIỂM MỚI #}
+    <div id="addGradeModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">Thêm cột điểm mới</h2>
+            <button class="modal-close-button" id="addModalCloseButton">&times;</button>
+            <form id="addGradeEntryForm" class="modal-form">
+                <div>
+                    <label for="addStudentId">Mã Học sinh:</label>
+                    <input type="text" id="addStudentId" name="student_id" placeholder="VD: HS001" required disabled>
+                </div>
+                <div class="form-group">
+                    <label>Môn học:</label>
+                    <div id="addSubjectTitleDisplay" class="subject-display"></div>
+                </div>
+                <div>
+                    <label for="addGradeCategory">Loại cột điểm:</label>
+                    <select id="addGradeCategory" name="grade_category_id" required>
+                        <option value="">Chọn loại cột điểm</option>
+                        {# Các option sẽ được load bằng JavaScript, đã lọc theo môn học #}
+                    </select>
+                </div>
+                <div>
+                    <label for="addScore">Điểm số:</label>
+                    <input type="number" id="addScore" name="score" step="0.01" min="0" max="10" required>
+                </div>
+
+                <div>
+                    <label for="addCustomName">Tên tùy chỉnh (nếu có):</label>
+                    <input type="text" id="addCustomName" name="custom_name" placeholder="VD: Bài kiểm tra miệng lần 1">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" id="addModalSubmitButton" class="primary">
+                        <span id="addModalButtonText">Thêm điểm mới</span>
+                        <span id="addModalLoadingSpinner" class="loading-spinner hidden"></span>
+                    </button>
+                    <button type="button" id="addModalClearFormButton" class="secondary">Xóa form</button>
+                </div>
+            </form>
+            <div id="addModalMessageBox" class="message-box hidden"></div>
+        </div>
+    </div>
+
+    {# MODAL SỬA ĐIỂM - ĐÃ CHỈNH SỬA #}
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">Sửa Điểm</h2>
+            <button class="modal-close-button" id="modalCloseButton">&times;</button>
+            <form id="editGradeEntryForm" class="modal-form">
+                <div>
+                    <label for="modalStudentId">Mã Học sinh:</label>
+                    <input type="text" id="modalStudentId" name="student_id" required disabled>
+                </div>
+                {# Thay thế select bằng div để hiển thị loại cột điểm và môn học #}
+                <div>
+                    <label>Loại cột điểm:</label>
+                    <div id="modalGradeCategoryDisplay" class="display-field"></div>
+                </div>
+                <div>
+                    <label for="modalScore">Điểm số:</label>
+                    <input type="number" id="modalScore" name="score" step="0.01" min="0" max="10" required>
+                </div>
+                <div>
+                    <label for="modalCustomName">Tên tùy chỉnh (nếu có):</label>
+                    <input type="text" id="modalCustomName" name="custom_name" placeholder="VD: Bài kiểm tra miệng lần 1">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" id="modalSubmitButton" class="primary">
+                        <span id="modalButtonText">Cập nhật điểm</span>
+                        <span id="modalLoadingSpinner" class="loading-spinner hidden"></span>
+                    </button>
+                </div>
+            </form>
+            <div id="modalMessageBox" class="message-box hidden"></div>
+        </div>
+    </div>
+
+    {# MODAL XEM CHI TIẾT ĐIỂM (MỚI) #}
+    <div id="gradeDetailsModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">Chi tiết Điểm</h2>
+            <button class="modal-close-button" id="gradeDetailsCloseButton">&times;</button>
+            <p id="gradeDetailsStudentInfo" class="mb-4 text-lg font-semibold"></p>
+            <div id="gradeDetailsMessageBox" class="message-box hidden mb-4"></div>
+            <div class="flex-center py-4">
+                <span id="gradeDetailsLoadingSpinner" class="loading-spinner hidden"></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Loại cột điểm</th>
+                            <th>Điểm số</th>
+                            <th>Tên tùy chỉnh</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeDetailsTableBody">
+                        {# Grade details will be loaded here #}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# BỔ SUNG: MODAL CHỌN ĐIỂM ĐỂ SỬA #}
+    <div id="selectGradeToEditModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="modal-title" id="selectGradeToEditTitle">Chọn Cột Điểm Để Sửa</h2>
+            <button class="modal-close-button" id="selectGradeToEditCloseButton">&times;</button>
+            <p id="selectGradeToEditStudentInfo" class="mb-4 text-lg font-semibold"></p>
+            <div id="selectGradeToEditMessageBox" class="message-box hidden mb-4"></div>
+            <div class="flex-center py-4">
+                <span id="selectGradeToEditLoadingSpinner" class="loading-spinner hidden"></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Loại cột điểm</th>
+                            <th>Tên tùy chỉnh</th>
+                            <th>Điểm số</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="selectGradeToEditTableBody">
+                        {# Grade entries will be loaded here dynamically #}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/faculty/edit_score.js') }}"></script>
+{% endblock %}
