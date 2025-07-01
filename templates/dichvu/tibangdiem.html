@@ -1,1 +1,340 @@
-{% include 'sapramat.html' %}
+{% extends 'base.html' %}
+{% block content %}
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom scrollbar for table */
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+            width: 8px; /* Added width for vertical scrollbar */
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #aab8c2; /* Darker scrollbar thumb */
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #778899; /* Even darker on hover */
+        }
+
+        /* Custom styles for select box arrow */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 2.5rem; /* Make space for the arrow */
+        }
+        @media (min-width: 1536px) {
+          .container {
+        max-width: 1200px;
+    }
+}
+    </style>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <main class="flex-grow py-6 px-4"> <!-- Reduced vertical padding -->
+        <div class="container bg-white p-6 rounded-2xl shadow-xl border border-gray-100"> <!-- Reduced padding -->
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center tracking-tight">Bảng Điểm Học Tập</h2> <!-- Slightly reduced font size -->
+
+            <!-- Type Selector Buttons -->
+            <div class="flex justify-center space-x-4 mb-8"> <!-- Reduced spacing -->
+                <button id="btn-9plus" class="px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 bg-blue-600 text-white shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    Học sinh 9+
+                </button>
+                <button id="btn-college" class="px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gray-200 text-gray-700 shadow-md hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400">
+                    Sinh viên Cao đẳng
+                </button>
+            </div>
+
+            <!-- Semester Selector -->
+            <div class="mb-8 text-center"> <!-- Reduced spacing -->
+                <label for="semester-select" class="block text-xl font-medium text-gray-700 mb-3">Chọn Kỳ Học:</label> <!-- Reduced font size and spacing -->
+                <select id="semester-select" class="block mx-auto w-full md:w-2/3 lg:w-1/3 py-3 px-4 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg cursor-pointer"> <!-- Reduced padding and font size -->
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+
+            <!-- Student Name Display (Placeholder) -->
+            <div class="bg-blue-50 p-4 rounded-lg shadow-md mb-8 text-center border border-blue-200"> <!-- Reduced padding and spacing -->
+                <p class="text-xl font-bold text-blue-800"> <!-- Reduced font size -->
+                    <span id="student-name">Tên Học Sinh / Sinh Viên</span>
+                </p>
+            </div>
+
+            <!-- Grades Table Container -->
+            <div class="overflow-x-auto rounded-xl shadow-lg border border-gray-200 table-container">
+                <table class="min-w-full divide-y divide-gray-200 bg-white">
+                    <thead class="bg-blue-600 text-white">
+                        <tr id="grade-table-header">
+                            <!-- Table headers will be populated by JavaScript -->
+                        </tr>
+                    </thead>
+                    <tbody id="grade-table-body" class="bg-white divide-y divide-gray-100">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Additional Info for 9+ Students -->
+            <div id="additional-9plus-info" class="mt-8 p-6 bg-indigo-50 rounded-lg shadow-md border border-indigo-200 hidden">
+                <h3 class="text-xl font-bold text-indigo-800 mb-4">Thông Tin Học Kỳ</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
+                    <div class="flex justify-between md:block">
+                        <span class="font-medium text-gray-700">Điểm Trung Bình Học Kỳ:</span>
+                        <span id="avg-semester-score" class="font-bold text-blue-700 ml-2 md:ml-0"></span>
+                    </div>
+                    <div class="flex justify-between md:block">
+                        <span class="font-medium text-gray-700">Học Lực:</span>
+                        <span id="academic-performance" class="font-bold text-blue-700 ml-2 md:ml-0"></span>
+                    </div>
+                    <div class="flex justify-between md:block">
+                        <span class="font-medium text-gray-700">Hạnh Kiểm:</span>
+                        <span id="conduct-grade" class="font-bold text-blue-700 ml-2 md:ml-0"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Data Message -->
+            <div id="no-data-message" class="text-center text-gray-500 text-lg mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200 shadow-sm hidden"> <!-- Reduced font size and spacing -->
+                Không có dữ liệu điểm cho kỳ học này. Vui lòng chọn kỳ học khác.
+            </div>
+        </div>
+    </main>
+
+ 
+
+    <script>
+        // Sample Data for Students
+        const student9PlusData = {
+            "Nguyễn Văn A": {
+                "Học Kỳ 1 Năm 2024-2025": {
+                    grades: [
+                        { mon: "Toán", mieng: 8.0, muoiLamPhut: 7.5, motTiet: 8.5, giuaKy: 7.0, cuoiKy: 9.0, ghiChu: "Khá tốt" },
+                        { mon: "Ngữ Văn", mieng: 7.0, muoiLamPhut: 8.0, motTiet: 7.5, giuaKy: 8.0, cuoiKy: 8.5, ghiChu: "Cần cải thiện kỹ năng viết" },
+                        { mon: "Tiếng Anh", mieng: 9.0, muoiLamPhut: 8.5, motTiet: 9.0, giuaKy: 8.5, cuoiKy: 9.5, ghiChu: "Học tốt, phát âm chuẩn" },
+                        { mon: "Lịch Sử", mieng: 7.5, muoiLamPhut: 6.0, motTiet: 7.0, giuaKy: 6.5, cuoiKy: 7.0, ghiChu: "Cần cố gắng hơn" }
+                    ],
+                    avgSemester: 7.9, // Sample semester average
+                    academicPerformance: "Khá", // Sample academic performance
+                    conductGrade: "Tốt" // Sample conduct grade
+                },
+                "Học Kỳ 2 Năm 2024-2025": {
+                    grades: [
+                        { mon: "Vật Lý", mieng: 7.5, muoiLamPhut: 8.0, motTiet: 7.0, giuaKy: 7.5, cuoiKy: 8.0, ghiChu: "" },
+                        { mon: "Hóa Học", mieng: 8.0, muoiLamPhut: 7.5, motTiet: 8.0, giuaKy: 7.0, cuoiKy: 8.5, ghiChu: "Tích cực làm thí nghiệm" }
+                    ],
+                    avgSemester: 7.8,
+                    academicPerformance: "Trung Bình",
+                    conductGrade: "Khá"
+                }
+            }
+        };
+
+        const collegeStudentData = {
+            "Trần Thị B": {
+                "Học Kỳ 1 Năm 2024-2025": [
+                    { mon: "Lập Trình Web", chuyenCan: 9.0, giuaKy: 7.5, cuoiKy: 8.0, tongKet: 8.2, ghiChu: "Đạt yêu cầu đồ án" },
+                    { mon: "Cơ Sở Dữ Liệu", chuyenCan: 8.5, giuaKy: 8.0, cuoiKy: 7.5, tongKet: 7.8, ghiChu: "Hiểu tốt các khái niệm" },
+                    { mon: "Mạng Máy Tính", chuyenCan: 9.5, giuaKy: 8.5, cuoiKy: 9.0, tongKet: 9.0, ghiChu: "Hoàn thành xuất sắc bài tập lớn" }
+                ],
+                "Học Kỳ Hè Năm 2025": [
+                    { mon: "Kỹ Năng Mềm", chuyenCan: 10.0, giuaKy: 9.0, cuoiKy: 9.5, tongKet: 9.4, ghiChu: "Kỹ năng thuyết trình tốt" }
+                ]
+            }
+        };
+
+        // DOM elements
+        const btn9Plus = document.getElementById('btn-9plus');
+        const btnCollege = document.getElementById('btn-college');
+        const semesterSelect = document.getElementById('semester-select');
+        const gradeTableHeader = document.getElementById('grade-table-header');
+        const gradeTableBody = document.getElementById('grade-table-body');
+        const studentNameDisplay = document.getElementById('student-name');
+        const noDataMessage = document.getElementById('no-data-message');
+        const additional9PlusInfo = document.getElementById('additional-9plus-info');
+        const avgSemesterScore = document.getElementById('avg-semester-score');
+        const academicPerformance = document.getElementById('academic-performance');
+        const conductGrade = document.getElementById('conduct-grade');
+
+        let currentStudentType = '9plus'; // Initial type
+        let currentStudentName = Object.keys(student9PlusData)[0]; // Default student for 9+
+        let currentData = student9PlusData; // Current active data set
+
+        // Function to calculate average for 9+ students
+        function calculate9PlusAverage(grades) {
+            const { mieng, muoiLamPhut, motTiet, giuaKy, cuoiKy } = grades;
+            // Formula: (Oral*1 + 15p*1 + 1tiet*2 + GiuaKy*3 + CuoiKy*4) / (1+1+2+3+4) = /11
+            const totalScore = (mieng * 1) + (muoiLamPhut * 1) + (motTiet * 2) + (giuaKy * 3) + (cuoiKy * 4);
+            const totalWeight = 1 + 1 + 2 + 3 + 4;
+            return (totalScore / totalWeight).toFixed(2); // Format to 2 decimal places
+        }
+
+        // Function to populate semester dropdown
+        function populateSemesters() {
+            semesterSelect.innerHTML = ''; // Clear existing options
+            const semesters = Object.keys(currentData[currentStudentName] || {});
+            if (semesters.length > 0) {
+                semesters.forEach(semester => {
+                    const option = document.createElement('option');
+                    option.value = semester;
+                    option.textContent = semester;
+                    semesterSelect.appendChild(option);
+                });
+                semesterSelect.value = semesters[0]; // Select the first semester by default
+                noDataMessage.classList.add('hidden');
+                semesterSelect.removeAttribute('disabled'); // Enable select box
+            } else {
+                noDataMessage.classList.remove('hidden');
+                semesterSelect.setAttribute('disabled', 'true'); // Disable select box if no data
+            }
+        }
+
+        // Function to render grades table
+        function renderGrades() {
+            const selectedSemester = semesterSelect.value;
+            let studentGrades = [];
+            let semesterInfo = null;
+
+            if (currentStudentType === '9plus') {
+                semesterInfo = currentData[currentStudentName]?.[selectedSemester];
+                studentGrades = semesterInfo ? semesterInfo.grades : [];
+            } else { // college
+                studentGrades = currentData[currentStudentName]?.[selectedSemester] || [];
+            }
+
+            // Clear existing table content
+            gradeTableHeader.innerHTML = '';
+            gradeTableBody.innerHTML = '';
+            additional9PlusInfo.classList.add('hidden'); // Hide additional info by default
+
+            if (studentGrades.length === 0) {
+                noDataMessage.classList.remove('hidden');
+                return;
+            } else {
+                noDataMessage.classList.add('hidden');
+            }
+
+            // Set student name
+            studentNameDisplay.textContent = currentStudentName;
+
+            // Render table header
+            let headerHtml = '';
+            if (currentStudentType === '9plus') {
+                headerHtml = `
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Môn học</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm miệng</th>
+                    <th col="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm 15p</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm 1 tiết</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm giữa kỳ</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm cuối kỳ</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm TB</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Ghi chú</th>
+                `;
+            } else { // college
+                headerHtml = `
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Môn học</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm chuyên cần</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm giữa kỳ</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm cuối kỳ</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Điểm tổng kết</th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider">Ghi chú</th>
+                `;
+            }
+            gradeTableHeader.innerHTML = headerHtml;
+
+            // Render table body
+            studentGrades.forEach((grade, index) => {
+                let rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50'; // Zebra striping
+                let rowHtml = `<tr class="${rowClass} hover:bg-gray-100 transition-colors duration-150">`;
+                if (currentStudentType === '9plus') {
+                    const avg = calculate9PlusAverage(grade);
+                    rowHtml += `
+                        <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${grade.mon}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.mieng}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.muoiLamPhut}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.motTiet}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.giuaKy}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.cuoiKy}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm font-bold text-blue-700">${avg}</td>
+                        <td class="px-5 py-3 text-sm text-gray-700">${grade.ghiChu || '-'}</td>
+                    `;
+                } else { // college
+                    rowHtml += `
+                        <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${grade.mon}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.chuyenCan}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.giuaKy}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-gray-700">${grade.cuoiKy}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm font-bold text-blue-700">${grade.tongKet || '-'}</td>
+                        <td class="px-5 py-3 text-sm text-gray-700">${grade.ghiChu || '-'}</td>
+                    `;
+                }
+                rowHtml += '</tr>';
+                gradeTableBody.innerHTML += rowHtml;
+            });
+
+            // Display additional info for 9+ students
+            if (currentStudentType === '9plus' && semesterInfo) {
+                avgSemesterScore.textContent = semesterInfo.avgSemester || '-';
+                academicPerformance.textContent = semesterInfo.academicPerformance || '-';
+                conductGrade.textContent = semesterInfo.conductGrade || '-';
+                additional9PlusInfo.classList.remove('hidden');
+            }
+        }
+
+        // Event Listeners for type buttons
+        btn9Plus.addEventListener('click', () => {
+            currentStudentType = '9plus';
+            currentData = student9PlusData;
+            currentStudentName = Object.keys(student9PlusData)[0]; // Set to default 9+ student
+            // Update button styles
+            btn9Plus.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'shadow-md');
+            btn9Plus.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-lg');
+            btnCollege.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-lg');
+            btnCollege.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'shadow-md');
+            populateSemesters();
+            renderGrades();
+        });
+
+        btnCollege.addEventListener('click', () => {
+            currentStudentType = 'college';
+            currentData = collegeStudentData;
+            currentStudentName = Object.keys(collegeStudentData)[0]; // Set to default college student
+            // Update button styles
+            btnCollege.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'shadow-md');
+            btnCollege.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-lg');
+            btn9Plus.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-lg');
+            btn9Plus.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'shadow-md');
+            populateSemesters();
+            renderGrades();
+        });
+
+        // Event listener for semester dropdown
+        semesterSelect.addEventListener('change', renderGrades);
+
+        // Initial render when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate initial student type and name selection
+            const initialStudentName9Plus = Object.keys(student9PlusData)[0];
+            if (initialStudentName9Plus) {
+                currentStudentName = initialStudentName9Plus;
+                populateSemesters();
+                renderGrades();
+            } else {
+                noDataMessage.classList.remove('hidden');
+                studentNameDisplay.textContent = "Không có học sinh/sinh viên";
+            }
+        });
+    </script>
+{%endblock%}
