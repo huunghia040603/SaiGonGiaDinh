@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, session, flash, request, jsonify
 from admin_bp import admin_bp
 from faculty import faculty
+from sinhvien import sinhvien
 import os
 import time
 import uuid
@@ -106,6 +107,8 @@ app.register_blueprint(admin_bp)
 
 # Đăng ký Blueprint faculty
 app.register_blueprint(faculty)
+
+app.register_blueprint(sinhvien)
 
 # Đường dẫn đến tệp lưu trữ số lượt truy cập TỔNG (giờ sẽ là JSON)
 VISITOR_COUNT_FILE = 'visitor_count.json'
@@ -374,9 +377,9 @@ def yduoc():
 def xhdlpl():
     return render_template('xh-dl-pl.html')
 
-@app.route('/student-services')
-def dichvusv():
-    return render_template('dichvusv.html')
+# @app.route('/student-services')
+# def dichvusv():
+#     return render_template('dichvusv.html')
 
 @app.route('/dang-ky-bang-diem')
 def dangkybangdiem():
@@ -592,6 +595,11 @@ def major_detail_page(major_id):
 @app.route('/hoc-tap/mon-hoc/<course_id>')
 def course_detail_page(course_id):
     return render_template('hoctap/course_detail.html', course_id=course_id)
+
+@app.route('/sinhvien')
+def sinhvien():
+    return render_template('/page_sinh_vien/base_sv.html')
+
 
 
 if __name__ == '__main__':

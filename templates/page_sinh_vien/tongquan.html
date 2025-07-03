@@ -1,0 +1,234 @@
+{% extends "page_sinh_vien/base_sv.html" %}
+
+{% block content %}
+ <style>
+        @font-face {
+            font-family: font3;
+            src: url('/static/fonts/font3.ttf');
+        }
+        @font-face {
+            font-family: font6;
+            src: url('/static/font/font6.ttf');
+        }
+        @font-face {
+            font-family: font2;
+            src: url(/static/font/font2.ttf);
+        }
+        
+         @media (max-width: 2420px) {
+       .manhinh
+        {
+           margin-left: 20%;
+        }
+        
+    }
+
+         @media (max-width: 1620px) {
+       .manhinh
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .manhinh
+        {
+           margin-left: 25%;
+        }
+        
+    }
+
+      @media (max-width: 768px) {
+       .manhinh
+        {
+           margin-left: 30px;
+        }
+        
+    }
+
+</style>
+<main class="manhinh p-6 md:p-8" > {# Padding mặc định 4 cho mobile, tăng lên 8 cho tablet/desktop #}
+    <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4">Tổng quan học tập</h2> {# Kích thước chữ 2xl cho tablet/desktop, 1xl cho mobile #}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8"> {# 1 cột cho mobile, 2 cột cho tablet/desktop. Giảm gap cho mobile #}
+        <div class="bg-white p-4 md:p-6 rounded-lg shadow-md border border-blue-200"> {# Padding 4 cho mobile, 6 cho tablet/desktop #}
+            <h3 class="text-lg md:text-xl font-medium text-blue-600 mb-1 md:mb-2">Điểm trung bình tất cả các kỳ</h3> {# Kích thước chữ xl cho tablet/desktop, lg cho mobile #}
+            <p class="text-3xl md:text-4xl font-bold text-blue-800">8.5</p> {# Kích thước chữ 4xl cho tablet/desktop, 3xl cho mobile #}
+            <p class="text-xs md:text-sm text-gray-500 mt-1 md:mt-2">Tính đến kỳ hiện tại</p> {# Kích thước chữ sm cho tablet/desktop, xs cho mobile #}
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-lg shadow-md border border-green-200"> {# Padding 4 cho mobile, 6 cho tablet/desktop #}
+            <h3 class="text-lg md:text-xl font-medium text-green-600 mb-1 md:mb-2">Hạnh kiểm</h3> {# Kích thước chữ xl cho tablet/desktop, lg cho mobile #}
+            <p class="text-3xl md:text-4xl font-bold text-green-800">Tốt</p> {# Kích thước chữ 4xl cho tablet/desktop, 3xl cho mobile #}
+            <p class="text-xs md:text-sm text-gray-500 mt-1 md:mt-2">Hạnh kiểm trung bình</p> {# Kích thước chữ sm cho tablet/desktop, xs cho mobile #}
+        </div>
+    </div>
+
+    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4">Danh sách các kỳ đã học</h3> {# Kích thước chữ xl cho tablet/desktop, lg cho mobile #}
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md mb-8"> {# Thêm margin-bottom cho bảng #}
+        <table id="diem-ky-table" class="min-w-full divide-y divide-gray-200 text-xs md:text-sm"> {# Thêm ID cho bảng #}
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-2 py-2 md:px-6 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STT</th> {# Padding và kích thước chữ lớn hơn cho tablet/desktop #}
+                    <th scope="col" class="px-2 py-2 md:px-6 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Học kỳ</th> {# Padding và kích thước chữ lớn hơn cho tablet/desktop #}
+                    <th scope="col" class="px-2 py-2 md:px-6 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Điểm TB</th> {# Đổi tên, padding và kích thước chữ lớn hơn cho tablet/desktop #}
+                    <th scope="col" class="px-2 py-2 md:px-6 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">H.kiểm</th> {# Đổi tên, padding và kích thước chữ lớn hơn cho tablet/desktop #}
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">1</td> {# Padding lớn hơn cho tablet/desktop #}
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">HK1 (23-24)</td> {# Giữ nguyên tên kỳ đầy đủ để hiển thị trên biểu đồ #}
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">8.2</td> {# Padding lớn hơn cho tablet/desktop #}
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">Tốt</td> {# Padding lớn hơn cho tablet/desktop #}
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">2</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">HK2 (23-24)</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">8.7</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">Tốt</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">3</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">HK1 (24-25)</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">8.6</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">Khá</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">4</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">HK2 (24-25)</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">8.9</td>
+                    <td class="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap">Tốt</td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+
+    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-4">Biểu đồ điểm trung bình theo kỳ</h3> {# Đổi tiêu đề biểu đồ #}
+    <div class="bg-white p-4 rounded-lg shadow-md" style="height: 400px;"> {# Đặt chiều cao cố định cho khung chứa biểu đồ #}
+        <canvas id="average-score-chart"></canvas>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const table = document.getElementById('diem-ky-table');
+        if (!table) {
+            console.error('Không tìm thấy bảng điểm với ID "diem-ky-table"');
+            return;
+        }
+
+        const tbody = table.querySelector('tbody');
+        if (!tbody) {
+            console.error('Không tìm thấy tbody trong bảng điểm.');
+            return;
+        }
+
+        const rows = tbody.querySelectorAll('tr');
+        const labels = [];
+        const scores = [];
+
+        let minScore = 10;
+        let maxScore = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 3) {
+                const semesterLabel = cells[1].textContent.trim();
+                const score = parseFloat(cells[2].textContent.trim());
+
+                if (!isNaN(score)) {
+                    labels.push(semesterLabel);
+                    scores.push(score);
+
+                    if (score < minScore) minScore = score;
+                    if (score > maxScore) maxScore = score;
+                }
+            }
+        });
+
+        const ctx = document.getElementById('average-score-chart');
+        if (!ctx) {
+            console.error('Không tìm thấy canvas với ID "average-score-chart"');
+            return;
+        }
+
+        // Tùy chỉnh khoảng đệm và giới hạn trục Y
+        // Đảm bảo min và max có một khoảng đệm hợp lý và làm tròn để vạch chia dễ nhìn
+        const suggestedMin = Math.floor(minScore * 10 - 2) / 10; // Ví dụ: 8.2 -> 82 -> 80 -> 8.0, trừ thêm 0.2
+        const suggestedMax = Math.ceil(maxScore * 10 + 2) / 10;  // Ví dụ: 8.9 -> 89 -> 90 -> 9.0, cộng thêm 0.2
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Điểm trung bình kỳ',
+                    data: scores,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Quan trọng để có thể điều khiển chiều cao bằng CSS
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Điểm trung bình'
+                        },
+                        min: suggestedMin, // Sử dụng giá trị min đã tính toán
+                        max: suggestedMax, // Sử dụng giá trị max đã tính toán
+                        ticks: {
+                            stepSize: 0.1, // Bước nhảy 0.1 để chi tiết hơn
+                            callback: function(value, index, ticks) {
+                                return value.toFixed(1); // Hiển thị 1 chữ số sau dấu phẩy
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Học kỳ'
+                        },
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y.toFixed(2); // Hiển thị 2 chữ số sau dấu phẩy trong tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

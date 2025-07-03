@@ -1,13 +1,37 @@
-{% extends "base.html" %}
+{% extends "page_sinh_vien/base_sv.html" %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/csvc.css') }}"> {# Có thể dùng lại hoặc tạo Facility.css riêng #}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/GV.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/hoctap.css') }}">
-<main class="main-content8 container8" style="background-color: #f5f5f5;">
-    <h1 class="study-header">Các Ngành Học Kỳ Này</h1>
+<style>
+    @media (max-width: 1620px) {
+       .main-content8
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .main-content8
+        {
+           margin-left: 25%;
+        }
+        
+    }
 
-    <div class="study-card-grid" id="majorsGrid">
+      @media (max-width: 768px) {
+       .main-content8
+        {
+           margin-left: 0px;
+        }
+        
+    }
+</style>
+<main class="main-content8 container8" style="background-color: #f5f5f5; padding-left: 50px;" >
+    <h1 class="study-header" >Các Ngành Học Kỳ Này</h1>
+
+    <div class="study-card-grid" id="majorsGrid" ">
         </div>
 
     <div class="no-data-message" style="display: none; text-align: center; padding: 50px; color: var(--secondary-color8);">
