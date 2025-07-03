@@ -1,7 +1,46 @@
 {% extends "page_sinh_vien/base_sv.html" %}
 
 {% block content %}
-<section class="min-h-screen py-6 px-3 sm:py-10 sm:px-6 lg:px-8 bg-gray-50 flex items-center justify-center"  style="margin-left:10% ;">
+<style>
+        @font-face {
+            font-family: font3;
+            src: url('/static/fonts/font3.ttf');
+        }
+        @font-face {
+            font-family: font6;
+            src: url('/static/font/font6.ttf');
+        }
+        @font-face {
+            font-family: font2;
+            src: url(/static/font/font2.ttf);
+        }
+
+         @media (max-width: 1620px) {
+       .manhinh
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .manhinh
+        {
+           margin-left: 25%;
+        }
+        
+    }
+
+      @media (max-width: 768px) {
+       .manhinh
+        {
+           margin-left: 0px;
+        }
+        
+    }
+
+</style>
+
+<section class="manhinh min-h-screen py-6 px-3 sm:py-10 sm:px-6 lg:px-8 bg-gray-50 flex items-center justify-center"  >
     <div class="max-w-xs sm:max-w-xl md:max-w-6xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden md:flex">
         <div class="md:w-1/2 p-4 sm:p-6 flex items-center justify-center">
             <img src="{{ url_for('static', filename='images/hotro.png') }}" alt="Đăng ký bản sao bằng tốt nghiệp" class="rounded-lg shadow-md w-full h-auto object-cover max-w-[200px] sm:max-w-full mx-auto">

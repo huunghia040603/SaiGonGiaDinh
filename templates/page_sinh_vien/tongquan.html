@@ -1,7 +1,53 @@
 {% extends "page_sinh_vien/base_sv.html" %}
 
 {% block content %}
-<main class="p-6 md:p-8" style="margin-left: 12%;"> {# Padding mặc định 4 cho mobile, tăng lên 8 cho tablet/desktop #}
+ <style>
+        @font-face {
+            font-family: font3;
+            src: url('/static/fonts/font3.ttf');
+        }
+        @font-face {
+            font-family: font6;
+            src: url('/static/font/font6.ttf');
+        }
+        @font-face {
+            font-family: font2;
+            src: url(/static/font/font2.ttf);
+        }
+        
+         @media (max-width: 2420px) {
+       .manhinh
+        {
+           margin-left: 20%;
+        }
+        
+    }
+
+         @media (max-width: 1620px) {
+       .manhinh
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .manhinh
+        {
+           margin-left: 25%;
+        }
+        
+    }
+
+      @media (max-width: 768px) {
+       .manhinh
+        {
+           margin-left: 30px;
+        }
+        
+    }
+
+</style>
+<main class="manhinh p-6 md:p-8" > {# Padding mặc định 4 cho mobile, tăng lên 8 cho tablet/desktop #}
     <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4">Tổng quan học tập</h2> {# Kích thước chữ 2xl cho tablet/desktop, 1xl cho mobile #}
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8"> {# 1 cột cho mobile, 2 cột cho tablet/desktop. Giảm gap cho mobile #}

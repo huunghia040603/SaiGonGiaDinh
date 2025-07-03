@@ -18,6 +18,11 @@ def taikhoan():
    
     return render_template('page_sinh_vien/taikhoan.html')
 
+@sinhvien.route('/hoctap')
+def hoctap():
+   
+    return render_template('hoctap/study_majors.html')
+
 
 
 
