@@ -7,7 +7,7 @@ let currentPeriod = 'day'; // Biến toàn cục mới để lưu trữ thời g
 // Hàm để lấy token xác thực, giống như trong admin_registrations.js
 function getAuthToken() {
     // Kiểm tra xem URL hiện tại có phải là đường dẫn của giảng viên không
-    if (window.location.pathname.startsWith('/sggd/gv/manage')) {
+    if (window.location.pathname.startsWith('/gv')) {
         // Nếu là trang quản lý giảng viên, lấy 'authToken' của giảng viên
         return localStorage.getItem('authToken'); 
     } 
@@ -24,7 +24,7 @@ async function loadTrafficData(period) {
     currentPeriod = period; // Cập nhật biến toàn cục period
     
     // Chỉ kiểm tra và yêu cầu token nếu đang ở trang admin hoặc giảng viên
-    const isAdminOrGVPage = window.location.pathname.startsWith('/sggd/qtv/admin') || window.location.pathname.startsWith('/sggd/gv/manage');
+    const isAdminOrGVPage = window.location.pathname.startsWith('/sggd/qtv/admin') || window.location.pathname.startsWith('/gv');
     
     const token = getAuthToken();
 
@@ -63,8 +63,8 @@ async function loadTrafficData(period) {
         setTimeout(() => {
             if (window.location.pathname.startsWith('/sggd/qtv/admin')) {
                 window.location.href = '/admin/login'; // Chuyển hướng về trang đăng nhập admin
-            } else if (window.location.pathname.startsWith('/sggd/gv/manage')) {
-                window.location.href = '/sggd/gv/manage/'; // Chuyển hướng về trang đăng nhập giảng viên
+            } else if (window.location.pathname.startsWith('/gv')) {
+                window.location.href = '/gv/'; // Chuyển hướng về trang đăng nhập giảng viên
             }
         }, 1000); 
         return; // Ngừng thực thi nếu không có token
@@ -132,8 +132,8 @@ async function loadTrafficData(period) {
                 setTimeout(() => {
                     if (window.location.pathname.startsWith('/sggd/qtv/admin')) {
                         window.location.href = '/admin/login';
-                    } else if (window.location.pathname.startsWith('/sggd/gv/manage')) {
-                        window.location.href = '/sggd/gv/login';
+                    } else if (window.location.pathname.startsWith('/gv')) {
+                        window.location.href = '/gv/';
                     }
                 }, 500);
             } else {

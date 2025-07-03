@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let touchStartX = 0;
     let touchEndX = 0;
 
-    slider.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        stopAutoSlide();
-    }, false);
+    // slider.addEventListener('touchstart', (e) => {
+    //     touchStartX = e.touches[0].clientX;
+    //     stopAutoSlide();
+    // }, false);
 
     slider.addEventListener('touchmove', (e) => {
         touchEndX = e.touches[0].clientX;
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         startAutoSlide();
     }, false);
 
-    // Pause auto-slide when mouse is over the slider
+    // // Pause auto-slide when mouse is over the slider
     slider.addEventListener('mouseenter', stopAutoSlide);
     slider.addEventListener('mouseleave', startAutoSlide);
 

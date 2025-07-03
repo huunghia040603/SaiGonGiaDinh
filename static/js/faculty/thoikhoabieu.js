@@ -3,18 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const timetableHead = document.querySelector('#facultyTimetable thead');
     const semesterSelect = document.getElementById('semesterSelect');
     const weekSelect = document.getElementById('weekSelect'); // Lấy tham chiếu đến dropdown tuần
-  
+
     const prevWeekBtn = document.getElementById('prevWeekBtn');
     const nextWeekBtn = document.getElementById('nextWeekBtn');
     const weekInfoSpan = document.getElementById('weekInfo'); // Đổi tên từ weekInfo thành weekInfoSpan
-    
+
     // currentDisplayDate sẽ lưu trữ ngày BẮT ĐẦU của tuần hiện tại (luôn là Thứ Hai)
-    let currentDisplayDate = new Date(); 
+    let currentDisplayDate = new Date();
     let selectedSemesterDetails = null;
 
     const semesterApiUrl = 'https://saigongiadinh.pythonanywhere.com/SemesterListView/';
     const baseUrl = 'http://saigongiadinh.pythonanywhere.com/FacultyScheduleView/';
-    const token = '7ff20e7b9370024f5f05c50506ccc79762f0039e';
+
+
+    function getAuthToken() {
+        const teacherToken = localStorage.getItem('teacherAuthToken');
+        if (teacherToken) {
+            console.log('DEBUG (JS): Đang sử dụng teacherAuthToken.');
+            return teacherToken;
+        }
+        console.log('DEBUG (JS): Không tìm thấy teacherAuthToken, đang sử dụng authToken thông thường.');
+        return localStorage.getItem('authToken');
+    }
+
+    const token = getAuthToken();
 
     const dayOrder = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const dayDisplayNames = {
@@ -50,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < 6; i++) { // Lặp 6 lần cho 6 ngày (Thứ 2 đến Thứ 7)
             const d = new Date(currentDay);
-            const apiDayIndex = d.getDay(); 
+            const apiDayIndex = d.getDay();
             let apiDayName;
             switch(apiDayIndex) {
                 case 1: apiDayName = 'MON'; break;
@@ -59,12 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 4: apiDayName = 'THU'; break;
                 case 5: apiDayName = 'FRI'; break;
                 case 6: apiDayName = 'SAT'; break;
-                default: apiDayName = ''; 
+                default: apiDayName = '';
             }
             days.push({
-                name: dayDisplayNames[apiDayName], 
-                apiName: apiDayName, 
-                date: d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' }) 
+                name: dayDisplayNames[apiDayName],
+                apiName: apiDayName,
+                date: d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })
             });
             currentDay.setDate(currentDay.getDate() + 1);
         }
@@ -92,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const startFormatted = startOfWeek.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});
         const endFormatted = endOfWeek.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});
-        
+
         weekInfoSpan.textContent = `Tuần ${weekNumber} (Từ ${startFormatted} đến ${endFormatted})`;
     }
 
@@ -121,8 +133,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             if (!response.ok) {
-                if (response.status === 401) {
-                    alert('Lỗi xác thực: Vui lòng đăng nhập lại.');
+                // Sửa lỗi 401 ở đây:
+                if (response.status === 401 || response.status === 403) {
+                    // Xóa tất cả các thông tin liên quan đến phiên đăng nhập khỏi localStorage
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userFullName');
+                    localStorage.removeItem('teacherAuthToken'); // Xóa cả teacherAuthToken
+
+                    alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
+                    window.location.href = '/dangnhap'; // Chuyển hướng về trang đăng nhập
+                    return []; // Quan trọng: trả về mảng rỗng và dừng hàm
                 } else {
                     const errorText = await response.text();
                     throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
@@ -141,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hàm tính toán và điền các tuần trong một học kỳ vào dropdown
     function populateWeeksDropdown(semesterStartDate, semesterEndDate) {
         weekSelect.innerHTML = '<option value="">Chọn tuần</option>'; // Xóa các option cũ
-        
+
         let currentWeekStart = new Date(semesterStartDate);
         // Đảm bảo currentWeekStart là ngày Thứ Hai của tuần đầu tiên trong học kỳ
         const dayOfWeek = currentWeekStart.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
@@ -159,9 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const option = document.createElement('option');
             const startFormatted = currentWeekStart.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});
-            const endFormatted = actualWeekEnd.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});     
+            const endFormatted = actualWeekEnd.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});
             // Value của option sẽ là ngày bắt đầu của tuần (Thứ Hai) để dễ dàng thao tác sau này
-            option.value = currentWeekStart.toISOString().split('T')[0]; // Format YYYY-MM-DD
+            option.value = currentWeekStart.toISOString().split('T')[0]; // FormatYYYY-MM-DD
             option.textContent = `Tuần ${weekCounter} (Từ ${startFormatted} đến ${endFormatted})`;
             weekSelect.appendChild(option);
 
@@ -193,9 +216,9 @@ document.addEventListener('DOMContentLoaded', () => {
             weekSelect.value = weekSelect.options[1].value;
             currentDisplayDate = new Date(weekSelect.options[1].value);
         } else {
-            currentDisplayDate = new Date(); 
+            currentDisplayDate = new Date();
         }
-        
+
         displaySchedule();
     }
 
@@ -217,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             organizedSchedule[day] = {};
             fixedTimeSlots.forEach(sessionBlock => {
                 sessionBlock.slots.forEach(slot => {
-                    organizedSchedule[day][slot.id] = null; 
+                    organizedSchedule[day][slot.id] = null;
                 });
             });
         });
@@ -230,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (dayOrder.includes(day)) {
                 if (organizedSchedule[day] && organizedSchedule[day][timeSlotId] === null) {
-                    organizedSchedule[day][timeSlotId] = entry; 
+                    organizedSchedule[day][timeSlotId] = entry;
                 } else if (organizedSchedule[day] && organizedSchedule[day][timeSlotId] !== null) {
                     console.warn(`Cảnh báo: Phát hiện nhiều mục cho cùng một ô (${day}, tiết ${timeSlotId}). Chỉ hiển thị mục cuối cùng.`);
                     organizedSchedule[day][timeSlotId] = entry;
@@ -269,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Chỉ hiển thị lịch nếu nó khớp với ngày trong tuần hiện tại và session
                     // Dựa trên cách API trả về, chúng ta chỉ cần kiểm tra day.apiName và timeSlot.id
-                    if (entry && entry.session_type === sessionName) { 
+                    if (entry && entry.session_type === sessionName) {
                         cell.classList.remove('empty-cell');
                         const entryDiv = document.createElement('div');
                         entryDiv.classList.add('schedule-entry');
@@ -295,10 +318,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         const classId = entry.class_thpt_info && entry.class_thpt_info.class_id ? entry.class_thpt_info.class_id.toUpperCase() : 'N/A';
                         const locationName = entry.location_info ? entry.location_info.name : 'N/A';
-                        
+                        const addressName = entry.location_info ? entry.location_info.address : 'N/A'; // Lỗi chính tả, nên là location_info.address nếu có
+
                         entryDiv.innerHTML = `
                             <strong>${classId} - ${subjectTitle}</strong>
-                            <span>${locationName}</span>
+                            <span>${locationName} - CS: ${addressName}</span>
                         `;
                         cell.appendChild(entryDiv);
                     }
@@ -335,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
- 
+
     prevWeekBtn.addEventListener('click', () => {
         if (selectedSemesterDetails) {
             const newDate = new Date(currentDisplayDate);
@@ -371,12 +395,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const lastSaturdayOfSemester = new Date(selectedSemesterDetails.endDate);
             const dayOfWeek = lastSaturdayOfSemester.getDay();
             // Điều chỉnh lastSaturdayOfSemester để nó là Thứ Bảy cuối cùng của tuần chứa endDate
-            const diff = dayOfWeek === 6 ? 0 : 6 - dayOfWeek; 
+            const diff = dayOfWeek === 6 ? 0 : 6 - dayOfWeek;
             lastSaturdayOfSemester.setDate(lastSaturdayOfSemester.getDate() + diff);
 
             // So sánh với ngày bắt đầu của tuần mới, không phải ngày kết thúc
             // newDate là ngày Thứ Hai của tuần tiếp theo
-            if (newDate <= lastSaturdayOfSemester) { 
+            if (newDate <= lastSaturdayOfSemester) {
                 currentDisplayDate = newDate;
                 const weekStartDateString = currentDisplayDate.toISOString().split('T')[0];
                 if (weekSelect.value !== weekStartDateString) {
@@ -404,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             data.forEach(semester => {
                 const option = document.createElement('option');
-                option.value = semester.id; 
+                option.value = semester.id;
                 option.textContent = `${semester.semester_type_display} - Năm học ${semester.academic_year_name}`;
                 option.dataset.startDate = semester.start_date;
                 option.dataset.endDate = semester.end_date;
@@ -431,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 }
-                
+
                 if (!foundCurrentSemester) {
                     semesterSelect.value = semesterSelect.options[0].value;
                     const firstOption = semesterSelect.options[0];
@@ -443,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 console.warn("Không có học kỳ nào được tải.");
-                displaySchedule(); 
+                displaySchedule();
             }
         })
         .catch(error => {
@@ -452,6 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultOption.value = "";
             defaultOption.textContent = "Không thể tải dữ liệu học kỳ";
             semesterSelect.appendChild(defaultOption);
-            displaySchedule(); 
+            displaySchedule();
         });
 });

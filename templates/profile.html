@@ -20,7 +20,7 @@
 
         <div id="login-required" class="login-prompt7" style="display: none;">
             <i class="fas fa-lock"></i>
-            <p>Bạn chưa đăng nhập. Vui lòng <a href="/login.html">đăng nhập</a> để xem thông tin.</p>
+            <p>Bạn chưa đăng nhập. Vui lòng <a href="{{ url_for('dangnhap') }}">đăng nhập</a> để xem thông tin.</p>
         </div>
 
         <div class="logout-button-container7">
@@ -32,7 +32,7 @@
 
     <script>
         const API_URL = "https://saigongiadinh.pythonanywhere.com/Students/me/";
-        const LOGIN_PAGE_URL = "/"; 
+        const LOGIN_PAGE_URL = "/dangnhap"; 
         const LOGOUT_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/logout/";
 
         async function fetchStudentInfo() {

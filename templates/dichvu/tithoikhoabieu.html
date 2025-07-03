@@ -1,1 +1,165 @@
-{% include 'sapramat.html' %}
+{% extends 'base.html' %}
+{% block content %}
+    <title>Thời Khóa Biểu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 1200px;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            min-height: 30px;
+        }
+        th {
+            background-color: #073d01;
+            color: white;
+          
+        }
+
+       th.session-column-header, /* Thêm class này cho header "BUỔI" */
+td.session-label-body { /* Sử dụng class cho cột "Buổi" trong tbody */
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    width: 50px;
+    min-width: 50px;
+    max-width: 80px;
+}
+
+/* Chiều rộng và style chữ ĐỒNG NHẤT cho tất cả các ô dữ liệu trong cột "Thời gian" (cột thứ hai) */
+th.time-column-header, /* Thêm class này cho header "TIẾT" */
+td.time-slot-label { /* Sử dụng class cho cột "Tiết" trong tbody */
+    font-size: 13px;
+    font-weight: normal;
+    text-align: center;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+/* Chiều rộng cho các cột ngày còn lại */
+/* Các cột ngày sẽ là cột thứ 3 trở đi, sau cột Buổi và Tiết */
+th:nth-child(n+3),
+td:nth-child(n+3) {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+        .session-header {
+            background-color: #f2f2f2;
+            
+        }
+        
+       
+        
+        .subject-info {
+            font-size: 0.9em;
+            text-align: center;
+        }
+        .subject-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #022808;
+        }
+        .teacher-name {
+            font-size: 13px;
+            color: #6c757d;
+        }
+        .location-name {
+            font-size: 11px;
+            color: #28a745;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .tkb{
+            
+            margin-top: 10px;
+        }
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Cho phép các mục xuống dòng trên màn hình nhỏ */
+        }
+        .controls-container label {
+            font-weight: bold;
+            color: #555;
+        }
+        .controls-container select,
+        .controls-container button {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .controls-container select {
+            background-color: #f9f9f9;
+        }
+        .controls-container button {
+            background-color: #073d01;
+            color: white;
+            border: none;
+            transition: background-color 0.2s;
+        }
+        .controls-container button:hover {
+            background-color: #052a00;
+        }
+        #weekInfo {
+            font-weight: bold;
+            color: #073d01;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="tkb">Thời Khóa Biểu Học Kỳ</h1>
+
+    <div class="controls-container">
+        <label for="semesterSelect">Chọn học kỳ:</label>
+        <select id="semesterSelect"></select>
+
+        <label for="weekSelect">Chọn tuần:</label>
+        <select id="weekSelect"></select>
+
+        <button id="prevWeekBtn">Tuần trước</button>
+        <span id="weekInfo"></span>
+        <button id="nextWeekBtn">Tuần sau</button>
+    </div>
+
+    <table id="facultyTimetable">
+        <thead>
+            </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <p id="errorMessage" class="error-message"></p>
+
+    <script src="{{ url_for('static', filename='js/tkb_sinhvien.js') }}"></script>
+{%endblock%}

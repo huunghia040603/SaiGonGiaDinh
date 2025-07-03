@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 
-faculty = Blueprint('faculty', __name__, url_prefix='/sggd/gv/manage')
+faculty = Blueprint('faculty', __name__, url_prefix='/gv')
 
 
 @faculty.route('/')

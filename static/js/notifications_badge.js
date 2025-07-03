@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let token = null;
 
         // Nếu đường dẫn là của giảng viên/cán bộ, lấy 'authToken'
-        if (currentPath.startsWith('/sggd/gv/manage')) {
+        if (currentPath.startsWith('/gv')) {
             token = localStorage.getItem('authToken');
           
         } 
