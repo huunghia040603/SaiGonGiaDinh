@@ -1,170 +1,6 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     const apiUrl = "https://saigongiadinh.pythonanywhere.com/StudentScheduleView/?semester_id=1";
-//     const scheduleTableBody = document.querySelector('#scheduleTable tbody');
-//     const errorMessageElement = document.getElementById('errorMessage');
-
-//     function getAuthToken() {
-//         return localStorage.getItem('authToken');
-//     }
-//     const token = getAuthToken();
-//     console.log('Authorization token:', token); // Giữ lại để debug token
-
-//     const daysOfWeek = {
-//         "MON": "Thứ Hai",
-//         "TUE": "Thứ Ba",
-//         "WED": "Thứ Tư",
-//         "THU": "Thứ Năm",
-//         "FRI": "Thứ Sáu",
-//         "SAT": "Thứ Bảy"
-//     };
-
-//     // --- ĐÃ SỬA ĐỔI ĐÂY ---
-//     // Mảng timeSlots được cập nhật với thời gian bắt đầu và kết thúc
-//     // và không còn các mục "Ra chơi" riêng biệt
-//     const timeSlots = [
-//         { name: "Tiết 1", morning: true, order: 1, start_time: '07:15:00', end_time: '08:00:00' },
-//         { name: "Tiết 2", morning: true, order: 2, start_time: '08:05:00', end_time: '08:35:00' },
-//         { name: "Tiết 3", morning: true, order: 3, start_time: '08:40:00', end_time: '09:25:00' },
-//         { name: "Ra chơi", morning: true, order: 4, start_time: '09:30:00', end_time: '10:15:00' },
-//         { name: "Tiết 5", morning: true, order: 5, start_time: '10:20:00', end_time: '11:05:00' },
-//         { name: "Tiết 1", morning: true, order: 6, start_time: '11:10:00', end_time: '11:55:00' }, // Đã sửa morning: true
-//         { name: "Tiết 2", morning: false, order: 7, start_time: '13:00:00', end_time: '13:45:00' },
-//         { name: "Tiết 3", morning: false, order: 8, start_time: '13:50:00', end_time: '14:35:00' },
-//         { name: "Ra chơi", morning: false, order: 9, start_time: '14:40:00', end_time: '15:25:00' },
-//         { name: "Tiết 4", morning: false, order: 10, start_time: '15:30:00', end_time: '16:15:00' },
-//         { name: "Tiết 5", morning: false, order: 11, start_time: '16:20:00', end_time: '17:05:00' },
-       
-//     ];
-//     // --- KẾT THÚC SỬA ĐỔI ---
-
-//     async function fetchSchedule() {
-//         try {
-//             const response = await fetch(apiUrl, {
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     'Authorization': `Token ${token}`
-//                 }
-//             });
-
-//             if (!response.ok) {
-//                 if (response.status === 401 || response.status === 403) {
-//                     localStorage.removeItem('authToken');
-//                     localStorage.removeItem('userId');
-//                     localStorage.removeItem('userEmail');
-//                     localStorage.removeItem('userRole');
-//                     localStorage.removeItem('userFullName');
-//                     localStorage.removeItem('teacherAuthToken'); // Xóa cả teacherAuthToken nếu có
-
-//                     alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
-//                     window.location.href = '/dangnhap'; // Chuyển hướng về trang đăng nhập
-//                     return; // Dừng hàm
-//                 }
-//                 throw new Error(`Lỗi HTTP: ${response.status} - ${response.statusText}`);
-//             }
-
-//             const data = await response.json();
-//             renderSchedule(data);
-//         } catch (error) {
-//             console.error('Lỗi khi tải dữ liệu thời khóa biểu:', error);
-//             errorMessageElement.textContent = `Không thể tải thời khóa biểu: ${error.message}. Vui lòng thử lại sau.`;
-//         }
-//     }
-
-//     function renderSchedule(scheduleData) {
-//         // Tạo một đối tượng để dễ dàng truy cập dữ liệu theo ngày và SỐ THỨ TỰ tiết
-//         const organizedSchedule = {};
-//         for (const dayKey in daysOfWeek) {
-//             organizedSchedule[dayKey] = {};
-//             timeSlots.forEach(slot => { // Lặp qua các tiết học đã định nghĩa
-//                 organizedSchedule[dayKey][slot.order] = null; // Khởi tạo rỗng, dùng 'order' làm khóa
-//             });
-//         }
-
-//         scheduleData.forEach(item => {
-//             const day = item.day_of_week;
-//             const timeSlotOrder = item.time_slot_info.order; // Lấy số thứ tự tiết từ dữ liệu API
-//             const sessionType = item.session_type; // "MORNING" hoặc "AFTERNOON"
-
-//             if (organizedSchedule[day] && timeSlotOrder) { // Kiểm tra nếu ngày và số tiết hợp lệ
-//                 const slotConfig = timeSlots.find(ts => ts.order === timeSlotOrder); // Tìm cấu hình tiết tương ứng
-
-//                 // Kiểm tra xem kiểu phiên (sáng/chiều) từ API có khớp với cấu hình tiết không
-//                 if (slotConfig && ((sessionType === "MORNING" && slotConfig.morning) || (sessionType === "AFTERNOON" && !slotConfig.morning))) {
-//                     organizedSchedule[day][timeSlotOrder] = item;
-//                 }
-//             }
-//         });
-
-//         let currentSession = ''; // "MORNING" hoặc "AFTERNOON"
-
-//         // Xóa nội dung cũ trong tbody trước khi render lại
-//         scheduleTableBody.innerHTML = '';
-
-//         timeSlots.forEach((slot, index) => { // Lặp qua các tiết học đã được định nghĩa
-//             const row = scheduleTableBody.insertRow();
-//             let sessionCellAdded = false;
-
-//             // Thêm ô Buổi (Morning/Afternoon)
-//             // Số hàng chiếm (rowSpan) sẽ là số tiết trong buổi đó (6 tiết)
-//             if (slot.morning && currentSession !== "MORNING") {
-//                 const sessionCell = row.insertCell();
-//                 sessionCell.rowSpan = timeSlots.filter(s => s.morning).length; // 6 tiết buổi sáng
-//                 sessionCell.textContent = 'Sáng';
-//                 sessionCell.classList.add('session-header');
-//                 sessionCellAdded = true;
-//                 currentSession = "MORNING";
-//             } else if (!slot.morning && currentSession !== "AFTERNOON") {
-//                 const sessionCell = row.insertCell();
-//                 sessionCell.rowSpan = timeSlots.filter(s => !s.morning).length; // 6 tiết buổi chiều
-//                 sessionCell.textContent = 'Chiều';
-//                 sessionCell.classList.add('session-header');
-//                 sessionCellAdded = true;
-//                 currentSession = "AFTERNOON";
-//             }
-
-//             // Thêm ô Thời gian (Tiết 1, Tiết 2,...) kèm theo khoảng thời gian
-//             const timeSlotCell = row.insertCell();
-//             // timeSlotCell.classList.add('time-slot');
-//             // --- ĐÃ SỬA ĐỔI ĐÂY ---
-//             timeSlotCell.innerHTML = `${slot.name}<br>(${slot.start_time.substring(0, 5)} - ${slot.end_time.substring(0, 5)})`;
-//             // --- KẾT THÚC SỬA ĐỔI ---
-
-//             // Thêm các ô cho Thứ Hai đến Thứ Bảy
-//             for (const dayKey in daysOfWeek) {
-//                 const cell = row.insertCell();
-//                 const lesson = organizedSchedule[dayKey][slot.order]; // Lấy dữ liệu tiết theo 'order'
-
-//                 if (lesson) {
-//                     let content = `<div class="subject-info">`;
-//                     if (lesson.subject_or_course_name) {
-//                         content += `<div class="subject-name">${lesson.subject_or_course_name}</div>`;
-//                     }
-//                     if (lesson.faculty_info && lesson.faculty_info.full_name) {
-//                         content += `<div class="teacher-name">GV: ${lesson.faculty_info.full_name}</div>`;
-//                     }
-//                     if (lesson.location_info && lesson.location_info.name) {
-//                         content += `<div class="location-name">${lesson.location_info.name} - ${lesson.location_info.address || 'N/A'}</div>`; // Thêm || 'N/A' phòng trường hợp address không có
-//                     }
-//                     content += `</div>`;
-//                     cell.innerHTML = content;
-//                 } else {
-//                     cell.textContent = ''; // Ô trống nếu không có lịch
-//                 }
-//             }
-//         });
-//     }
-
-//     fetchSchedule();
-// });
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const timetableBody = document.querySelector('#facultyTimetable tbody'); // Đảm bảo ID này khớp với HTML
-    const timetableHead = document.querySelector('#facultyTimetable thead'); // Đảm bảo ID này khớp với HTML
+document.addEventListener('DOMContentLoaded', async () => { // Thêm async ở đây
+    const timetableBody = document.querySelector('#facultyTimetable tbody');
+    const timetableHead = document.querySelector('#facultyTimetable thead');
     const semesterSelect = document.getElementById('semesterSelect');
     const weekSelect = document.getElementById('weekSelect');
 
@@ -172,16 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextWeekBtn = document.getElementById('nextWeekBtn');
     const weekInfoSpan = document.getElementById('weekInfo');
 
-    let currentDisplayDate = new Date(); // Sẽ lưu trữ ngày BẮT ĐẦU của tuần hiện tại (luôn là Thứ Hai)
-    let selectedSemesterDetails = null; // Để lưu thông tin học kỳ đã chọn
+    let currentDisplayDate = new Date();
+    let selectedSemesterDetails = null;
 
     const semesterApiUrl = 'https://saigongiadinh.pythonanywhere.com/SemesterListView/';
-    // URL API cho sinh viên
     const studentScheduleApiUrl = 'https://saigongiadinh.pythonanywhere.com/StudentScheduleView/';
+    const timeSlotsApiUrl = 'https://saigongiadinh.pythonanywhere.com/Time/'; // URL API cho time slots
 
+    let processedTimeSlots = []; // Sẽ lưu trữ dữ liệu time slots đã được xử lý từ API
 
     function getAuthToken() {
-        return localStorage.getItem('authToken'); // Lấy token sinh viên
+        return localStorage.getItem('authToken');
     }
     const token = getAuthToken();
     console.log('Authorization token:', token);
@@ -192,25 +29,78 @@ document.addEventListener('DOMContentLoaded', () => {
         'FRI': 'Thứ 6', 'SAT': 'Thứ 7'
     };
 
-    // Định nghĩa cố định các tiết học và buổi
-    const fixedTimeSlots = [
-        { session: 'MORNING', label: 'Sáng', slots: [
-            { id: 1, order: 1, start_time: '07:00:00', end_time: '07:45:00' },
-            { id: 2, order: 2, start_time: '07:50:00', end_time: '08:35:00' },
-            { id: 3, order: 3, start_time: '08:40:00', end_time: '09:25:00' },
-            { id: 4, order: 4, start_time: '09:30:00', end_time: '10:15:00' },
-            { id: 5, order: 5, start_time: '10:20:00', end_time: '11:05:00' },
-            { id: 6, order: 6, start_time: '11:10:00', end_time: '11:55:00' }
-        ]},
-        { session: 'AFTERNOON', label: 'Chiều', slots: [
-            { id: 7, order: 7, start_time: '13:00:00', end_time: '13:45:00' },
-            { id: 8, order: 8, start_time: '13:50:00', end_time: '14:35:00' },
-            { id: 9, order: 9, start_time: '14:40:00', end_time: '15:25:00' },
-            { id: 10, order: 10, start_time: '15:30:00', end_time: '16:15:00' },
-            { id: 11, order: 11, start_time: '16:20:00', end_time: '17:05:00' },
-            { id: 12, order: 12, start_time: '17:10:00', end_time: '17:55:00' }
-        ]}
-    ];
+    // --- HÀM MỚI: FETCH VÀ XỬ LÝ TIME SLOTS TỪ API ---
+    async function fetchTimeSlots() {
+        try {
+            const response = await fetch(timeSlotsApiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}` // Vẫn cần token nếu API Time yêu cầu
+                }
+            });
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userFullName');
+                    localStorage.removeItem('teacherAuthToken');
+                    alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
+                    window.location.href = '/dangnhap';
+                    return [];
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+                }
+            }
+            const data = await response.json();
+            console.log('Dữ liệu Time Slots từ API:', data);
+            return processTimeSlotsData(data); // Xử lý dữ liệu sau khi nhận được
+        } catch (error) {
+            console.error('Lỗi khi lấy dữ liệu time slots:', error);
+            document.getElementById('errorMessage').textContent = `Không thể tải cấu hình tiết học: ${error.message}. Vui lòng thử lại sau.`;
+            return [];
+        }
+    }
+
+    function processTimeSlotsData(apiData) {
+        const morningSlots = [];
+        const afternoonSlots = [];
+
+        apiData.sort((a, b) => a.order - b.order); // Sắp xếp theo order để đảm bảo đúng thứ tự
+
+        apiData.forEach(slot => {
+            const timeSlot = {
+                id: slot.id,
+                order: slot.order,
+                start_time: slot.start_time,
+                end_time: slot.end_time,
+                name: slot.name // Giữ lại name từ API
+            };
+
+            // Kiểm tra và gán nhãn "Ra chơi"
+            if (slot.name && slot.name.toLowerCase().includes('ra chơi')) { // Sử dụng .includes để linh hoạt hơn
+                timeSlot.isBreakTime = true;
+                timeSlot.breakLabel = slot.name; // Sử dụng tên từ API cho breakLabel
+            }
+
+            // Phân loại buổi dựa trên 'order'
+            // Dựa vào dữ liệu bạn cung cấp, order 1-6 là sáng, 7 trở đi là chiều.
+            if (timeSlot.order <= 6) { // Tiết 1-6 là buổi sáng
+                morningSlots.push(timeSlot);
+            } else { // Tiết 7-12 là buổi chiều
+                afternoonSlots.push(timeSlot);
+            }
+        });
+
+        return [
+            { session: 'MORNING', label: 'Sáng', slots: morningSlots },
+            { session: 'AFTERNOON', label: 'Chiều', slots: afternoonSlots }
+        ];
+    }
+    // --- KẾT THÚC HÀM MỚI ---
 
     function getWeekDays(inputDate) {
         const days = [];
@@ -264,30 +154,21 @@ document.addEventListener('DOMContentLoaded', () => {
         weekInfoSpan.textContent = `Tuần ${weekNumber} (Từ ${startFormatted} đến ${endFormatted})`;
     }
 
-    // function createTableHeaders(weekDays) {
-    //     let headerHtml = '<tr><th class="session-column-header">BUỔI</th><th class="time-column-header">TIẾT</th>';
-    //     weekDays.forEach(day => {
-    //         headerHtml += `<th class="day-header">${day.name}<br>${day.date}</th>`;
-    //     });
-    //     headerHtml += '</tr>';
-    //     timetableHead.innerHTML = headerHtml;
-    // }
-
     function createTableHeaders(weekDays) {
-    // Sửa đổi chỗ này trong JS để thêm class vào <th>
-    let headerHtml = '<tr><th class="session-column-header">BUỔI</th><th class="time-column-header">TIẾT</th>';
-    weekDays.forEach(day => {
-        headerHtml += `<th class="day-header">${day.name}<br>${day.date}</th>`;
-    });
-    headerHtml += '</tr>';
-    timetableHead.innerHTML = headerHtml;
-}
+        let headerHtml = '<tr><th class="session-column-header">BUỔI</th><th class="time-column-header">TIẾT</th>';
+        weekDays.forEach(day => {
+            headerHtml += `<th class="day-header">${day.name}<br>${day.date}</th>`;
+        });
+        headerHtml += '</tr>';
+        timetableHead.innerHTML = headerHtml;
+    }
+
     async function fetchScheduleData(semesterId) {
         if (!semesterId || semesterId === "") {
             console.warn("Chưa chọn học kỳ hoặc học kỳ không hợp lệ. Không thể tải thời khóa biểu.");
             return [];
         }
-        const url = `${studentScheduleApiUrl}?semester_id=${semesterId}`; // Sử dụng studentScheduleApiUrl
+        const url = `${studentScheduleApiUrl}?semester_id=${semesterId}`;
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -303,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.removeItem('userEmail');
                     localStorage.removeItem('userRole');
                     localStorage.removeItem('userFullName');
-                    localStorage.removeItem('teacherAuthToken'); // Xóa cả teacherAuthToken nếu có
+                    localStorage.removeItem('teacherAuthToken');
 
                     alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
                     window.location.href = '/dangnhap';
@@ -390,7 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const organizedSchedule = {};
         dayOrder.forEach(day => {
             organizedSchedule[day] = {};
-            fixedTimeSlots.forEach(sessionBlock => {
+            // Sử dụng processedTimeSlots ở đây
+            processedTimeSlots.forEach(sessionBlock => {
                 sessionBlock.slots.forEach(slot => {
                     organizedSchedule[day][slot.id] = null;
                 });
@@ -399,32 +281,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         scheduleData.forEach(entry => {
             const day = entry.day_of_week;
-            const timeSlotId = entry.time_slot_info.id; // Sử dụng time_slot_info.id
+            const timeSlotId = entry.time_slot_info.id;
             const sessionType = entry.session_type;
 
-            // Kiểm tra xem tiết học có khớp với buổi không (MORNING/AFTERNOON)
-            const correspondingTimeSlot = fixedTimeSlots.flatMap(block => block.slots).find(s => s.id === timeSlotId);
+            // Tìm timeSlot tương ứng trong processedTimeSlots
+            const correspondingTimeSlot = processedTimeSlots.flatMap(block => block.slots).find(s => s.id === timeSlotId);
 
-            if (correspondingTimeSlot) { // Đảm bảo timeSlotId hợp lệ
-                const expectedSession = correspondingTimeSlot.id <= 6 ? 'MORNING' : 'AFTERNOON';
+            if (correspondingTimeSlot) {
+                // Nếu là tiết ra chơi, chúng ta sẽ lưu thông tin tiết ra chơi vào organizedSchedule
+                // và bỏ qua việc kiểm tra sessionType từ API cho tiết ra chơi.
+                if (correspondingTimeSlot.isBreakTime) {
+                    // Không cần gán entry từ scheduleData nếu là break time
+                    // Mà chỉ cần đảm bảo timeSlot này được nhận diện là break time
+                    // processedTimeSlots đã có thông tin này
+                } else {
+                    // Đối với các tiết học bình thường, kiểm tra sessionType
+                    const expectedSessionBlock = processedTimeSlots.find(block => 
+                        block.slots.some(s => s.id === timeSlotId)
+                    );
+                    const expectedSession = expectedSessionBlock ? expectedSessionBlock.session : null;
 
-                if (dayOrder.includes(day) && sessionType === expectedSession) {
-                    // Kiểm tra xem dữ liệu đã tồn tại chưa để tránh ghi đè không mong muốn
-                    if (!organizedSchedule[day][timeSlotId]) {
-                         organizedSchedule[day][timeSlotId] = entry;
-                    } else {
-                        // Nếu có nhiều hơn 1 mục cho cùng một ô, có thể xử lý ở đây
-                        // Ví dụ: log cảnh báo hoặc chọn cách hiển thị cụ thể
-                        console.warn(`Cảnh báo: Phát hiện nhiều mục cho cùng một ô (${day}, tiết ${timeSlotId}).`);
-                        // Hoặc bạn có thể chọn ghi đè: organizedSchedule[day][timeSlotId] = entry;
+                    if (dayOrder.includes(day) && sessionType === expectedSession) {
+                        if (!organizedSchedule[day][timeSlotId]) {
+                            organizedSchedule[day][timeSlotId] = entry;
+                        } else {
+                            console.warn(`Cảnh báo: Phát hiện nhiều mục cho cùng một ô (${day}, tiết ${timeSlotId}).`);
+                        }
                     }
                 }
             } else {
-                console.warn(`Cảnh báo: Không tìm thấy time_slot_info.id ${timeSlotId} trong fixedTimeSlots.`);
+                console.warn(`Cảnh báo: Không tìm thấy time_slot_info.id ${timeSlotId} trong processedTimeSlots.`);
             }
         });
 
-        fixedTimeSlots.forEach(sessionBlock => {
+        // Vòng lặp để vẽ bảng sử dụng processedTimeSlots
+        processedTimeSlots.forEach(sessionBlock => {
             const sessionName = sessionBlock.session;
             const sessionLabel = sessionBlock.label;
             const slotsInThisSession = sessionBlock.slots;
@@ -442,7 +333,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const timeSlotLabelCell = document.createElement('td');
                 timeSlotLabelCell.classList.add('time-slot-label');
-                timeSlotLabelCell.innerHTML = `Tiết ${timeSlot.order}<br>(${timeSlot.start_time.substring(0, 5)} - ${timeSlot.end_time.substring(0, 5)})`;
+                // Kiểm tra nếu là giờ ra chơi để hiển thị nội dung và style khác
+                if (timeSlot.isBreakTime) {
+                    timeSlotLabelCell.innerHTML = `${timeSlot.breakLabel}<br>(${timeSlot.start_time.substring(0, 5)} - ${timeSlot.end_time.substring(0, 5)})`;
+                    // timeSlotLabelCell.classList.add('break-time-label'); // Thêm class nếu muốn style riêng cho nhãn này
+                } else {
+                    // Hiển thị tên tiết nếu có, hoặc "Tiết [số thứ tự trong buổi]" nếu không
+                    const slotDisplayName = timeSlot.name && timeSlot.name.startsWith('Tiết') ? timeSlot.name : `Tiết ${timeSlot.order % 6 === 0 ? 6 : timeSlot.order % 6}`;
+                    timeSlotLabelCell.innerHTML = `${slotDisplayName}<br>(${timeSlot.start_time.substring(0, 5)} - ${timeSlot.end_time.substring(0, 5)})`;
+                }
                 row.appendChild(timeSlotLabelCell);
 
                 weekDays.forEach(day => {
@@ -453,8 +352,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Lấy dữ liệu theo day.apiName và timeSlot.id
                     const entry = organizedSchedule[day.apiName] ? organizedSchedule[day.apiName][timeSlot.id] : null;
 
-                    // Chỉ hiển thị nếu có dữ liệu và khớp với session hiện tại
-                    if (entry && entry.session_type === sessionName) {
+                    // Nếu là tiết ra chơi, tô màu nền vàng
+                    if (timeSlot.isBreakTime) {
+                        cell.classList.add('break-time-cell'); // Thêm class để tô màu
+                        // KHÔNG ĐIỀN CHỮ "RA CHƠI" VÀO ĐÂY
+                        // cell.textContent = timeSlot.breakLabel; // Bỏ dòng này
+                    } else if (entry && entry.session_type === sessionName) { // Chỉ hiển thị nếu có dữ liệu và khớp với session hiện tại
                         cell.classList.remove('empty-cell');
                         const entryDiv = document.createElement('div');
                         entryDiv.classList.add('schedule-entry');
@@ -552,10 +455,15 @@ document.addEventListener('DOMContentLoaded', () => {
             newDate.setDate(newDate.getDate() + 7);
 
             const lastSaturdayOfSemester = new Date(selectedSemesterDetails.endDate);
+            // Đảm bảo lastSaturdayOfSemester là Thứ Bảy của tuần cuối cùng
             const dayOfWeek = lastSaturdayOfSemester.getDay();
             const diff = dayOfWeek === 6 ? 0 : 6 - dayOfWeek;
             lastSaturdayOfSemester.setDate(lastSaturdayOfSemester.getDate() + diff);
 
+
+            // Kiểm tra newDate không vượt quá ngày cuối cùng của học kỳ
+            // và đảm bảo nó vẫn nằm trong tuần cuối cùng có thể hiển thị
+            // So sánh với ngày bắt đầu của tuần mới so với ngày kết thúc học kỳ
             if (newDate <= lastSaturdayOfSemester) {
                 currentDisplayDate = newDate;
                 const weekStartDateString = currentDisplayDate.toISOString().split('T')[0];
@@ -571,7 +479,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Tải dữ liệu học kỳ khi trang tải
+    // --- LOGIC TẢI DỮ LIỆU KHI TRANG TẢI ---
+    // Fetch Time Slots đầu tiên và xử lý nó
+    try {
+        processedTimeSlots = await fetchTimeSlots();
+        if (processedTimeSlots.length === 0) {
+            console.error("Không tải được dữ liệu tiết học, không thể hiển thị TKB.");
+            document.getElementById('errorMessage').textContent = "Không thể tải cấu hình tiết học. Vui lòng kiểm tra kết nối hoặc thử lại sau.";
+            return; // Dừng nếu không có dữ liệu tiết học
+        }
+    } catch (error) {
+        console.error("Lỗi nghiêm trọng khi tải dữ liệu tiết học:", error);
+        document.getElementById('errorMessage').textContent = `Lỗi nghiêm trọng khi tải cấu hình tiết học: ${error.message}. Vui lòng thử lại sau.`;
+        return; // Dừng nếu có lỗi
+    }
+
+    // Sau khi Time Slots được tải, tiến hành tải danh sách học kỳ
     fetch(semesterApiUrl, {
         method: 'GET',
         headers: {
@@ -582,15 +505,15 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => {
         if (!response.ok) {
             if (response.status === 401 || response.status === 403) {
-                 localStorage.removeItem('authToken');
-                 localStorage.removeItem('userId');
-                 localStorage.removeItem('userEmail');
-                 localStorage.removeItem('userRole');
-                 localStorage.removeItem('userFullName');
-                 localStorage.removeItem('teacherAuthToken');
-                 alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
-                 window.location.href = '/dangnhap';
-                 return null; // Trả về null để dừng chuỗi .then
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userFullName');
+                localStorage.removeItem('teacherAuthToken');
+                alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
+                window.location.href = '/dangnhap';
+                return null;
             }
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -598,18 +521,16 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(data => {
         if (data) {
-            data.sort((a, b) => b.id - a.id); // Sắp xếp theo ID giảm dần để học kỳ mới nhất lên đầu
+            data.sort((a, b) => b.id - a.id);
             data.forEach(semester => {
                 const option = document.createElement('option');
                 option.value = semester.id;
                 option.textContent = semester.name;
-                // Lưu startDate và endDate vào dataset để dễ dàng truy cập
                 option.dataset.startDate = semester.start_date;
                 option.dataset.endDate = semester.end_date;
                 semesterSelect.appendChild(option);
             });
 
-            // Tự động chọn học kỳ đầu tiên (mới nhất) sau khi tải
             if (semesterSelect.options.length > 0) {
                 semesterSelect.value = semesterSelect.options[0].value;
                 const firstOption = semesterSelect.options[0];
@@ -619,6 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 populateWeeksDropdown(selectedSemesterDetails.startDate, selectedSemesterDetails.endDate);
             }
+            // displaySchedule() sẽ được gọi bên trong populateWeeksDropdown()
         }
     })
     .catch(error => {

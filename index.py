@@ -571,13 +571,6 @@ def ktx():
 def tuyendung():
     return render_template('tuyendung.html')
 
-@app.route('/bangdiem')
-def bandiem():
-    return render_template('/dichvu/tibangdiem.html')
-
-@app.route('/thoikhoabieu')
-def tkb():
-    return render_template('/dichvu/tithoikhoabieu.html')
 
 @app.route('/dich-vu-da-dang-ky')
 def dadangki():

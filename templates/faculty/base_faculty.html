@@ -39,9 +39,12 @@
 <body>
 
     <div class="layout-wrapper"> {# Bọc toàn bộ layout #}
-        <div class="sidebar">
+       
+
+        <div class="sidebar" id="sidebar"> {# Thêm ID cho sidebar để dễ thao tác JS #}
             <div class="sidebar-header">
                 <img style="width: 35px; height: 35px;" src="/static//images/logoSGGD.png"/>&nbsp;<span>SGC</span>
+                
             </div>
             {# Menu chính #}
             <h2>Dashboard</h2>
@@ -59,7 +62,7 @@
             </ul>
             {# Phần này có thể chuyển thành nút Đăng xuất ở cuối sidebar #}
             <div class="sidebar-footer">
-                <a href="" id="sidebarLogoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a>
+                <a href="#" id="sidebarLogoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a>
             </div>
         </div>
 
@@ -79,12 +82,13 @@
     </div>
 
     {# Đặt các script ở cuối body để cải thiện tốc độ tải trang #}
-
-
+  
     <script src="{{ url_for('static', filename='js/navbar_active.js') }}"></script>
     <script src="{{ url_for('static', filename='js/notifications_badge.js') }}"></script>
     <script src="{{ url_for('static', filename='js/faculty/login.js') }}"></script>
     <script src="{{ url_for('static', filename='js/faculty/sidebar_active.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/logout.js') }}"></script> {# Đảm bảo đã thêm logout.js #}
+    <script src="{{ url_for('static', filename='js/faculty/mobile_sidebar.js') }}"></script> {# THÊM DÒNG NÀY CHO JS XỬ LÝ MOBILE #}
 
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}

@@ -23,7 +23,12 @@ def hoctap():
    
     return render_template('hoctap/study_majors.html')
 
+@sinhvien.route('/bangdiem')
+def bangdiem():
+    return render_template('page_sinh_vien/tibangdiem.html')
 
-
+@sinhvien.route('/thoikhoabieu')
+def thoikhoabieu():
+    return render_template('page_sinh_vien/tithoikhoabieu.html')
 
 

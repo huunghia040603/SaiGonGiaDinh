@@ -44,3 +44,126 @@ html, body {
     /* Đảm bảo content-area không bị tràn, nếu cần, thêm overflow-x: hidden; */
     /* overflow-x: hidden; */
 }
+
+/* General layout for desktop */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent horizontal scroll when sidebar is open on mobile */
+    position: relative; /* For overlay positioning */
+}
+
+.main-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* transition: margin-left 0.3s ease; */ /* Removed as we're using width: 100% on mobile */
+}
+
+.content-and-footer-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-area {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for content */
+}
+
+/* Hamburger menu button for mobile */
+.hamburger-menu-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001; /* Above everything else */
+    background: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    display: none; /* Hidden by default on desktop */
+}
+
+.close-sidebar-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    display: none; /* Hidden by default on desktop */
+}
+
+/* Overlay when sidebar is open on mobile */
+.layout-wrapper.sidebar-open::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    z-index: 999; /* Below sidebar, above main content */
+    display: block; /* Show only when sidebar is open */
+}
+
+
+/* --- Media Queries for Mobile Devices --- */
+@media (max-width: 991.98px) { /* Bootstrap's 'lg' breakpoint */
+    .layout-wrapper {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+
+    .hamburger-menu-btn,
+    .close-sidebar-btn {
+        display: block; /* Show hamburger and close button on mobile */
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px; /* Hide sidebar off-screen */
+        width: 250px;
+        height: 100vh;
+        z-index: 1000; /* Ensure sidebar is on top */
+        transition: left 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add shadow for effect */
+    }
+
+    .sidebar.active {
+        left: 0; /* Slide in sidebar */
+    }
+
+    .sidebar .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .main-content-wrapper {
+        margin-left: 0; /* No margin-left on mobile */
+        width: 100%; /* Take full width */
+    }
+
+    /* Adjust padding for content to not be under hamburger button */
+    .content-area {
+        padding-top: 60px; /* Enough space for fixed header/hamburger */
+    }
+}
+
+/* Optional: Further adjustments for smaller screens if needed */
+@media (max-width: 575.98px) { /* Bootstrap's 'sm' breakpoint */
+    .hamburger-menu-btn {
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        font-size: 1em;
+    }
+}
