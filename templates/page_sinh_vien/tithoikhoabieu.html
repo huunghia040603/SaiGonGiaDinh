@@ -5,126 +5,133 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0; /* Đặt margin về 0 để kiểm soát tốt hơn */
+            padding: 10px; /* Thêm padding tổng thể cho body trên mobile */
             background-color: #f4f4f4;
-             margin-left: 260px;
         }
         h1 {
             color: #333;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Giảm margin-bottom */
+            font-size: 1.8em; /* Giảm kích thước font cho tiêu đề trên mobile */
         }
         table {
-            width: 1200px;
+           
             border-collapse: collapse;
             margin: 0 auto;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Giảm đổ bóng */
+            display: block; /* Quan trọng: Cho phép bảng cuộn ngang trên mobile */
+            overflow-x: auto; /* Tạo thanh cuộn ngang khi cần */
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 6px; /* Giảm padding cho các ô */
             text-align: center;
             vertical-align: top;
             word-wrap: break-word;
             white-space: normal;
             overflow: hidden;
-            min-height: 30px;
+            min-height: 25px; /* Giảm chiều cao tối thiểu */
+            font-size: 0.75em; /* Giảm kích thước font mặc định cho các ô */
         }
         th {
-            background-color: #073d01;
+            background-color: #1130bb;
             color: white;
-          
+            font-size: 0.8em; /* Giảm font size cho header */
+            padding: 8px 6px; /* Điều chỉnh padding cho header */
         }
 
-       th.session-column-header, /* Thêm class này cho header "BUỔI" */
-        td.session-label-body { /* Sử dụng class cho cột "Buổi" trong tbody */
-            font-size: 13px;
+        th.session-column-header,
+        td.session-label-body {
+            font-size: 0.7em; /* Rất nhỏ cho mobile */
             font-weight: bold;
             text-align: center;
-            width: 50px;
-            min-width: 50px;
-            max-width: 80px;
+            width: 40px; /* Giảm chiều rộng */
+            min-width: 40px;
+            max-width: 60px; /* Giới hạn tối đa để không quá lớn */
         }
 
-        /* Chiều rộng và style chữ ĐỒNG NHẤT cho tất cả các ô dữ liệu trong cột "Thời gian" (cột thứ hai) */
-        th.time-column-header, /* Thêm class này cho header "TIẾT" */
-        td.time-slot-label { /* Sử dụng class cho cột "Tiết" trong tbody */
-            font-size: 13px;
+        th.time-column-header,
+        td.time-slot-label {
+            font-size: 0.7em; /* Rất nhỏ cho mobile */
             font-weight: normal;
             text-align: center;
-            width: 100px;
-            min-width: 100px;
-            max-width: 100px;
+            width: 70px; /* Giảm chiều rộng */
+            min-width: 70px;
+            max-width: 80px; /* Giới hạn tối đa */
         }
 
         /* Chiều rộng cho các cột ngày còn lại */
-        /* Các cột ngày sẽ là cột thứ 3 trở đi, sau cột Buổi và Tiết */
         th:nth-child(n+3),
         td:nth-child(n+3) {
-            width: 120px;
-            min-width: 120px;
-            max-width: 120px;
+            width: 90px; /* Giảm chiều rộng cho cột ngày */
+            min-width: 90px;
+            max-width: 100px; /* Giới hạn tối đa */
         }
 
         .session-header {
             background-color: #f2f2f2;
-            
         }
-        
-       
-        
+
         .subject-info {
-            font-size: 0.9em;
+            font-size: 0.7em; /* Font nhỏ hơn cho thông tin môn học */
             text-align: center;
         }
         .subject-name {
-            font-size: 14px;
+            font-size: 0.85em; /* Giảm font cho tên môn */
             font-weight: bold;
-            color: #022808;
+            color: #020928;
+            line-height: 1.2; /* Giảm khoảng cách dòng */
         }
         .teacher-name {
-            font-size: 13px;
+            font-size: 0.75em; /* Giảm font cho tên giáo viên */
             color: #6c757d;
         }
         .location-name {
-            font-size: 11px;
-            color: #28a745;
+            font-size: 0.65em; /* Giảm font cho địa điểm */
+            color: #2835a7;
         }
         .error-message {
             color: red;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
+            font-size: 0.9em;
         }
-        .tkb{
-            
+        .tkb {
             margin-top: 10px;
         }
         .controls-container {
             display: flex;
+            flex-direction: column; /* Sắp xếp các mục theo cột trên mobile */
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap; /* Cho phép các mục xuống dòng trên màn hình nhỏ */
+            gap: 10px; /* Giảm khoảng cách giữa các mục */
+            margin: 15px auto; /* Căn giữa và giảm margin */
+            width: 95%; /* Chiếm gần hết chiều rộng */
+            max-width: 400px; /* Giới hạn chiều rộng trên mobile */
         }
         .controls-container label {
             font-weight: bold;
             color: #555;
+            text-align: center; /* Căn giữa label */
+            margin-bottom: 0; /* Xóa margin dưới label */
         }
         .controls-container select,
         .controls-container button {
-            padding: 8px 12px;
+            padding: 6px 10px; /* Giảm padding */
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 1em;
+            font-size: 0.9em; /* Giảm font size */
             cursor: pointer;
+            width: 100%; /* Cho phép chiếm toàn bộ chiều rộng trong container */
+            box-sizing: border-box; /* Đảm bảo padding không làm tràn width */
         }
         .controls-container select {
             background-color: #f9f9f9;
         }
         .controls-container button {
-            background-color: #073d01;
+            background-color: #00328f;
             color: white;
             border: none;
             transition: background-color 0.2s;
@@ -134,29 +141,149 @@
         }
         #weekInfo {
             font-weight: bold;
-            color: #073d01;
-            font-size: 1.1em;
+            color: #01143d;
+            font-size: 1em;
+            display: block !important; /* Luôn hiển thị */
+            text-align: center;
+            margin-top: 5px; /* Thêm khoảng cách */
         }
         .schedule-cell.break-time-cell {
-    background-color: #c0f9c9; /* Màu vàng nhạt */
-            /* Bạn có thể thêm các thuộc tính khác nếu muốn */
-            /* text-align: center; */
-            /* font-weight: bold; */
+            background-color: #c0e7f9;
         }
+
+        /* MEDIA QUERIES cho tablet và desktop */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            table {
+                width: 1000px; /* Chiều rộng cố định cho desktop */
+                max-width: 80%;
+            }
+            th, td {
+                padding: 8px; /* Padding lớn hơn */
+                font-size: 0.85em; /* Font lớn hơn */
+                min-height: 30px;
+            }
+            th {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            th.session-column-header,
+            td.session-label-body {
+                font-size: 0.8em;
+                width: 50px;
+                min-width: 50px;
+                max-width: 80px;
+            }
+
+            th.time-column-header,
+            td.time-slot-label {
+                font-size: 0.8em;
+                width: 100px;
+                min-width: 100px;
+                max-width: 100px;
+            }
+
+            th:nth-child(n+3),
+            td:nth-child(n+3) {
+                width: 120px;
+                min-width: 120px;
+                max-width: 120px;
+            }
+
+            .subject-info {
+                font-size: 0.85em;
+            }
+            .subject-name {
+                font-size: 14px;
+            }
+            .teacher-name {
+                font-size: 13px;
+            }
+            .location-name {
+                font-size: 11px;
+            }
+            .controls-container {
+                flex-direction: row; /* Trở lại sắp xếp hàng ngang */
+                flex-wrap: wrap; /* Cho phép wrap nếu cần */
+                gap: 15px;
+               
+                width: auto; /* Để nội dung tự điều chỉnh chiều rộng */
+                max-width: none; /* Bỏ giới hạn max-width */
+            }
+            .controls-container label {
+                margin-left: 0; /* Xóa margin-left cố định */
+            }
+             .controls-container select,
+             .controls-container button {
+                width: auto; /* Trở lại width tự động */
+            }
+            #semesterSelect {
+                width: 250px;
+            }
+            #weekSelect {
+                width: 400px;
+            }
+            #weekInfo {
+                display: inline; /* Hiển thị inline trên desktop */
+            }
+        }
+        @media (min-width: 1024px) { /* Cho màn hình lớn hơn một chút */
+             h1 {
+                font-size: 2.5em;
+            }
+        }
+
+            @media (max-width: 4620px) {
+       .main-container
+        {
+           margin-left: 20%;
+        }
+        
+    }
+
+         @media (max-width: 1620px) {
+       .main-container
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .main-container
+        {
+           margin-left: 25%;
+        }
+        
+    }
+
+      @media (max-width: 768px) {
+       .main-container
+        {
+           margin-left: 30px;
+        }
+        
+    }
+
     </style>
 </head>
-<body>
+<body class="main-container">
     <h1 class="tkb">Thời Khóa Biểu Học Kỳ</h1>
 
     <div class="controls-container">
-        <label for="semesterSelect" style="margin-left: 150px;">Chọn học kỳ:</label>
-        <select id="semesterSelect" style="width: 250px;"></select>
+        <label for="semesterSelect">Chọn học kỳ:</label>
+        <select id="semesterSelect"></select>
 
-        <label for="weekSelect" style="margin-left: 50px;">Chọn tuần:</label>
-        <select id="weekSelect" style="width: 400px;"></select>
+        <label for="weekSelect">Chọn tuần:</label>
+        <select id="weekSelect"></select>
 
-        <button id="prevWeekBtn"style="margin-left: 50px;">Tuần trước</button>
-        <span id="weekInfo"></span>
+        <button id="prevWeekBtn">Tuần trước</button>
+        <span id="weekInfo" style="display: none !important; "></span>
         <button id="nextWeekBtn">Tuần sau</button>
     </div>
 
