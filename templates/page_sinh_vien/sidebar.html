@@ -1,0 +1,144 @@
+<aside id="sidebar" class="sidebar fixed inset-y-0 left-0 w-16 md:w-64 bg-gradient-to-br from-gray-800 to-blue-900 text-white p-4 flex flex-col z-40 transition-all duration-300 ease-in-out transform translate-x-0 md:rounded-none rounded-r-xl">
+    <div class="flex items-center justify-center mb-8 mt-2">
+        <img src="/static/images/logoSGGD.png" alt="Logo Cao đẳng Sài Gòn Gia Định" class="w-10 h-10 rounded-full mr-3 shadow-md">
+        <span class="text-xl font-extrabold whitespace-nowrap overflow-hidden md:block hidden sidebar-text" style="font-family: font2;">Cao đẳng Sài Gòn Gia Định</span>
+    </div>
+
+    <nav class="flex-grow">
+        <ul>
+            <li class="mb-2">
+                <a href="{{ url_for('sinhvien.tongquan') }}" data-content="overview" class="menu-item flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                    <svg class="w-5 h-5 mr-0 md:mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Tổng quan</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ url_for('sinhvien.dichvu') }}" data-content="services" class="menu-item flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                    <svg class="w-5 h-5 mr-0 md:mr-3 text-green-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v2m7-7V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Danh sách dịch vụ</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="#" data-content="grades" class="menu-item flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                    <svg class="w-5 h-5 mr-0 md:mr-3 text-yellow-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Xem điểm</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="#" data-content="timetable" class="menu-item flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                    <svg class="w-5 h-5 mr-0 md:mr-3 text-purple-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Xem thời khóa biểu</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="#" data-content="learning" class="menu-item flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                    <svg class="w-5 h-5 mr-0 md:mr-3 text-red-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.747 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Học tập</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <div class="relative">
+                    <a href="#" id="accountInfoToggle" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out justify-center md:justify-start">
+                        <svg class="w-5 h-5 mr-0 md:mr-3 text-pink-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Thông tin tài khoản</span>
+                        <svg id="arrowIcon" class="w-4 h-4 ml-auto transform transition-transform duration-200 flex-shrink-0 md:block hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <ul id="accountSubmenu" class="hidden mt-2 space-y-1 pl-4 md:pl-0">
+                        <li>
+                            <a href="{{ url_for('sinhvien.taikhoan') }}"  data-content="account-details" class="menu-item submenu-item block p-2 rounded-lg hover:bg-gray-600 transition duration-200 ease-in-out">
+                                <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Thông tin tài khoản</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-content="change-password" class="menu-item submenu-item block p-2 rounded-lg hover:bg-gray-600 transition duration-200 ease-in-out">
+                                <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Đổi mật khẩu</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-content="logout" class="menu-item submenu-item block p-2 rounded-lg hover:bg-gray-600 transition duration-200 ease-in-out">
+                                <span class="whitespace-nowrap overflow-hidden md:block hidden sidebar-text">Đăng xuất</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="mt-auto pt-3 border-t border-gray-700 text-xs text-gray-400 text-center whitespace-nowrap overflow-hidden md:block hidden sidebar-text">
+        &copy; 2025 Cao đẳng Sài Gòn Gia Định
+    </div>
+</aside>
+
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const accountInfoToggle = document.getElementById('accountInfoToggle');
+    const accountSubmenu = document.getElementById('accountSubmenu');
+    const arrowIcon = document.getElementById('arrowIcon');
+    const sidebarTexts = document.querySelectorAll('.sidebar-text');
+
+    accountInfoToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Luôn toggle submenu khi click, bất kể kích thước màn hình
+        accountSubmenu.classList.toggle('hidden');
+        arrowIcon.classList.toggle('rotate-90');
+    });
+
+    function handleResize() {
+        if (window.innerWidth >= 768) {
+            // Trên desktop:
+            // Sidebar luôn fixed với chiều rộng 64
+            sidebar.classList.remove('w-16'); // Xóa chiều rộng mobile
+            sidebar.classList.add('w-64');   // Đặt chiều rộng desktop
+            
+            // Hiển thị văn bản trong sidebar
+            sidebarTexts.forEach(textElem => {
+                textElem.classList.remove('hidden'); 
+            });
+
+            // Đảm bảo mainContent có lề trái phù hợp với chiều rộng sidebar fixed
+            if (mainContent) {
+                mainContent.style.marginLeft = '16rem'; // 16rem = 256px = w-64
+            }
+            // Hiển thị mũi tên submenu
+            arrowIcon.classList.remove('hidden'); 
+        } else {
+            // Trên di động:
+            // Sidebar luôn fixed với chiều rộng 16
+            sidebar.classList.remove('w-64'); // Xóa chiều rộng desktop
+            sidebar.classList.add('w-16');   // Đặt chiều rộng mobile
+            
+            // Ẩn văn bản trong sidebar
+            sidebarTexts.forEach(textElem => {
+                textElem.classList.add('hidden'); 
+            });
+
+            // Đảm bảo mainContent có lề trái phù hợp với chiều rộng sidebar fixed
+            if (mainContent) {
+                mainContent.style.marginLeft = '4rem'; // 4rem = 64px = w-16
+            }
+            // Ẩn mũi tên submenu trên di động (để tránh lộn xộn khi chỉ có icon)
+            // Nếu bạn muốn hiển thị mũi tên trên mobile khi sidebar thu gọn, hãy bỏ dòng này
+            arrowIcon.classList.add('hidden'); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', handleResize);
+    window.addEventListener('resize', handleResize);
+</script>

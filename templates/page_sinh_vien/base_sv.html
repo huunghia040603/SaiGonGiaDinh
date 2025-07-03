@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinh Viên - Cao đẳng Sài Gòn Gia Định</title>
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+    <!-- Tải Font Awesome CDN cho các biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: font3;
+            src: url('/static/fonts/font3.ttf');
+        }
+        @font-face {
+            font-family: font6;
+            src: url('/static/font/font6.ttf');
+        }
+        @font-face {
+            font-family: font2;
+            src: url(/static/font/font2.ttf);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Màu nền nhẹ */
+        }
+        /* Ẩn sidebar theo mặc định trên màn hình nhỏ và hiển thị nút toggle */
+        .sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng cho sidebar */
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        /* Hiển thị sidebar cố định trên màn hình lớn */
+        @media (min-width: 768px) {
+            .sidebar {
+                transform: translateX(0);
+                position: static; /* Đặt lại vị trí tĩnh trên desktop */
+                box-shadow: none; /* Bỏ đổ bóng trên desktop khi nó là một phần của layout */
+            }
+            .menu-button {
+                display: none; /* Ẩn nút menu trên desktop */
+            }
+        }
+        /* Style cho các mục con trong menu Thông tin tài khoản */
+        .submenu-item {
+            padding-left: 2.5rem; /* Thụt lề cho mục con */
+        }
+
+        /* CUSTOM CSS TỪ YÊU CẦU CỦA BẠN */
+        /* CSS Variables for easy theme customization */
+        :root {
+            --primary-color8: #007bff; /* Màu xanh dương chủ đạo */
+            --secondary-color8: #6c757d; /* Màu xám phụ */
+            --accent-color8: #28a745; /* Màu điểm nhấn (ví dụ cho button/active) */
+            --bg-light8: #f8f9fa; /* Nền sáng */
+            --text-dark8: #212529; /* Chữ tối */
+            --text-light8: #f1f1f1; /* Chữ sáng */
+            --card-bg8: #ffffff; /* Nền card */
+            --card-shadow8: rgba(0, 0, 0, 0.08);
+            --hover-shadow8: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Container để giới hạn chiều rộng và căn giữa nội dung */
+        .container8 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: 'Inter', sans-serif; /* Sử dụng font Inter đã tải */
+        }
+
+        /* Main Content Area Styles */
+        .main-content8 {
+            padding: 40px 0; /* Giúp nội dung không bị dính vào header/footer */
+        }
+
+        .page-title8 {
+            text-align: center;
+            font-size: 2.8em;
+            color: var(--primary-color8);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: font2; /* Sử dụng font2 */
+        }
+
+        .page-description8 {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--secondary-color8);
+            margin-bottom: 50px;
+        }
+
+        /* Service Category Styles */
+        .service-category8 {
+            background-color: var(--card-bg8); /* Nền cho khối danh mục */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--card-shadow8);
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+
+        .category-title8 {
+            color: var(--text-dark8);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--primary-color8); /* Đường gạch chân nổi bật */
+            padding-bottom: 15px;
+            display: flex; /* Dùng flexbox để căn chỉnh icon và text */
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa icon và text */
+        }
+
+        .category-title8 .fas, .category-title8 .fa-solid { /* Style cho icon trong tiêu đề danh mục */
+            color: var(--primary-color8);
+            font-size: 1.2em;
+        }
+
+        /* Service Grid Styles (Dùng CSS Grid để bố cục các thẻ dịch vụ) */
+        .service-grid8 {
+            display: grid;
+            /* Điều chỉnh minmax để các thẻ nhỏ hơn và có thể có nhiều hơn trên một hàng */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Giảm min-width */
+            gap: 20px; /* Giảm khoảng cách giữa các ô */
+        }
+
+        /* Service Card Styles (Thiết kế cho từng ô dịch vụ) */
+        .service-card8 {
+            background-color: var(--bg-light8); /* Nền của từng thẻ dịch vụ */
+            border-radius: 10px;
+            padding: 20px; /* Giảm padding để thẻ gọn hơn */
+            text-align: center;
+            cursor: pointer;
+            /* Hiệu ứng chuyển động mượt mà khi hover */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex; /* Dùng flexbox để căn chỉnh nội dung trong thẻ */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card8 .icon8 { /* Style cho icon bên trong thẻ dịch vụ */
+            font-size: 3em; /* Giảm kích thước icon */
+            color: var(--primary-color8);
+            margin-bottom: 10px; /* Giảm khoảng cách dưới icon */
+            transition: color 0.3s ease;
+        }
+
+        .service-card8 h3 {
+            color: var(--text-dark8);
+            font-size: 1.3em; /* Giảm kích thước tiêu đề */
+            margin-top: 0;
+            margin-bottom: 8px; /* Giảm khoảng cách dưới tiêu đề */
+            font-weight: 600;
+        }
+
+        .service-card8 p {
+            color: var(--secondary-color8);
+            font-size: 0.9em; /* Giảm kích thước mô tả */
+            line-height: 1.4;
+            font-family: font6; /* Sử dụng font6 */
+        }
+
+        /* Hover Effect for Service Cards */
+        .service-card8:hover {
+            transform: translateY(-8px); /* Di chuyển lên trên ít hơn */
+            box-shadow: 0 12px 25px var(--hover-shadow8); /* Bóng đổ nhỏ hơn khi hover */
+        }
+
+        .service-card8:hover .icon8 {
+            color: var(--accent-color8); /* Thay đổi màu icon khi hover */
+        }
+
+        /* Active Effect for Service Cards (khi click) */
+        .service-card8:active {
+            transform: translateY(-4px); /* "Nhấn" xuống một chút khi click */
+            box-shadow: 0 6px 12px var(--card-shadow8);
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .page-title8 {
+                font-size: 2.2em;
+            }
+
+            .page-description8 {
+                font-size: 1em;
+            }
+
+            .category-title8 {
+                font-size: 1.8em;
+                flex-direction: column; /* Icon và text xuống dòng trên màn hình nhỏ */
+                align-items: flex-start;
+                gap: 10px; /* Điều chỉnh khoảng cách cho màn hình nhỏ */
+            }
+
+            /* Quan trọng: Đảm bảo grid chỉ có 1 cột trên điện thoại */
+            .service-grid8 {
+                grid-template-columns: 1fr; /* Mỗi ô chiếm toàn bộ chiều rộng */
+                gap: 20px; /* Khoảng cách giữa các ô trên điện thoại */
+            }
+
+            .service-category8 {
+                padding: 20px; /* Giảm padding */
+                margin-bottom: 25px; /* Giảm khoảng cách giữa các danh mục */
+            }
+
+            .service-card8 {
+                padding: 20px; /* Giảm padding */
+            }
+
+            .service-card8 .icon8 {
+                font-size: 2.5em; /* Giảm kích thước icon trên di động */
+            }
+
+            .service-card8 h3 {
+                font-size: 1.2em; /* Giảm kích thước tiêu đề trên di động */
+            }
+            .service-card8 p {
+                font-size: 0.85em; /* Giảm kích thước mô tả trên di động */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content8 {
+                padding: 20px 10px; /* Giảm padding */
+            }
+
+            .page-title8 {
+                font-size: 1.8em;
+            }
+            .page-description8 {
+                font-size: 0.9em;
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Custom scrollbar for table */
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+            width: 8px; /* Added width for vertical scrollbar */
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #aab8c2; /* Darker scrollbar thumb */
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #778899; /* Even darker on hover */
+        }
+
+        /* Custom styles for select box arrow */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 2.5rem; /* Make space for the arrow */
+        }
+        @media (min-width: 1536px) {
+            .container {
+                max-width: 1200px;
+            }
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Nút mở/đóng Sidebar cho thiết bị di động -->
+      {% include '/page_sinh_vien/sidebar.html' %}
+
+    <!-- Khu vực nội dung chính -->
+    <main id="mainContent" class="flex-1 p-1 md:ml-0 transition-all duration-300 ease-in-out" style="padding-left: 20px;">
+        {% block content %}
+        {# Nội dung cụ thể của từng trang sẽ được đặt ở đây #}
+        {% endblock %}
+    </main>
+
+   
+</body>
+</html>
