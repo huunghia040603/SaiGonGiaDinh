@@ -3,322 +3,422 @@
 {% block title %}Thời Khóa Biểu Giảng Viên{% endblock %}
 
 {% block page_styles %}
-    <style>
-        /* Các CSS hiện có của bạn sẽ ở đây */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e9ecef;
-            padding: 20px;
-            line-height: 1.2;
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 1300px;
-            margin: 20px auto;
-        }
-        h2 {
-            color: #212529;
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 2.2rem;
-        }
+   <style>
+    /* Các CSS hiện có của bạn sẽ ở đây */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    padding: 10px; /* Giảm padding trên mobile */
+    line-height: 1.2;
+    margin: 0; /* Đảm bảo không có margin mặc định */
+}
+.container {
+    background-color: #fff;
+    padding: 20px; /* Giảm padding trên mobile */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 1300px;
+    margin: 10px auto; /* Giảm margin trên mobile */
+}
+h2 {
+    color: #212529;
+    margin-bottom: 20px; /* Giảm margin trên mobile */
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.8rem; /* Giảm kích thước font trên mobile */
+}
 
-        /* --- SỬA ĐỔI HEADER SECTION --- */
-        .header-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between; /* Đẩy các nhóm phần tử ra hai phía */
-            align-items: flex-end; /* Căn chỉnh các mục theo đáy */
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            /* border-bottom: 1px solid #dee2e6; */ /* Có thể thêm border dưới nhẹ nhàng */
-            gap: 20px; /* Khoảng cách giữa các nhóm lớn */
-        }
+/* --- SỬA ĐỔI HEADER SECTION --- */
+.header-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px; /* Giảm margin trên mobile */
+    padding-bottom: 15px;
+    gap: 15px; /* Giảm khoảng cách giữa các nhóm lớn */
+}
 
-        .header-left-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px; /* Khoảng cách giữa các dropdown */
-            align-items: center;
-        }
+.header-left-group, .header-right-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Giảm khoảng cách giữa các dropdown/nút */
+    align-items: center;
+    width: 100%; /* Mặc định full width trên mobile trước */
+    justify-content: center; /* Căn giữa trên mobile */
+}
 
-        .header-right-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px; /* Khoảng cách giữa các nút */
-            align-items: center;
-        }
+/* --- CÁC DROPDOWN --- */
+.custom-select {
+    padding: 8px 12px; /* Giảm padding trên mobile */
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 0.9rem; /* Giảm kích thước font */
+    color: #495057;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M128%20192L48%20112l16-16%2064%2064%2064-64%2016%2016z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 8px center; /* Điều chỉnh vị trí mũi tên */
+    background-size: 0.8em; /* Điều chỉnh kích thước mũi tên */
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    min-width: unset; /* Xóa min-width cố định */
+    width: 50%; /* Luôn full width trên mobile */
+    box-sizing: border-box; /* Quan trọng để padding không làm tràn */
+}
+.custom-select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
 
-        /* --- CÁC DROPDOWN --- */
-        .custom-select {
-            padding: 10px 15px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 1rem;
-            color: #495057;
-            background-color: #fff;
-            appearance: none; /* Bỏ giao diện mặc định của select */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M128%20192L48%20112l16-16%2064%2064%2064-64%2016%2016z%22/%3E%3C/svg%3E'); /* Icon mũi tên xuống */
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 1em;
-            cursor: pointer;
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            min-width: 270px; /* Đảm bảo đủ rộng */
-        }
-        .custom-select:focus {
-            border-color: #80bdff;
-            outline: 0;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-        }
+/* --- NÚT ĐIỀU HƯỚNG TUẦN --- */
+.timetable-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Giảm khoảng cách */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng nếu cần */
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+}
+#facultyTimetable { /* Hoặc .timetable nếu bạn dùng chung class cho bảng */
+    width: 100%; /* Đảm bảo bảng sử dụng hết chiều rộng có thể */
+    table-layout: fixed; /* Rất quan trọng: Giúp cột có width cố định */
+    border-collapse: collapse; /* Để các đường viền đẹp hơn */
+    min-width: 900px; /* Đảm bảo bảng luôn có chiều rộng tối thiểu, bắt buộc cuộn ngang */
+}
 
-        /* --- NÚT ĐIỀU HƯỚNG TUẦN --- */
-        .timetable-navigation {
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Căn giữa các nút và thông tin tuần */
-            gap: 15px; /* Khoảng cách giữa các phần tử điều hướng */ /* Nền nhẹ nhàng cho khu vực điều hướng */
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+/* Chiều rộng cố định cho cột "BUỔI" */
+#facultyTimetable .session-column-header, /* Tiêu đề cột BUỔI */
+#facultyTimetable .session-label-body { /* Ô dữ liệu BUỔI */
+    width: 50px; /* Chiều rộng mong muốn */
+    min-width: 50px; /* Chiều rộng tối thiểu */
+    max-width: 50px; /* Chiều rộng tối đa */
+    white-space: nowrap; /* Ngăn không cho chữ xuống dòng */
+}
 
-        .nav-button {
-            background-color: #070163;
-            border: 1px solid #06023f;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .nav-button:hover {
-            background-color: #0a5ed7;
-            border-color: #0a58ca;
-        }
-        .week-info {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #212529;
-            white-space: nowrap; /* Giữ thông tin tuần trên một dòng */
-        }
-        
-        /* Cập nhật button in */
-        .btn-print {
-            background-color: #6c757d; /* Màu xám trung tính */
-            border-color: #6c757d;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            white-space: nowrap;
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-print:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
-        }
+/* Chiều rộng cố định cho cột "TIẾT" */
+#facultyTimetable .time-column-header, /* Tiêu đề cột TIẾT */
+#facultyTimetable .time-slot-label { /* Ô dữ liệu TIẾT */
+    width: 80px; /* Chiều rộng mong muốn */
+    min-width: 80px; /* Chiều rộng tối thiểu */
+    max-width: 80px; /* Chiều rộng tối đa */
+    word-wrap: break-word; /* Cho phép từ dài bị ngắt nếu cần */
+}
 
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .header-section {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .header-left-group, .header-right-group {
-                width: 100%;
-                justify-content: flex-start;
-                flex-direction: column; /* Đặt các dropdown và nút xuống dòng trên màn hình nhỏ */
-                gap: 10px;
-            }
-            .custom-select, .btn-print {
-                width: 100%;
-                min-width: unset;
-            }
-            .timetable-navigation {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .week-info {
-                text-align: center;
-            }
-        }
+/* Chiều rộng cố định cho các cột ngày (Thứ 2 đến Thứ 7) */
+#facultyTimetable th.day-header, /* Tiêu đề các cột ngày */
+#facultyTimetable td.schedule-cell { /* Ô dữ liệu của các ngày */
+    width: 100px; /* Điều chỉnh giá trị này */
+    min-width: 100px;
+    max-width: 100px;
+    word-wrap: break-word; /* Cho phép từ dài bị ngắt nếu cần */
+}
 
-        @media (max-width: 576px) {
-            .container {
-                padding: 15px;
-            }
-            h2 {
-                font-size: 1.8rem;
-            }
-            .custom-select, .btn-print, .nav-button {
-                font-size: 0.9rem;
-                padding: 8px 12px;
-            }
-            .week-info {
-                font-size: 1rem;
-            }
-        }
 
-        /* Các style khác của bảng (timetable) giữ nguyên */
-        .timetable-container {
-            overflow-x: auto;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .timetable {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9em;
-            min-width: 900px;
-            table-layout: fixed;
-        }
-        .timetable thead {
-            background-color: #02014a;
-            color: white;
-        }
-        .timetable th {
-            padding: 15px 8px;
-            text-align: center;
-            border-right: 2px solid white;
-            border-top: 2px solid black;
-            vertical-align: middle;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-        .timetable thead tr th:last-child {
-            border-right: 2px solid black;
-        }
-        .timetable th.session-column-header {
-            width: 70px;
-            background-color: #02014a;
-            border-right: 1px solid white;
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            font-size: 1em;
-        }
-        .timetable th.time-column-header {
-            width: 110px;
-            background-color: #02014a;
-            border-right: 1px solid white;
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            font-size: 1em;
-        }
-        .timetable th.day-header {
-            font-size: 1.05em;
-            text-transform: none;
-        }
-        .timetable th.date-header {
-            font-size: 0.85em;
-            font-weight: normal;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-        .timetable td {
-            border: 1px solid #201c1c;
-            padding: 0;
-            vertical-align: top;
-            position: relative;
-        }
-        .timetable td.session-label-body {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            text-align: center;
-            vertical-align: middle;
-            width: 80px;
-            min-width: 80px;
-            max-width: 80px;
-            border-right: 1px solid #201c1c;
-            border-bottom: 1px solid #201c1c;
-            position: sticky;
-            left: 0;
-            z-index: 2;
-            color: #495057;
-            font-size: 0.95em;
-        }
-        .timetable td.time-slot-label {
-            background-color: #f8f9fa;
-            font-weight: normal;
-            text-align: center;
-            padding: 10px 5px;
-            white-space: nowrap;
-            border-right: 1px solid #201c1c;
-            border-bottom: 1px solid #201c1c;
-            width: 90px;
-            min-width: 90px;
-            max-width: 90px;
-            color: #495057;
-            font-size: 0.85em;
-            line-height: 1.4;
-        }
-        .timetable td.schedule-cell {
-            padding: 5px;
-            height: 50px;
-            box-sizing: border-box;
-            background-color: #ffffff;
-        }
-        .schedule-entry {
-            background-color: #fffed6;
-            border: 1px solid #d8d770;
-            border-radius: 6px;
-            padding: 4px;
-            margin: 0;
-            font-size: 0.8em;
-            text-align: center;
-            word-wrap: break-word;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            line-height: 1.2;
-            color: #3a1f1f;
-            transition: all 0.2s ease-in-out;
-        }
-        .schedule-entry:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
-        }
-        .schedule-entry strong {
-            display: block;
-            font-size: 1.3em;
-            color: #bc0808;
-            margin-bottom: 2px;
-            font-weight: 700;
-        }
-        .schedule-entry span {
-            display: block;
-            color: #454a4f;
-            font-size: 0.85em;
-        }
-        .empty-cell {
-            background-color: #fdfdfd;
-        }
-        .timetable tbody tr:last-child td {
-            border-bottom: 1px solid #201c1c;
-        }
-        .timetable.break-time-cell {
-    background-color: #c0f9c9; /* Màu vàng nhạt */
-            /* Bạn có thể thêm các thuộc tính khác nếu muốn */
-            /* text-align: center; */
-            /* font-weight: bold; */
-        }
-    </style>
+.nav-button {
+    background-color: #070163;
+    border: 1px solid #06023f;
+    color: white;
+    padding: 8px 12px; /* Giảm padding */
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem; /* Giảm kích thước font */
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 80px; /* Cho phép các nút co giãn */
+    text-align: center;
+    justify-content: center; /* Căn giữa nội dung nút */
+}
+.nav-button:hover {
+    background-color: #0a5ed7;
+    border-color: #0a58ca;
+}
+.week-info {
+    font-size: 1rem; /* Giảm kích thước font */
+    font-weight: 600;
+    color: #212529;
+    white-space: normal; /* Cho phép xuống dòng */
+    text-align: center; /* Căn giữa thông tin tuần */
+    flex-basis: 100%; /* Chiếm toàn bộ chiều rộng giữa các nút */
+    order: -1; /* Đưa lên trên cùng trong flex item */
+}
+
+/* Cập nhật button in */
+
+
+/* --- Responsive adjustments (Sắp xếp lại Media Queries) --- */
+
+/* Điều chỉnh chung cho màn hình nhỏ hơn 992px (tablets và mobile) */
+@media (max-width: 991.98px) { /* Thay 992px thành 991.98px để khớp Bootstrap */
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start; /* Căn trái các nhóm */
+        gap: 15px; /* Khoảng cách giữa các nhóm */
+    }
+    .header-left-group, .header-right-group {
+        width: 100%;
+        flex-direction: column; /* Xếp các item theo cột */
+        align-items: flex-start; /* Căn trái các item */
+        gap: 10px; /* Khoảng cách giữa các item */
+    }
+    .custom-select, .btn-print, .nav-button {
+        width: 100%; /* Đảm bảo chúng chiếm toàn bộ chiều rộng */
+        min-width: unset;
+    }
+    .timetable-navigation {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center; /* Căn giữa các mục điều hướng */
+    }
+    .week-info {
+        text-align: center;
+        order: -1; /* Luôn đặt thông tin tuần lên đầu */
+        margin-bottom: 5px; /* Thêm khoảng cách với các nút */
+    }
+    .nav-button {
+        flex-grow: 1; /* Đảm bảo nút co giãn để lấp đầy không gian */
+        width: calc(50% - 5px); /* Chia đôi cho nút trước và sau trên màn hình nhỏ */
+    }
+    .timetable-navigation .nav-button:first-of-type {
+        margin-right: 5px; /* Khoảng cách giữa hai nút */
+    }
+}
+
+/* Các style khác của bảng (timetable) - Cần điều chỉnh để responsive hơn */
+.timetable-container {
+    overflow-x: auto; /* Rất quan trọng để bảng cuộn ngang trên màn hình nhỏ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px; /* Bo góc cho container của bảng */
+}
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em; /* Giảm kích thước font cho toàn bảng */
+    min-width: 700px; /* **GIẢM MIN-WIDTH** để bảng không quá rộng trên mobile */
+    /* Thay table-layout: fixed; bằng auto nếu nội dung không quá dài để cho phép cột tự điều chỉnh */
+    table-layout: auto; 
+}
+.timetable thead {
+    background-color: #02014a;
+    color: white;
+}
+.timetable th {
+    padding: 10px 5px; /* Giảm padding */
+    text-align: center;
+    border-right: 1px solid white; /* Giảm độ dày border */
+    border-top: 1px solid black;
+    vertical-align: middle;
+    font-weight: 600;
+    letter-spacing: 0.2px; /* Giảm khoảng cách ký tự */
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 0.9em; /* Kích thước font cho tiêu đề cột */
+}
+.timetable thead tr th:last-child {
+    border-right: 1px solid black; /* Giảm độ dày border */
+}
+.timetable th.session-column-header {
+    width: 60px; /* Giảm chiều rộng */
+    min-width: 60px;
+    max-width: 60px;
+    background-color: #02014a;
+    border-right: 1px solid white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    font-size: 0.9em; /* Kích thước font cho 'Buổi' */
+}
+.timetable th.time-column-header {
+    width: 90px; /* Giảm chiều rộng */
+    min-width: 90px;
+    max-width: 90px;
+    background-color: #02014a;
+    border-right: 1px solid white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    font-size: 0.9em; /* Kích thước font cho 'Tiết' */
+}
+.timetable th.day-header {
+    font-size: 0.95em; /* Kích thước font cho 'Thứ' */
+    text-transform: none;
+}
+.timetable th.date-header {
+    font-size: 0.75em; /* Giảm kích thước font cho ngày */
+    font-weight: normal;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.timetable td {
+    border: 1px solid #ccc; /* Border nhẹ nhàng hơn */
+    padding: 0;
+    vertical-align: top;
+    position: relative;
+    height: 60px; /* Tăng chiều cao ô để nội dung dễ đọc hơn */
+}
+.timetable td.session-label-body {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px; /* Giảm chiều rộng */
+    min-width: 60px;
+    max-width: 60px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    color: #42484f;
+    font-size: 13px; /* Giảm kích thước font */
+}
+.timetable td.time-slot-label {
+    background-color: #f8f9fa;
+    font-weight: normal;
+    text-align: center;
+    padding: 8px 3px; /* Giảm padding */
+    white-space: nowrap;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    width: 80px; /* Giảm chiều rộng */
+    min-width: 80px;
+    max-width: 80px;
+    color: #42484f;
+    font-size: 15px; /* Giảm kích thước font */
+    line-height: 1.3;
+}
+.timetable td.schedule-cell {
+    padding: 3px; /* Giảm padding */
+    height: 60px; /* Đảm bảo chiều cao phù hợp */
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.schedule-entry {
+    background-color: #fffed6;
+    border: 1px solid #d8d770;
+    border-radius: 4px; /* Giảm bo góc */
+    padding: 2px; /* Giảm padding */
+    margin: 0;
+    font-size: 0.75em; /* Giảm kích thước font cho nội dung ô */
+    text-align: center;
+    word-wrap: break-word;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.1; /* Giảm line-height */
+    color: #3a1f1f;
+    transition: all 0.2s ease-in-out;
+}
+.schedule-entry:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Giảm shadow */
+    transform: none; /* Bỏ transform trên hover cho mobile để tránh lỗi layout */
+}
+.schedule-entry strong {
+    display: block;
+    font-size: 1.2em; /* Giảm kích thước font */
+    color: #bc0808;
+    margin-bottom: 1px; /* Giảm margin */
+    font-weight: 700;
+}
+.schedule-entry span {
+    display: block;
+    color: #454a4f;
+    font-size: 0.8em; /* Giảm kích thước font */
+}
+.empty-cell {
+    background-color: #fdfdfd;
+}
+.timetable tbody tr:last-child td {
+    border-bottom: 1px solid #ccc;
+}
+.timetable.break-time-cell {
+    background-color: #c0f9c9;
+}
+
+/* Media Query cho màn hình cực nhỏ (điện thoại ngang) */
+@media (max-width: 767.98px) { /* Dưới 768px, ví dụ iPhone SE ngang */
+    .timetable {
+        min-width: 600px; /* Vẫn cần min-width nhưng có thể nhỏ hơn */
+    }
+}
+
+@media (max-width: 575.98px) { /* Dưới 576px (điện thoại dọc) */
+    .container {
+        padding: 10px;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    .header-section {
+        gap: 10px;
+    }
+    .header-left-group, .header-right-group {
+        gap: 8px;
+    }
+    .custom-select, .btn-print, .nav-button {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    .week-info {
+        font-size: 0.9rem;
+    }
+    /* Điều chỉnh lại nút điều hướng để chúng có thể chia dòng tốt hơn */
+    .timetable-navigation {
+        flex-direction: row; /* Trở lại xếp hàng ngang */
+        flex-wrap: wrap; /* Cho phép các nút xuống dòng */
+        justify-content: space-between; /* Đẩy ra hai bên */
+        padding: 5px 0;
+    }
+    .nav-button {
+        width: 48%; /* Cho phép hai nút nằm trên cùng một hàng */
+        margin-bottom: 5px; /* Khoảng cách khi xuống dòng */
+    }
+    .week-info {
+        order: 0; /* Đưa về vị trí bình thường */
+        width: 100%; /* Chiếm full width */
+        margin-top: 5px; /* Khoảng cách với nút */
+        margin-bottom: 10px; /* Khoảng cách với nút */
+    }
+    .timetable {
+        font-size: 0.75em; /* Giảm kích thước font tổng thể hơn nữa */
+        min-width: 500px; /* Kích thước tối thiểu cho bảng trên màn hình nhỏ nhất */
+    }
+    .timetable th, .timetable td {
+        padding: 2px; /* Giảm padding tối đa */
+    }
+    .timetable th.session-column-header,
+    .timetable td.session-label-body {
+        width: 50px; /* Giảm nhỏ cột 'Buổi' */
+        min-width: 50px;
+        max-width: 50px;
+    }
+    .timetable th.time-column-header,
+    .timetable td.time-slot-label {
+        width: 70px; /* Giảm nhỏ cột 'Tiết' */
+        min-width: 70px;
+        max-width: 70px;
+        font-size: 0.7em; /* Font nhỏ hơn cho tiết */
+    }
+    .schedule-entry {
+        font-size: 0.7em; /* Font nhỏ hơn cho nội dung ô */
+        padding: 1px;
+    }
+    .schedule-entry strong {
+        font-size: 1.1em;
+    }
+    .schedule-entry span {
+        font-size: 0.75em;
+    }
+}
+   </style>
 {% endblock %}
 
 {% block content %}

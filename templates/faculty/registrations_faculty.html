@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends 'faculty/base_faculty.html' %}
 
 {% block title %}Quản lý lượt đăng ký{% endblock %}
@@ -10,36 +11,39 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Bóng tinh tế hơn */
+            padding: 15px; /* Thêm padding cho nội dung chính */
         }
 
         h1 {
             color: #212540;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Giảm margin-bottom cho mobile */
             font-weight: 400;
+            font-size: 1.75rem; /* Điều chỉnh kích thước tiêu đề cho mobile */
+            text-align: center; /* Căn giữa tiêu đề trên mobile */
         }
 
-        /* Table Styling */
+        /* Table Styling (Main Table) */
         .table-responsive {
-            margin-top: 25px;
+            margin-top: 15px; /* Giảm margin-top */
             border: 1px solid #dee2e6; /* Border nhẹ xung quanh bảng */
             border-radius: 8px;
-            overflow-x: auto;
+            overflow-x: auto; /* Rất quan trọng: cho phép cuộn ngang bảng */
+            -webkit-overflow-scrolling: touch; /* Cho cuộn mượt mà trên iOS */
         }
 
         .table {
-            font-size: 15px;
-            min-width: 900px; /* Đảm bảo bảng không quá co lại */
+            font-size: 14px; /* Giảm kích thước font cho bảng trên mobile */
+            min-width: 1000px; /* **QUAN TRỌNG:** Tăng min-width để đảm bảo cuộn ngang hiển thị đủ dữ liệu */
         }
 
         .table thead th {
             background-color: #007bff;
             color: white;
-            font-weight: 200;
-            padding: 15px 18px;
+            font-weight: bold; /* Giữ đậm */
+            padding: 12px 10px; /* Giảm padding cho tiêu đề cột */
             border-bottom: none;
             text-align: left;
-            white-space: nowrap;
-            font-weight: bold;
+            white-space: nowrap; /* Đảm bảo tiêu đề không bị xuống dòng */
         }
 
         .table tbody tr {
@@ -56,10 +60,9 @@
             background-color: #e9ecef; /* Nền nhẹ cho hàng cha */
         }
         .master-row td {
-            white-space: nowrap; /* Mặc định giữ nowrap */
-            max-width: 250px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: nowrap; /* Mặc định giữ nowrap cho hầu hết các cột */
+            /* LOẠI BỎ max-width, overflow: hidden, text-overflow: ellipsis để hiển thị đủ dữ liệu */
+            padding: 8px 10px; /* Giảm padding cho ô dữ liệu */
         }
         /* Cột số lượt đăng ký */
         .master-row td:last-child {
@@ -67,13 +70,13 @@
             font-style: italic;
             color: #393c3f;
             font-size: 10px;
+            white-space: normal; /* Cho phép cột này xuống dòng nếu cần vì nó thường chỉ là một số */
         }
 
         /* Rounded corners for table */
         .table thead th:first-child { border-top-left-radius: 8px; }
         .table thead th:last-child { border-top-right-radius: 8px; }
-        .table tbody tr:last-child td:first-child { border-bottom-left-radius: 8px; }
-        .table tbody tr:last-child td:last-child { border-bottom-right-radius: 8px; }
+        /* Lưu ý: Góc dưới cùng sẽ không được bo nếu có scroll ngang và không phải toàn bộ bảng hiển thị */
 
         /* Modal Styling */
         .modal-content {
@@ -86,23 +89,23 @@
             color: white;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
-            padding: 18px 25px;
+            padding: 15px 20px; /* Giảm padding */
             border-bottom: none;
         }
 
         .modal-title {
             font-weight: 600;
-            font-size: 1.25rem;
+            font-size: 1.15rem; /* Điều chỉnh kích thước tiêu đề modal */
         }
 
         .modal-body {
-            padding: 25px;
+            padding: 20px; /* Giảm padding */
             color: #343a40; /* Chữ đen trong modal body */
         }
 
         .modal-footer {
             border-top: none;
-            padding: 15px 25px;
+            padding: 12px 20px; /* Giảm padding */
             background-color: #f1f3f5;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
@@ -114,17 +117,109 @@
         }
 
         /* Styling cho bảng trong modal */
+        #registrationDetailsModal .modal-body .table-responsive { 
+            overflow-x: auto; /* Quan trọng: cho phép cuộn ngang */
+            -webkit-overflow-scrolling: touch; /* Cho cuộn mượt mà trên iOS */
+            margin-bottom: 0; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 6px; 
+        }
+
         #registrationDetailsModal .modal-body .table {
-            font-size: 14px; /* Nhỏ hơn một chút trong modal */
-            margin-top: 15px; /* Khoảng cách với thông tin người đăng ký */
+            font-size: 13px; /* Nhỏ hơn một chút trong modal cho mobile */
+            margin-top: 10px; /* Khoảng cách với thông tin người đăng ký */
+            min-width: 800px; /* **QUAN TRỌNG:** Tăng min-width để đảm bảo cuộn ngang hiển thị đủ dữ liệu */
         }
         #registrationDetailsModal .modal-body .table thead th {
             background-color: #6c757d; /* Màu tối hơn cho tiêu đề bảng trong modal */
             color: white;
+            padding: 10px 8px; /* Giảm padding trong modal table header */
+            white-space: nowrap; /* Đảm bảo tiêu đề không bị xuống dòng */
         }
         #registrationDetailsModal .modal-body .table tbody td {
-            white-space: normal; /* Cho phép xuống dòng trong modal */
+            white-space: nowrap; /* **QUAN TRỌNG:** Giữ nội dung không xuống dòng mặc định để cuộn ngang */
+            /* LOẠI BỎ max-width, overflow: hidden, text-overflow: ellipsis để hiển thị đủ dữ liệu */
+            padding: 8px; /* Giảm padding trong modal table cell */
         }
+        
+        /* Ghi đè cho các cột mà bạn muốn cho phép xuống dòng thay vì kéo ngang/ellipsis */
+        #registrationDetailsModal .modal-body .table tbody td:nth-child(2) { /* Cột Ngành quan tâm */
+             white-space: normal; 
+             word-break: break-word; 
+             max-width: 180px; /* Tăng max-width để hiển thị nhiều hơn trước khi xuống dòng */
+        }
+        #registrationDetailsModal .modal-body .table tbody td:nth-child(5) { /* Cột Ghi chú */
+             white-space: normal; 
+             word-break: break-word; 
+             max-width: 200px; 
+        }
+
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 767.98px) { /* Cho màn hình nhỏ hơn 768px (điện thoại) */
+            h1 {
+                font-size: 1.5rem; /* Lại giảm kích thước tiêu đề cho màn hình rất nhỏ */
+                margin-bottom: 15px;
+            }
+
+            #content {
+                padding: 10px; /* Giảm padding tổng thể cho màn hình nhỏ */
+                margin-top: 10px; /* Giảm margin-top nếu cần */
+            }
+
+            .table {
+                font-size: 13px; /* Kích thước font nhỏ hơn nữa cho bảng */
+            }
+
+            .table thead th,
+            .table tbody td {
+                padding: 8px 6px; /* Giảm padding cho các ô bảng */
+            }
+
+            .master-row td {
+                /* LOẠI BỎ max-width để cho phép nội dung hiển thị đầy đủ, cuộn ngang */
+                /* max-width: 100px; */ 
+            }
+
+            /* Điều chỉnh kích thước modal trên mobile */
+            .modal-dialog {
+                margin: 0.5rem; /* Giảm khoảng cách modal với mép màn hình */
+                max-width: calc(100% - 1rem); /* Đảm bảo modal không tràn ra ngoài */
+            }
+            .modal-dialog.modal-xl { /* Vẫn giữ modal-xl nhưng điều chỉnh cho mobile */
+                max-width: calc(100% - 1rem);
+            }
+            .modal-content {
+                border-radius: 0.3rem; /* Đồng bộ với các element khác của Bootstrap */
+            }
+
+            /* Điều chỉnh cho bảng trong modal trên điện thoại */
+            #registrationDetailsModal .modal-body .table {
+                min-width: 700px; /* Có thể điều chỉnh min-width nhỏ hơn nếu cần cho màn hình rất nhỏ */
+                font-size: 11px; /* Kích thước font nhỏ hơn nữa cho bảng trong modal */
+            }
+            #registrationDetailsModal .modal-body .table thead th,
+            #registrationDetailsModal .modal-body .table tbody td {
+                padding: 5px; /* Giảm padding hơn nữa */
+            }
+            #registrationDetailsModal .modal-body .table tbody td:nth-child(2), /* Ngành quan tâm */
+            #registrationDetailsModal .modal-body .table tbody td:nth-child(5) { /* Ghi chú */
+                 max-width: 150px; /* Điều chỉnh max-width cho các cột xuống dòng trên mobile */
+                 font-size: 10.5px; /* Thậm chí nhỏ hơn cho những cột nhiều chữ */
+            }
+        }
+
+        /* Ẩn các cột ít quan trọng hơn trên màn hình nhỏ nếu cần (ví dụ minh họa) */
+        /* Tôi đã comment phần này để đảm bảo hiển thị đủ dữ liệu theo yêu cầu của bạn.
+           Nếu bạn muốn ẩn cột trên màn hình nhỏ, hãy bỏ comment và điều chỉnh lại.
+        @media (max-width: 576px) {
+            .table thead th:nth-child(5), // Cột Địa chỉ 
+            .table tbody td:nth-child(5),
+            .table thead th:nth-child(6), // Cột Tốt nghiệp 
+            .table tbody td:nth-child(6) {
+                display: none;
+            }
+        }
+        */
     </style>
 {% endblock %}
 

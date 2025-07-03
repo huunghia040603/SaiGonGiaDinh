@@ -12,16 +12,30 @@
             background-color: #f8f9fa;
         }
         .container {
-            margin-top: 50px;
+            margin-top: 20px; /* Giảm margin-top để có thêm không gian trên thiết bị di động */
+            padding-left: 15px; /* Thêm padding ngang */
+            padding-right: 15px; /* Thêm padding ngang */
         }
         .chart-container {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Thêm scroll ngang cho biểu đồ nếu quá rộng */
         }
         .button-group {
             margin-bottom: 20px;
+            display: flex; /* Sử dụng flexbox cho nhóm nút */
+            flex-wrap: wrap; /* Cho phép các nút xuống dòng */
+            justify-content: center; /* Căn giữa các nút */
+            gap: 10px; /* Khoảng cách giữa các nút */
+        }
+        /* Điều chỉnh kích thước nút trên màn hình nhỏ hơn */
+        @media (max-width: 576px) {
+            .button-group .btn {
+                flex: 1 1 auto; /* Các nút sẽ co giãn để lấp đầy không gian */
+                min-width: 120px; /* Đảm bảo chiều rộng tối thiểu cho nút */
+            }
         }
     </style>
 </head>
@@ -30,10 +44,9 @@
         <h2 class="mb-4 text-center">Thống kê lượt truy cập hệ thống</h2>
 
         <div class="button-group text-center">
-            <button type="button" class="btn btn-primary me-2" onclick="loadTrafficData('day')">Theo Ngày</button>
-            <button type="button" class="btn btn-secondary me-2" onclick="loadTrafficData('month')">Theo Tháng</button>
-            <button type="button" class="btn btn-info me-2" onclick="loadTrafficData('year')">Theo Năm</button>
-            <!-- Nút Xuất Excel mới -->
+            <button type="button" class="btn btn-primary" onclick="loadTrafficData('day')">Theo Ngày</button>
+            <button type="button" class="btn btn-secondary" onclick="loadTrafficData('month')">Theo Tháng</button>
+            <button type="button" class="btn btn-info" onclick="loadTrafficData('year')">Theo Năm</button>
             <button type="button" class="btn btn-success" onclick="exportToExcel()">Xuất Excel</button>
         </div>
 
@@ -47,7 +60,3 @@
     <script src="{{ url_for('static', filename='js/admin/traffic.js') }}"></script>
 </body>
 </html>
-
-
-
-

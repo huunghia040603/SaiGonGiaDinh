@@ -72,22 +72,111 @@ html, body {
     background-color: #f8f9fa; /* Light background for content */
 }
 
-/* Hamburger menu button for mobile */
-.hamburger-menu-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1001; /* Above everything else */
-    background: #007bff; /* Blue color */
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-    display: none; /* Hidden by default on desktop */
+
+.sidebar-search-bar {
+    display: flex; /* Dùng flexbox để sắp xếp input và icon */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 0 20px; /* Padding hai bên */
+    margin-bottom: 20px; /* Khoảng cách với phần thông báo */
+    gap: 10px;
+    /* Loại bỏ width: 50px; ở đây để flex-grow của input hoạt động */
 }
 
+.sidebar-search-bar input {
+    flex-grow: 1; /* Cho phép input chiếm hết không gian còn lại */
+    padding: 10px 15px; /* Padding input: trên dưới 10px, trái phải 15px */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px; /* Bo tròn vừa phải */
+    font-size: 0.95rem;
+    color: #4a5568;
+    background-color: #ffffff; /* Nền trắng cho input */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100px;
+}
+
+.sidebar-search-bar input::placeholder {
+    color: #a0aec0; /* Màu placeholder */
+}
+
+.sidebar-search-bar input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+.sidebar-search-bar .search-icon { /* Đặt icon bên cạnh input */
+    color: #a0aec0;
+    font-size: 1rem;
+    cursor: pointer;
+    /* Không cần position: absolute nữa vì dùng flexbox */
+}
+
+/* Responsive cho Sidebar (cập nhật phần search bar) */
+@media (max-width: 992px) {
+    /* ... (giữ nguyên các style responsive khác) ... */
+
+    /* Điều chỉnh search bar khi sidebar thu gọn */
+    .sidebar-search-bar {
+        padding: 0 5px; /* Giảm padding */
+        margin-bottom: 10px;
+        justify-content: center; /* Căn giữa khi chỉ còn icon */
+    }
+    .sidebar-search-bar input {
+        display: none; /* Ẩn input khi sidebar thu gọn */
+    }
+    .sidebar-search-bar .search-icon {
+        margin: auto; /* Căn giữa icon khi input ẩn */
+        font-size: 1.1em; /* Tăng kích thước icon lên một chút */
+    }
+}
+
+.sidebar-user-actions {
+    display: flex;
+    flex-direction: column; /* Xếp các hành động theo cột */
+    padding: 0 10px; /* Padding phù hợp với sidebar menu items */
+    margin-bottom: 20px; /* Khoảng cách với phần user-info */
+}
+
+.sidebar-user-actions .icon-wrapper { /* Để bọc icon và text Thông báo */
+    position: relative;
+    cursor: pointer;
+    padding: 12px 10px; /* Padding cho từng mục hành động */
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa icon và text */
+    color: #4a5568; /* Màu chữ mặc định */
+    text-decoration: none; /* Đảm bảo link không gạch chân */
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.sidebar-user-actions .icon-wrapper:hover {
+    background-color: #e2e8f0;
+    color: #2d3748;
+    transform: translateX(5px);
+}
+
+.sidebar-user-actions .icon-wrapper i {
+    font-size: 1.1em;
+    color: #a0aec0; /* Màu icon mặc định */
+}
+
+.sidebar-user-actions .icon-wrapper .badge {
+    position: absolute;
+    top: 8px; /* Điều chỉnh vị trí badge */
+    right: 15px; /* Điều chỉnh vị trí badge */
+    background-color: #e53e3e;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 0.6em;
+    min-width: 12px;
+    text-align: center;
+    line-height: 1;
+    border: 1px solid #ffffff;
+}
 .close-sidebar-btn {
     position: absolute;
     top: 10px;
@@ -167,3 +256,5 @@ html, body {
         font-size: 1em;
     }
 }
+
+

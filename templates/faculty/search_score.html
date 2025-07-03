@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm kiếm Môn học theo Khối</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset / Base Styles (tương tự như một phần của normalize.css hoặc base của Tailwind) */
         *, *::before, *::after {
@@ -20,7 +21,7 @@
             justify-content: center;
             align-items: flex-start; /* Align to top for better content flow */
             min-height: 100vh;
-            padding: 2rem;
+            padding: 2rem; /* Padding lớn cho desktop */
             line-height: 1.5; /* Default line height for better readability */
         }
         .container {
@@ -117,6 +118,9 @@
         #subjectList li span:last-child {
             font-size: 0.875rem; /* text-sm */
             color: #6b7280; /* text-gray-500 */
+            text-align: right; /* Căn phải cho số lượng môn học */
+            flex-shrink: 0; /* Ngăn không cho co lại */
+            margin-left: 1rem; /* Khoảng cách với tên môn học */
         }
         .message-box {
             padding: 1rem;
@@ -169,6 +173,93 @@
             padding-top: 1rem;
             padding-bottom: 1rem;
         }
+
+        /* --- Responsive Adjustments for Mobile --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem; /* Giảm padding tổng thể trên mobile */
+            }
+            .container {
+                padding: 1.5rem; /* Giảm padding bên trong container */
+                margin-top: 1rem; /* Giảm margin-top trên mobile */
+                border-radius: 0.5rem; /* Bo góc nhỏ hơn cho mobile */
+            }
+            h1 {
+                font-size: 1.75rem; /* text-2xl cho mobile */
+                margin-bottom: 1.5rem; /* Giảm khoảng cách dưới tiêu đề */
+            }
+            label {
+                font-size: 0.8125rem; /* text-xs */
+                margin-bottom: 0.3rem; /* Giảm khoảng cách cho label */
+            }
+            select, button {
+                padding: 0.625rem; /* p-2.5 */
+                font-size: 0.9375rem; /* text-sm */
+            }
+            .mb-6 {
+                margin-bottom: 1rem; /* Giảm mb-6 */
+            }
+            .space-y-4 > *:not(:last-child) {
+                margin-bottom: 0.75rem; /* Giảm khoảng cách giữa các mục form */
+            }
+            #subjectList {
+                margin-top: 1rem; /* Giảm margin-top */
+                padding-top: 1rem; /* Giảm padding-top */
+            }
+            #subjectList h2 {
+                font-size: 1.25rem; /* text-xl cho mobile */
+                margin-bottom: 0.75rem; /* Giảm mb-4 */
+            }
+            #subjectList li {
+                padding: 0.625rem 0.75rem; /* py-2.5 px-3 */
+                font-size: 0.9375rem; /* text-sm cho list item */
+                margin-bottom: 0.4rem; /* Giảm mb-2 */
+            }
+            #subjectList li span:first-child {
+                font-size: 0.9375rem; /* Đảm bảo kích thước chữ phù hợp */
+            }
+            #subjectList li span:last-child {
+                font-size: 0.75rem; /* text-xs cho số lượng môn học */
+                margin-left: 0.5rem; /* Giảm khoảng cách */
+            }
+            .message-box {
+                padding: 0.75rem; /* Giảm padding cho hộp thông báo */
+                font-size: 0.8125rem; /* Giảm kích thước chữ */
+                margin-bottom: 1rem; /* Giảm margin-bottom */
+            }
+        }
+
+        /* Further adjustments for very small screens (e.g., iPhone SE) */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.75rem;
+            }
+            .container {
+                padding: 1rem;
+                margin-top: 0.75rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            select, button {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+            .space-y-4 > *:not(:last-child) {
+                margin-bottom: 0.6rem;
+            }
+            #subjectList h2 {
+                font-size: 1.125rem;
+            }
+            #subjectList li {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.875rem;
+            }
+            #subjectList li span:last-child {
+                font-size: 0.65rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -194,14 +285,154 @@
                 </select>
             </div>
             <div class="flex justify-end">
-               <button id="searchSubjectsButton" class="action-button primary">Tìm kiếm Môn học</button>
+                <button id="searchSubjectsButton" class="action-button primary">
+                    Tìm kiếm Môn học
+                    <span id="loadingSpinner" class="loading-spinner hidden"></span>
+                </button>
             </div>
         </div>
 
-       
-
+        <div id="subjectList">
+            <h2>Kết quả tìm kiếm</h2>
+            <ul id="subjectsResultList">
+                <li class="text-center text-gray-500 py-4">Chưa có môn học nào được tìm kiếm.</li>
+            </ul>
+        </div>
+        
     </div>
 
-    <script src="{{ url_for('static', filename='js/faculty/search_score.js') }}"></script>
+    <script>
+        // JavaScript logic here for fetching and displaying data
+        // Make sure to include the actual logic from your search_score.js file
+        // For demonstration, here's a placeholder:
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const gradeLevelSelect = document.getElementById('gradeLevelSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const searchSubjectsButton = document.getElementById('searchSubjectsButton');
+            const subjectsResultList = document.getElementById('subjectsResultList');
+            const messageBox = document.getElementById('messageBox');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            // Placeholder for your actual API endpoint
+            const API_BASE_URL = 'YOUR_API_BASE_URL_HERE'; 
+
+            function showMessage(type, message) {
+                messageBox.classList.remove('hidden', 'error', 'success');
+                messageBox.classList.add(type);
+                messageBox.textContent = message;
+            }
+
+            function hideMessage() {
+                messageBox.classList.add('hidden');
+                messageBox.textContent = '';
+            }
+
+            function toggleLoading(isLoading) {
+                if (isLoading) {
+                    loadingSpinner.classList.remove('hidden');
+                    searchSubjectsButton.disabled = true;
+                    searchSubjectsButton.textContent = 'Đang tìm kiếm...'; // Cập nhật text để hiển thị spinner
+                    searchSubjectsButton.appendChild(loadingSpinner); // Đảm bảo spinner nằm trong button
+                } else {
+                    loadingSpinner.classList.add('hidden');
+                    searchSubjectsButton.disabled = false;
+                    searchSubjectsButton.textContent = 'Tìm kiếm Môn học';
+                }
+            }
+
+            // Function to fetch subjects based on grade level
+            async function fetchSubjectsByGrade(gradeLevel) {
+                hideMessage();
+                subjectSelect.innerHTML = '<option value="">Đang tải...</option>';
+                subjectSelect.disabled = true;
+
+                if (!gradeLevel) {
+                    subjectSelect.innerHTML = '<option value="">Chọn Khối trước</option>';
+                    return;
+                }
+
+                try {
+                    // Replace with your actual API endpoint for subjects
+                    const response = await fetch(`${API_BASE_URL}/subjects?grade=${gradeLevel}`);
+                    if (!response.ok) {
+                        throw new Error('Không thể tải môn học.');
+                    }
+                    const data = await response.json();
+                    
+                    subjectSelect.innerHTML = '<option value="">Chọn một Môn học</option>';
+                    if (data && data.length > 0) {
+                        data.forEach(subject => {
+                            const option = document.createElement('option');
+                            option.value = subject.id; // Or subject.code, depending on your API
+                            option.textContent = subject.name;
+                            subjectSelect.appendChild(option);
+                        });
+                        subjectSelect.disabled = false;
+                    } else {
+                        subjectSelect.innerHTML = '<option value="">Không có môn học nào cho khối này</option>';
+                    }
+                } catch (error) {
+                    console.error('Error fetching subjects:', error);
+                    showMessage('error', 'Lỗi khi tải danh sách môn học: ' + error.message);
+                    subjectSelect.innerHTML = '<option value="">Lỗi tải môn học</option>';
+                }
+            }
+
+            // Function to search for scores based on selected subject
+            async function searchSubjects() {
+                hideMessage();
+                const selectedSubjectId = subjectSelect.value;
+
+                if (!selectedSubjectId) {
+                    showMessage('error', 'Vui lòng chọn một môn học.');
+                    subjectsResultList.innerHTML = '<li class="text-center text-gray-500 py-4">Vui lòng chọn một môn học.</li>';
+                    return;
+                }
+
+                toggleLoading(true);
+                subjectsResultList.innerHTML = '<li class="text-center text-gray-500 py-4"><div class="loading-spinner"></div> Đang tìm kiếm...</li>';
+
+                try {
+                    // Replace with your actual API endpoint for search results
+                    const response = await fetch(`${API_BASE_URL}/search_scores?subject_id=${selectedSubjectId}`);
+                    if (!response.ok) {
+                        throw new Error('Không thể tìm kiếm môn học.');
+                    }
+                    const data = await response.json();
+
+                    subjectsResultList.innerHTML = ''; // Clear previous results
+                    if (data && data.length > 0) {
+                        data.forEach(result => {
+                            const listItem = document.createElement('li');
+                            // Customize how you want to display the search result
+                            listItem.innerHTML = `<span>${result.name}</span><span>${result.score_count || 0} lượt</span>`; 
+                            subjectsResultList.appendChild(listItem);
+                        });
+                    } else {
+                        subjectsResultList.innerHTML = '<li class="text-center text-gray-500 py-4">Không tìm thấy môn học nào phù hợp.</li>';
+                    }
+                    showMessage('success', `Tìm kiếm hoàn tất. Tìm thấy ${data.length} môn học.`);
+
+                } catch (error) {
+                    console.error('Error searching subjects:', error);
+                    showMessage('error', 'Lỗi tìm kiếm môn học: ' + error.message);
+                    subjectsResultList.innerHTML = '<li class="text-center text-gray-500 py-4">Đã xảy ra lỗi khi tìm kiếm môn học.</li>';
+                } finally {
+                    toggleLoading(false);
+                }
+            }
+
+            // Event Listeners
+            gradeLevelSelect.addEventListener('change', function() {
+                fetchSubjectsByGrade(this.value);
+            });
+
+            searchSubjectsButton.addEventListener('click', searchSubjects);
+
+            // Initial load (if you want to pre-load subjects for a default grade)
+            // fetchSubjectsByGrade(gradeLevelSelect.value); 
+        });
+    </script>
 </body>
 </html>

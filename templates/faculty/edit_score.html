@@ -357,6 +357,106 @@
         .form-group {
             margin-bottom: 15px; /* Đảm bảo có khoảng cách giữa các nhóm form */
         }
+         @media (max-width: 767.98px) { /* Cho màn hình nhỏ hơn 768px (điện thoại) */
+        .modal-dialog {
+            margin: 0.5rem; /* Giảm khoảng cách modal với mép màn hình */
+            max-width: calc(100% - 1rem); /* Đảm bảo modal không tràn ra ngoài */
+        }
+
+        .modal-dialog.modal-xl,
+        .modal-dialog.modal-lg,
+        .modal-dialog.modal-md,
+        .modal-dialog.modal-sm {
+            /* Đảm bảo tất cả các kích thước modal đều co lại trên mobile */
+            max-width: calc(100% - 1rem);
+        }
+
+        .modal-content {
+            border-radius: 0.5rem; /* Bo góc nhỏ hơn cho modal trên mobile */
+        }
+
+        .modal-header {
+            padding: 1rem 1.25rem; /* Giảm padding header */
+        }
+
+        .modal-title {
+            font-size: 1.1rem; /* Giảm kích thước tiêu đề modal */
+        }
+
+        .modal-body {
+            padding: 1rem 1.25rem; /* Giảm padding body */
+            font-size: 0.9rem; /* Giảm kích thước chữ trong body */
+        }
+
+        /* Điều chỉnh các phần tử form bên trong modal */
+        .modal-body .form-label {
+            font-size: 0.8rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-body .form-control {
+            padding: 0.6rem 0.75rem; /* Giảm padding input/textarea */
+            font-size: 0.85rem;
+        }
+
+        .modal-footer {
+            padding: 0.75rem 1.25rem; /* Giảm padding footer */
+        }
+
+        .modal-footer .btn {
+            padding: 0.5rem 0.8rem; /* Giảm padding button trong footer */
+            font-size: 0.85rem;
+        }
+
+        /* Nếu có bảng bên trong modal, hãy làm cho nó responsive */
+        .modal-body .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .modal-body .table {
+            min-width: 550px; /* Điều chỉnh dựa trên nội dung thực tế của bảng */
+            font-size: 0.8rem;
+        }
+
+        .modal-body .table thead th,
+        .modal-body .table tbody td {
+            padding: 0.4rem 0.5rem;
+            white-space: nowrap; /* Giữ nội dung trên một dòng để cuộn */
+        }
+        /* Các ô cụ thể trong bảng modal cần xuống dòng (nếu có) */
+        .modal-body .table tbody td.wrap-content { /* Thêm class này vào các <td> cụ thể */
+            white-space: normal;
+            word-break: break-word;
+        }
+    }
+
+    /* Điều chỉnh thêm cho các màn hình rất nhỏ (ví dụ: iPhone SE) */
+    @media (max-width: 480px) {
+        .modal-dialog {
+            margin: 0.25rem;
+            max-width: calc(100% - 0.5rem);
+        }
+        .modal-header {
+            padding: 0.75rem 1rem;
+        }
+        .modal-title {
+            font-size: 1rem;
+        }
+        .modal-body {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+        }
+        .modal-footer {
+            padding: 0.6rem 1rem;
+        }
+        .modal-body .table {
+            min-width: 450px; /* min-width nhỏ hơn nữa cho màn hình siêu nhỏ */
+            font-size: 0.75rem;
+        }
+    }
     </style>
 {% endblock %}
 {% block content %}

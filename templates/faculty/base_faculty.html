@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     {# Đảm bảo các file CSS quan trọng được tải trước #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_faculty/base_layout.css') }}"> {# File CSS mới cho bố cục base và header #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_faculty/base_layout.css') }}"> {# File CSS mới cho bố cục base #}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base_faculty/sidebar.css') }}"> {# Sidebar CSS #}
 
 
@@ -39,27 +39,49 @@
 <body>
 
     <div class="layout-wrapper"> {# Bọc toàn bộ layout #}
-       
-
+        
         <div class="sidebar" id="sidebar"> {# Thêm ID cho sidebar để dễ thao tác JS #}
             <div class="sidebar-header">
                 <img style="width: 35px; height: 35px;" src="/static//images/logoSGGD.png"/>&nbsp;<span>SGC</span>
-                
             </div>
-            {# Menu chính #}
+
+           <div class="sidebar-search-bar">
+                <input type="text" placeholder="Tìm kiếm...">
+                <i class="fas fa-search search-icon"></i> {# THÊM class search-icon #}
+            </div>
+
+            <div class="sidebar-user-actions">
+                <div class="icon-wrapper">
+                    <a href="/gv/notifications/" class="notification-icon" style="color: inherit; text-decoration: none;">
+                        <i class="fas fa-bell"></i>&nbsp;&nbsp;<span>Thông báo</span>
+                     
+                        <span id="notificationCountBadge" class="badge">2</span> {# Số lượng thông báo cứng để minh họa #}
+                    </a>
+                </div> 
+            </div>
+           <div class="sidebar-user-info">
+                <a href="/gv/profile_faculty/" class="sidebar-user-avatar" id="sidebarUserAvatarLink"> {# Đã đổi ID cho rõ ràng hơn #}
+                    <img src="" alt="User Avatar" id="sidebarUserAvatar"> {# Đã đổi ID cho rõ ràng hơn #}
+                </a>
+                <a id="sidebarUserNameLinkText" href="/gv/profile_faculty/" style="color: inherit; text-decoration: none;"> {# Đã đổi ID cho rõ ràng hơn #}
+                    <span id="sidebarUserName"></span> {# Đã đổi ID cho rõ ràng hơn, để trống để JS điền vào #}
+                </a>
+            </div>
             <h2>Dashboard</h2>
             <ul>
-                <li><a href="{{ url_for('faculty.faculty_home') }}"><i class="fa-solid fa-house"></i></i> <span>Trang chủ</span></a></li>
+                <li><a href="{{ url_for('faculty.faculty_home') }}"><i class="fa-solid fa-house"></i> <span>Trang chủ</span></a></li>
                 <li><a href="{{ url_for('faculty.registration_faculty') }}" ><i class="fa-solid fa-pen-to-square"></i><span>Xem lượt ĐKTV</span></a></li>
                 <li><a href="{{ url_for('faculty.edit_score') }}"><i class="fas fa-book"></i> <span>Nhập/Sửa điểm</span></a></li>
                 <li><a href="{{ url_for('faculty.tkb') }}"><i class="fas fa-users"></i> <span>Thời khóa biểu</span></a></li>
-                <li><a href="#"><i class="fas fa-concierge-bell"></i> <span>Dịch vụ</span></a></li>
+                <!-- <li><a href="#"><i class="fas fa-concierge-bell"></i> <span>Dịch vụ</span></a></li> -->
             </ul>
             {# Cần chỉnh các mục menu để phù hợp với mẫu #}
             <h2>Cài đặt</h2>
             <ul>
                 <li><a href="#"><i class="fas fa-cog"></i> <span>Cài đặt</span></a></li>
             </ul>
+
+
             {# Phần này có thể chuyển thành nút Đăng xuất ở cuối sidebar #}
             <div class="sidebar-footer">
                 <a href="#" id="sidebarLogoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a>
@@ -67,8 +89,7 @@
         </div>
 
         <div class="main-content-wrapper"> {# Đổi tên từ main-content-area để dễ phân biệt, đây là wrapper cho header và main content #}
-            {# Include the header section #}
-            {% include 'faculty/header_faculty.html' %}
+            {# LOẠI BỎ DÒNG NÀY: {% include 'faculty/header_faculty.html' %} #}
 
             <main class="content-and-footer-wrapper"> {# Đặt main và footer vào đây #}
                 <div class="content-area">
@@ -82,10 +103,10 @@
     </div>
 
     {# Đặt các script ở cuối body để cải thiện tốc độ tải trang #}
-  
+ 
     <script src="{{ url_for('static', filename='js/navbar_active.js') }}"></script>
     <script src="{{ url_for('static', filename='js/notifications_badge.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/faculty/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dangnhap.js') }}"></script>
     <script src="{{ url_for('static', filename='js/faculty/sidebar_active.js') }}"></script>
     <script src="{{ url_for('static', filename='js/logout.js') }}"></script> {# Đảm bảo đã thêm logout.js #}
     <script src="{{ url_for('static', filename='js/faculty/mobile_sidebar.js') }}"></script> {# THÊM DÒNG NÀY CHO JS XỬ LÝ MOBILE #}
