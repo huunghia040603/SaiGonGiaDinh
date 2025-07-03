@@ -576,6 +576,10 @@ def tuyendung():
 def dadangki():
     return render_template('/dichvu/dvdadangki.html')
 
+@app.route('/hoc-bong')
+def hocbong():
+    return render_template('/hocbong.html')
+
 
 @app.route('/hoc-tap')
 def study_home():

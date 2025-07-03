@@ -689,9 +689,19 @@ textarea:focus {
     }
 }
 
+@media (max-width: 1600px) {
+    .container {
+   
+        margin-left: 19%;
+    }
+ 
+}
+
 /* Điều chỉnh cho Desktop lớn (từ 1024px trở lên) */
 @media (min-width: 1024px) {
     .teacher-list {
         grid-template-columns: repeat(3, 1fr); /* 3 cột trên desktop */
     }
 }
+
+

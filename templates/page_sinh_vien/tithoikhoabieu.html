@@ -8,6 +8,7 @@
             margin: 0; /* Đặt margin về 0 để kiểm soát tốt hơn */
             padding: 10px; /* Thêm padding tổng thể cho body trên mobile */
             background-color: #f4f4f4;
+            margin-left: 220px;
         }
         h1 {
             color: #333;
@@ -279,10 +280,11 @@
         <label for="semesterSelect">Chọn học kỳ:</label>
         <select id="semesterSelect"></select>
 
-        <label for="weekSelect" style="margin-left: 50px;">Chọn tuần:</label>
+        <button id="prevWeekBtn"style="margin-left: 50px;">Tuần trước</button>
+        <label for="weekSelect"></label>
         <select id="weekSelect" style="width: 400px;"></select>
 
-        <button id="prevWeekBtn"style="margin-left: 50px;">Tuần trước</button>
+       
         <span id="weekInfo"></span>
         <button id="nextWeekBtn">Tuần sau</button>
     </div>

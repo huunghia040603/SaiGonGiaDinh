@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Sửa đổi: fixedTimeSlots sẽ được tạo động từ fetchedTimeSlots sau khi gọi API
-    let fixedTimeSlots = [];
+    // let fixedTimeSlots = [];
 
     // Sửa đổi: Hàm mới để lấy dữ liệu tiết học từ API
     async function fetchTimeSlots() {
@@ -94,39 +94,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const morningSlots = data.filter(slot => slot.start_time < '12:00:00'); // Giả định buổi sáng trước 12h
             const afternoonSlots = data.filter(slot => slot.start_time >= '12:00:00'); // Giả định buổi chiều từ 12h trở đi
 
-            fixedTimeSlots = [
-                { session: 'MORNING', label: 'Sáng', slots: morningSlots },
-                { session: 'AFTERNOON', label: 'Chiều', slots: afternoonSlots }
-            ];
+            // fixedTimeSlots = [
+            //     { session: 'MORNING', label: 'Sáng', slots: morningSlots },
+            //     { session: 'AFTERNOON', label: 'Chiều', slots: afternoonSlots }
+            // ];
             
             // Lưu trữ fetchedTimeSlots (mảng phẳng) nếu cần để tra cứu sau này
             fetchedTimeSlots = data; 
 
-            return fixedTimeSlots;
+        
 
         } catch (error) {
             console.error('Lỗi khi lấy dữ liệu tiết học:', error);
             alert('Không thể tải thông tin tiết học. Vui lòng thử lại sau.');
             // Cung cấp một mảng tiết học mặc định nếu API lỗi để tránh lỗi giao diện
-            fixedTimeSlots = [
-                { session: 'MORNING', label: 'Sáng', slots: [
-                    { id: 1, order: 1, start_time: '07:00:00', end_time: '07:45:00', name: 'Tiết 1' },
-                    { id: 2, order: 2, start_time: '07:50:00', end_time: '08:35:00', name: 'Tiết 2' },
-                    { id: 3, order: 3, start_time: '08:40:00', end_time: '09:25:00', name: 'Tiết 3' },
-                    { id: 4, order: 4, start_time: '09:30:00', end_time: '10:15:00', name: 'Tiết 4' },
-                    { id: 5, order: 5, start_time: '10:20:00', end_time: '11:05:00', name: 'Tiết 5' },
-                    { id: 6, order: 6, start_time: '11:10:00', end_time: '11:55:00', name: 'Tiết 6' }
-                ]},
-                { session: 'AFTERNOON', label: 'Chiều', slots: [
-                    { id: 7, order: 7, start_time: '13:00:00', end_time: '13:45:00', name: 'Tiết 1' },
-                    { id: 8, order: 8, start_time: '13:50:00', end_time: '14:35:00', name: 'Tiết 2' },
-                    { id: 9, order: 9, start_time: '14:40:00', end_time: '15:25:00', name: 'Tiết 3' },
-                    { id: 10, order: 10, start_time: '15:30:00', end_time: '16:15:00', name: 'Tiết 4' },
-                    { id: 11, order: 11, start_time: '16:20:00', end_time: '17:05:00', name: 'Tiết 5' },
-                    { id: 12, order: 12, start_time: '17:10:00', end_time: '17:55:00', name: 'Tiết 6' }
-                ]}
-            ];
-            return fixedTimeSlots;
+            
+       
         }
     }
 
@@ -332,79 +315,79 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // DUYỆT QUA FIXED_TIME_SLOTS để tạo bảng đầy đủ và hiển thị dữ liệu
-        fixedTimeSlots.forEach(sessionBlock => {
-            const sessionName = sessionBlock.session;
-            const sessionLabel = sessionBlock.label;
-            const slotsInThisSession = sessionBlock.slots;
+        // fixedTimeSlots.forEach(sessionBlock => {
+        //     const sessionName = sessionBlock.session;
+        //     const sessionLabel = sessionBlock.label;
+        //     const slotsInThisSession = sessionBlock.slots;
 
-            slotsInThisSession.forEach((timeSlot, index) => {
-                const row = document.createElement('tr');
+        //     slotsInThisSession.forEach((timeSlot, index) => {
+        //         const row = document.createElement('tr');
 
-                if (index === 0) {
-                    const sessionHeaderCell = document.createElement('td');
-                    sessionHeaderCell.classList.add('session-label-body');
-                    sessionHeaderCell.rowSpan = slotsInThisSession.length;
-                    sessionHeaderCell.textContent = sessionLabel;
-                    row.appendChild(sessionHeaderCell);
-                }
+        //         if (index === 0) {
+        //             const sessionHeaderCell = document.createElement('td');
+        //             sessionHeaderCell.classList.add('session-label-body');
+        //             sessionHeaderCell.rowSpan = slotsInThisSession.length;
+        //             sessionHeaderCell.textContent = sessionLabel;
+        //             row.appendChild(sessionHeaderCell);
+        //         }
 
-                const timeSlotLabelCell = document.createElement('td');
-                timeSlotLabelCell.classList.add('time-slot-label');
-                // Sửa đổi: Sử dụng timeSlot.name từ API và định dạng thời gian
-                timeSlotLabelCell.innerHTML = `${timeSlot.name}<br>(${timeSlot.start_time.substring(0, 5)} - ${timeSlot.end_time.substring(0, 5)})`;
-                if (timeSlot.name.includes('Ra chơi')) {
-                    timeSlotLabelCell.classList.add('ra-choi');
-                }
-                row.appendChild(timeSlotLabelCell);
+        //         const timeSlotLabelCell = document.createElement('td');
+        //         timeSlotLabelCell.classList.add('time-slot-label');
+        //         // Sửa đổi: Sử dụng timeSlot.name từ API và định dạng thời gian
+        //         timeSlotLabelCell.innerHTML = `${timeSlot.name}<br>(${timeSlot.start_time.substring(0, 5)} - ${timeSlot.end_time.substring(0, 5)})`;
+        //         if (timeSlot.name.includes('Ra chơi')) {
+        //             timeSlotLabelCell.classList.add('ra-choi');
+        //         }
+        //         row.appendChild(timeSlotLabelCell);
 
-                weekDays.forEach(day => {
-                    const cell = document.createElement('td');
-                    cell.classList.add('schedule-cell');
-                    cell.classList.add('empty-cell');
+        //         weekDays.forEach(day => {
+        //             const cell = document.createElement('td');
+        //             cell.classList.add('schedule-cell');
+        //             cell.classList.add('empty-cell');
 
-                    const entry = organizedSchedule[day.apiName] ? organizedSchedule[day.apiName][timeSlot.id] : null;
+        //             const entry = organizedSchedule[day.apiName] ? organizedSchedule[day.apiName][timeSlot.id] : null;
 
-                    // Chỉ hiển thị lịch nếu nó khớp với ngày trong tuần hiện tại và session
-                    // Dựa trên cách API trả về, chúng ta chỉ cần kiểm tra day.apiName và timeSlot.id
-                    if (entry && entry.session_type === sessionName) {
-                        cell.classList.remove('empty-cell');
-                        const entryDiv = document.createElement('div');
-                        entryDiv.classList.add('schedule-entry');
+        //             // Chỉ hiển thị lịch nếu nó khớp với ngày trong tuần hiện tại và session
+        //             // Dựa trên cách API trả về, chúng ta chỉ cần kiểm tra day.apiName và timeSlot.id
+        //             if (entry && entry.session_type === sessionName) {
+        //                 cell.classList.remove('empty-cell');
+        //                 const entryDiv = document.createElement('div');
+        //                 entryDiv.classList.add('schedule-entry');
 
-                        let subjectTitle = entry.subject_thpt_info ? entry.subject_thpt_info.title : 'Không xác định';
+        //                 let subjectTitle = entry.subject_thpt_info ? entry.subject_thpt_info.title : 'Không xác định';
 
-                        const shortenSubjectName = (name) => {
-                            if (name.includes('Giáo dục công dân')) return 'GDCD';
-                            if (name.includes('Giáo dục địa phương')) return 'GDDP';
-                            if (name.includes('Giáo dục thể chất')) return 'TD';
-                            if (name.includes('Nghệ thuật')) return 'NT';
-                            if (name.includes('Toán')) return 'Toán';
-                            if (name.includes('Giáo dục quốc phòng và an ninh')) return 'GDQP';
-                            if (name.includes('Lịch sử')) return 'Sử';
-                            if (name.includes('Hóa học')) return 'Hóa';
-                            if (name.includes('Ngoại ngữ 1')) return 'Anh';
-                            if (name.includes('Sinh học')) return 'Sinh';
-                            if (name.includes('Vật lý')) return 'Lý';
-                            if (name.includes('Hoạt động trải nghiệm, hướng nghiệp')) return 'HDTN';
-                            return name;
-                        };
-                        subjectTitle = shortenSubjectName(subjectTitle);
+        //                 const shortenSubjectName = (name) => {
+        //                     if (name.includes('Giáo dục công dân')) return 'GDCD';
+        //                     if (name.includes('Giáo dục địa phương')) return 'GDDP';
+        //                     if (name.includes('Giáo dục thể chất')) return 'TD';
+        //                     if (name.includes('Nghệ thuật')) return 'NT';
+        //                     if (name.includes('Toán')) return 'Toán';
+        //                     if (name.includes('Giáo dục quốc phòng và an ninh')) return 'GDQP';
+        //                     if (name.includes('Lịch sử')) return 'Sử';
+        //                     if (name.includes('Hóa học')) return 'Hóa';
+        //                     if (name.includes('Ngoại ngữ 1')) return 'Anh';
+        //                     if (name.includes('Sinh học')) return 'Sinh';
+        //                     if (name.includes('Vật lý')) return 'Lý';
+        //                     if (name.includes('Hoạt động trải nghiệm, hướng nghiệp')) return 'HDTN';
+        //                     return name;
+        //                 };
+        //                 subjectTitle = shortenSubjectName(subjectTitle);
 
-                        const classId = entry.class_thpt_info && entry.class_thpt_info.class_id ? entry.class_thpt_info.class_id.toUpperCase() : 'N/A';
-                        const locationName = entry.location_info ? entry.location_info.name : 'N/A';
-                        const addressName = entry.location_info ? entry.location_info.address : 'N/A'; // Lỗi chính tả, nên là location_info.address nếu có
+        //                 const classId = entry.class_thpt_info && entry.class_thpt_info.class_id ? entry.class_thpt_info.class_id.toUpperCase() : 'N/A';
+        //                 const locationName = entry.location_info ? entry.location_info.name : 'N/A';
+        //                 const addressName = entry.location_info ? entry.location_info.address : 'N/A'; // Lỗi chính tả, nên là location_info.address nếu có
 
-                        entryDiv.innerHTML = `
-                            <strong>${classId} - ${subjectTitle}</strong>
-                            <span>${locationName} - CS: ${addressName}</span>
-                        `;
-                        cell.appendChild(entryDiv);
-                    }
-                    row.appendChild(cell);
-                });
-                timetableBody.appendChild(row);
-            });
-        });
+        //                 entryDiv.innerHTML = `
+        //                     <strong>${classId} - ${subjectTitle}</strong>
+        //                     <span>${locationName} - CS: ${addressName}</span>
+        //                 `;
+        //                 cell.appendChild(entryDiv);
+        //             }
+        //             row.appendChild(cell);
+        //         });
+        //         timetableBody.appendChild(row);
+        //     });
+        // });
     }
 
     // --- EVENT LISTENERS CẬP NHẬT ---

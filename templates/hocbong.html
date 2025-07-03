@@ -1,0 +1,406 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <title>THÔNG TIN TƯ VẤN TUYỂN SINH NĂM HỌC 2025 - 2026</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0; /* Đặt margin body về 0 để container kiểm soát toàn bộ khoảng cách */
+            color: #333;
+            background-color: #f8f8f8;
+        }
+
+        .containerhb {
+            line-height: 1.6;
+            margin: 20px auto;
+            max-width: 900px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
+        }
+        
+        /* CSS cho phần header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .header p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        .header .ministry {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        .header .school-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0056b3;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        .header .republic-slogan {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 0;
+            line-height: 1.3;
+        }
+        .header .date {
+            font-size: 0.95em;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* Các CSS khác giữ nguyên */
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        .section-box {
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .box-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 8px;
+        }
+        .box-subtitle {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        table, th, td {
+            border: 1px solid #e0e0e0;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f8ff;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+        ul ul {
+            list-style-type: circle;
+            margin-left: 20px;
+        }
+        .note {
+            font-style: italic;
+            margin-top: 15px;
+            color: #666;
+            padding-left: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .footer .left-col {
+            width: 45%;
+            text-align: left;
+        }
+        .footer .right-col {
+            width: 45%;
+            text-align: center;
+        }
+        .footer .right-col p {
+            margin: 5px 0;
+        }
+        .footer .signature-name {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .contact-info {
+            margin-top: 30px;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+        }
+        .contact-info p {
+            margin: 5px 0;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVE DESIGN FOR MOBILE PHONES */
+        /* =========================================== */
+        @media screen and (max-width: 768px) {
+            .containerhb {
+                margin: 10px; /* Giảm margin trên điện thoại */
+                padding: 15px; /* Giảm padding để tận dụng không gian */
+            }
+
+            .title {
+                font-size: 22px; /* Giảm kích thước tiêu đề chính */
+            }
+
+            .subtitle {
+                font-size: 16px; /* Giảm kích thước tiêu đề phụ */
+            }
+
+            .header .school-name {
+                font-size: 1.1em; /* Giảm kích thước chữ tên trường */
+            }
+
+            .header .republic-slogan {
+                font-size: 1em; /* Giảm kích thước chữ khẩu hiệu */
+            }
+
+            .box-title {
+                font-size: 20px; /* Giảm kích thước tiêu đề box */
+            }
+
+            .box-subtitle {
+                font-size: 16px; /* Giảm kích thước tiêu đề phụ trong box */
+            }
+
+            /* Responsive tables */
+            table {
+                display: block;
+                overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá rộng */
+                white-space: nowrap; /* Ngăn không cho nội dung trong ô bị xuống dòng */
+            }
+            thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { border: 1px solid #ccc; }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                white-space: normal;
+                text-align: right;
+            }
+            td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+            /* Thêm nhãn cho từng cột của bảng */
+            td:nth-of-type(1):before { content: "STT"; }
+            td:nth-of-type(2):before { content: "Ngành, nghề đào tạo"; }
+            td:nth-of-type(3):before { content: "Học phí HK1"; }
+            td:nth-of-type(4):before { content: "Học phí HK2"; }
+            /* Thêm nhãn cho bảng "Các khoản thu khác" */
+            .section-box:nth-of-type(2) td:nth-of-type(1):before { content: "Nội dung"; }
+            .section-box:nth-of-type(2) td:nth-of-type(2):before { content: "Mức thu"; }
+            .section-box:nth-of-type(2) td:nth-of-type(3):before { content: "Ghi chú"; }
+            /* Thêm nhãn cho bảng "Chính sách miễn, giảm" */
+            .section-box:nth-of-type(3) td:nth-of-type(1):before { content: "Chính sách"; }
+            .section-box:nth-of-type(3) td:nth-of-type(2):before { content: "Mức giảm"; }
+            .section-box:nth-of-type(3) td:nth-of-type(3):before { content: "Áp dụng"; }
+            .section-box:nth-of-type(3) td:nth-of-type(4):before { content: "Điều kiện"; }
+
+
+            /* Footer stacking for mobile */
+            .footer {
+                flex-direction: column; /* Xếp các cột theo chiều dọc */
+                align-items: center; /* Căn giữa các mục */
+            }
+            .footer .left-col,
+            .footer .right-col {
+                width: 100%; /* Chiếm toàn bộ chiều rộng */
+                text-align: center; /* Căn giữa nội dung */
+                margin-bottom: 20px; /* Khoảng cách giữa các cột */
+            }
+        }
+
+        /* Thêm một breakpoint cho màn hình rất nhỏ (dưới 480px) nếu cần */
+        @media screen and (max-width: 480px) {
+            .containerhb {
+                padding: 10px;
+            }
+            .title {
+                font-size: 20px;
+            }
+            .subtitle {
+                font-size: 14px;
+            }
+            /* Có thể điều chỉnh thêm font-size cho p, li nếu cần */
+        }
+    </style>
+
+<div class="containerhb">
+
+    
+    
+    
+    <h2 class="subtitle">Chính sách học bổng và học phí năm học 2025 - 2026</h2>
+ 
+
+    <div class="section-box">
+        <h3 class="box-title">Mức thu học phí</h3>
+        <h4 class="box-subtitle">Học phí ngành, nghề</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Ngành, nghề đào tạo</th>
+                    <th>Học phí Học kỳ 1</th>
+                    <th>Học phí Học kỳ 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Kế toán doanh nghiệp</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>2</td><td>Quản trị kinh doanh</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>3</td><td>Luật - Dịch vụ pháp lý</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>4</td><td>Tài chính ngân hàng</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>5</td><td>Công nghệ thông tin (Quản trị cơ sở dữ liệu, Thiết kế đồ họa, Lập trình máy tính)</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>6</td><td>Du lịch (Hướng dẫn du lịch và Quản trị Nhà hàng - Khách sạn)</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>7</td><td>Logistics</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>8</td><td>Thương mại điện tử</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>9</td><td>Điều dưỡng</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>10</td><td>Dược</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>11</td><td>Kỹ thuật phục hồi chức năng (Vật lý trị liệu & Phục hồi chức năng)</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>12</td><td>Công nghệ thực phẩm</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>13</td><td>Thú y</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>14</td><td>Công nghệ ô tô</td><td>7.500.000đ</td><td>8.500.000đ</td></tr>
+                <tr><td>15</td><td>Tiếng Anh</td><td>7.500.000đ</td><td>8.300.000đ</td></tr>
+                <tr><td>16</td><td>Kỹ thuật phục hình răng (Răng - Hàm - Mặt)</td><td>7.500.000đ</td><td>12.000.000đ</td></tr>
+                <tr><td>17</td><td>Y sỹ đa khoa</td><td>7.500.000đ</td><td>11.000.000đ</td></tr>
+                <tr><td>18</td><td>Y học cổ truyền</td><td>7.500.000đ</td><td>11.000.000đ</td></tr>
+            </tbody>
+        </table>
+        <p class="note">* Ghi chú : Học phí năm tiếp theo không tăng quá 15%</p>
+
+        <h4 class="box-subtitle">Học phí văn hóa hệ 9+ (03 học phần)</h4>
+        <ul>
+            <li>Văn hóa THPT chính quy: 1.450.000đ/tháng/lớp 10 x 09 tháng (đóng theo tháng)</li>
+            <li>Văn hóa 4 môn: 2.500.000đ/học phần x 03 học phần</li>
+            <li>Văn hóa 5 môn: 3.000.000đ/học phần x 03 học phần</li>
+        </ul>
+    </div>
+
+    <div class="section-box">
+        <h3 class="box-title">Các khoản thu khác</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nội dung</th>
+                    <th>Mức thu</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Lệ phí nhập học và thẻ sinh viên</td><td>150.000đ</td><td></td></tr>
+                <tr><td>Bảo hiểm y tế</td><td>885.000đ</td><td>(theo quy định nhà nước, tạm thu)</td></tr>
+                <tr><td>Bảo hiểm tai nạn</td><td>90.000đ</td><td></td></tr>
+                <tr><td>Đồng phục</td><td>850.000đ</td><td>(gồm 02 áo sơmi, 01 bộ đồ thể dục, 01 balo)</td></tr>
+                <tr><td colspan="3">Đồng phục: (tính theo số lượng)</td></tr>
+                <tr><td>Áo sơmi</td><td>180.000đ</td><td></td></tr>
+                <tr><td>Áo thể dục</td><td>180.000đ</td><td></td></tr>
+                <tr><td>Quần thể dục</td><td>110.000đ</td><td></td></tr>
+                <tr><td>Quần tây nam</td><td>200.000đ</td><td></td></tr>
+                <tr><td>Váy nữ</td><td>220.000đ</td><td></td></tr>
+                <tr><td>Cà vạt</td><td>50.000đ</td><td>Áp dụng cho hệ 9+ học song song THPT</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-box">
+        <h3 class="box-title">Chính sách miễn, giảm</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Chính sách</th>
+                    <th>Mức giảm</th>
+                    <th>Áp dụng</th>
+                    <th>Điều kiện</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Đăng ký nhập học sớm</td><td>Giảm 1.500.000đ</td><td>Học kỳ 1</td><td>Trước ngày 31/7/2025</td></tr>
+                <tr><td>Học sinh đóng học phí cả năm I</td><td>Giảm 2.500.000đ</td><td>Đóng 1 lần</td><td>Trước ngày 31/08/2025</td></tr>
+                <tr><td>Học sinh đạt danh hiệu “Học sinh Giỏi năm lớp 9/lớp 12”</td><td>Giảm 20%</td><td>Học kỳ 1</td><td></td></tr>
+                <tr><td>Học sinh thuộc đối tượng chính sách (Con thương binh, bệnh binh, Hộ nghèo, Bộ đội xuất ngũ)</td><td>Giảm 20%</td><td>Học kỳ 1, 2</td><td>Có giấy tờ xác nhận hợp lệ</td></tr>
+                <tr><td>Học sinh là con/anh/chị/em ruột cán bộ, giảng viên, công nhân viên đang công tác tại trường</td><td>Giảm 20%</td><td>Toàn khóa</td><td></td></tr>
+                <tr><td>Học sinh đóng học phí trọn gói 2.5 năm (06 học kỳ, đóng 1 lần)</td><td>Giảm 10%</td><td>Toàn khóa</td><td>Trước ngày 31/08/2025</td></tr>
+                <tr><td>Học sinh có Anh/chị/em ruột, vợ/chồng cùng học tại trường ở cùng thời điểm</td><td>Giảm 10%</td><td>Toàn khóa</td><td></td></tr>
+            </tbody>
+        </table>
+
+        <h4 class="box-subtitle">*Những lưu ý chung:</h4>
+        <ul>
+            <li>Đối với học sinh-sinh viên đủ điều kiện nhận nhiều chính sách miễn giảm hoặc học bổng, trường sẽ áp dụng chính sách có giá trị ưu đãi cao nhất.</li>
+            <li>Các chính sách miễn giảm và học bổng chỉ áp dụng cho học phí chính khóa, không bao gồm các khoản phí khác (như phí đồng phục, BHYT, chứng chỉ giáo dục quốc phòng-an ninh, v.v.).</li>
+            <li>Tất cả học sinh-sinh viên cần hoàn tất các khoản học phí theo đúng thời hạn quy định để được hưởng các chính sách ưu đãi.</li>
+            <li>Không hoàn lại học phí ngoài trừ trường không mở được lớp.</li>
+            <li>Chính sách này có thể được điều chỉnh và bổ sung tùy theo tình hình thực tế và quy định của nhà trường.</li>
+        </ul>
+    </div>
+
+    <div class="section-box contact-info">
+        <h3 class="box-title">Thông tin liên hệ và nộp hồ sơ: Phòng Công tác HSSV và Tuyển sinh</h3>
+        <p>Địa chỉ 1: Số 514, Lê Quang Định, Phường Hạnh Thông, TPHCM</p>
+        <p>Địa chỉ 2: Số 173 Hiền Vương, Phường Phú Thạnh, TPHCM</p>
+        <p>Số điện thoại: (028) 3588 5558; (028) 6256 4639</p>
+        <p>Hotline: 0971 327 841; 0971 327 840</p>
+        <p>Facebook: <a href="https://www.facebook.com/caodangsaigongiadinh/">Cao Đẳng Sài Gòn Gia Định</a></p>
+        <p>Mail: <a href="mailto:tuyensinhsaigongiadinh@gmail.com">tuyensinhsaigongiadinh@gmail.com</a></p>
+        <p>Website: <a href="https://www.sgc.edu.vn/">www.sgc.edu.vn</a></p>
+    </div>
+
+    
+
+</div>
+{% endblock %}
