@@ -3,6 +3,16 @@
 {% block content %}
     <title>Thời Khóa Biểu</title>
     <style>
+        @font-face {
+ font-family: 'font2';
+ src: url('/static/fonts/font2.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'font6';
+  src: url('/static/fonts/font6.ttf') format('truetype');
+}
         body {
             font-family: Arial, sans-serif;
             margin: 0; /* Đặt margin về 0 để kiểm soát tốt hơn */
@@ -11,6 +21,7 @@
             margin-left: 220px;
         }
         h1 {
+            font-family: font2;
             color: #333;
             text-align: center;
             margin-bottom: 20px; /* Giảm margin-bottom */
