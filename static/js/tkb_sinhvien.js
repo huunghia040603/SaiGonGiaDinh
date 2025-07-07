@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentDisplayDate = new Date();
     let selectedSemesterDetails = null;
 
-    const semesterApiUrl = 'https://saigongiadinh.pythonanywhere.com/SemesterListView/';
-    const studentScheduleApiUrl = 'https://saigongiadinh.pythonanywhere.com/StudentScheduleView/';
-    const timeSlotsApiUrl = 'https://saigongiadinh.pythonanywhere.com/Time/';
+    const semesterApiUrl = 'https://saigongiadinh.pythonanywhere.com/semesters/';
+    const studentScheduleApiUrl = 'https://saigongiadinh.pythonanywhere.com/student-schedule/';
+    const timeSlotsApiUrl = 'https://saigongiadinh.pythonanywhere.com/time-slots/';
 
     let processedTimeSlots = [];
 
@@ -276,50 +276,66 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
 
-        scheduleData.forEach(entry => {
-            const day = entry.day_of_week;
-            const timeSlotId = entry.time_slot_info.id;
-            const sessionType = entry.session_type;
+     // Đoạn mã bạn đã cung cấp trong câu trả lời trước, nhưng có thể cần kiểm tra lại việc gán giá trị
+scheduleData.forEach(entry => {
+    const day = entry.day_of_week;
+    const timeSlotId = entry.time_slot_info.id;
+    let sessionType = entry.session_type; // Lấy session_type từ dữ liệu
 
-            const correspondingTimeSlot = processedTimeSlots.flatMap(block => block.slots).find(s => s.id === timeSlotId);
+    const correspondingTimeSlot = processedTimeSlots.flatMap(block => block.slots).find(s => s.id === timeSlotId);
 
-            if (correspondingTimeSlot) {
-                if (correspondingTimeSlot.isBreakTime) {
-                    // Không cần gán entry cho break time ở đây, thông tin break time đã có trong processedTimeSlots
-                } else {
-                    const expectedSessionBlock = processedTimeSlots.find(block =>
-                        block.slots.some(s => s.id === timeSlotId)
-                    );
-                    const expectedSession = expectedSessionBlock ? expectedSessionBlock.session : null;
-
-                    if (dayOrder.includes(day) && sessionType === expectedSession) {
-                        if (!organizedSchedule[day][timeSlotId]) {
-                            organizedSchedule[day][timeSlotId] = entry;
-                        } else {
-                            console.warn(`Cảnh báo: Phát hiện nhiều mục cho cùng một ô (${day}, tiết ${timeSlotId}).`);
-                        }
-                    }
+    if (correspondingTimeSlot) {
+        if (!correspondingTimeSlot.isBreakTime) { // Bỏ qua break time ở đây
+            // Nếu session_type là null, cố gắng suy luận từ time_slot_info
+            if (sessionType === null && correspondingTimeSlot) {
+                const foundSessionBlock = processedTimeSlots.find(block =>
+                    block.slots.some(s => s.id === timeSlotId)
+                );
+                if (foundSessionBlock) {
+                    sessionType = foundSessionBlock.session; // Gán giá trị sessionType đã suy luận
+                    console.warn(`Dữ liệu session_type cho ${entry.subject_or_course_name} (${day}, tiết ${timeSlotId}) là null, đã suy luận thành: ${sessionType}`);
                 }
-            } else {
-                console.warn(`Cảnh báo: Không tìm thấy time_slot_info.id ${timeSlotId} trong processedTimeSlots.`);
             }
-        });
+
+            // Dòng này rất quan trọng: Đảm bảo điều kiện kiểm tra sessionType sau khi suy luận
+            // và gán đúng entry vào organizedSchedule
+            if (dayOrder.includes(day) && sessionType !== null) { 
+                // Cập nhật session_type của entry trước khi gán vào organizedSchedule nếu cần
+                // Hoặc bạn có thể tạo một bản sao của entry và gán sessionType đã suy luận
+                const entryToOrganize = { ...entry, session_type: sessionType }; // Tạo bản sao với session_type đã cập nhật
+
+                if (!organizedSchedule[day][timeSlotId]) {
+                    organizedSchedule[day][timeSlotId] = entryToOrganize; // Gán bản sao đã cập nhật
+                } else {
+                    console.warn(`Cảnh báo: Phát hiện nhiều mục cho cùng một ô (${day}, tiết ${timeSlotId}).`);
+                }
+            }
+        }
+    } else {
+        console.warn(`Cảnh báo: Không tìm thấy time_slot_info.id ${timeSlotId} trong processedTimeSlots.`);
+    }
+});
 
         processedTimeSlots.forEach(sessionBlock => {
-            const sessionName = sessionBlock.session;
-            const sessionLabel = sessionBlock.label;
-            const slotsInThisSession = sessionBlock.slots;
+                const sessionName = sessionBlock.session;
+                const sessionLabel = sessionBlock.label;
+                const slotsInThisSession = sessionBlock.slots;
 
-            slotsInThisSession.forEach((timeSlot, index) => {
-                const row = document.createElement('tr');
+                slotsInThisSession.forEach((timeSlot, index) => {
+                    const row = document.createElement('tr');
 
-                if (index === 0) {
-                    const sessionHeaderCell = document.createElement('td');
-                    sessionHeaderCell.classList.add('session-label-body');
-                    sessionHeaderCell.rowSpan = slotsInThisSession.length;
-                    sessionHeaderCell.textContent = sessionLabel;
-                    row.appendChild(sessionHeaderCell);
-                }
+                    // THÊM DÒNG NÀY: Kiểm tra nếu đây là buổi Chiều và là tiết đầu tiên của buổi đó
+                    if (sessionName === 'AFTERNOON' && index === 0) {
+                        row.classList.add('afternoon-start-row');
+                    }
+
+                    if (index === 0) {
+                        const sessionHeaderCell = document.createElement('td');
+                        sessionHeaderCell.classList.add('session-label-body');
+                        sessionHeaderCell.rowSpan = slotsInThisSession.length;
+                        sessionHeaderCell.textContent = sessionLabel;
+                        row.appendChild(sessionHeaderCell);
+                    }
 
                 const timeSlotLabelCell = document.createElement('td');
                 timeSlotLabelCell.classList.add('time-slot-label');

@@ -1,0 +1,318 @@
+{% extends "page_sinh_vien/base_sv.html" %}
+
+{% block content %}
+
+    <title>Kết Quả Học Tập & Bảng Điểm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-left: 400px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            text-align: center;
+        }
+
+        /* Styling for the academic results table */
+        .academic-results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .academic-results-table th,
+        .academic-results-table td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .academic-results-table th {
+            background-color: #f2f2f2;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .academic-results-table td:first-child {
+            font-weight: bold;
+            width: 150px; /* Adjust as needed */
+        }
+
+        .academic-results-table td:last-child {
+            text-align: right; /* Align numerical values to the right */
+        }
+
+        /* Styling for the subject scores table */
+        .subject-scores-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .subject-scores-table thead {
+            background-color: #3498db; /* Blue header */
+            color: white;
+        }
+
+        .subject-scores-table th,
+        .subject-scores-table td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: center; /* Center align for scores */
+            font-size: 14px;
+        }
+
+        .subject-scores-table th {
+            font-weight: bold;
+            white-space: nowrap; /* Prevent wrapping for headers */
+        }
+
+        .subject-scores-table td:first-child {
+            text-align: left; /* Subject names align left */
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        .subject-scores-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Style for "Đ" entries */
+        .grade-D {
+            color: #999; /* Lighter color for 'Đ' */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            h2 {
+                font-size: 18px;
+            }
+            .academic-results-table th,
+            .academic-results-table td,
+            .subject-scores-table th,
+            .subject-scores-table td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .subject-scores-table td:first-child {
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subject-scores-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .subject-scores-table thead, .subject-scores-table tbody, .subject-scores-table th, .subject-scores-table td, .subject-scores-table tr {
+                display: block;
+            }
+            .subject-scores-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            .subject-scores-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .subject-scores-table td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            .subject-scores-table td:before {
+                position: absolute;
+                left: 6px;
+                content: attr(data-label);
+                font-weight: bold;
+                text-align: left;
+                white-space: normal;
+            }
+            .subject-scores-table td:first-child {
+                text-align: right; /* Reset for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Kết quả học tập</h2>
+        <table class="academic-results-table">
+            <tbody>
+                <tr>
+                    <td>Điểm TB</td>
+                    <td style="text-align: right;">9.2</td>
+                </tr>
+                <tr>
+                    <td>Xếp hạng</td>
+                    <td style="text-align: right;">4</td>
+                </tr>
+                <tr>
+                    <td>Danh hiệu</td>
+                    <td style="text-align: right;">Học sinh giỏi</td>
+                </tr>
+                <tr>
+                    <td>Hạnh kiểm</td>
+                    <td style="text-align: right;">Tốt</td>
+                </tr>
+                <tr>
+                    <td>Học lực</td>
+                    <td style="text-align: right;">Giỏi</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Bảng điểm các môn học kỳ 2</h2>
+        <table class="subject-scores-table">
+            <thead>
+                <tr>
+                    <th>Môn học</th>
+                    <th>Điểm miệng</th>
+                    <th>Điểm 15 phút</th>
+                    <th>Điểm 1 tiết</th>
+                    <th>Học kỳ</th>
+                    <th>TBM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Môn học">Toán học</td>
+                    <td data-label="Điểm miệng">9 10 10 9.5</td>
+                    <td data-label="Điểm 15 phút">10</td>
+                    <td data-label="Điểm 1 tiết">9</td>
+                    <td data-label="Học kỳ">9.5</td>
+                    <td data-label="TBM">9.5</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Ngữ văn</td>
+                    <td data-label="Điểm miệng">10 10 8 10</td>
+                    <td data-label="Điểm 15 phút">8</td>
+                    <td data-label="Điểm 1 tiết">7.5</td>
+                    <td data-label="Học kỳ">8.5</td>
+                    <td data-label="TBM">8.5</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Vật lí</td>
+                    <td data-label="Điểm miệng">9 9</td>
+                    <td data-label="Điểm 15 phút">8.8</td>
+                    <td data-label="Điểm 1 tiết">9.5</td>
+                    <td data-label="Học kỳ">9.2</td>
+                    <td data-label="TBM">9.2</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Sinh học</td>
+                    <td data-label="Điểm miệng">10 9 10</td>
+                    <td data-label="Điểm 15 phút">9.3</td>
+                    <td data-label="Điểm 1 tiết">9.5</td>
+                    <td data-label="Học kỳ">9.5</td>
+                    <td data-label="TBM">9.5</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Tin học</td>
+                    <td data-label="Điểm miệng">10 9 10</td>
+                    <td data-label="Điểm 15 phút">8.8</td>
+                    <td data-label="Điểm 1 tiết">10</td>
+                    <td data-label="Học kỳ">9.6</td>
+                    <td data-label="TBM">9.6</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Lịch sử</td>
+                    <td data-label="Điểm miệng">8 8</td>
+                    <td data-label="Điểm 15 phút">10</td>
+                    <td data-label="Điểm 1 tiết">9</td>
+                    <td data-label="Học kỳ">9.0</td>
+                    <td data-label="TBM">9.0</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Địa lí</td>
+                    <td data-label="Điểm miệng">9 7</td>
+                    <td data-label="Điểm 15 phút">7.8</td>
+                    <td data-label="Điểm 1 tiết">9.5</td>
+                    <td data-label="Học kỳ">8.6</td>
+                    <td data-label="TBM">8.6</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Ngoại ngữ</td>
+                    <td data-label="Điểm miệng">10 10 9 8</td>
+                    <td data-label="Điểm 15 phút">8.3</td>
+                    <td data-label="Điểm 1 tiết">9</td>
+                    <td data-label="Học kỳ">9.0</td>
+                    <td data-label="TBM">9.0</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">GDCD</td>
+                    <td data-label="Điểm miệng">10 10</td>
+                    <td data-label="Điểm 15 phút">10</td>
+                    <td data-label="Điểm 1 tiết">8.5</td>
+                    <td data-label="Học kỳ">9.4</td>
+                    <td data-label="TBM">9.4</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Công nghệ</td>
+                    <td data-label="Điểm miệng">10 9 10</td>
+                    <td data-label="Điểm 15 phút">9.8</td>
+                    <td data-label="Điểm 1 tiết">10</td>
+                    <td data-label="Học kỳ">9.8</td>
+                    <td data-label="TBM">9.8</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Thể dục</td>
+                    <td data-label="Điểm miệng" class="grade-D">Đ Đ Đ</td>
+                    <td data-label="Điểm 15 phút" class="grade-D">Đ</td>
+                    <td data-label="Điểm 1 tiết" class="grade-D">Đ</td>
+                    <td data-label="Học kỳ" class="grade-D">Đ</td>
+                    <td data-label="TBM" class="grade-D">Đ</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Âm nhạc</td>
+                    <td data-label="Điểm miệng" class="grade-D">Đ Đ Đ</td>
+                    <td data-label="Điểm 15 phút" class="grade-D">Đ</td>
+                    <td data-label="Điểm 1 tiết" class="grade-D">Đ</td>
+                    <td data-label="Học kỳ" class="grade-D">Đ</td>
+                    <td data-label="TBM" class="grade-D">Đ</td>
+                </tr>
+                <tr>
+                    <td data-label="Môn học">Mĩ thuật</td>
+                    <td data-label="Điểm miệng" class="grade-D">Đ Đ Đ</td>
+                    <td data-label="Điểm 15 phút" class="grade-D">Đ</td>
+                    <td data-label="Điểm 1 tiết" class="grade-D">Đ</td>
+                    <td data-label="Học kỳ" class="grade-D">Đ</td>
+                    <td data-label="TBM" class="grade-D">Đ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{%endblock%}

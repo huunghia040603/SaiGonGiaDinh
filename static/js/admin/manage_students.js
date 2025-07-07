@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const editUserPhotoInput = document.getElementById('editUserPhoto'); // File input
 
 
-    const API_ENDPOINT = 'https://saigongiadinh.pythonanywhere.com/StudentList/'; // For listing students
-    const STUDENT_DETAIL_API_BASE_URL = 'https://saigongiadinh.pythonanywhere.com/StudentList/'; // For student detail and delete
+    const API_ENDPOINT = 'https://saigongiadinh.pythonanywhere.com/student-list/'; // For listing students
+    const STUDENT_DETAIL_API_BASE_URL = 'https://saigongiadinh.pythonanywhere.com/student-list/'; // For student detail and delete
     const PLACEHOLDER_AVATAR = 'https://placehold.co/40x40/cccccc/ffffff?text=AV'; // Placeholder for missing avatar
 
-    const PROGRAM_API = 'https://saigongiadinh.pythonanywhere.com/Program/';
-    const MAJOR_API = 'https://saigongiadinh.pythonanywhere.com/Major/';
-    const ACADEMIC_YEAR_API = 'https://saigongiadinh.pythonanywhere.com/AcademicYear/';
-    const DEPARTMENT_API = 'https://saigongiadinh.pythonanywhere.com/Department/';
+    const PROGRAM_API = 'https://saigongiadinh.pythonanywhere.com/programs/';
+    const MAJOR_API = 'https://saigongiadinh.pythonanywhere.com/majors/';
+    const ACADEMIC_YEAR_API = 'https://saigongiadinh.pythonanywhere.com/academic-years/';
+    const DEPARTMENT_API = 'https://saigongiadinh.pythonanywhere.com/departments/';
 
     // --- Custom Confirmation Modal Elements (re-used from previous version) ---
     let confirmModal = null;

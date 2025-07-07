@@ -25,7 +25,7 @@ def hoctap():
 
 @sinhvien.route('/bangdiem')
 def bangdiem():
-    return render_template('page_sinh_vien/tibangdiem.html')
+    return render_template('page_sinh_vien/tkb_test.html')
 
 @sinhvien.route('/thoikhoabieu')
 def thoikhoabieu():

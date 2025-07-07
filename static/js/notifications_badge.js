@@ -1,7 +1,7 @@
 // /static/js/notification_badge.js
 document.addEventListener('DOMContentLoaded', function() {
     const notificationCountBadge = document.getElementById('notificationCountBadge');
-    const unreadNotificationsApiUrl = 'https://saigongiadinh.pythonanywhere.com/unread_notifications/'; // URL API
+    const unreadNotificationsApiUrl = 'https://saigongiadinh.pythonanywhere.com/unread-notifications/'; // URL API
 
     // Ẩn badge ngay lập tức khi DOM được tải để tránh hiển thị giá trị không chính xác ban đầu
     if (notificationCountBadge) {

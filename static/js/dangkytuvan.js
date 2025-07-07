@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Hàm tải dữ liệu Ngành học từ API với caching ---
     async function loadMajors() {
-        const majorsApiUrl = "https://saigongiadinh.pythonanywhere.com/Major/";
+        const majorsApiUrl = "https://saigongiadinh.pythonanywhere.com/majors/";
         const CACHE_KEY = 'cachedMajors';
         const CACHE_EXPIRY_TIME = 60 * 60 * 1000; // 1 giờ (milliseconds)
 

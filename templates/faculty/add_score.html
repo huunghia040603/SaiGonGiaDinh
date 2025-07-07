@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý điểm học sinh - SGC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2em;
+        }
+        .header .logo {
+            font-weight: bold;
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        .navbar {
+            background-color: #e9ecef;
+            padding: 10px 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #495057;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .navbar a.active, .navbar a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section-header {
+            background-color: #d1ecf1;
+            padding: 10px;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .section-header .buttons button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .section-header .buttons button:hover {
+            opacity: 0.9;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .controls label {
+            font-weight: bold;
+        }
+        .controls select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            vertical-align: middle; /* Căn giữa theo chiều dọc cho tiêu đề */
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table input[type="number"], table input[type="text"] {
+            width: 40px; /* Điều chỉnh lại chiều rộng nhỏ hơn vì có nhiều cột */
+            padding: 5px 2px;
+            border: 1px solid #ced4da;
+            border-radius: 3px;
+            text-align: center;
+            box-sizing: border-box; /* Đảm bảo padding không làm tăng tổng width */
+        }
+        td.input-group {
+            white-space: nowrap; /* Ngăn không cho input xuống dòng */
+        }
+        td.input-group input {
+            display: inline-block; /* Hiển thị input trên cùng một dòng */
+            margin: 0 1px; /* Khoảng cách nhỏ giữa các input */
+        }
+        .float-right-text {
+            float: right;
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+        .center-text {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">SGC -EDU</div>
+        <div>Quản lý điểm học sinh</div>
+        <div class="user-info">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmktcGVyc29uLWZpbGwiIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgPHBhdGggZD0iMTEgNiNhMyAzIDAgMSAxLTYgMCAzIDMgMCAwIDEgNiAwem0yLjUgOWE0LjUgNC41IDAgMSAxLTktMCA0LjUgNC41IDAgMCAxIDkgMHoiLz4KPC9zdmc+" alt="user icon">
+            adm
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="#">1. Khai báo</a>
+        <a href="#">2. Hồ sơ</a>
+        <a href="#" class="active">3. Nhập liệu</a>
+        <a href="#">4. Tổng kết</a>
+        <a href="#">5. In ấn</a>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <div>3.1 Nhập điểm</div>
+            <div class="buttons">
+                <button>Lấy điểm TBMK1</button>
+                <button>Lấy điểm TBMK1 toàn trường</button>
+            </div>
+        </div>
+
+        <div class="note">
+            Ghi chú: Nhập điểm không cần dấu '.' thì dự 95 thay cho 9.5. Những học sinh bị bôi đỏ là những học sinh NGHỈ HỌC, CHUYỂN trường hãy vào <a href="#" style="color: inherit;">4.5 Cấu hình hệ thống</a>, chọn mục Không hiện học sinh đã nghỉ học, chuyển trường
+        </div>
+
+        <div class="controls">
+            <label for="class">Lớp:</label>
+            <select id="class">
+                <option value="6A1">6A1</option>
+                <option value="6A2">6A2</option>
+            </select>
+            <label for="subject">Môn học:</label>
+            <select id="subject">
+                <option value="Toán học">Toán học</option>
+                <option value="Vật lí">Vật lí</option>
+                <option value="Hóa học">Hóa học</option>
+                <option value="Sinh học">Sinh học</option>
+                <option value="Tin học">Tin học</option>
+                <option value="Ngữ văn">Ngữ văn</option>
+                <option value="Lịch sử">Lịch sử</option>
+                <option value="Địa lí">Địa lí</option>
+                <option value="Ngoại ngữ">Ngoại ngữ</option>
+                <option value="GDCD">GDCD</option>
+                <option value="Công nghệ">Công nghệ</option>
+                <option value="Thể dục">Thể dục</option>
+                <option value="GDQP">GDQP</option>
+                <option value="GDQP">HĐTN</option>
+            </select>
+            <span class="float-right-text">Hà Nội đã áp dụng số điểm điện tử để giảm thiểu</span>
+        </div>
+
+        <div class="table-container">
+            <h2 class="center-text">Bảng điểm các môn học kỳ 2</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">STT</th>
+                        <th rowspan="2">Họ tên</th>
+                        <th rowspan="2">Ngày sinh</th>
+                        <th colspan="3">Điểm miệng</th>
+                        <th colspan="3">Điểm 15 phút</th>
+                        <th colspan="2">Điểm 1 tiết</th>
+                        <th rowspan="2">Giữa kỳ</th>
+                        <th rowspan="2">Cuối kỳ</th>
+                        <th rowspan="2">TBM</th>
+                    </tr>
+                    <tr>
+                        <th>1</th><th>2</th><th>3</th>
+                        <th>1</th><th>2</th><th>3</th>
+                        <th>1</th><th>2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Đoàn Minh An</td>
+                        <td>15/11/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number" value="9"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number" value="9"><input type="number" value="9">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="5.3"><input type="number" value="9">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="8.4"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Hoàng Minh An</td>
+                        <td>14/04/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="6"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number" value="8"><input type="number" value="8">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8.5"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="8.7"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Nguyễn Thị Hồng Anh</td>
+                        <td>13/05/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="10"><input type="number" value="10"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="10"><input type="number" value="9"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9.6"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="9.9"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Phạm Vũ Anh</td>
+                        <td>18/09/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="10"><input type="number" value="10"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="10"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="9.8"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Trần Quỳnh Anh</td>
+                        <td>18/03/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number" value="8"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="8.8"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Trần Thị Thu Anh</td>
+                        <td>20/11/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number" value="8"><input type="number" value="8">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number" value="7.5">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="7.8"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Nguyễn Bảo Châu</td>
+                        <td>21/10/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number" value="10"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9.6"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="9.5"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Nguyễn Ngọc Bảo Châu</td>
+                        <td>16/10/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number" value="10"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="9.4"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Nguyễn Trí Dũng</td>
+                        <td>21/12/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="7"><input type="number" value="8"><input type="number" value="8">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="4.3"><input type="number" value="8">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="7.5"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Nguyễn Tuấn Duy</td>
+                        <td>16/06/2004</td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="9"><input type="number"><input type="number">
+                        </td>
+                        <td class="input-group">
+                            <input type="number" value="8"><input type="number">
+                        </td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value=""></td>
+                        <td><input type="number" value="8.6"></td>
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+
+                        <td><input type="number" value=""></td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

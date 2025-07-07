@@ -44,4 +44,7 @@ def tkb():
 
 
 
-
+@faculty.route('/diemso/')
+def diemso():
+    
+    return render_template('faculty/add_score.html')

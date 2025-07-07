@@ -7,7 +7,7 @@ function getAuthToken() {
 }
 
 async function fetchFacultyData() {
-    const apiUrl = "https://saigongiadinh.pythonanywhere.com/FacultyList/";
+    const apiUrl = "https://saigongiadinh.pythonanywhere.com/faculty-list/";
     const token = getAuthToken();
 
     const loadingMessage = document.getElementById('loadingMessage');
@@ -48,12 +48,12 @@ async function fetchFacultyData() {
         } else {
             facultyData.forEach((faculty, index) => {
                 const row = document.createElement('tr');
-                const photoSrc = `https://res.cloudinary.com/dftarzzfw/${faculty.user_photo}`
+             
                 
                 row.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${faculty.faculty_code || 'N/A'}</td>
-                    <td><img src="${photoSrc}" alt="Ảnh đại diện" class="user-photo"></td>
+                    <td><img src="${faculty.user_photo}" alt="Ảnh đại diện" class="user-photo"></td>
                     <td>${faculty.first_name || ''} ${faculty.last_name || 'N/A'}</td>
                     <td>${faculty.email || 'N/A'}</td>
                     <td>${faculty.department_name}</td>

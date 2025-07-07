@@ -59,6 +59,51 @@
         .master-row {
             background-color: #e9ecef; /* Nền nhẹ cho hàng cha */
         }
+        /* Các quy tắc CSS cho bảng CHÍNH */
+.table tbody tr.group-status-new td {
+    background-color: #ffffff !important; /* Xám nhạt */
+    color: #212529 !important; /* Màu chữ mặc định */
+}
+
+.table tbody tr.group-status-contacted td {
+    background-color: #ffe0e6 !important; /* Hồng nhạt */
+    color: #dc3545 !important; /* Đỏ đậm */
+}
+
+.table tbody tr.group-status-consulted td {
+    background-color: #e0f2ff !important; /* Xanh nhạt */
+    color: #007bff !important; /* Xanh dương đậm */
+}
+
+/* Đảm bảo hover vẫn hoạt động trên bảng chính */
+.table tbody tr.group-status-new:hover,
+.table tbody tr.group-status-contacted:hover,
+.table tbody tr.group-status-consulted:hover {
+    filter: brightness(95%);
+}
+
+/* Giữ nguyên các quy tắc cho bảng trong modal */
+#registrationDetailsModal .modal-body .table tbody tr.status-new td {
+    background-color: #e6ffb4 !important; 
+    color: #212529 !important; 
+}
+
+#registrationDetailsModal .modal-body .table tbody tr.status-contacted td {
+    background-color: #ffe0e6 !important; 
+    color: #dc3545 !important; 
+}
+
+#registrationDetailsModal .modal-body .table tbody tr.status-consulted td {
+    background-color: #e0f2ff !important; 
+    color: #007bff !important; 
+}
+
+/* Đảm bảo rằng khi hover, màu nền vẫn hiển thị nhưng có thể điều chỉnh độ sáng */
+#registrationDetailsModal .modal-body .table tbody tr.status-new:hover,
+#registrationDetailsModal .modal-body .table tbody tr.status-contacted:hover,
+#registrationDetailsModal .modal-body .table tbody tr.status-consulted:hover {
+    filter: brightness(95%); 
+}
         .master-row td {
             white-space: nowrap; /* Mặc định giữ nowrap cho hầu hết các cột */
             /* LOẠI BỎ max-width, overflow: hidden, text-overflow: ellipsis để hiển thị đủ dữ liệu */
@@ -208,28 +253,65 @@
             }
         }
 
-        /* Ẩn các cột ít quan trọng hơn trên màn hình nhỏ nếu cần (ví dụ minh họa) */
-        /* Tôi đã comment phần này để đảm bảo hiển thị đủ dữ liệu theo yêu cầu của bạn.
-           Nếu bạn muốn ẩn cột trên màn hình nhỏ, hãy bỏ comment và điều chỉnh lại.
-        @media (max-width: 576px) {
-            .table thead th:nth-child(5), // Cột Địa chỉ 
-            .table tbody td:nth-child(5),
-            .table thead th:nth-child(6), // Cột Tốt nghiệp 
-            .table tbody td:nth-child(6) {
-                display: none;
-            }
-        }
-        */
+       .legend-container {
+    display: flex;
+    justify-content: flex-end; /* Căn phải */
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    flex-wrap: wrap; /* Cho phép các mục chú thích xuống dòng trên màn hình nhỏ */
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-left: 15px; /* Khoảng cách giữa các mục chú thích */
+    margin-bottom: 5px; /* Khoảng cách khi xuống dòng */
+}
+
+.legend-color-box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+.legend-color-box.new {
+    background-color: white; /* Tương ứng với group-status-new */
+}
+
+.legend-color-box.contacted {
+    background-color: #ffe0e6; /* Tương ứng với group-status-contacted */
+}
+
+.legend-color-box.consulted {
+    background-color: #e0f2ff; /* Tương ứng với group-status-consulted */
+}
     </style>
 {% endblock %}
 
 {% block content %}
     <div id="content">
         <div class="container-fluid">
+            <div class="legend-container">
+    <div class="legend-item">
+        <div class="legend-color-box new"></div>
+        <span>Mới đăng ký</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-color-box contacted"></div>
+        <span>Đã liên hệ</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-color-box consulted"></div>
+        <span>Đã tư vấn</span>
+    </div>
+</div>
             <h1 class="mb-4">Danh sách Đăng ký tư vấn</h1>
 
             <div class="table-responsive">
-                <table class="table table-striped table-hover shadow-sm">
+                <table class="table  table-hover shadow-sm">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 50px;"></th> {# Cột cho nút mở modal #}

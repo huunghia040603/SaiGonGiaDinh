@@ -10,10 +10,10 @@ if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET || CLOUDINARY_CLOUD_NAME
 // --- API Endpoints ---
 const BASE_URL = 'https://saigongiadinh.pythonanywhere.com';
 const NEWS_API_URL = `${BASE_URL}/news/`;
-const TAGS_API_URL = `${BASE_URL}/TagView/`;
+const TAGS_API_URL = `${BASE_URL}/tags/`;
 const ALBUMS_API_URL = `${BASE_URL}/albums/`;
 const IMAGES_API_URL = `${BASE_URL}/images/`; // Endpoint để tạo Image model trong DB
-const TYPE_NEWS_API_URL = `${BASE_URL}/TypeNewsView/`; // Endpoint để lấy danh sách loại tin tức
+const TYPE_NEWS_API_URL = `${BASE_URL}/type-news/`; // Endpoint để lấy danh sách loại tin tức
 
 // --- DOM Elements ---
 const newsForm = document.getElementById('newsForm');
