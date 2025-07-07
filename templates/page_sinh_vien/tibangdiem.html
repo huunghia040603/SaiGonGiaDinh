@@ -3,6 +3,16 @@
 {% block content %}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+ font-family: 'font2';
+ src: url('/static/fonts/font2.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'font6';
+  src: url('/static/fonts/font6.ttf') format('truetype');
+}
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6; /* bg-gray-100 */
@@ -31,6 +41,7 @@
             margin-bottom: 1.5rem; /* mb-6 */
             text-align: center; /* text-center */
             letter-spacing: -0.025em; /* tracking-tight */
+            font-family: font2;
         }
 
         .button-group {

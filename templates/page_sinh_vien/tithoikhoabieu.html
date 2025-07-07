@@ -1,55 +1,47 @@
 {% extends "page_sinh_vien/base_sv.html" %}
 
 {% block content %}
-  <title>Thời Khóa Biểu</title>
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Phông chữ hiện đại hơn */
-        margin: 0;
-        padding: 20px; /* Tăng padding để có không gian xung quanh */
-        background-color: #eef2f6; /* Màu nền nhẹ nhàng hơn */
-        margin-left: 250px; /* Giá trị mặc định cho desktop */
-        color: #333; /* Màu chữ mặc định */
-    }
-    h1 {
-        color: #1a237e; /* Màu xanh đậm hơn cho tiêu đề */
-        text-align: center;
-        margin-bottom: 30px; /* Tăng khoảng cách dưới tiêu đề */
-        font-size: 2.2em; /* Tăng kích thước tiêu đề */
-        font-weight: 600; /* Đậm hơn một chút */
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Thêm đổ bóng nhẹ */
-    }
-   
-    table {
-        width: 100%; /* Đảm bảo bảng sử dụng toàn bộ chiều rộng có thể */
-        max-width: 1200px; /* Giới hạn chiều rộng tối đa để không quá rộng trên màn hình lớn */
-        border-collapse: collapse;
-        margin: 0 auto;
-        background-color: #ffffff;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng nổi bật hơn */
-        border-radius: 8px; /* Bo góc nhẹ cho bảng */
-        overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài bo góc */
-    }
-    th, td {
-        border: 1px solid #e0e0e0; /* Màu viền nhẹ nhàng hơn */
-        text-align: center;
-        vertical-align: middle; /* Căn giữa theo chiều dọc */
-        word-wrap: break-word;
-        white-space: normal;
-        overflow: hidden;
-        font-size: 0.9em; /* Kích thước chữ tổng thể hợp lý hơn */
-        padding: 10px 5px; /* Tăng padding trong ô */
-        min-width: 80px; /* Giữ min-width để tránh co quá nhỏ */
-        max-height: 25px; /* Giữ min-width để tránh co quá nhỏ */
-    }
-    th {
-        background-color: #0152a9; /* Màu nền header đậm hơn */
-        color: white;
-        font-size: 1em; /* Kích thước chữ header rõ ràng hơn */
-        font-weight: 600;
-        padding: 12px 6px; /* Tăng padding header */
-        white-space: nowrap; /* Tránh ngắt dòng các ngày */
-    }
+    <title>Thời Khóa Biểu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Đặt margin về 0 để kiểm soát tốt hơn */
+            padding: 10px; /* Thêm padding tổng thể cho body trên mobile */
+            background-color: #f4f4f4;
+            margin-left: 220px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px; /* Giảm margin-bottom */
+            font-size: 1.8em; /* Giảm kích thước font cho tiêu đề trên mobile */
+        }
+        table {
+           
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Giảm đổ bóng */
+            display: block; /* Quan trọng: Cho phép bảng cuộn ngang trên mobile */
+            overflow-x: auto; /* Tạo thanh cuộn ngang khi cần */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px; /* Giảm padding cho các ô */
+            text-align: center;
+            vertical-align: top;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            min-height: 25px; /* Giảm chiều cao tối thiểu */
+            font-size: 0.75em; /* Giảm kích thước font mặc định cho các ô */
+        }
+        th {
+            background-color: #1130bb;
+            color: white;
+            font-size: 0.8em; /* Giảm font size cho header */
+            padding: 8px 6px; /* Điều chỉnh padding cho header */
+        }
 
     /* Cải thiện hiển thị các cột đặc biệt */
     th.session-column-header,
