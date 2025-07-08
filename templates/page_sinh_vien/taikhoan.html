@@ -16,6 +16,36 @@
   font-family: 'font6';
   src: url('/static/fonts/font6.ttf') format('truetype');
 }
+ @media (max-width: 2420px) {
+       .container7
+        {
+           margin-left: 20%;
+        }
+        
+    }
+
+         @media (max-width: 1620px) {
+       .container7
+        {
+           margin-left: 20%;
+        }
+        
+    }
+     @media (max-width: 1000px) {
+       .container7
+        {
+           margin-left: 25%;
+        }
+        
+    }
+
+      @media (max-width: 768px) {
+       .container7
+        {
+           margin-left: 30px;
+        }
+        
+    }
 </style>
 <body>
     <div class="container7">
@@ -43,7 +73,7 @@
     </div>
 
     <script>
-        const API_URL = "https://saigongiadinh.pythonanywhere.com/Students/me/";
+        const API_URL = "https://saigongiadinh.pythonanywhere.com/students/me/";
         const LOGIN_PAGE_URL = "/dangnhap"; 
         const LOGOUT_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/logout/";
 
@@ -129,12 +159,12 @@
             }
 
             studentInfoDiv.innerHTML = `
-                <div class="profile-header7">
+                <div class="profile-header7" ">
                     <img src="${student.user_photo || 'default-avatar.png'}" 
                          alt="${student.full_name || 'Ảnh đại diện'}" 
                          class="profile-avatar7" 
                          id="profile-avatar7"
-                         onerror="this.src='/static/images/default-avatar.png'">
+                         onerror="this.src='/static/images/default-avatar.png'" style="margin-left:40%;">
                     <h2 id="student-name7">${student.full_name || 'N/A'}</h2>
                     <p id="student-id7"><i class="fas fa-id-card"></i> ${student.student_code || 'N/A'}</p>
                 </div>
