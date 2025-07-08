@@ -7,7 +7,7 @@
 async function recordUserVisit() {
     // Địa chỉ API endpoint của Django backend để ghi nhận lượt truy cập
     // Đảm bảo URL này khớp với URL bạn đã cấu hình trong Django (RecordUserVisitAPIView)
-    const apiUrl = 'https://saigongiadinh.pythonanywhere.com/RecordUserVisitAPIView/'; 
+    const apiUrl = 'https://saigongiadinh.pythonanywhere.com/record-user-visit/'; 
     
     // Thu thập dữ liệu từ trình duyệt
     const data = {

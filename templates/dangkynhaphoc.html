@@ -299,415 +299,272 @@ body {
 </style>
 <title>{% block title %} Đăng Ký Nhập Học - Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}</title>
 <body>
-    <div class="container01"> <h1 class="form-title01">ĐĂNG KÝ NHẬP HỌC - NHẬN NGAY HỌC BỔNG</h1> <form id="registrationForm01" class="registration-form01"> <div class="form-section01"> <h2>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
-                <div class="radio-group01"> <label class="radio-label01"> <input type="radio" name="chuongTrinhDaoTao01" value="caodang" checked> Cao đẳng chính quy
-                        <span class="sub-text01">(Áp dụng cho học sinh có trình độ đầu vào tốt nghiệp THPT)</span> </label>
-                    <label class="radio-label01"> <input type="radio" name="chuongTrinhDaoTao01" value="phothong9plus"> Phổ thông Cao Đẳng 9+
-                        <span class="sub-text01">(Áp dụng cho học sinh có trình độ đầu vào tốt nghiệp THCS)</span> </label>
+    <div class="container01">
+        <h1 class="form-title01">ĐĂNG KÝ NHẬP HỌC - NHẬN NGAY HỌC BỔNG</h1>
+        <form id="registrationForm01" class="registration-form01">
+            <div class="form-section01">
+                <h2>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
+                <div class="radio-group01">
+                    <label class="radio-label01">
+                        <input type="radio" name="chuongTrinhDaoTao01" value="caodang" checked> Cao đẳng chính quy
+                        <span class="sub-text01">(Áp dụng cho học sinh có trình độ đầu vào tốt nghiệp THPT)</span>
+                    </label>
+                    <label class="radio-label01">
+                        <input type="radio" name="chuongTrinhDaoTao01" value="phothong9plus"> Phổ thông Cao Đẳng 9+
+                        <span class="sub-text01">(Áp dụng cho học sinh có trình độ đầu vào tốt nghiệp THCS)</span>
+                    </label>
                 </div>
             </div>
 
-            <div class="form-section01"> <h2>THÔNG TIN THÍ SINH</h2>
-                <div class="form-group01"> <label for="hoTen01">Họ và tên <span class="required01">*</span></label> <input type="text" id="hoTen01" name="hoTen01" required> </div>
+            <div class="form-section01">
+                <h2>THÔNG TIN THÍ SINH</h2>
+                <div class="form-group01">
+                    <label for="hoTen01">Họ và tên <span class="required01">*</span></label>
+                    <input type="text" id="hoTen01" name="hoTen01" required>
+                </div>
 
-                <div class="form-group-inline01"> <div class="form-group01"> <label for="ngaySinh01">Ngày sinh <span class="required01">*</span></label> <input type="date" id="ngaySinh01" name="ngaySinh01" required> </div>
-                    <div class="form-group01 gender-group01"> <label>Giới tính <span class="required01">*</span></label> <label class="radio-label01 inline01"> <input type="radio" name="gioiTinh01" value="nam" required> Nam </label>
-                        <label class="radio-label01 inline01"> <input type="radio" name="gioiTinh01" value="nu"> Nữ </label>
+                <div class="form-group-inline01">
+                    <div class="form-group01">
+                        <label for="ngaySinh01">Ngày sinh <span class="required01">*</span></label>
+                        <input type="date" id="ngaySinh01" name="ngaySinh01" required>
+                    </div>
+                    <div class="form-group01 gender-group01">
+                        <label>Giới tính <span class="required01">*</span></label>
+                        <label class="radio-label01 inline01">
+                            <input type="radio" name="gioiTinh01" value="Nam" required> Nam
+                        </label>
+                        <label class="radio-label01 inline01">
+                            <input type="radio" name="gioiTinh01" value="Nữ"> Nữ
+                        </label>
                     </div>
                 </div>
 
-                <div class="form-group01"> <label for="danToc01">Dân tộc</label> <input type="text" id="danToc01" name="danToc01"> </div>
-
-                <div class="form-group01"> <label for="cccd01">Số CCCD/Chứng minh nhân dân <span class="required01">*</span></label> <input type="text" id="cccd01" name="cccd01" required pattern="[0-9]{9,12}" title="Vui lòng nhập 9-12 chữ số"> </div>
-
-                <div class="form-group-inline01"> <div class="form-group01"> <label for="ngayCapCCCD01">Ngày cấp <span class="required01">*</span></label> <input type="date" id="ngayCapCCCD01" name="ngayCapCCCD01" required> </div>
-                    <div class="form-group01"> <label for="noiCapCCCD01">Nơi cấp <span class="required01">*</span></label> <input type="text" id="noiCapCCCD01" name="noiCapCCCD01" required> </div>
+                <div class="form-group01">
+                    <label for="danToc01">Dân tộc</label>
+                    <input type="text" id="danToc01" name="danToc01">
                 </div>
 
-                <div class="form-group01"> <label>Địa chỉ thường trú <span class="required01">*</span></label> <div class="address-group01"> <select id="tinhThanhPho01" name="tinhThanhPho01" required> <option value="">Chọn tỉnh/thành phố</option>
-                            </select>
-                        <select id="quanHuyen01" name="quanHuyen01" required disabled> <option value="">Chọn quận/huyện</option>
-                        </select>
-                        <select id="xaPhuong01" name="xaPhuong01" required disabled> <option value="">Chọn xã/phường/thị trấn</option>
-                        </select>
-                        <input type="text" id="soNhaDuong01" name="soNhaDuong01" placeholder="Số nhà, đường, ngõ, xóm" required> </div>
+                <div class="form-group01">
+                    <label for="cccd01">Số CCCD/Chứng minh nhân dân <span class="required01">*</span></label>
+                    <input type="text" id="cccd01" name="cccd01" required pattern="[0-9]{9,12}" title="Vui lòng nhập 9-12 chữ số">
                 </div>
 
-                <div class="form-group01"> <label for="sdtThiSinh01">Số điện thoại thí sinh <span class="required01">*</span></label> <input type="tel" id="sdtThiSinh01" name="sdtThiSinh01" required pattern="[0-9]{10}" title="Vui lòng nhập 10 chữ số"> </div>
+                <div class="form-group-inline01">
+                    <div class="form-group01">
+                        <label for="ngayCapCCCD01">Ngày cấp <span class="required01">*</span></label>
+                        <input type="date" id="ngayCapCCCD01" name="ngayCapCCCD01" required>
+                    </div>
+                    <div class="form-group01">
+                        <label for="noiCapCCCD01">Nơi cấp <span class="required01">*</span></label>
+                        <input type="text" id="noiCapCCCD01" name="noiCapCCCD01" required>
+                    </div>
+                </div>
 
-                <div class="form-group01"> <label for="emailThiSinh01">Email thí sinh <span class="required01">*</span></label> <input type="email" id="emailThiSinh01" name="emailThiSinh01" required> </div>
+                <div class="form-group01">
+                    <label>Địa chỉ thường trú <span class="required01">*</span></label>
+                    <div class="address-group01">
+                        <select id="tinhThanhPho01" name="tinhThanhPho01" required>
+                            <option value="">Chọn tỉnh/thành phố</option>
+                        </select>
+                        <select id="quanHuyen01" name="quanHuyen01" required disabled>
+                            <option value="">Chọn quận/huyện</option>
+                        </select>
+                        <select id="xaPhuong01" name="xaPhuong01" required disabled>
+                            <option value="">Chọn xã/phường/thị trấn</option>
+                        </select>
+                        <input type="text" id="soNhaDuong01" name="soNhaDuong01" placeholder="Số nhà, đường, ngõ, xóm" required>
+                    </div>
+                </div>
 
-                <div class="form-group01"> <label for="hoTenPhuHuynh01">Họ tên phụ huynh <span class="required01">*</span></label> <input type="text" id="hoTenPhuHuynh01" name="hoTenPhuHuynh01" required> </div>
+                <div class="form-group01">
+                    <label for="sdtThiSinh01">Số điện thoại thí sinh <span class="required01">*</span></label>
+                    <input type="tel" id="sdtThiSinh01" name="sdtThiSinh01" required pattern="[0-9]{10}" title="Vui lòng nhập 10 chữ số">
+                </div>
 
-                <div class="form-group01"> <label for="sdtPhuHuynh01">Số điện thoại phụ huynh <span class="required01">*</span></label> <input type="tel" id="sdtPhuHuynh01" name="sdtPhuHuynh01" required pattern="[0-9]{10}" title="Vui lòng nhập 10 chữ số"> </div>
+                <div class="form-group01">
+                    <label for="emailThiSinh01">Email thí sinh <span class="required01">*</span></label>
+                    <input type="email" id="emailThiSinh01" name="emailThiSinh01" required>
+                </div>
+
+                <div class="form-group01">
+                    <label for="hoTenPhuHuynh01">Họ tên phụ huynh <span class="required01">*</span></label>
+                    <input type="text" id="hoTenPhuHuynh01" name="hoTenPhuHuynh01" required>
+                </div>
+
+                <div class="form-group01">
+                    <label for="sdtPhuHuynh01">Số điện thoại phụ huynh <span class="required01">*</span></label>
+                    <input type="tel" id="sdtPhuHuynh01" name="sdtPhuHuynh01" required pattern="[0-9]{10}" title="Vui lòng nhập 10 chữ số">
+                </div>
             </div>
 
-            <div class="form-section01"> <h2>THÔNG TIN ĐĂNG KÝ NHẬP HỌC</h2>
-                <div class="form-group01"> <label for="nganhHocDangKy01">Ngành học đăng ký <span class="required01">*</span></label> <select id="nganhHocDangKy01" name="nganhHocDangKy01" required> <option value="">Chọn ngành</option>
-                    <option value="ktdn">Kế toán doanh nghiệp</option>
-                    <option value="qtkd">Quản trị kinh doanh</option>
-                    <option value="tcnh">Tài chính ngân hàng</option>
-                    <option value="tmdt">Thương mại điện tử</option>
-                    <option value="logistics">Logistics</option>
-                    <option value="thuy">Thú y</option>
-                    <option value="cntt">Công nghệ thông tin</option>
-                    <option value="thietke">Thiết kế đồ họa</option>
-                    <option value="cntt">Quản trị cơ sở dữ liệu</option>
-                    <option value="cntt">Lập trình máy tính</option>
-                    <option value="cnoto">Công nghệ ô tô</option>
-                    <option value="cntp">Công nghệ thực phẩm</option>
-                    <option value="duoc">Dược</option>
-                    <option value="dd">Điều dưỡng</option>
-                    <option value="ysdk">Y sĩ đa khoa</option>
-                    <option value="ktphr">Kỹ thuật phục hình răng</option>
-                    <option value="ktphcn">Kỹ thuật phục hồi chức năng</option>
-                    <option value="yhct">Y học cổ truyền</option>
-                    <option value="dl">Du lịch</option>
-                    <option value="nna">Ngôn ngữ anh</option>
-                    <option value="ldvpl">Luật dịch vụ pháp lý</option>
-                        </select>
+            <div class="form-section01">
+                <h2>THÔNG TIN ĐĂNG KÝ NHẬP HỌC</h2>
+                <div class="form-group01">
+                    <label for="nganhHocDangKy01">Ngành học đăng ký <span class="required01">*</span></label>
+                    <select id="nganhHocDangKy01" name="nganhHocDangKy01" required>
+                        <option value="">Chọn ngành</option>
+                        <option value="Kế toán doanh nghiệp">Kế toán doanh nghiệp</option>
+                        <option value="Quản trị kinh doanh">Quản trị kinh doanh</option>
+                        <option value="Tài chính ngân hàng">Tài chính ngân hàng</option>
+                        <option value="Thương mại điện tử">Thương mại điện tử</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Thú y">Thú y</option>
+                        <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                        <option value="Thiết kế đồ họa">Thiết kế đồ họa</option>
+                        <option value="Quản trị cơ sở dữ liệu">Quản trị cơ sở dữ liệu</option>
+                        <option value="Lập trình máy tính">Lập trình máy tính</option>
+                        <option value="Công nghệ ô tô">Công nghệ ô tô</option>
+                        <option value="Công nghệ thực phẩm">Công nghệ thực phẩm</option>
+                        <option value="Dược">Dược</option>
+                        <option value="Điều dưỡng">Điều dưỡng</option>
+                        <option value="Y sĩ đa khoa">Y sĩ đa khoa</option>
+                        <option value="Kỹ thuật phục hình răng">Kỹ thuật phục hình răng</option>
+                        <option value="Kỹ thuật phục hồi chức năng">Kỹ thuật phục hồi chức năng</option>
+                        <option value="Y học cổ truyền">Y học cổ truyền</option>
+                        <option value="Du lịch">Du lịch</option>
+                        <option value="Ngôn ngữ anh">Ngôn ngữ anh</option>
+                        <option value="Luật dịch vụ pháp lý">Luật dịch vụ pháp lý</option>
+                    </select>
                 </div>
-                <div class="form-group01"> <label for="nguyenVong201">Nguyện vọng thứ hai</label> <select id="nguyenVong201" name="nguyenVong201"> <option value="">Chọn ngành (Không bắt buộc)</option>
-                    <option value="ktdn">Kế toán doanh nghiệp</option>
-                    <option value="qtkd">Quản trị kinh doanh</option>
-                    <option value="tcnh">Tài chính ngân hàng</option>
-                    <option value="tmdt">Thương mại điện tử</option>
-                    <option value="logistics">Logistics</option>
-                    <option value="thuy">Thú y</option>
-                    <option value="cntt">Công nghệ thông tin</option>
-                    <option value="thietke">Thiết kế đồ họa</option>
-                    <option value="cntt">Quản trị cơ sở dữ liệu</option>
-                    <option value="cntt">Lập trình máy tính</option>
-                    <option value="cnoto">Công nghệ ô tô</option>
-                    <option value="cntp">Công nghệ thực phẩm</option>
-                    <option value="duoc">Dược</option>
-                    <option value="dd">Điều dưỡng</option>
-                    <option value="ysdk">Y sĩ đa khoa</option>
-                    <option value="ktphr">Kỹ thuật phục hình răng</option>
-                    <option value="ktphcn">Kỹ thuật phục hồi chức năng</option>
-                    <option value="yhct">Y học cổ truyền</option>
-                    <option value="dl">Du lịch</option>
-                    <option value="nna">Ngôn ngữ anh</option>
-                    <option value="ldvpl">Luật dịch vụ pháp lý</option>
-                        </select>
+                <div class="form-group01">
+                    <label for="nguyenVong201">Nguyện vọng thứ hai</label>
+                    <select id="nguyenVong201" name="nguyenVong201">
+                        <option value="">Chọn ngành (Không bắt buộc)</option>
+                        <option value="Kế toán doanh nghiệp">Kế toán doanh nghiệp</option>
+                        <option value="Quản trị kinh doanh">Quản trị kinh doanh</option>
+                        <option value="Tài chính ngân hàng">Tài chính ngân hàng</option>
+                        <option value="Thương mại điện tử">Thương mại điện tử</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Thú y">Thú y</option>
+                        <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                        <option value="Thiết kế đồ họa">Thiết kế đồ họa</option>
+                        <option value="Quản trị cơ sở dữ liệu">Quản trị cơ sở dữ liệu</option>
+                        <option value="Lập trình máy tính">Lập trình máy tính</option>
+                        <option value="Công nghệ ô tô">Công nghệ ô tô</option>
+                        <option value="Công nghệ thực phẩm">Công nghệ thực phẩm</option>
+                        <option value="Dược">Dược</option>
+                        <option value="Điều dưỡng">Điều dưỡng</option>
+                        <option value="Y sĩ đa khoa">Y sĩ đa khoa</option>
+                        <option value="Kỹ thuật phục hình răng">Kỹ thuật phục hình răng</option>
+                        <option value="Kỹ thuật phục hồi chức năng">Kỹ thuật phục hồi chức năng</option>
+                        <option value="Y học cổ truyền">Y học cổ truyền</option>
+                        <option value="Du lịch">Du lịch</option>
+                        <option value="Ngôn ngữ anh">Ngôn ngữ anh</option>
+                        <option value="Luật dịch vụ pháp lý">Luật dịch vụ pháp lý</option>
+                    </select>
                 </div>
 
-                <div id="phoThong9PlusFields01" class="pho-thong-9-plus-fields01"> <div class="form-group01"> <label for="namTotNghiepTHCS01">Năm tốt nghiệp THCS hoặc tương đương <span class="required01">*</span></label> <select id="namTotNghiepTHCS01" name="namTotNghiepTHCS01"> <option value="">Chọn năm</option>
-                            <script>
-                                const currentYear = new Date().getFullYear();
-                                for (let i = currentYear; i >= currentYear - 12; i--) {
-                                    document.write(`<option value="${i}">${i}</option>`);
-                                }
-                            </script>
-                        </select>
-                    </div>
-                    <div class="form-group01"> <label for="truongTHCS01">Trường tốt nghiệp THCS hoặc tương đương <span class="required01">*</span></label> <input type="text" id="truongTHCS01" name="truongTHCS01"> </div>
-                    <div class="form-group01"> <label>Nơi tốt nghiệp <span class="required01">*</span></label> <div class="address-group01"> <select id="tinhThanhPhoTHCS01" name="tinhThanhPhoTHCS01"> <option value="">Chọn tỉnh/thành phố</option>
-                                </select>
-                            <select id="quanHuyenTHCS01" name="quanHuyenTHCS01" disabled> <option value="">Chọn quận/huyện</option>
+                <div class="form-group01">
+                    <label for="nguyenVong301">Nguyện vọng thứ ba</label>
+                    <select id="nguyenVong301" name="nguyenVong301">
+                        <option value="">Chọn ngành (Không bắt buộc)</option>
+                        <option value="Kế toán doanh nghiệp">Kế toán doanh nghiệp</option>
+                        <option value="Quản trị kinh doanh">Quản trị kinh doanh</option>
+                        <option value="Tài chính ngân hàng">Tài chính ngân hàng</option>
+                        <option value="Thương mại điện tử">Thương mại điện tử</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Thú y">Thú y</option>
+                        <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                        <option value="Thiết kế đồ họa">Thiết kế đồ họa</option>
+                        <option value="Quản trị cơ sở dữ liệu">Quản trị cơ sở dữ liệu</option>
+                        <option value="Lập trình máy tính">Lập trình máy tính</option>
+                        <option value="Công nghệ ô tô">Công nghệ ô tô</option>
+                        <option value="Công nghệ thực phẩm">Công nghệ thực phẩm</option>
+                        <option value="Dược">Dược</option>
+                        <option value="Điều dưỡng">Điều dưỡng</option>
+                        <option value="Y sĩ đa khoa">Y sĩ đa khoa</option>
+                        <option value="Kỹ thuật phục hình răng">Kỹ thuật phục hình răng</option>
+                        <option value="Kỹ thuật phục hồi chức năng">Kỹ thuật phục hồi chức năng</option>
+                        <option value="Y học cổ truyền">Y học cổ truyền</option>
+                        <option value="Du lịch">Du lịch</option>
+                        <option value="Ngôn ngữ anh">Ngôn ngữ anh</option>
+                        <option value="Luật dịch vụ pháp lý">Luật dịch vụ pháp lý</option>
+                    </select>
+                </div>
+
+                <div id="phoThong9PlusFields01" class="pho-thong-9-plus-fields01">
+                    <div class="form-group01">
+                        <label for="namTotNghiepTHCS01">Năm tốt nghiệp THCS hoặc tương đương <span class="required01">*</span></label>
+                        <select id="namTotNghiepTHCS01" name="namTotNghiepTHCS01">
+                            <option value="">Chọn năm</option>
                             </select>
-                            <select id="xaPhuongTHCS01" name="xaPhuongTHCS01" disabled> <option value="">Chọn xã/phường/thị trấn</option>
+                    </div>
+                    <div class="form-group01">
+                        <label for="truongTHCS01">Trường tốt nghiệp THCS hoặc tương đương <span class="required01">*</span></label>
+                        <input type="text" id="truongTHCS01" name="truongTHCS01">
+                    </div>
+                    <div class="form-group01">
+                        <label>Nơi tốt nghiệp <span class="required01">*</span></label>
+                        <div class="address-group01">
+                            <select id="tinhThanhPhoTHCS01" name="tinhThanhPhoTHCS01">
+                                <option value="">Chọn tỉnh/thành phố</option>
+                            </select>
+                            <select id="quanHuyenTHCS01" name="quanHuyenTHCS01" disabled>
+                                <option value="">Chọn quận/huyện</option>
+                            </select>
+                            <select id="xaPhuongTHCS01" name="xaPhuongTHCS01" disabled>
+                                <option value="">Chọn xã/phường/thị trấn</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-section01"> <h2>THÔNG TIN GỬI KẾT QUẢ XÉT TUYỂN</h2>
-                <div class="radio-group01"> <label class="radio-label01 inline01"> <input type="radio" name="nguoiNhanKetQua01" value="thiSinh" checked> Thí sinh </label>
-                    <label class="radio-label01 inline01"> <input type="radio" name="nguoiNhanKetQua01" value="phuHuynh"> Phụ huynh </label>
+            <div class="form-section01">
+                <h2>THÔNG TIN GỬI KẾT QUẢ XÉT TUYỂN</h2>
+                <div class="radio-group01">
+                    <label class="radio-label01 inline01">
+                        <input type="radio" name="nguoiNhanKetQua01" value="thiSinh" checked> Thí sinh
+                    </label>
+                    <label class="radio-label01 inline01">
+                        <input type="radio" name="nguoiNhanKetQua01" value="phuHuynh"> Phụ huynh
+                    </label>
                 </div>
 
-                <div class="radio-group01 address-type-group01"> <label class="radio-label01 inline01"> <input type="radio" name="diaChiNhan01" value="hoKhau" checked> Địa chỉ hộ khẩu thường trú </label>
-                    <label class="radio-label01 inline01"> <input type="radio" name="diaChiNhan01" value="khac"> Khác </label>
+                <div class="radio-group01 address-type-group01">
+                    <label class="radio-label01 inline01">
+                        <input type="radio" name="diaChiNhan01" value="hoKhau" checked> Địa chỉ hộ khẩu thường trú
+                    </label>
+                    <label class="radio-label01 inline01">
+                        <input type="radio" name="diaChiNhan01" value="khac"> Khác
+                    </label>
                 </div>
-                <div class="form-group01" id="diaChiKhacGroup01" style="display: none;"> <label for="diaChiNhanKhac01">Địa chỉ nhận khác <span class="required01">*</span></label> <textarea id="diaChiNhanKhac01" name="diaChiNhanKhac01" rows="3"></textarea> </div>
+                <div class="form-group01" id="diaChiKhacGroup01" style="display: none;">
+                    <label for="diaChiNhanKhac01">Địa chỉ nhận khác <span class="required01">*</span></label>
+                    <textarea id="diaChiNhanKhac01" name="diaChiNhanKhac01" rows="3"></textarea>
+                </div>
             </div>
 
-            <div class="form-section01"> <h2>TẢI HỒ SƠ ĐĂNG KÝ NHẬP HỌC</h2>
-                <div class="file-upload-group01"> <label for="anhCCCDTruoc01">Ảnh CMT/CCCD mặt trước <span class="required01">*</span></label> <input type="file" id="anhCCCDTruoc01" name="anhCCCDTruoc01" accept="image/*" required> <span class="file-name01" id="fileAnhCCCDTruoc01">Chưa có file nào được chọn</span> </div>
-                <div class="file-upload-group01"> <label for="anhCCCDSau01">Ảnh CMT/CCCD mặt sau <span class="required01">*</span></label> <input type="file" id="anhCCCDSau01" name="anhCCCDSau01" accept="image/*" required> <span class="file-name01" id="fileAnhCCCDSau01">Chưa có file nào được chọn</span> </div>
-                <div class="file-upload-group01"> <label for="bangTotNghiepTHPT01">Bản sao công chứng Bằng tốt nghiệp THPT</label> <input type="file" id="bangTotNghiepTHPT01" name="bangTotNghiepTHPT01" accept=".pdf,image/*"> <span class="sub-text01">(Hoặc giấy chứng nhận tốt nghiệp tạm thời - không bắt buộc)</span> <span class="file-name01" id="fileBangTotNghiepTHPT01">Chưa có file nào được chọn</span> </div>
+            <div class="form-section01">
+                <h2>TẢI HỒ SƠ ĐĂNG KÝ NHẬP HỌC</h2>
+                <div class="file-upload-group01">
+                    <label for="anhCCCDTruoc01">Ảnh CMT/CCCD mặt trước <span class="required01">*</span></label>
+                    <input type="file" id="anhCCCDTruoc01" name="anhCCCDTruoc01" accept="image/*" required>
+                    <span class="file-name01" id="fileAnhCCCDTruoc01">Chưa có file nào được chọn</span>
+                </div>
+                <div class="file-upload-group01">
+                    <label for="anhCCCDSau01">Ảnh CMT/CCCD mặt sau <span class="required01">*</span></label>
+                    <input type="file" id="anhCCCDSau01" name="anhCCCDSau01" accept="image/*" required>
+                    <span class="file-name01" id="fileAnhCCCDSau01">Chưa có file nào được chọn</span>
+                </div>
+                <div class="file-upload-group01">
+                    <label for="bangTotNghiepTHPT01">Bản sao công chứng Bằng tốt nghiệp THPT</label>
+                    <input type="file" id="bangTotNghiepTHPT01" name="bangTotNghiepTHPT01" accept=".pdf,image/*">
+                    <span class="sub-text01">(Hoặc giấy chứng nhận tốt nghiệp tạm thời - không bắt buộc)</span>
+                    <span class="file-name01" id="fileBangTotNghiepTHPT01">Chưa có file nào được chọn</span>
+                </div>
             </div>
 
-            <div class="form-group01 checkbox-group01"> <label class="checkbox-label01"> <input type="checkbox" id="camDoan01" name="camDoan01" required> Tôi xin cam đoan những lời khai của tôi trên phiếu đăng ký này là đúng sự thật. <span class="required01">*</span> </label>
+            <div class="form-group01 checkbox-group01">
+                <label class="checkbox-label01">
+                    <input type="checkbox" id="camDoan01" name="camDoan01" required> Tôi xin cam đoan những lời khai của tôi trên phiếu đăng ký này là đúng sự thật. <span class="required01">*</span>
+                </label>
             </div>
 
-            <button type="submit" class="submit-button01">Gửi Phiếu Đăng Ký</button> </form>
+            <button type="submit" class="submit-button01">Gửi Phiếu Đăng Ký</button>
+        </form>
     </div>
 
-    <script > document.addEventListener('DOMContentLoaded', () => {
-        // --- Khai báo các phần tử DOM (đã thêm 01 vào cuối ID và tên) ---
-        const registrationForm01 = document.getElementById('registrationForm01');
-        const chuongTrinhDaoTao01Radios = document.querySelectorAll('input[name="chuongTrinhDaoTao01"]');
-        const phoThong9PlusFields01 = document.getElementById('phoThong9PlusFields01');
-    
-        const tinhThanhPho01Select = document.getElementById('tinhThanhPho01');
-        const quanHuyen01Select = document.getElementById('quanHuyen01');
-        const xaPhuong01Select = document.getElementById('xaPhuong01');
-        const soNhaDuong01Input = document.getElementById('soNhaDuong01');
-    
-        const tinhThanhPhoTHCS01Select = document.getElementById('tinhThanhPhoTHCS01');
-        const quanHuyenTHCS01Select = document.getElementById('quanHuyenTHCS01');
-        const xaPhuongTHCS01Select = document.getElementById('xaPhuongTHCS01');
-        const truongTHCS01Input = document.getElementById('truongTHCS01');
-        const namTotNghiepTHCS01Select = document.getElementById('namTotNghiepTHCS01');
-    
-        const diaChiNhan01Radios = document.querySelectorAll('input[name="diaChiNhan01"]');
-        const diaChiKhacGroup01 = document.getElementById('diaChiKhacGroup01');
-        const diaChiNhanKhac01Textarea = document.getElementById('diaChiNhanKhac01');
-    
-        const fileInputs01 = document.querySelectorAll('input[type="file"]');
-    
-        // --- Dữ liệu tĩnh cho địa chỉ (ví dụ, thực tế sẽ lấy từ API) ---
-        const addressData01 = { // Đổi tên biến
-            "Thành phố Hà Nội": {
-                "Quận Ba Đình": ["Phường Phúc Xá", "Phường Trúc Bạch", "Phường Vĩnh Phúc"],
-                "Quận Cầu Giấy": ["Phường Nghĩa Đô", "Phường Quan Hoa", "Phường Dịch Vọng"],
-                "Huyện Từ Liêm": ["Xã Đông Ngạc", "Xã Tây Tựu"]
-            },
-            "Thành phố Hồ Chí Minh": {
-                "Quận 1": ["Phường Bến Nghé", "Phường Bến Thành", "Phường Đa Kao"],
-                "Quận Bình Thạnh": ["Phường 1", "Phường 2", "Phường 3"],
-                "Thành phố Thủ Đức": ["Phường An Khánh", "Phường Bình Thọ"]
-            },
-            "Tỉnh Đồng Nai": {
-                "Thành phố Biên Hòa": ["Phường Quyết Thắng", "Phường Hoà Bình"],
-                "Huyện Long Thành": ["Thị trấn Long Thành", "Xã An Phước"]
-            },
-            // Thêm các tỉnh/thành phố và quận/huyện/xã/phường khác theo cấu trúc này
-        };
-    
-        const tinhThanhPhoList01 = [ // Đổi tên biến
-            "Thành phố Hà Nội", "Thành phố Hồ Chí Minh", "Tỉnh Đồng Nai",
-            "Tỉnh Cà Mau", "Tỉnh Bạc Liêu", "Tỉnh Sóc Trăng", "Tỉnh Hậu Giang",
-            "Thành phố Cần Thơ", "Tỉnh Kiên Giang", "Tỉnh An Giang", "Tỉnh Đồng Tháp",
-            "Tỉnh Vĩnh Long", "Tỉnh Trà Vinh", "Tỉnh Bến Tre", "Tỉnh Tiền Giang",
-            "Tỉnh Long An", "Tỉnh Bà Rịa - Vũng Tàu", "Tỉnh Bình Dương", "Tỉnh Tây Ninh",
-            "Tỉnh Bình Phước", "Tỉnh Lâm Đồng", "Tỉnh Đắk Nông", "Tỉnh Đắk Lắk",
-            "Tỉnh Gia Lai", "Tỉnh Kon Tum", "Tỉnh Bình Thuận", "Tỉnh Ninh Thuận",
-            "Tỉnh Khánh Hòa", "Tỉnh Phú Yên", "Tỉnh Bình Định", "Tỉnh Quảng Ngãi",
-            "Tỉnh Quảng Nam", "Thành phố Đà Nẵng", "Tỉnh Thừa Thiên Huế", "Tỉnh Quảng Trị",
-            "Tỉnh Quảng Bình", "Tỉnh Hà Tĩnh", "Tỉnh Nghệ An", "Tỉnh Thanh Hóa",
-            "Tỉnh Ninh Bình", "Tỉnh Nam Định", "Tỉnh Hà Nam", "Tỉnh Thái Bình",
-            "Tỉnh Hưng Yên", "Thành phố Hải Phòng", "Tỉnh Hải Dương", "Tỉnh Bắc Ninh",
-            "Tỉnh Vĩnh Phúc", "Tỉnh Phú Thọ", "Tỉnh Bắc Giang", "Tỉnh Quảng Ninh",
-            "Tỉnh Lạng Sơn", "Tỉnh Thái Nguyên", "Tỉnh Hoà Bình", "Tỉnh Yên Bái",
-            "Tỉnh Sơn La", "Tỉnh Lai Châu", "Tỉnh Điện Biên", "Tỉnh Lào Cai",
-            "Tỉnh Tuyên Quang", "Tỉnh Bắc Kạn", "Tỉnh Cao Bằng", "Tỉnh Hà Giang"
-        ];
-    
-        // --- Functions ---
-    
-        // Hàm load options cho select box
-        const loadOptions01 = (selectElement, dataArray, defaultText) => { // Đổi tên hàm
-            selectElement.innerHTML = `<option value="">${defaultText}</option>`;
-            dataArray.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item;
-                option.textContent = item;
-                selectElement.appendChild(option);
-            });
-            selectElement.disabled = false; // Kích hoạt select sau khi load data
-        };
-    
-        // Hàm reset các select con (quận/huyện, xã/phường)
-        const resetChildSelects01 = (quanHuyenEl, xaPhuongEl) => { // Đổi tên hàm
-            quanHuyenEl.innerHTML = '<option value="">Chọn quận/huyện</option>';
-            quanHuyenEl.disabled = true;
-            xaPhuongEl.innerHTML = '<option value="">Chọn xã/phường/thị trấn</option>';
-            xaPhuongEl.disabled = true;
-        };
-    
-        // Hàm xử lý thay đổi Tỉnh/Thành phố
-        const handleProvinceChange01 = (provinceSelect, districtSelect, wardSelect) => { // Đổi tên hàm
-            const selectedProvince = provinceSelect.value;
-            resetChildSelects01(districtSelect, wardSelect); // Gọi hàm đã đổi tên
-    
-            if (selectedProvince && addressData01[selectedProvince]) { // Sử dụng addressData01
-                const districts = Object.keys(addressData01[selectedProvince]);
-                loadOptions01(districtSelect, districts, 'Chọn quận/huyện'); // Gọi hàm đã đổi tên
-                districtSelect.disabled = false;
-            } else {
-                districtSelect.disabled = true;
-                wardSelect.disabled = true;
-            }
-        };
-    
-        // Hàm xử lý thay đổi Quận/Huyện
-        const handleDistrictChange01 = (provinceSelect, districtSelect, wardSelect) => { // Đổi tên hàm
-            const selectedProvince = provinceSelect.value;
-            const selectedDistrict = districtSelect.value;
-            wardSelect.innerHTML = '<option value="">Chọn xã/phường/thị trấn</option>';
-            wardSelect.disabled = true;
-    
-            if (selectedProvince && selectedDistrict && addressData01[selectedProvince] && addressData01[selectedProvince][selectedDistrict]) { // Sử dụng addressData01
-                const wards = addressData01[selectedProvince][selectedDistrict];
-                loadOptions01(wardSelect, wards, 'Chọn xã/phường/thị trấn'); // Gọi hàm đã đổi tên
-                wardSelect.disabled = false;
-            } else {
-                wardSelect.disabled = true;
-            }
-        };
-    
-        // Hàm ẩn/hiện trường "Phổ thông Cao đẳng 9+"
-        const togglePhoThong9PlusFields01 = () => { // Đổi tên hàm
-            const selectedProgram = document.querySelector('input[name="chuongTrinhDaoTao01"]:checked').value; // Đổi tên name
-            const isPhoThong9Plus = selectedProgram === 'phothong9plus';
-    
-            phoThong9PlusFields01.style.display = isPhoThong9Plus ? 'block' : 'none'; // Đổi tên biến
-    
-            // Đặt thuộc tính 'required' cho các trường trong phần này
-            const requiredElements = phoThong9PlusFields01.querySelectorAll('input, select'); // Đổi tên biến
-            requiredElements.forEach(el => {
-                if (isPhoThong9Plus) {
-                    el.setAttribute('required', 'required');
-                } else {
-                    el.removeAttribute('required');
-                }
-            });
-            
-            // Disable/enable selects cho địa chỉ THCS
-            if (!isPhoThong9Plus) {
-                quanHuyenTHCS01Select.disabled = true; // Đổi tên biến
-                xaPhuongTHCS01Select.disabled = true; // Đổi tên biến
-                // Clear values when hidden
-                namTotNghiepTHCS01Select.value = ''; // Đổi tên biến
-                truongTHCS01Input.value = ''; // Đổi tên biến
-                tinhThanhPhoTHCS01Select.value = ''; // Đổi tên biến
-                resetChildSelects01(quanHuyenTHCS01Select, xaPhuongTHCS01Select); // Gọi hàm đã đổi tên
-            } else {
-                // Re-enable if data loaded
-                if (tinhThanhPhoTHCS01Select.value) { // Đổi tên biến
-                    handleProvinceChange01(tinhThanhPhoTHCS01Select, quanHuyenTHCS01Select, xaPhuongTHCS01Select); // Gọi hàm đã đổi tên
-                }
-            }
-        };
-    
-        // Hàm xử lý hiển thị tên file được chọn
-        const handleFileSelect01 = (event) => { // Đổi tên hàm
-            const input = event.target;
-            const fileNameSpanId = 'file' + input.id.charAt(0).toUpperCase() + input.id.slice(1);
-            const fileNameSpan = document.getElementById(fileNameSpanId);
-            if (input.files.length > 0) {
-                fileNameSpan.textContent = input.files[0].name;
-            } else {
-                fileNameSpan.textContent = 'Chưa có file nào được chọn';
-            }
-        };
-    
-        // --- Khởi tạo ban đầu ---
-        loadOptions01(tinhThanhPho01Select, tinhThanhPhoList01, 'Chọn tỉnh/thành phố'); // Gọi hàm đã đổi tên và biến
-        loadOptions01(tinhThanhPhoTHCS01Select, tinhThanhPhoList01, 'Chọn tỉnh/thành phố'); // Gọi hàm đã đổi tên và biến
-        togglePhoThong9PlusFields01(); // Gọi hàm đã đổi tên
-    
-        // --- Event Listeners ---
-    
-        // Lắng nghe sự kiện thay đổi chương trình đào tạo
-        chuongTrinhDaoTao01Radios.forEach(radio => { // Đổi tên biến
-            radio.addEventListener('change', togglePhoThong9PlusFields01); // Gọi hàm đã đổi tên
-        });
-    
-        // Lắng nghe sự kiện thay đổi Tỉnh/Thành phố (Địa chỉ thường trú)
-        tinhThanhPho01Select.addEventListener('change', () => handleProvinceChange01(tinhThanhPho01Select, quanHuyen01Select, xaPhuong01Select)); // Đổi tên biến và hàm
-        quanHuyen01Select.addEventListener('change', () => handleDistrictChange01(tinhThanhPho01Select, quanHuyen01Select, xaPhuong01Select)); // Đổi tên biến và hàm
-    
-        // Lắng nghe sự kiện thay đổi Tỉnh/Thành phố (Nơi tốt nghiệp THCS)
-        tinhThanhPhoTHCS01Select.addEventListener('change', () => handleProvinceChange01(tinhThanhPhoTHCS01Select, quanHuyenTHCS01Select, xaPhuongTHCS01Select)); // Đổi tên biến và hàm
-        quanHuyenTHCS01Select.addEventListener('change', () => handleDistrictChange01(tinhThanhPhoTHCS01Select, quanHuyenTHCS01Select, xaPhuongTHCS01Select)); // Đổi tên biến và hàm
-    
-        // Lắng nghe sự kiện thay đổi radio "Địa chỉ nhận"
-        diaChiNhan01Radios.forEach(radio => { // Đổi tên biến
-            radio.addEventListener('change', () => {
-                if (document.querySelector('input[name="diaChiNhan01"]:checked').value === 'khac') { // Đổi tên name
-                    diaChiKhacGroup01.style.display = 'block'; // Đổi tên biến
-                    diaChiNhanKhac01Textarea.setAttribute('required', 'required'); // Đổi tên biến
-                } else {
-                    diaChiKhacGroup01.style.display = 'none'; // Đổi tên biến
-                    diaChiNhanKhac01Textarea.removeAttribute('required'); // Đổi tên biến
-                    diaChiNhanKhac01Textarea.value = ''; // Đổi tên biến
-                }
-            });
-        });
-    
-        // Lắng nghe sự kiện thay đổi file input để hiển thị tên file
-        fileInputs01.forEach(input => { // Đổi tên biến
-            input.addEventListener('change', handleFileSelect01); // Gọi hàm đã đổi tên
-        });
-    
-        // Xử lý gửi form
-        registrationForm01.addEventListener('submit', (event) => { // Đổi tên biến
-            event.preventDefault(); // Ngăn chặn form gửi đi mặc định
-    
-            // Kiểm tra các trường required (HTML5 validation đã xử lý phần lớn, đây là fallback)
-            let isValid = true;
-            const requiredInputs = registrationForm01.querySelectorAll('[required]'); // Đổi tên biến
-            requiredInputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    // Có thể thêm hiệu ứng visual cho trường bị lỗi
-                    input.style.borderColor = 'red';
-                } else {
-                    input.style.borderColor = ''; // Reset border
-                }
-            });
-    
-            // Kiểm tra checkbox cam kết
-            const camDoan01Checkbox = document.getElementById('camDoan01'); // Đổi tên ID
-            if (!camDoan01Checkbox.checked) {
-                isValid = false;
-                alert('Bạn phải cam đoan những lời khai là đúng sự thật.');
-                camDoan01Checkbox.focus();
-            }
-    
-            if (isValid) {
-                // Thu thập dữ liệu form (ví dụ)
-                const formData = new FormData(registrationForm01); // Đổi tên biến
-                const data = {};
-                for (let [key, value] of formData.entries()) {
-                    // Xử lý các trường file riêng
-                    if (value instanceof File) {
-                        if (value.name) {
-                            data[key] = {
-                                name: value.name,
-                                size: value.size,
-                                type: value.type
-                            };
-                        } else {
-                            data[key] = null; // Không có file được chọn
-                        }
-                    } else {
-                        data[key] = value;
-                    }
-                }
-    
-                console.log('Dữ liệu form:', data);
-                alert('Đăng ký thành công! Dữ liệu đã được gửi (xem console để biết chi tiết).');
-    
-                // Trong ứng dụng thực tế, bạn sẽ gửi dữ liệu này đến máy chủ
-                // fetch('/api/register', {
-                //     method: 'POST',
-                //     body: JSON.stringify(data),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     }
-                // })
-                // .then(response => response.json())
-                // .then(result => {
-                //     if (result.success) {
-                //         alert('Đăng ký thành công!');
-                //         registrationForm01.reset(); // Reset form sau khi gửi thành công
-                //     } else {
-                //         alert('Đăng ký thất bại: ' + result.message);
-                //     }
-                // })
-                // .catch(error => {
-                //     console.error('Lỗi khi gửi form:', error);
-                //     alert('Có lỗi xảy ra, vui lòng thử lại sau.');
-                // });
-            } else {
-                alert('Vui lòng điền đầy đủ và chính xác các thông tin bắt buộc.');
-            }
-        });
-    });</script>
+    <script src="{{ url_for('static', filename='js/dangkynhaphoc.js') }}"></script>
+</body>
 {% endblock %}
