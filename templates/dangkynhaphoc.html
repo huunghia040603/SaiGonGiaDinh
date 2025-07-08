@@ -9,22 +9,26 @@
 <style>
     /* General Body Styles */
 body {
-    background-image:url(/static/images/nen1.jpg);
+    background-image:url(/static/images/nen2.jpg);
+    background-size: 2300px;
+    background-repeat: no-repeat;
     /* justify-content: center; */
 }
 
 
 .container01 { /* Thêm 01 */
-    background: #fff;
-    padding: 30px 40px;
+    /* background: #fff; */
+    padding: 30px 40px 230px 100px;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+    max-width: 1400px;
     width: 90%;
     margin-top: 30px;
     margin-bottom: 30px;
     justify-content: center;
    margin-left:1%;
+    justify-items: center;
 }
 
 .form-title01 { /* Thêm 01 */
@@ -252,7 +256,7 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .container01 { /* Thêm 01 */
-    
+    padding: 25px 25px 10px 25px;
     max-width: 700px;
     width: 90%;
    margin-left: 0px;
@@ -283,8 +287,8 @@ body {
 @media (max-width: 480px) {
     .container01 { /* Thêm 01 */
      
-        padding: 15px;
-        margin-left: 0px;
+        padding: 15px 15px 10px 15px;
+        margin-left: 8px;
     }
     .form-title01 { /* Thêm 01 */
         font-size: 1.5em;
@@ -299,7 +303,7 @@ body {
 </style>
 <title>{% block title %} Đăng Ký Nhập Học - Trường Cao Đẳng SÀI GÒN GIA ĐỊNH{% endblock %}</title>
 <body>
-    <div class="container01"> <h1 class="form-title01">ĐĂNG KÝ NHẬP HỌC - NHẬN NGAY HỌC BỔNG</h1> <form id="registrationForm01" class="registration-form01"> <div class="form-section01"> <h2>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
+    <div class="container01"> <h1 class="form-title01" style="background-color: #fff; border-radius: 5px; padding: 15px 50px;">ĐĂNG KÝ NHẬP HỌC - NHẬN NGAY HỌC BỔNG</h1> <form id="registrationForm01" class="registration-form01"> <div class="form-section01"> <h2>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
                 <div class="radio-group01"> <label class="radio-label01"> <input type="radio" name="chuongTrinhDaoTao01" value="caodang" checked> Cao đẳng chính quy
                         <span class="sub-text01">(Áp dụng cho học sinh có trình độ đầu vào tốt nghiệp THPT)</span> </label>
                     <label class="radio-label01"> <input type="radio" name="chuongTrinhDaoTao01" value="phothong9plus"> Phổ thông Cao Đẳng 9+
@@ -430,7 +434,7 @@ body {
                 <div class="file-upload-group01"> <label for="bangTotNghiepTHPT01">Bản sao công chứng Bằng tốt nghiệp THPT</label> <input type="file" id="bangTotNghiepTHPT01" name="bangTotNghiepTHPT01" accept=".pdf,image/*"> <span class="sub-text01">(Hoặc giấy chứng nhận tốt nghiệp tạm thời - không bắt buộc)</span> <span class="file-name01" id="fileBangTotNghiepTHPT01">Chưa có file nào được chọn</span> </div>
             </div>
 
-            <div class="form-group01 checkbox-group01"> <label class="checkbox-label01"> <input type="checkbox" id="camDoan01" name="camDoan01" required> Tôi xin cam đoan những lời khai của tôi trên phiếu đăng ký này là đúng sự thật. <span class="required01">*</span> </label>
+            <div class="form-group01 checkbox-group01" style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 10px;"> <label class="checkbox-label01"> <input type="checkbox" id="camDoan01" name="camDoan01" required> Tôi xin cam đoan những lời khai của tôi trên phiếu đăng ký này là đúng sự thật. <span class="required01">*</span> </label>
             </div>
 
             <button type="submit" class="submit-button01">Gửi Phiếu Đăng Ký</button> </form>
