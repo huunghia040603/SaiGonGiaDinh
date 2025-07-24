@@ -275,6 +275,8 @@ def thuongmaidientu():
 def thuy():
     return render_template('nganhhoc/thuy.html')
 
+
+
 @app.route('/y-hoc-co-truyen')
 def yhoccotruyen():
     return render_template('nganhhoc/yhoccotruyen.html')

@@ -1,0 +1,128 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Danh Sách Đăng Ký Nhập Học{% endblock %}
+
+{% block page_styles %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font Inter */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Tùy chỉnh cho bảng */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* border-gray-200 */
+            padding: 0.75rem; /* p-3 */
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc; /* bg-gray-50 */
+        }
+        tr:nth-child(even) {
+            background-color: #f1f5f9; /* bg-gray-100 */
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border-radius: 0.5rem;
+            width: 90%; /* Adjust width for responsiveness */
+            max-width: 800px; /* Max width for larger screens */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Responsive adjustments for modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Danh Sách Đăng Ký Nhập Học</h1>
+
+        
+        <div class="flex justify-end mb-4">
+            <button id="exportExcelBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md">
+                Xuất Excel
+            </button>
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="loading" class="text-center text-gray-600 mb-4">Đang tải dữ liệu...</div>
+
+        <!-- Bảng hiển thị dữ liệu -->
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table id="data-table" class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STT</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Họ Tên</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày Sinh</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngành ĐK 1</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngành ĐK 2</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngành ĐK 3</th>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chi Tiết</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="bg-white divide-y divide-gray-200">
+                    <!-- Dữ liệu sẽ được chèn vào đây bởi JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Error message -->
+        <div id="error-message" class="hidden text-center text-red-600 mt-4">Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại sau.</div>
+    </div>
+
+    <!-- Modal cho chi tiết -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModalBtn">&times;</span>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Chi Tiết Đăng Ký Nhập Học</h2>
+            <div id="modal-body" class="text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Dữ liệu chi tiết sẽ được chèn vào đây -->
+            </div>
+        </div>
+    </div>
+
+    
+    {# Liên kết đến file JavaScript chung #}
+     <script src="{{ url_for('static', filename='js/xlsx.full.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/admin/dangkynhaphoc.js') }}"></script>
+{% endblock %}
+

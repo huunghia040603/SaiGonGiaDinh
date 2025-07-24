@@ -1,0 +1,223 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Quản lý Thông Báo - Admin{% endblock %}
+
+{% block page_styles %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 30px auto;
+        }
+        h1, h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .notification-list {
+            margin-top: 30px;
+        }
+        .notification-item {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-item h3 {
+            margin: 0;
+            color: #343a40;
+            font-size: 1.2em;
+        }
+        .notification-actions button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .notification-actions button.edit { background-color: #28a745; }
+        .notification-actions button.delete { background-color: #dc3545; }
+        .notification-actions button:hover { opacity: 0.9; }
+
+        .edit-form-section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        #specificUsersContainer {
+            margin-top: 10px;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #specificUsersContainer label {
+            font-weight: normal;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Quản lý Thông Báo</h1>
+        <div id="message" class="message"></div>
+
+        <div class="notification-list">
+            <h2>Danh sách Thông báo</h2>
+            <div id="notificationsContainer">
+                <p style="text-align: center; margin-top: 20px;">Đang tải thông báo...</p>
+            </div>
+        </div>
+
+        <div class="edit-form-section" style="display: none;" id="editNotificationSection">
+            <h2>Chỉnh sửa Thông báo</h2>
+            <form id="editNotificationForm">
+                <input type="hidden" id="editNotificationId">
+
+                <div class="form-group">
+                    <label for="editTitle">Tiêu đề:</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editContent">Nội dung:</label>
+                    <textarea id="editContent" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStartDate">Ngày bắt đầu hiển thị:</label>
+                    <input type="datetime-local" id="editStartDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editEndDate">Ngày kết thúc hiển thị (Tùy chọn):</label>
+                    <input type="datetime-local" id="editEndDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="editTargetUsers">Đối tượng nhận thông báo:</label>
+                    <select id="editTargetUsers" required>
+                        <option value="ALL">Tất cả người dùng</option>
+                        <option value="SINH_VIEN">Sinh viên</option>
+                        <option value="CBCNV">Giảng viên/Nhân viên</option>
+                        <option value="ADMIN">Quản trị viên</option>
+                        <option value="SPECIFIC_USER">Người dùng cụ thể</option>
+                    </select>
+                </div>
+
+                <div id="editSpecificUsersContainer" class="form-group" style="display: none;">
+                    <label for="editSpecificUsers">ID Người dùng cụ thể (phân cách bởi dấu phẩy, ví dụ: 1,2,5):</label>
+                    <input type="text" id="editSpecificUsers">
+                </div>
+
+                <div class="form-group">
+                    <label for="editNotificationType">Loại thông báo:</label>
+                    <select id="editNotificationType" required>
+                        <option value="INFO">Thông tin</option>
+                        <option value="URGENT">Khẩn cấp</option>
+                        <option value="REMINDER">Nhắc nhở</option>
+                        <option value="EVENT">Sự kiện</option>
+                        <option value="ANNOUNCEMENT">Thông báo chung</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editIsActive">
+                    <label for="editIsActive">Đang hoạt động</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editRequiresAcknowledgement">
+                    <label for="editRequiresAcknowledgement">Yêu cầu xác nhận đã đọc</label>
+                </div>
+
+                <button type="submit">Cập nhật Thông Báo</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/admin/admin_manage_notifications.js') }}"></script>
+{% endblock %}

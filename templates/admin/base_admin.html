@@ -216,11 +216,39 @@
                 </a>
             </li>
 
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin.manage_nganh') }}"> {# Thêm liên kết này #}
-                    <i class="bi bi-person-plus me-2"></i>Quản lý ngành
+                <a class="nav-link" href="{{ url_for('admin.edit_banner') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-chalkboard"></i> &nbsp;Quản lý banner
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.schedule') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-clipboard-list"></i> &nbsp;Quản lý thời khóa biểu
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.dangkynhaphoc') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-clipboard-list"></i> &nbsp;Quản lý đăng ký nhập học
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.createNoti') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-clipboard-list"></i> &nbsp;Tạo thông báo mới
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.editNoti') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-clipboard-list"></i> &nbsp;Sửa/Xóa thông báo 
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.ip_summary') }}"> {# Thêm liên kết này #}
+                    <i class="fa-solid fa-clipboard-list"></i> &nbsp;Thống kê lượt truy cập 
+                </a>
+            </li>
+
 
             <li class="nav-item mt-3">
                 <span class="nav-link text-uppercase fw-bold text-muted" style="font-size: 0.75rem; padding: 5px 20px;">Auth</span>

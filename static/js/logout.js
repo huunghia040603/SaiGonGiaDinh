@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Bạn đã đăng xuất thành công.');
 
             // Chuyển hướng về trang đăng nhập
-            window.location.href = '/dangnhap'; 
+            window.location.href = '/'; 
         });
     } else {
         console.warn('Không tìm thấy nút đăng xuất với ID "sidebarLogoutBtn".');

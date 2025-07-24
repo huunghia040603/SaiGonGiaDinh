@@ -24,9 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Nếu API trả về "image/upload/v1749022077/Screenshot_...", thì cần tiền tố Cloudinary
         const imageUrl = `${newsItem.featured_image}`; 
         
-        // Ensure category is not null and has a default
-        // Dựa trên JSON, tags là một mảng, bạn có thể lấy tên tag đầu tiên
-        const category = newsItem.tags && newsItem.tags.length > 0 ? newsItem.tags[0].name : 'Chung'; 
+        // CẬP NHẬT: Lấy tên loại tin tức từ newsItem.type.name
+        // Đảm bảo newsItem.type tồn tại và có thuộc tính 'name'
+        const newsType = newsItem.type_display;
+        const newsTypeKey = newsItem.type_display && newsItem.type.key ? newsItem.type.key : '';
 
         // Limit title to 3 lines (CSS handles truncation, nhưng bạn có thể cắt ở đây nếu muốn)
         const truncatedTitle = newsItem.title; 
@@ -34,20 +35,32 @@ document.addEventListener('DOMContentLoaded', function() {
         // Limit description to 3 lines (CSS handles truncation, nhưng bạn có thể cắt ở đây nếu muốn)
         const truncatedDescription = newsItem.short_description; // Sử dụng short_description
 
-        // Construct detail URL. Assuming your backend has a detail view, e.g., /news/<slug>
-        const detailUrl = newsItem.slug ? `/news/${newsItem.slug}` : '#'; 
+        // Construct detail URL: Ưu tiên newsItem.link, sau đó là newsItem.slug, cuối cùng là '#'
+        const detailUrl = newsItem.link ? newsItem.link : (newsItem.slug ? `/news/${newsItem.slug}` : '#');
+        
         let displayCategory;
-        switch (`${category}`) {
-                    case "TU_VAN":
-                        displayCategory = "Tư vấn";
-                        break;
-                    case "GIAO_DUC": // Example of another category
-                        displayCategory = "Giáo dục";
-                        break;
-                    case "PHONG_TRAO": // Example of another category
-                        displayCategory = "Phong trào";
-                        break;
-                    }
+        // CẬP NHẬT: Sử dụng newsTypeKey cho switch case
+        switch (newsTypeKey) {
+            case "TU_VAN":
+                displayCategory = "Tư vấn";
+                break;
+            case "GIAO_DUC":
+                displayCategory = "Giáo dục";
+                break;
+            case "PHONG_TRAO":
+                displayCategory = "Phong trào";
+                break;
+            case "SU_KIEN":
+                displayCategory = "Sự kiện"; // Thêm case cho "Sự kiện" nếu cần
+                break;
+            case "HOAT_DONG":
+                displayCategory = "Hoạt động"; // Thêm case cho "Hoạt động" nếu cần
+                break;
+            default:
+                displayCategory = newsType; // Giữ nguyên tên loại tin tức nếu không khớp với các trường hợp trên
+                break;
+        }
+
         newsCard.innerHTML = `
             <div class="card-image-wrapper">
                 <img src="${imageUrl}" alt="Ảnh bìa" class="image" style="width: 100%; height: 100%; opacity: 0.9;">
@@ -145,10 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Hàm Fetch dữ liệu từ API
-
-
-
-    
     async function fetchNews() {
         loadingMessage.style.display = 'block'; // Hiển thị thông báo đang tải
         newsGridContainer.innerHTML = ''; // Xóa nội dung cũ để chuẩn bị tải mới
@@ -160,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const data = await response.json();
 
-          
             allNews = data.results || []; 
             
             loadingMessage.style.display = 'none'; // Ẩn thông báo đang tải
@@ -174,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-
     // Gọi hàm fetch dữ liệu khi trang được tải
     fetchNews();
 });

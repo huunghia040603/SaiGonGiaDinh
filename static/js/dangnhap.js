@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
     // --- Lấy các phần tử DOM ---
     const emailInput = document.getElementById('email');
@@ -9,12 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessageDisplay = document.getElementById('errorMessageDisplay'); // Dành cho thông báo lỗi cụ thể trên form
 
     // CÁC BIẾN NÀY LIÊN QUAN ĐẾN SIDEBAR HOẶC HEADER CỦA CÁC TRANG KHÁC
-    // Trên trang login.js, chúng ta không thực sự cần chúng để trang login hoạt động,
-    // nhưng nếu bạn muốn tái sử dụng hàm updateSidebarUserInfo ở đây, bạn có thể giữ.
-    // Tuy nhiên, tốt nhất là code cập nhật UI sidebar nên nằm trong file JS của layout chính.
     const sidebarUserNameElement = document.getElementById('sidebarUserName');
     const sidebarUserAvatarElement = document.getElementById('sidebarUserAvatar');
-    const sidebarUserAvatarLink = document.getElementById('sidebarUserAvatarLink');
     const sidebarUserInfoDiv = document.querySelector('.sidebar-user-info');
 
     const togglePassword = document.querySelector('.toggle-password');
@@ -26,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Cấu hình API và thời gian phiên ---
     const loginApiUrl = 'https://saigongiadinh.pythonanywhere.com/auth/login/'; // Cập nhật API của bạn
     const SESSION_DURATION_MS = 10000 * 60 * 10; // 10 phút tính bằng mili giây
-
+// const SESSION_DURATION_MS = 1000 * 60 * 10;
     // Lưu nội dung gốc của nút đăng nhập
     let originalButtonContent = loginBtn ? loginBtn.innerHTML : '<i class="fas fa-sign-in-alt"></i> Đăng Nhập';
 
@@ -34,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function isAuthenticated() {
         const authToken = localStorage.getItem('authToken');
         const userRole = localStorage.getItem('userRole');
-        // Kiểm tra xem có token và vai trò hợp lệ không
         return authToken && (userRole === 'CBCNV' || userRole === 'SINH_VIEN');
     }
 
@@ -71,23 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- Cập nhật thông tin User Info trong Sidebar (Avatar và Tên) ---
-    // Hàm này chủ yếu dùng trên các trang đã đăng nhập, không thực sự cần thiết trên trang login.
-    // Tôi giữ lại nhưng lưu ý rằng nó có thể không được gọi hoặc các phần tử DOM của nó không tồn tại.
     function updateSidebarUserInfo(fullName, userPhotoUrl, role, hide = false) {
         if (sidebarUserInfoDiv) {
             if (hide || !fullName || (role !== 'CBCNV' && role !== 'SINH_VIEN')) {
-                sidebarUserInfoDiv.style.display = 'none'; // Ẩn toàn bộ div nếu không có thông tin hợp lệ hoặc yêu cầu ẩn
+                sidebarUserInfoDiv.style.display = 'none';
                 return;
             }
-            sidebarUserInfoDiv.style.display = 'flex'; // Hiện div nếu có thông tin hợp lệ
+            sidebarUserInfoDiv.style.display = 'flex';
 
-            // Cập nhật tên
             if (sidebarUserNameElement) {
                 sidebarUserNameElement.textContent = fullName;
                 sidebarUserNameElement.style.display = 'inline';
             }
 
-            // Cập nhật avatar
             if (sidebarUserAvatarElement) {
                 const finalUserPhotoUrl = userPhotoUrl || "/static/images/default_avatar.png";
                 sidebarUserAvatarElement.src = finalUserPhotoUrl;
@@ -111,8 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'studentIdNumber', 'studentMajor', 'studentEnrollmentYear'
         ];
         keysToRemove.forEach(key => localStorage.removeItem(key));
-        console.log('Đã xóa dữ liệu Local Storage của phiên đăng nhập.');
-        // Sau khi xóa, cập nhật lại UI sidebar để ẩn thông tin người dùng (nếu có các phần tử này trên trang)
+      
         updateSidebarUserInfo('', '', '', true);
     }
 
@@ -121,7 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('time_login', Date.now().toString());
         localStorage.setItem('sessionStartTime', Date.now().toString());
 
-        if (data.token) localStorage.setItem('authToken', data.token);
+        if (data.token) {
+            localStorage.setItem('authToken', data.token);
+            // THÊM DÒNG NÀY ĐỂ LOG TOKEN RA CONSOLE
+            
+        }
         if (data.user_id) localStorage.setItem('userId', data.user_id);
         if (data.email) localStorage.setItem('userEmail', data.email);
         if (data.role) localStorage.setItem('userRole', data.role);
@@ -172,15 +164,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('facultyIsDepartmentHead', userData.is_department_head ? 'true' : 'false');
             }
 
-            // LƯU Ý QUAN TRỌNG: Đảm bảo user_photo là URL tuyệt đối hoặc tương đối đúng
             localStorage.setItem('userPhoto', userData.user_photo || '');
         }
+        
     }
 
-    // Hàm xử lý đăng xuất (chủ yếu dùng cho nút Đăng xuất trên các trang khác)
+    // Hàm xử lý đăng xuất
     function handleLogout() {
         clearLocalStorageSession();
-        alert('Bạn đã đăng xuất thành công!');
+          setTimeout(() => {
+                        alert('Bạn đã đăng xuất thành công!');
+                    }, 500); 
         window.location.href = '/dangnhap';
     }
 
@@ -191,11 +185,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
+        // --- Console Log: Dữ liệu đầu vào ---
+        
         clearErrorMessage();
         showMessage('', '');
 
         if (!email || !password) {
             showErrorMessage('Vui lòng nhập đầy đủ email và mật khẩu.');
+            console.warn('[Login Process] Lỗi: Email hoặc mật khẩu trống.');
             return;
         }
 
@@ -203,12 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!emailRegex.test(email)) {
             showErrorMessage('Email chưa hợp lệ, hãy kiểm tra lại nhé!');
             emailInput.focus();
+            console.warn('[Login Process] Lỗi: Định dạng email không hợp lệ.');
             return;
         }
 
         if (password.length < 3) {
             showErrorMessage('Mật khẩu của bạn cần ít nhất 3 ký tự. Hãy thử lại!');
             passwordInput.focus();
+            console.warn('[Login Process] Lỗi: Mật khẩu quá ngắn.');
             return;
         }
 
@@ -217,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng nhập...';
         }
 
-        // Kích hoạt hiệu ứng "vui vẻ" cho các nhân vật
         if (characterPurple) characterPurple.classList.add('character-purple--happy');
         if (characterBlack) characterBlack.classList.add('character-black--happy');
         if (characterOrange) characterOrange.classList.add('character-orange--happy');
@@ -227,48 +225,62 @@ document.addEventListener('DOMContentLoaded', function() {
             password: password
         };
 
+        // --- Console Log: Payload và Headers gửi đi ---
+       
+        const requestHeaders = {
+            'Content-Type': 'application/json',
+        };
         try {
             const response = await fetch(loginApiUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: requestHeaders, // Sử dụng headers đã định nghĩa
                 body: JSON.stringify(payload)
             });
 
             const data = await response.json();
 
-            if (response.ok) {
+           if (response.ok) {
+                console.log('Thành công!');
+
                 showMessage(data.message || 'Đăng nhập thành công!', 'success');
                 saveUserInfoToLocalStorage(data); // Lưu tất cả thông tin vào Local Storage
 
-                // Cập nhật thông tin người dùng trên sidebar (chỉ nếu các phần tử tồn tại)
+                // Gọi hàm ghi nhận lượt truy cập sau khi đăng nhập thành công
+                // Đảm bảo user_visit_web.js đã được tải trước dangnhap.js
+                if (typeof window.sendUserVisit === 'function') {
+                    window.sendUserVisit(); 
+                } else {
+                    console.warn('[UserVisit] Hàm sendUserVisit không tồn tại. Đảm bảo user_visit_web.js được tải trước.');
+                }
+
                 const userFullName = localStorage.getItem('userFullName');
                 const userPhoto = localStorage.getItem('userPhoto');
                 const userRole = localStorage.getItem('userRole');
                 updateSidebarUserInfo(userFullName, userPhoto, userRole);
 
-                // Chuyển hướng người dùng dựa trên vai trò
                 if (data.role === 'CBCNV') {
+                    console.log('Giảng viên...');
                     setTimeout(() => {
                         window.location.href = '/gv/home_faculty/';
-                    }, 500); // Chuyển hướng nhanh chóng
+                    }, 500); 
                 } else if (data.role === 'SINH_VIEN') {
+                    console.log('Sinh viên...');
                     setTimeout(() => {
-                        window.location.href = '/'; // Hoặc trang dashboard sinh viên
-                    }, 500); // Chuyển hướng nhanh chóng
+                        window.location.href = '/';
+                    }, 500);
                 } else {
-                    // Nếu role không xác định, vẫn thông báo và chuyển về đăng nhập
+                    console.warn('[Login Process] Vai trò người dùng không xác định. Chuyển hướng về trang đăng nhập.');
                     showErrorMessage('Đăng nhập thành công nhưng tài khoản không có quyền truy cập cụ thể. Bạn sẽ được chuyển hướng về trang đăng nhập.');
-                    clearLocalStorageSession(); // Xóa phiên không hợp lệ
+                    clearLocalStorageSession();
                     setTimeout(() => {
                         window.location.href = '/dangnhap';
-                    }, 1500); // Giảm thời gian chờ
+                    }, 1500);
                 }
 
             } else {
-                // Xử lý lỗi từ API
-                console.error(`Login failed (Status: ${response.status}):`, data);
+                // --- Console Log: Phản hồi lỗi từ API ---
+                console.error('%c[Login API Call] LỖI khi đăng nhập! Phản hồi từ API:', 'color: red; font-weight: bold;', response.status, response.statusText, data);
+
                 let displayMsg = 'Có vẻ email hoặc mật khẩu chưa đúng. Vui lòng thử lại!';
                 if (data.detail) {
                     displayMsg = data.detail;
@@ -287,14 +299,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 showErrorMessage(displayMsg);
 
-                // Tắt hiệu ứng "vui vẻ" khi đăng nhập thất bại
                 if (characterPurple) characterPurple.classList.remove('character-purple--happy');
                 if (characterBlack) characterBlack.classList.remove('character-black--happy');
                 if (characterOrange) characterOrange.classList.remove('character-orange--happy');
             }
 
         } catch (error) {
-            console.error('Lỗi khi gửi yêu cầu đăng nhập:', error);
+            // --- Console Log: Lỗi mạng hoặc lỗi khác ---
+            console.error('%c[Login API Call] LỖI MẠNG hoặc lỗi khác khi gửi yêu cầu đăng nhập:', 'color: red; font-weight: bold;', error);
+
             if (error.response) {
                 const statusCode = error.response.status;
                 const errorData = error.response.data;
@@ -326,22 +339,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 showErrorMessage('Đã xảy ra lỗi hệ thống. Vui lòng thử lại!');
             }
 
-            // Tắt hiệu ứng "vui vẻ" khi có lỗi
             if (characterPurple) characterPurple.classList.remove('character-purple--happy');
             if (characterBlack) characterBlack.classList.remove('character-black--happy');
             if (characterOrange) characterOrange.classList.remove('character-orange--happy');
 
         } finally {
-            // Luôn reset nút đăng nhập
             if (loginBtn) {
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = originalButtonContent;
+                
             }
         }
     }
 
     // --- Logic kiểm tra phiên hết hạn trên client ---
-    let isSessionExpiredAlertShown = false; // Biến cờ để tránh hiển thị nhiều alert
+    let isSessionExpiredAlertShown = false;
 
     function checkFrontendSessionExpiry() {
         const timeLogin = localStorage.getItem('time_login');
@@ -349,23 +361,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const userRole = localStorage.getItem('userRole');
 
         const currentPathname = window.location.pathname;
-        // Trang đăng nhập hoặc trang root không cần kiểm tra phiên hết hạn định kỳ tại đây
-        // vì chúng ta đã có logic chuyển hướng đầu trang cho trang login.
-        // Các trang dashboard (home_faculty, /) sẽ tự kiểm tra và chuyển hướng nếu hết hạn.
         const isLoginPage = currentPathname === '/dangnhap' || currentPathname === '/login/';
 
         if (isLoginPage) {
-            isSessionExpiredAlertShown = false; // Reset cờ nếu đang ở trang login
-            return true; // Không cần kiểm tra phiên trên trang login (logic chuyển hướng đã lo)
+            isSessionExpiredAlertShown = false;
+            return true;
         }
 
-        // Nếu không có token, thời gian đăng nhập hoặc vai trò không hợp lệ
         if (!timeLogin || !authToken || (userRole !== 'CBCNV' && userRole !== 'SINH_VIEN')) {
             if (!isSessionExpiredAlertShown) {
                 isSessionExpiredAlertShown = true;
+                console.warn('%c[Session Check] Phiên không hợp lệ hoặc thiếu thông tin. Đang xóa session và chuyển hướng.', 'color: darkred; font-weight: bold;');
                 clearLocalStorageSession();
                 alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
-                window.location.href = '/dangnhap'; // Chuyển hướng về trang đăng nhập
+                window.location.href = '/dangnhap';
             }
             return false;
         }
@@ -375,19 +384,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const elapsedTime = currentTime - loginTimestamp;
         const remainingTimeMs = SESSION_DURATION_MS - elapsedTime;
 
-        if (remainingTimeMs <= 0) { // Phiên đã hết hạn
+        if (remainingTimeMs <= 0) {
             if (!isSessionExpiredAlertShown) {
                 isSessionExpiredAlertShown = true;
+                console.warn('%c[Session Check] Phiên đã hết hạn. Đang xóa session và chuyển hướng.', 'color: darkred; font-weight: bold;');
                 clearLocalStorageSession();
                 alert('Phiên đăng nhập của bạn đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
-                window.location.href = '/dangnhap'; // Chuyển hướng về trang đăng nhập
+                window.location.href = '/dangnhap';
             }
             return false;
         } else {
-            // const remainingMinutes = Math.floor(remainingTimeMs / (1000 * 60));
-            // const remainingSeconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
-            // console.log(`%c[Phiên Đăng Nhập] Còn lại: ${remainingMinutes} phút ${remainingSeconds} giây.`, 'color: green;');
-            isSessionExpiredAlertShown = false; // Đảm bảo cờ được reset nếu phiên còn hiệu lực
+            const remainingMinutes = Math.floor(remainingTimeMs / (1000 * 60));
+            const remainingSeconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
+   
+            isSessionExpiredAlertShown = false;
             return true;
         }
     }
@@ -403,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 handleLogin(event);
             }
         });
-        emailInput.addEventListener('input', clearErrorMessage); // Xóa lỗi khi gõ
+        emailInput.addEventListener('input', clearErrorMessage);
     }
     if (passwordInput) {
         passwordInput.addEventListener('keypress', function(event) {
@@ -411,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 handleLogin(event);
             }
         });
-        passwordInput.addEventListener('input', clearErrorMessage); // Xóa lỗi khi gõ
+        passwordInput.addEventListener('input', clearErrorMessage);
     }
 
     // Toggle hiển thị mật khẩu
@@ -482,54 +492,68 @@ document.addEventListener('DOMContentLoaded', function() {
     // **Logic chính để ngăn nút Back khi đã đăng nhập**
     if (isLoginPage && isAuthenticated()) {
         const userRole = localStorage.getItem('userRole');
-        let redirectPath = '/'; // Mặc định là trang chủ sinh viên
+        let redirectPath = '/';
         if (userRole === 'CBCNV') {
-            redirectPath = '/gv/home_faculty/'; // Nếu là giảng viên, chuyển hướng đến trang của giảng viên
+            redirectPath = '/gv/home_faculty/';
         }
-        console.log(`%c[Kiểm tra phiên] Đã có phiên đăng nhập hợp lệ trên trang đăng nhập. Chuyển hướng đến ${redirectPath}`, 'color: green;');
-        window.location.replace(redirectPath); // Dùng replace để ngăn nút back
-        return; // Dừng mọi thứ trên trang đăng nhập
+     
+        window.location.replace(redirectPath);
+        return;
     }
 
     // Logic kiểm tra phiên cho CÁC TRANG KHÔNG PHẢI TRANG ĐĂNG NHẬP
     if (!isLoginPage) {
         if (isAuthenticated()) {
-            // Bắt đầu kiểm tra phiên định kỳ 5 giây một lần
-            checkFrontendSessionExpiry(); // Kiểm tra ngay lập tức
+          
+            checkFrontendSessionExpiry();
             setInterval(() => {
                 checkFrontendSessionExpiry();
             }, 5000);
         } else {
-            console.log('%c[Khởi tạo] Không có phiên đăng nhập hợp lệ. Chuyển hướng về trang đăng nhập.', 'color: red;');
+          
             clearLocalStorageSession();
             alert('Bạn cần đăng nhập để truy cập trang này.');
-            window.location.href = '/dangnhap'; // Chuyển hướng về trang đăng nhập
+            window.location.href = '/dangnhap';
         }
     } else {
-        // Nếu đang ở trang đăng nhập và không có phiên hợp lệ (hoặc phiên hết hạn)
-        console.log('%c[Khởi tạo] Đang ở trang đăng nhập. Không có phiên hợp lệ để tự động chuyển hướng.', 'color: blue;');
+        console.log('Đang ở đăng nhập', 'color: blue;');
     }
 
     // Kiểm tra lại phiên khi tab trình duyệt được focus trở lại
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'visible') {
             const currentPathnameOnFocus = window.location.pathname;
-            // Chỉ kiểm tra phiên nếu KHÔNG phải trang đăng nhập
             if (!(currentPathnameOnFocus === '/dangnhap' || currentPathnameOnFocus === '/login/')) {
                 checkFrontendSessionExpiry();
             }
         }
     });
 
-    // Cập nhật thông tin user info trong sidebar khi tải trang, dựa trên session hiện có
-    // (Đây là logic dùng cho các trang khác có sidebar, không phải trang login này)
     const storedUserFullName = localStorage.getItem('userFullName');
     const storedUserPhoto = localStorage.getItem('userPhoto');
     const storedUserRole = localStorage.getItem('userRole');
 
-    if (isAuthenticated()) { // Kiểm tra lại xem có phiên hợp lệ không
+    if (isAuthenticated()) {
         updateSidebarUserInfo(storedUserFullName, storedUserPhoto, storedUserRole);
     } else {
-        updateSidebarUserInfo('', '', '', true); // Ẩn nếu không có phiên hoặc vai trò không hợp lệ
+        updateSidebarUserInfo('', '', '', true);
     }
+
+    // Bổ sung các hàm xử lý UX mobile từ script nội tuyến
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('dblclick', function() {
+            this.value = '';
+        });
+        input.addEventListener('focus', function() {
+            setTimeout(() => {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+    });
+
+    window.addEventListener('orientationchange', function() {
+        window.scrollTo(0, 0);
+        document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 });

@@ -26,7 +26,10 @@ def count_traffic():
     
     return render_template('admin/stats.html')
 
-
+@admin_bp.route('/IPSummary/')
+def ip_summary():
+    
+    return render_template('admin/admin_ip_summary.html')
 
 
 @admin_bp.route('/IPDetail/')
@@ -79,5 +82,33 @@ def manage_nganh():
 
 
 
+@admin_bp.route('/create_schedule/')
+def schedule():
+    
+    return render_template('admin/schedule.html')
+
+
+
+@admin_bp.route('/edit_banner/')
+def edit_banner():
+    
+    return render_template('admin/edit_banner.html')
+
+
+@admin_bp.route('/dangkynhaphoc/')
+def dangkynhaphoc():
+    
+    return render_template('admin/dangkynhaphoc.html')
+
+
+@admin_bp.route('/create_noti/')
+def createNoti():
+    
+    return render_template('admin/admin_create_notifications.html')
+
+@admin_bp.route('/edit_noti/')
+def editNoti():
+    
+    return render_template('admin/admin_manage_notifications.html')
 
 

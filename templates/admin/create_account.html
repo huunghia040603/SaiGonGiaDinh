@@ -21,6 +21,7 @@
             max-width: 1200px; /* Tăng max-width để chứa nhiều cột */
             box-sizing: border-box;
             margin: 50px auto;
+            
         }
         .sggd-heading {
             text-align: center;
@@ -32,8 +33,7 @@
         .sggd-form-group {
             margin-bottom: 20px;
             flex-grow: 1; /* Cho phép các nhóm form mở rộng */
-            flex-shrink: 1;
-            flex-basis: 0; /* Cho phép flexbox tính toán kích thước cơ sở */
+           
         }
         .sggd-label {
             display: block;
@@ -93,6 +93,8 @@
         }
 
         .sggd-message {
+            display: none;
+            background-color: #0056b3;
             margin-top: 25px;
             padding: 15px;
             border-radius: 8px;
@@ -101,6 +103,8 @@
             font-size: 1em;
             line-height: 1.5;
             word-break: break-word;
+            color: yellow;
+            
         }
         .sggd-message.sggd-success {
             background-color: #d4edda;
@@ -131,6 +135,7 @@
             margin-right: auto;
             align-self: center; /* Căn giữa trong flex container */
             flex-basis: auto; /* Điều chỉnh lại flex-basis */
+            display: none; /* Ẩn theo mặc định, JS sẽ hiện */
         }
 
         .photo-preview-wrapper {
@@ -224,6 +229,52 @@
             text-overflow: ellipsis; /* Hiển thị dấu ... nếu tên quá dài */
         }
 
+        /* CSS cho checkbox tùy chỉnh */
+        .sggd-checkbox {
+            /* Ẩn checkbox mặc định */
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sggd-checkbox + label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .sggd-checkbox + label::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .sggd-checkbox:checked + label::before {
+            background-color: #007bff;
+            border-color: #007bff;
+            content: '\2713'; /* Dấu tick */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .sggd-checkbox:focus + label::before {
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+            outline: none;
+        }
+
         /* --- Responsive Adjustments --- */
         @media (max-width: 1200px) {
             .sggd-container {
@@ -307,208 +358,177 @@
             color: #333;
         }
 
-        /* Toggle Switch CSS */
-        .toggle-container {
+        /* Radio button group for role selection */
+        .role-selection-group {
+            display: flex;
+            justify-content: center;
+            gap: 25px; /* Khoảng cách giữa các lựa chọn vai trò */
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .role-radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .role-radio-label input[type="radio"] {
+            /* Ẩn radio mặc định */
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .custom-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin-right: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
-            gap: 20px;
-            flex-wrap: wrap; /* Cho phép wrap trên màn hình nhỏ */
+            transition: all 0.2s ease-in-out;
+            flex-shrink: 0; /* Ngăn không cho co lại */
         }
 
-        .toggle-label {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #555;
-            white-space: nowrap; /* Ngăn không cho text bị xuống dòng */
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 90px;
-            height: 34px;
-        }
-
-        .switch input {
+        .custom-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #007bff;
             opacity: 0;
-            width: 0;
-            height: 0;
+            transition: opacity 0.2s ease-in-out;
         }
 
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #007bff; /* Màu xanh khi chưa chọn */
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 34px;
+        .role-radio-label input[type="radio"]:checked + .custom-radio {
+            background-color: #007bff;
+            border-color: #007bff;
         }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 50%;
+        .role-radio-label input[type="radio"]:checked + .custom-radio::after {
+            opacity: 1;
+            background-color: white; /* Dot màu trắng khi được chọn */
         }
 
-        input:checked + .slider {
-            background-color: #2c3e50; /* Màu xanh navy khi chọn */
+        .role-radio-label:hover .custom-radio {
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
         }
 
-        input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
+        .required-indicator {
+            color: red;
+            margin-left: 3px;
         }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(56px); /* 90px (width) - 34px (height) = 56px */
-            -ms-transform: translateX(56px);
-            transform: translateX(56px);
-        }
-
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .slider-text {
-            position: absolute;
-            font-weight: bold;
-            font-size: 0.9em;
-            line-height: 34px;
-            padding: 0 10px;
-            transition: all 0.4s ease;
-            user-select: none; /* Ngăn người dùng chọn chữ khi kéo */
-        }
-
-        .slider-text.student {
-            left: 8px;
-            color: white; /* Màu trắng khi ở trạng thái SV (unchecked) */
-        }
-
-        .slider-text.faculty {
-            right: 8px;
-            color: #a7d1eb; /* Màu xanh nhạt khi ở trạng thái SV (unchecked) */
-        }
-
-        input:checked + .slider .slider-text.student {
-            color: #a7d1eb; /* Màu xanh nhạt khi ở trạng thái GV (checked) */
-        }
-
-        input:checked + .slider .slider-text.faculty {
-            color: white; /* Màu trắng khi ở trạng thái GV (checked) */
-        }
+      
     </style>
 {% endblock %}
 
-
 {% block content %}
+ 
     <div class="sggd-container">
         <h1 class="sggd-heading" id="formHeading">Tạo Tài Khoản Mới</h1>
-
-        <div class="toggle-container">
-            <span class="toggle-label">Sinh viên</span>
-            <label class="switch">
-                <input type="checkbox" id="accountTypeToggle">
-                <span class="slider round">
-                    <span class="slider-text student"></span>
-                    <span class="slider-text faculty"></span>
-                </span>
+       
+        <div class="role-selection-group">
+            <label class="role-radio-label">
+                <input type="radio" name="account_role" value="student" id="roleStudent" checked>
+                <span class="custom-radio"></span>
+                Sinh viên
             </label>
-            <span class="toggle-label">Giảng viên</span>
+            <label class="role-radio-label">
+                <input type="radio" name="account_role" value="highschool_student" id="roleHighschoolStudent">
+                <span class="custom-radio"></span>
+                Học sinh 9+
+            </label>
+            <label class="role-radio-label">
+                <input type="radio" name="account_role" value="staff" id="roleStaff">
+                <span class="custom-radio"></span>
+                Nhân viên
+            </label>
+            <label class="role-radio-label">
+                <input type="radio" name="account_role" value="faculty" id="roleFaculty">
+                <span class="custom-radio"></span>
+                Giảng viên
+            </label>
         </div>
 
         <form id="createAccountForm">
-            {# COMMON FIELDS #}
+            {# COMMON FIELDS - Các trường này hiển thị cho tất cả các loại tài khoản #}
             <div class="sggd-form-row five-columns">
                 <div class="sggd-form-group">
-                    <label for="username" class="sggd-label">Tên đăng nhập:<span style="color: red;">*</span></label>
-                    <input type="text" id="username" name="username" class="sggd-input" required>
+                    <label for="email" class="sggd-label">Email:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="email" id="email" name="email" class="sggd-input" required autocomplete="email">
                 </div>
                 <div class="sggd-form-group">
-                    <label for="email" class="sggd-label">Email:<span style="color: red;">*</span></label>
-                    <input type="email" id="email" name="email" class="sggd-input" required>
+                    <label for="first_name" class="sggd-label">Họ:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="text" id="first_name" name="first_name" class="sggd-input" required autocomplete="given-name">
                 </div>
                 <div class="sggd-form-group">
-                    <label for="first_name" class="sggd-label">Họ:<span style="color: red;">*</span></label>
-                    <input type="text" id="first_name" name="first_name" class="sggd-input" required>
+                    <label for="last_name" class="sggd-label">Tên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="text" id="last_name" name="last_name" class="sggd-input" required autocomplete="family-name">
                 </div>
                 <div class="sggd-form-group">
-                    <label for="last_name" class="sggd-label">Tên:<span style="color: red;">*</span></label>
-                    <input type="text" id="last_name" name="last_name" class="sggd-input" required>
+                    <label for="national_id_card" class="sggd-label">Số CMND/CCCD:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="text" id="national_id_card" name="national_id_card" class="sggd-input" required autocomplete="on">
                 </div>
                 <div class="sggd-form-group">
-                    <label for="national_id_card" class="sggd-label">Số CMND/CCCD:<span style="color: red;">*</span></label>
-                    <input type="text" id="national_id_card" name="national_id_card" class="sggd-input" required>
+                    <label for="phone" class="sggd-label">Số điện thoại:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="tel" id="phone" name="phone" class="sggd-input" required autocomplete="tel">
                 </div>
             </div>
             
-            <div class="sggd-form-row five-columns">
+            <div class="sggd-form-row four-columns">
                 <div class="sggd-form-group">
-                    <label for="nationality" class="sggd-label">Quốc tịch:<span style="color: red;">*</span></label>
+                    <label for="nationality" class="sggd-label">Quốc tịch:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                     <select id="nationality" name="nationality" class="sggd-select" required>
-                        <option value="">Chọn quốc tịch</option>
-                    </select>
+                        <option value="" disabled selected>Chọn quốc tịch</option>
+                        </select>
                 </div>
                 <div class="sggd-form-group">
-                    <label for="gender" class="sggd-label">Giới tính:<span style="color: red;">*</span></label>
+                    <label for="gender" class="sggd-label">Giới tính:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                     <select id="gender" name="gender" class="sggd-select" required>
-                        <option value="">Chọn giới tính</option>
+                        <option value="" disabled selected>Chọn giới tính</option>
                         <option value="M">Nam</option>
                         <option value="F">Nữ</option>
                         <option value="O">Khác</option>
                     </select>
                 </div>
                 <div class="sggd-form-group">
-                    <label for="date_of_birth" class="sggd-label">Ngày sinh:<span style="color: red;">*</span></label>
-                    <input type="date" id="date_of_birth" name="date_of_birth" class="sggd-input" required>
+                    <label for="date_of_birth" class="sggd-label">Ngày sinh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" class="sggd-input" required autocomplete="bday">
                 </div>
                 <div class="sggd-form-group">
-                    <label for="place_of_birth" class="sggd-label">Nơi sinh:<span style="color: red;">*</span></label>
+                    <label for="place_of_birth" class="sggd-label">Nơi sinh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                     <select id="place_of_birth" name="place_of_birth" class="sggd-select" required>
-                        <option value="">Chọn tỉnh/thành</option>
-                    </select>
-                </div>
-                <div class="sggd-form-group">
-                    <label for="phone" class="sggd-label">Số điện thoại:<span style="color: red;">*</span></label>
-                    <input type="tel" id="phone" name="phone" class="sggd-input" required>
+                        <option value="" disabled selected>Chọn tỉnh/thành</option>
+                        </select>
                 </div>
             </div>
             
-            <div class="sggd-form-row three-columns"> {# Thay đổi thành 3 cột cho 3 trường này #}
+            <div class="sggd-form-row three-columns">
                 <div class="sggd-form-group">
-                    <label for="city" class="sggd-label">Tỉnh/Thành phố:<span style="color: red;">*</span></label>
-                    <select type="text" id="city" name="city" class="sggd-select" required>
-                        <option value="">Chọn tỉnh/thành</option>
-                    </select>
+                    <label for="city" class="sggd-label">Tỉnh/Thành phố:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <select id="city" name="city" class="sggd-select" required>
+                        <option value="" disabled selected>Chọn tỉnh/thành</option>
+                        </select>
                 </div>
                 <div class="sggd-form-group">
-                    <label for="district" class="sggd-label">Quận/Huyện:<span style="color: red;">*</span></label>
-                    <select type="text" id="district" name="district" class="sggd-select" required>
-                        <option value="">Chọn quận/huyện</option>
-                    </select>
+                    <label for="district" class="sggd-label">Quận/Huyện:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <select id="district" name="district" class="sggd-select" required>
+                        <option value="" disabled selected>Chọn quận/huyện</option>
+                        </select>
                 </div>
                 <div class="sggd-form-group">
-                    <label for="address" class="sggd-label">Địa chỉ:<span style="color: red;">*</span></label>
-                    <input type="text" id="address" name="address" class="sggd-input" required>
+                    <label for="address" class="sggd-label">Địa chỉ:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="text" id="address" name="address" class="sggd-input" required autocomplete="street-address">
                 </div>
             </div>
 
-            <div class="sggd-form-row two-columns"> {# Sử dụng two-columns cho phần upload ảnh và preview #}
+            <div class="sggd-form-row two-columns">
                 <div class="sggd-form-group">
                     <label for="user_photo" class="sggd-label">Ảnh đại diện:</label>
                     <div class="custom-file-upload-wrapper">
@@ -517,68 +537,68 @@
                         <span id="fileNameDisplay" class="file-name-display">Chưa có tệp nào được chọn</span>
                     </div>
                 </div>
-                <div id="photoPreviewContainer" class="sggd-form-group" style="display: none;">
+                <div id="photoPreviewContainer" class="sggd-form-group">
                     <div class="photo-preview-wrapper">
-                        <img id="photoPreview" src="#" alt="Ảnh đại diện" style="display: none;">
+                        <img id="photoPreview" src="#" alt="Ảnh đại diện">
                     </div>
                     <p id="photoPreviewText">Ảnh đại diện</p>
                 </div>
             </div>
             
-
             {# STUDENT-SPECIFIC FIELDS #}
-            <div id="studentFields" style="display: block;"> {# Default to student fields #}
-                <div class="sggd-form-row three-columns"> {# Đổi sang 3 cột #}
+            <div id="studentFields" class="role-specific-fields"> {# Default to student fields #}
+                <div class="sggd-form-row three-columns">
                     <div class="sggd-form-group">
-                        <label for="student_code" class="sggd-label">Mã sinh viên:<span style="color: red;">*</span></label>
+                        <label for="student_code" class="sggd-label">Mã sinh viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <input type="text" id="student_code" name="student_code" class="sggd-input">
                     </div>
                     <div class="sggd-form-group">
-                        <label for="parent_name" class="sggd-label">Tên phụ huynh:<span style="color: red;">*</span></label>
-                        <input type="text" id="parent_name" name="parent_name" class="sggd-input">
+                        <label for="parent_name" class="sggd-label">Tên phụ huynh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <input type="text" id="parent_name" name="parent_name" class="sggd-input" autocomplete="name">
                     </div>
                     <div class="sggd-form-group">
-                        <label for="parent_phone" class="sggd-label">Số điện thoại phụ huynh:<span style="color: red;">*</span></label>
-                        <input type="tel" id="parent_phone" name="parent_phone" class="sggd-input">
+                        <label for="parent_phone" class="sggd-label">Số điện thoại phụ huynh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <input type="tel" id="parent_phone" name="parent_phone" class="sggd-input" autocomplete="tel">
                     </div>
                 </div>
-                <div class="sggd-form-row three-columns"> {# Đổi sang 3 cột #}
+                <div class="sggd-form-row three-columns">
                     <div class="sggd-form-group">
-                        <label for="program" class="sggd-label">Chương trình học:<span style="color: red;">*</span></label>
+                        <label for="program" class="sggd-label">Chương trình học:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <select id="program" name="program" class="sggd-select">
-                            <option value="">Chọn chương trình học</option>
-                        </select>
+                            <option value="" disabled selected>Chọn chương trình học</option>
+                            </select>
                     </div>
                     <div class="sggd-form-group">
-                        <label for="department" class="sggd-label">Khoa:<span style="color: red;">*</span></label>
+                        <label for="department" class="sggd-label">Khoa:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <select id="department" name="department" class="sggd-select">
-                            <option value="">Chọn khoa </option>
-                        </select>
+                            <option value="" disabled selected>Chọn khoa </option>
+                            </select>
                     </div>
                     <div class="sggd-form-group">
-                        <label for="major" class="sggd-label">Ngành học:<span style="color: red;">*</span></label>
+                        <label for="major" class="sggd-label">Ngành học:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <select id="major" name="major" class="sggd-select">
-                            <option value="">Chọn ngành học</option>
-                        </select>
+                            <option value="" disabled selected>Chọn ngành học</option>
+                            </select>
+                    </div>
+
+                    <div class="sggd-form-group">
+                        <label for="classCollege" class="sggd-label">Lớp:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <select id="classCollege" name="classCollege" class="sggd-select">
+                            <option value="" disabled selected>Chọn lớp</option>
+                            </select>
                     </div>
                 </div>
-                <div class="sggd-form-row two-columns"> {# Đổi sang 2 cột #}
+                <div class="sggd-form-row two-columns">
                     <div class="sggd-form-group">
-                        <label for="academic_year" class="sggd-label">Năm học:<span style="color: red;">*</span></label>
+                        <label for="academic_year" class="sggd-label">Năm học:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <select id="academic_year" name="academic_year" class="sggd-select">
-                            <option value="">Chọn năm học</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
+                            <option value="" disabled selected>Chọn năm học</option>
                         </select>
                     </div>
                     <div class="sggd-form-group">
-                        <label for="student_status" class="sggd-label">Trạng thái sinh viên:<span style="color: red;">*</span></label>
+                        <label for="student_status" class="sggd-label">Trạng thái sinh viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
                         <select id="student_status" name="student_status" class="sggd-select">
-                            <option value="">Chọn trạng thái</option>
+                            <option value="" disabled selected>Chọn trạng thái</option>
                             <option value="DANG_HOC">Đang học</option>
                             <option value="DA_TOT_NGHIEP">Đã tốt nghiệp</option>
                             <option value="SAP_TOT_NGHIEP">Sắp tốt nghiệp</option>
@@ -590,49 +610,112 @@
                 </div>
             </div>
 
-            {# FACULTY-SPECIFIC FIELDS #}
-            <div id="facultyFields" style="display: none;">
+            {# HIGHSCHOOL STUDENT-SPECIFIC FIELDS #}
+            <div id="highschoolStudentFields" class="role-specific-fields" style="display: none;">
                 <div class="sggd-form-row three-columns">
                     <div class="sggd-form-group">
-                        <label for="faculty_code" class="sggd-label">Mã giảng viên:<span style="color: red;">*</span></label>
-                        <input type="text" id="faculty_code" name="faculty_code" class="sggd-input">
+                        <label for="hs_student_code" class="sggd-label">Mã học sinh 9+:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <input type="text" id="hs_student_code" name="hs_student_code" class="sggd-input">
                     </div>
                     <div class="sggd-form-group">
-                        <label for="type" class="sggd-label">Loại giảng viên:<span style="color: red;">*</span></label>
-                        <select id="type" name="type" class="sggd-select">
-                            <option value="">Chọn loại</option>
-                            <option value="GIANG_VIEN">Giảng viên</option>
-                            <option value="CAN_BO">Cán bộ</option>
+                        <label for="hs_parent_name" class="sggd-label">Tên phụ huynh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <input type="text" id="hs_parent_name" name="hs_parent_name" class="sggd-input" autocomplete="name">
+                    </div>
+                    <div class="sggd-form-group">
+                        <label for="hs_parent_phone" class="sggd-label">Số điện thoại phụ huynh:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <input type="tel" id="hs_parent_phone" name="hs_parent_phone" class="sggd-input" autocomplete="tel">
+                    </div>
+                </div>
+                <div class="sggd-form-group">
+                        <label for="academic_year" class="sggd-label">Năm học:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <select id="academic_year1" name="academic_year" class="sggd-select">
+                            <option value="" disabled selected>Chọn năm học</option>
                         </select>
                     </div>
+                <div class="sggd-form-row two-columns">
+                    
                     <div class="sggd-form-group">
-                        <label for="department_faculty" class="sggd-label">Khoa:<span style="color: red;">*</span></label>
-                        <select id="department_faculty" name="department_faculty" class="sggd-select">
-                            <option value="">Chọn khoa</option>
+                        <label for="hs_grade" class="sggd-label">Khối lớp hiện tại:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <select id="hs_grade" name="hs_grade" class="sggd-select">
+                            <option value="" disabled selected>Chọn khối lớp</option>
+                            <option value="10">Lớp 10</option>
+                            <option value="11">Lớp 11</option>
+                            <option value="12">Lớp 12</option>
                         </select>
                     </div>
-                </div>
-                <div class="sggd-form-row three-columns">
-                    <div class="sggd-form-group">
-                        <label for="position" class="sggd-label">Chức vụ:<span style="color: red;">*</span></label>
-                        <input type="text" id="position" name="position" class="sggd-input">
-                    </div>
-                    <div class="sggd-form-group">
-                        <label for="degree" class="sggd-label">Bằng cấp:<span style="color: red;">*</span></label>
-                        <input type="text" id="degree" name="degree" class="sggd-input">
-                    </div>
-                    <div class="sggd-form-group">
-                        <label for="office_location" class="sggd-label">Vị trí văn phòng:<span style="color: red;">*</span></label>
-                        <input type="text" id="office_location" name="office_location" class="sggd-input">
+                     <div class="sggd-form-group">
+                        <label for="classTHPT" class="sggd-label">Lớp:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                        <select id="classTHPT" name="classTHPT" class="sggd-select">
+                            <option value="" disabled selected>Chọn lớp</option>
+                            </select>
                     </div>
                 </div>
-                <div class="sggd-form-row one-column">
-                    <div class="sggd-form-group">
-                        <label for="is_department_head" class="sggd-label">Là trưởng khoa:</label>
-                        <input type="checkbox" id="is_department_head" name="is_department_head" class="sggd-checkbox">
-                    </div>
-                </div>
+               
             </div>
+
+            {# STAFF-SPECIFIC FIELDS #}
+          <div id="staffFields" class="role-specific-fields" style="display: none;">
+    <div class="sggd-form-row three-columns">
+        <div class="sggd-form-group">
+            <label for="staff_code" class="sggd-label">Mã nhân viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <input type="text" id="staff_code" name="staff_code" class="sggd-input" readonly>
+        </div>
+        <div class="sggd-form-group">
+            <label for="staff_type" class="sggd-label">Loại nhân viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <select id="staff_type" name="staff_type" class="sggd-select">
+                <option value="" disabled selected>Chọn loại</option>
+                <option value="ADMIN">Quản trị viên</option>
+                <option value="NHAN_VIEN">Nhân viên hành chính</option>
+                <option value="CHUYEN_VIEN">Chuyên viên</option>
+                <option value="KHAC">Khác</option>
+            </select>
+        </div>
+        <div class="sggd-form-group">
+            <label for="department_staff" class="sggd-label">Phòng ban:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <select id="department_staff" name="department_staff" class="sggd-select">
+                <option value="" disabled selected>Chọn phòng ban</option>
+            </select>
+        </div>
+    </div>
+    <div class="sggd-form-row one-column"> {# Hoặc two-columns nếu bạn muốn căn chỉnh nó bên cạnh một thứ gì đó khác #}
+        <div class="sggd-form-group">
+            <input type="checkbox" id="is_manager" name="is_manager" class="sggd-checkbox">
+            <label for="is_manager" class="sggd-label">Là quản lý/trưởng bộ phận:</label>
+        </div>
+    </div>
+</div>
+
+            {# FACULTY-SPECIFIC FIELDS #}
+           <div id="facultyFields" class="role-specific-fields" style="display: none;">
+            <div class="sggd-form-row three-columns">
+                <div class="sggd-form-group">
+                    <label for="faculty_code" class="sggd-label">Mã giảng viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <input type="text" id="faculty_code" name="faculty_code" class="sggd-input" readonly>
+                </div>
+                <div class="sggd-form-group">
+                    <label for="faculty_type" class="sggd-label">Loại giảng viên:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+                    <select id="faculty_type" name="faculty_type" class="sggd-select"></select>
+                </div>
+        <div class="sggd-form-group">
+            <label for="department_faculty" class="sggd-label">Khoa:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <select id="department_faculty" name="department_faculty" class="sggd-select"></select>
+        </div>
+        <div class="sggd-form-group">
+            <label for="degree" class="sggd-label">Học vị:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <input type="text" id="degree" name="degree" class="sggd-input">
+        </div>
+    </div>
+    <div class="sggd-form-row two-columns"> {# Thêm một sggd-form-row mới cho 2 trường này #}
+        <div class="sggd-form-group">
+            <label for="office_location" class="sggd-label">Vị trí văn phòng:<span class="required-indicator" title="Trường bắt buộc">*</span></label>
+            <input type="text" id="office_location" name="office_location" class="sggd-input">
+        </div>
+        <div class="sggd-form-group">
+            <input type="checkbox" id="is_department_head" name="is_department_head" class="sggd-checkbox">
+            <label for="is_department_head" class="sggd-label">Là trưởng khoa:</label>
+        </div>
+    </div>
+</div>
 
             <button type="submit" class="sggd-button" id="submitButton">Tạo tài khoản</button>
         </form>
@@ -648,111 +731,4 @@
 {% block scripts %}
     {# Liên kết đến file JavaScript chung #}
     <script src="{{ url_for('static', filename='js/admin/create_account.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const accountTypeToggle = document.getElementById('accountTypeToggle');
-            const studentFields = document.getElementById('studentFields');
-            const facultyFields = document.getElementById('facultyFields');
-            const formHeading = document.getElementById('formHeading');
-            const fileNameDisplay = document.getElementById('fileNameDisplay');
-            const userPhotoInput = document.getElementById('user_photo');
-            const photoPreview = document.getElementById('photoPreview');
-            const photoPreviewContainer = document.getElementById('photoPreviewContainer');
-            const photoPreviewText = document.getElementById('photoPreviewText');
-
-            // Set initial state based on toggle
-            function setFormFieldsVisibility() {
-                if (accountTypeToggle.checked) { // Giảng viên
-                    studentFields.style.display = 'none';
-                    facultyFields.style.display = 'block';
-                    formHeading.textContent = 'Tạo Tài Khoản Giảng Viên';
-                    setRequired(studentFields, false);
-                    setRequired(facultyFields, true);
-                } else { // Sinh viên
-                    studentFields.style.display = 'block';
-                    facultyFields.style.display = 'none';
-                    formHeading.textContent = 'Tạo Tài Khoản Sinh Viên';
-                    setRequired(studentFields, true);
-                    setRequired(facultyFields, false);
-                }
-            }
-
-            function setRequired(container, isRequired) {
-                const inputs = container.querySelectorAll('input[required], select[required]');
-                inputs.forEach(input => {
-                    if (isRequired) {
-                        input.setAttribute('required', 'required');
-                    } else {
-                        input.removeAttribute('required');
-                    }
-                });
-            }
-
-            accountTypeToggle.addEventListener('change', setFormFieldsVisibility);
-
-            // Initial call to set correct visibility
-            setFormFieldsVisibility();
-
-            // Handle file input changes for preview
-            userPhotoInput.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    fileNameDisplay.textContent = this.files[0].name;
-
-                    reader.onload = function(e) {
-                        photoPreview.src = e.target.result;
-                        photoPreview.style.display = 'block';
-                        photoPreviewContainer.style.display = 'flex'; // Show container
-                        photoPreviewText.style.display = 'none'; // Hide default text
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                } else {
-                    fileNameDisplay.textContent = 'Chưa có tệp nào được chọn';
-                    photoPreview.src = '#';
-                    photoPreview.style.display = 'none';
-                    photoPreviewContainer.style.display = 'none'; // Hide container
-                    photoPreviewText.style.display = 'block'; // Show default text
-                }
-            });
-
-            // Populate select options (example for nationalities and provinces)
-            const nationalities = ["Việt Nam", "Mỹ", "Anh", "Pháp", "Đức", "Nhật Bản", "Hàn Quốc"];
-            const provinces = ["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ", "Huế", "Nha Trang"];
-            const departments = ["Công nghệ thông tin", "Kinh tế", "Ngoại ngữ", "Luật", "Y học", "Điện tử viễn thông"];
-            const programs = ["Đại học", "Cao đẳng", "Sau đại học"];
-            const majors = ["Khoa học máy tính", "Kỹ thuật phần mềm", "An toàn thông tin", "Quản trị kinh doanh", "Kinh tế quốc tế"];
-
-
-            function populateSelect(selectElement, options) {
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    selectElement.appendChild(opt);
-                });
-            }
-
-            populateSelect(document.getElementById('nationality'), nationalities);
-            populateSelect(document.getElementById('place_of_birth'), provinces);
-            populateSelect(document.getElementById('city'), provinces);
-            populateSelect(document.getElementById('department'), departments);
-            populateSelect(document.getElementById('program'), programs);
-            populateSelect(document.getElementById('major'), majors);
-            populateSelect(document.getElementById('department_faculty'), departments);
-
-            // Example for district based on city selection
-            document.getElementById('city').addEventListener('change', function() {
-                const districtSelect = document.getElementById('district');
-                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>'; // Clear existing options
-                const selectedCity = this.value;
-                let districts = [];
-                if (selectedCity === "TP. Hồ Chí Minh") {
-                    districts = ["Quận 1", "Quận 3", "Quận 5", "Quận Bình Thạnh", "Quận Thủ Đức"];
-                } else if (selectedCity === "Hà Nội") {
-                    districts = ["Ba Đình", "Hoàn Kiếm", "Đống Đa", "Cầu Giấy", "Hà Đông"];
-                }
-                populateSelect(districtSelect, districts);
-            });
-        });
-    </script>
 {% endblock %}

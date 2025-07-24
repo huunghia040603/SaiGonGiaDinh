@@ -1,0 +1,545 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Quản lý Banner{% endblock %}
+
+{% block page_styles %}
+<style>
+        /* Basic styling for the admin panel - you might already have this in admin_style.css */
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; color: #0056b3; margin-bottom: 30px; }
+        .button-group { text-align: right; margin-bottom: 20px; }
+        .button-group button {
+            padding: 5px 10px;
+            margin-left: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .button-group button.add-btn { background-color: #28a745; color: white; }
+        .button-group button.add-btn:hover { background-color: #218838; }
+        .button-group button.edit-btn { background-color: #007bff; color: white; }
+        .button-group button.edit-btn:hover { background-color: #0056b3; }
+        .button-group button.delete-btn { background-color: #dc3545; color: white; }
+        .button-group button.delete-btn:hover { background-color: #c82333; }
+        
+        .banner-list { margin-top: 10px; }
+        .banner-item {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .banner-item:hover { background-color: #e9e9e9; border-color: #bbb; }
+        .banner-item.selected { background-color: #cfe2ff; border-color: #007bff; }
+        .banner-item img {
+            width: 180px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+        .banner-info { flex-grow: 1; }
+        .banner-info p { margin: 0; line-height: 1.4; }
+        .banner-info strong { color: #0056b3; }
+        .banner-status { font-size: 0.9em; color: #666; }
+        .banner-status.active { color: #28a745; font-weight: bold; }
+        .banner-status.inactive { color: #dc3545; }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-title {
+            text-align: center;
+            margin-bottom: 2px;
+            color: #0056b3;
+        }
+        .form-group {
+            margin-bottom: 2px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="file"],
+        .form-group select {
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+       
+        /* Để label và input checkbox nằm trên cùng một hàng */
+        .form-group.checkbox-group {
+            display: flex;
+            align-items: center; /* Căn chỉnh theo chiều dọc */
+            gap: 5px; /* Khoảng cách giữa checkbox và label */
+        }
+        .form-group input[type="checkbox"] {
+            /* Quan trọng nhất để căn chỉnh theo chiều dọc với văn bản */
+            vertical-align: middle; 
+            /* Đặt lại margin mặc định để tránh bị lệch */
+            margin: 0 10px 0 0; /* margin-right 5px để tạo khoảng cách với chữ "Hoạt động" */
+            width: 20px; /* Tăng kích thước chiều rộng */
+            height: 20px; /* Tăng kích thước chiều cao */
+            cursor: pointer;
+        }
+        .modal-buttons {
+            text-align: center;
+            margin-top: 5px;
+        }
+        .modal-buttons button {
+            padding: 5px 10px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .modal-buttons button.save-btn { background-color: #28a745; color: white; }
+        .modal-buttons button.save-btn:hover { background-color: #218838; }
+        .modal-buttons button.cancel-btn { background-color: #6c757d; color: white; }
+        .modal-buttons button.cancel-btn:hover { background-color: #5a6268; }
+
+        /* Preview for image upload */
+        #imagePreviewContainer {
+            margin-top: 2px;
+            text-align: center;
+        }
+        #imagePreview {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            display: none; /* Hidden by default */
+        }
+       /* Đặt CSS này vào khối <style> của bạn */
+
+
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Quản lý Banner Ảnh</h1>
+
+        <div class="button-group">
+            <button id="addBannerBtn" class="add-btn">Thêm Banner Mới</button>
+            <button id="editBannerBtn" class="edit-btn" disabled>Sửa Banner</button>
+            <button id="deleteBannerBtn" class="delete-btn" disabled>Xóa Banner</button>
+        </div>
+        <div style="font-style: italic; font-size: 15px;">Chọn vào banner muốn sửa/xóa trước khi nhấn nút sửa hay xóa nhé</div>
+
+        <div class="banner-list" id="bannerList">
+            <p style="text-align: center; color: #888;">Đang tải danh sách banner...</p>
+        </div>
+    </div>
+
+    <div id="bannerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modalTitle" class="modal-title">Thêm Banner Mới</h2>
+            <form id="bannerForm">
+                <input type="hidden" id="bannerId">
+                
+                <div class="form-group">
+                    <label for="imageUploadInput">Tải ảnh lên:</label>
+                    <input type="file" id="imageUploadInput" accept="image/*" required>
+                    <div id="imagePreviewContainer">
+                        <img id="imagePreview" src="" alt="Image Preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="orderInput">Thứ tự hiển thị:</label>
+                    <input type="number" id="orderInput" value="0" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="isActiveInput">Hoạt động:</label>
+                    <input type="checkbox" id="isActiveInput" checked>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="save-btn">Lưu Banner</button>
+                    <button type="button" id="cancelModalBtn" class="cancel-btn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Cấu hình Cloudinary (THAY THẾ VỚI THÔNG TIN CỦA BẠN) ---
+        const CLOUDINARY_CLOUD_NAME = 'dftarzzfw';
+        const CLOUDINARY_UPLOAD_PRESET = 'SGGDCollege'; // Đảm bảo preset này là 'Unsigned'
+        const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+        // const CLOUDINARY_FOLDER = 'banner'; // Không cần thiết khi dùng unsigned preset
+
+        // Lấy token từ localStorage (đảm bảo bạn đã lưu token sau khi đăng nhập)
+        function getAuthToken() {
+            const token = localStorage.getItem('adminAuthToken');
+            if (!token) {
+                console.warn("Không tìm thấy token xác thực. Vui lòng đăng nhập.");
+                window.location.href = '/sggd/qtv/admin/login/'; 
+            }
+            return token;
+        }
+        const token = getAuthToken();
+
+        // --- Khai báo các phần tử HTML ---
+        const bannerList = document.getElementById('bannerList');
+        const addBannerBtn = document.getElementById('addBannerBtn');
+        const editBannerBtn = document.getElementById('editBannerBtn');
+        const deleteBannerBtn = document.getElementById('deleteBannerBtn');
+
+        const bannerModal = document.getElementById('bannerModal');
+        const closeButton = bannerModal.querySelector('.close-button');
+        const cancelModalBtn = document.getElementById('cancelModalBtn');
+        const bannerForm = document.getElementById('bannerForm');
+        const modalTitle = document.getElementById('modalTitle');
+
+        const bannerIdInput = document.getElementById('bannerId');
+        // const imagePathInput = document.getElementById('imagePathInput'); // Đã xóa
+        const imageUploadInput = document.getElementById('imageUploadInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        // const altTextInput = document.getElementById('altTextInput'); // Đã xóa
+        const orderInput = document.getElementById('orderInput');
+        const isActiveInput = document.getElementById('isActiveInput');
+
+        let currentSelectedBannerId = null; 
+        let currentImageUrl = ''; // Để lưu URL ảnh hiện tại khi sửa
+
+        // --- Hàm chung để fetch dữ liệu từ API ---
+        async function fetchData(url, method = 'GET', body = null) {
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Token ${token}`;
+            }
+            // Luôn gửi Content-Type là application/json nếu không phải FormData
+            headers['Content-Type'] = 'application/json';
+            
+
+            try {
+                const options = {
+                    method: method,
+                    headers: headers,
+                };
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+
+                const response = await fetch(url, options);
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        alert('Phiên làm việc đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.');
+                        window.location.href = '/sggd/qtv/admin/login/'; 
+                        return null;
+                    }
+                    const errorData = await response.json();
+                    let errorMessage = `Lỗi HTTP! Status: ${response.status}. `;
+                    if (errorData) {
+                        for (const key in errorData) {
+                            errorMessage += `${key}: ${Array.isArray(errorData[key]) ? errorData[key].join(', ') : errorData[key]} `;
+                        }
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return await response.json();
+                } else {
+                    return {}; 
+                }
+
+            } catch (error) {
+                console.error(`Lỗi khi fetch dữ liệu từ ${url}:`, error);
+                alert(`Lỗi: ${error.message}`);
+                return null;
+            }
+        }
+
+        // --- Hàm tải và hiển thị danh sách banner ---
+        async function fetchAndRenderBanners() {
+            bannerList.innerHTML = '<p style="text-align: center; color: #888;">Đang tải danh sách banner...</p>';
+            editBannerBtn.disabled = true;
+            deleteBannerBtn.disabled = true;
+            currentSelectedBannerId = null;
+
+            // Đảm bảo URL này là endpoint API của bạn để lấy danh sách banner từ Django
+            const banners = await fetchData('https://saigongiadinh.pythonanywhere.com/edit-banner/'); 
+            
+            if (banners && banners.length > 0) {
+                bannerList.innerHTML = ''; 
+                banners.forEach(banner => {
+                    const bannerItem = document.createElement('div');
+                    bannerItem.className = 'banner-item';
+                    bannerItem.dataset.id = banner.id;
+                    bannerItem.innerHTML = `
+                        <img src="${banner.image_path}" alt="Banner Image">
+                        <div class="banner-info">
+                            <p><strong>Thứ tự hiển thị:</strong> ${banner.order}</p>
+                            <p class="banner-status ${banner.is_active ? 'active' : 'inactive'}">
+                                Trạng thái: ${banner.is_active ? 'Hoạt động' : 'Không hoạt động'}
+                            </p>
+                        </div>
+                    `;
+                    bannerItem.addEventListener('click', () => {
+                        document.querySelectorAll('.banner-item').forEach(item => item.classList.remove('selected'));
+                        bannerItem.classList.add('selected');
+                        currentSelectedBannerId = banner.id;
+                        currentImageUrl = banner.image_path; // Lưu URL ảnh hiện tại
+                        editBannerBtn.disabled = false;
+                        deleteBannerBtn.disabled = false;
+                    });
+                    bannerList.appendChild(bannerItem);
+                });
+            } else if (banners) { 
+                bannerList.innerHTML = '<p style="text-align: center; color: #888;">Chưa có banner nào.</p>';
+            } else { 
+                bannerList.innerHTML = '<p style="text-align: center; color: red;">Không thể tải banner. Vui lòng thử lại.</p>';
+            }
+        }
+
+        // --- Chức năng Modal ---
+        function openModal(isEditMode = false, bannerData = {}) {
+            bannerModal.style.display = 'flex';
+            bannerForm.reset();
+            bannerIdInput.value = '';
+            imagePreview.src = ''; // Clear preview image source
+            imagePreview.style.display = 'none'; 
+            imageUploadInput.required = !isEditMode; // Ảnh là bắt buộc khi thêm, không bắt buộc khi sửa
+
+            modalTitle.textContent = isEditMode ? 'Sửa Banner' : 'Thêm Banner Mới';
+
+            if (isEditMode && bannerData) {
+                bannerIdInput.value = bannerData.id;
+                orderInput.value = bannerData.order || 0;
+                isActiveInput.checked = bannerData.is_active;
+
+                if (bannerData.image_path) {
+                    imagePreview.src = bannerData.image_path;
+                    imagePreview.style.display = 'block';
+                    currentImageUrl = bannerData.image_path; // Cập nhật URL ảnh hiện tại
+                }
+            } else {
+                orderInput.value = 0;
+                isActiveInput.checked = true;
+                currentImageUrl = ''; // Xóa URL ảnh hiện tại khi thêm mới
+            }
+            imageUploadInput.value = ''; // Luôn đảm bảo input file rỗng khi mở modal
+        }
+
+        function closeModal() {
+            bannerModal.style.display = 'none';
+            bannerForm.reset();
+            imagePreview.src = ''; 
+            imagePreview.style.display = 'none';
+            currentSelectedBannerId = null;
+            currentImageUrl = '';
+            editBannerBtn.disabled = true;
+            deleteBannerBtn.disabled = true;
+            document.querySelectorAll('.banner-item').forEach(item => item.classList.remove('selected'));
+        }
+
+        // --- Xử lý sự kiện mở/đóng Modal ---
+        addBannerBtn.addEventListener('click', () => openModal(false));
+        closeButton.addEventListener('click', closeModal);
+        cancelModalBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', (event) => {
+            if (event.target === bannerModal) {
+                closeModal();
+            }
+        });
+
+        // --- Xử lý sự kiện Sửa Banner ---
+        editBannerBtn.addEventListener('click', async () => {
+
+    if (currentSelectedBannerId === null || currentSelectedBannerId === undefined) {
+        // Nếu không có banner nào được chọn, hiển thị cảnh báo
+        alert('Vui lòng chọn một banner để sửa.');
+        return; // Dừng hàm tại đây
+    }
+
+    // Nếu có banner được chọn, tiếp tục xử lý
+    try {
+        const bannerData = await fetchData(`https://saigongiadinh.pythonanywhere.com/edit-banner/${currentSelectedBannerId}/`);
+        if (bannerData) {
+            openModal(true, bannerData);
+        } else {
+            // Trường hợp fetchData trả về null hoặc undefined nhưng không báo lỗi cụ thể
+            alert('Không thể tải dữ liệu banner. Vui lòng thử lại.');
+        }
+    } catch (error) {
+        console.error('Lỗi khi tải dữ liệu banner để sửa:', error);
+        alert('Đã xảy ra lỗi khi cố gắng tải dữ liệu banner để sửa.');
+    }
+});
+
+        // --- Xử lý sự kiện Xóa Banner ---
+        deleteBannerBtn.addEventListener('click', async () => {
+            if (currentSelectedBannerId && confirm('Bạn có chắc chắn muốn xóa banner này?')) {
+                const success = await fetchData(`https://saigongiadinh.pythonanywhere.com/edit-banner/${currentSelectedBannerId}/`, 'DELETE');
+                if (success !== null) { 
+                    alert('Xóa banner thành công!');
+                    fetchAndRenderBanners(); 
+                }
+            } else if (!currentSelectedBannerId) {
+                alert('Vui lòng chọn một banner để xóa.');
+            }
+        });
+
+        // --- Xử lý xem trước ảnh khi upload ---
+        imageUploadInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        // --- Hàm upload ảnh lên Cloudinary ---
+        async function uploadImageToCloudinary(file) {
+            const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            // formData.append('folder', CLOUDINARY_FOLDER); // Đã comment vì không cần khi dùng unsigned preset
+
+            try {
+                const response = await fetch(cloudinaryUrl, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Cloudinary upload failed: ${errorData.error.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                return data.secure_url; // Trả về URL của ảnh đã upload
+            } catch (error) {
+                console.error('Lỗi khi upload ảnh lên Cloudinary:', error);
+                alert(`Upload ảnh thất bại: ${error.message}`);
+                return null;
+            }
+        }
+
+        // --- Xử lý submit form Thêm/Sửa Banner ---
+        bannerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const id = bannerIdInput.value;
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `https://saigongiadinh.pythonanywhere.com/edit-banner/${id}/` : 'https://saigongiadinh.pythonanywhere.com/edit-banner/';
+
+            let finalImagePath = currentImageUrl; // Mặc định dùng URL ảnh hiện tại khi sửa
+
+            const fileToUpload = imageUploadInput.files[0];
+            
+            if (fileToUpload) {
+                // Nếu có file mới được chọn, upload lên Cloudinary
+                const uploadedUrl = await uploadImageToCloudinary(fileToUpload);
+                if (!uploadedUrl) {
+                    return; // Dừng nếu upload thất bại
+                }
+                finalImagePath = uploadedUrl; 
+            } else if (!id) {
+                // Nếu là chế độ thêm mới và không có file, báo lỗi
+                alert('Vui lòng tải lên một ảnh cho banner mới.');
+                return;
+            } else if (id && !currentImageUrl) {
+                // Nếu đang sửa và không có ảnh cũ, cũng yêu cầu upload ảnh mới
+                alert('Vui lòng tải lên một ảnh mới hoặc đảm bảo banner cũ có ảnh.');
+                return;
+            }
+
+
+            const payload = {
+                order: parseInt(orderInput.value, 10),
+                is_active: isActiveInput.checked,
+                image_path: finalImagePath // Gửi URL ảnh cuối cùng
+            };
+
+            try {
+                const result = await fetchData(url, method, payload); 
+
+                if (result) {
+                    alert(`Banner đã được ${id ? 'cập nhật' : 'thêm'} thành công!`);
+                    closeModal();
+                    fetchAndRenderBanners(); 
+                }
+            } catch (error) {
+                console.error('Lỗi khi lưu banner:', error);
+            }
+        });
+
+        // --- Khởi tạo khi trang tải ---
+        fetchAndRenderBanners();
+    });
+</script>
+{% endblock %}

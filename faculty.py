@@ -3,10 +3,6 @@ from flask import Blueprint, render_template, redirect, url_for, session, flash,
 faculty = Blueprint('faculty', __name__, url_prefix='/gv')
 
 
-@faculty.route('/')
-def faculty_login():
-   
-    return render_template('faculty/login_faculty.html')
 
 @faculty.route('/home_faculty/')
 def faculty_home():
@@ -48,3 +44,14 @@ def tkb():
 def diemso():
     
     return render_template('faculty/add_score.html')
+
+@faculty.route('/dangkynhaphoc/')
+def dangkynhaphoc():
+    
+    return render_template('faculty/dangkynhaphoc.html')
+
+
+@faculty.route('/tintuc/')
+def tintuc():
+    
+    return render_template('faculty/manage_news.html')

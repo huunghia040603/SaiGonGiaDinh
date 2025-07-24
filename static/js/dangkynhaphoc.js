@@ -1,8 +1,18 @@
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Khai báo các phần tử DOM ---
     const registrationForm01 = document.getElementById('registrationForm01');
     const chuongTrinhDaoTao01Radios = document.querySelectorAll('input[name="chuongTrinhDaoTao01"]');
-    const phoThong9PlusFields01 = document.getElementById('phoThothong9PlusFields01');
+    const phoThong9PlusFields01 = document.getElementById('phoThong9PlusFields01');
+    
+    // Trường input file mà bạn dùng cho cả THPT (trước đây) và THCS (bây giờ cho 9+)
+    const fileBangTotNghiepInput = document.getElementById('bangTotNghiepTHPT01'); 
+    // Lấy phần tử span hiển thị tên file cho trường tốt nghiệp
+    const fileBangTotNghiepSpan = document.getElementById('fileBangTotNghiepTHPT01'); 
+    // Lấy label của trường input file để cập nhật text
+    const labelBangTotNghiep = document.querySelector('label[for="bangTotNghiepTHPT01"]');
 
     const tinhThanhPho01Select = document.getElementById('tinhThanhPho01');
     const quanHuyen01Select = document.getElementById('quanHuyen01');
@@ -22,28 +32,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInputs01 = document.querySelectorAll('input[type="file"]');
 
     // API Base URL của Django REST Framework
-    const BASE_API_URL = 'https://saigongiadinh.pythonanyanywhere.com/'; // Đổi lại thành URL API của bạn
+    const BASE_API_URL = 'https://saigongiadinh.pythonanywhere.com/';
 
     // API Base URL của esgoo.net
     const ESGOO_API = {
-        provinces: 'https://esgoo.net/api-tinhthanh/1/0.htm', // Biến {A}: giá trị 1, Biến {B}: giá trị 0
-        districts: 'https://esgoo.net/api-tinhthanh/2/',     // Biến {A}: giá trị 2, Biến {B}: id tỉnh thành
-        wards: 'https://esgoo.net/api-tinhthanh/3/'          // Biến {A}: giá trị 3, Biến {B}: id quận huyện
+        provinces: 'https://esgoo.net/api-tinhthanh/1/0.htm',
+        districts: 'https://esgoo.net/api-tinhthanh/2/',
+        wards: 'https://esgoo.net/api-tinhthanh/3/'
     };
 
     // --- Cấu hình Cloudinary ---
     const CLOUDINARY_CLOUD_NAME = 'dftarzzfw';
     const CLOUDINARY_UPLOAD_PRESET = 'SGGDCollege'; // Đảm bảo preset này là 'Unsigned'
     const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-    const CLOUDINARY_FOLDER = 'CCCD'; 
+    // Thư mục mặc định cho ảnh CCCD
+    const CLOUDINARY_FOLDER_CCCD = 'CCCD'; 
+    // Thư mục cho bản sao tốt nghiệp
+    const CLOUDINARY_FOLDER_BANSAOTOTNGHIEP = 'bansaototnghiep'; 
 
-    
     // Hàm load options cho select box từ API
     const loadOptionsFromApi = async (selectElement, apiUrl, defaultText) => {
         selectElement.innerHTML = `<option value="">${defaultText}</option>`;
         selectElement.disabled = true; // Tắt select trong khi đang load
-        
-        console.log(`Đang tải dữ liệu từ API: ${apiUrl}`); // LOG: URL API đang được gọi
+
+        // console.log(`Đang tải dữ liệu từ API: ${apiUrl}`);
 
         try {
             const response = await fetch(apiUrl);
@@ -51,24 +63,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            
-            console.log(`Dữ liệu nhận được từ ${apiUrl}:`, data); // LOG: Dữ liệu API nhận được
+
+            // console.log(`Dữ liệu nhận được từ ${apiUrl}:`, data);
 
             if (data && data.data && Array.isArray(data.data)) {
                 data.data.forEach(item => {
                     const option = document.createElement('option');
-                    option.value = item.id; // Giá trị là ID của tỉnh/huyện/xã
-                    option.textContent = item.name; // Hiển thị tên
+                    option.value = item.id;
+                    option.textContent = item.name;
                     selectElement.appendChild(option);
                 });
-                selectElement.disabled = false; // Kích hoạt select sau khi load data
-                console.log(`Đã tải xong và kích hoạt cho select: ${selectElement.id}`); // LOG: Đã tải xong
+                selectElement.disabled = false;
+                
             } else {
                 console.error('Dữ liệu API không đúng định dạng:', data);
             }
         } catch (error) {
             console.error(`Lỗi khi tải dữ liệu từ ${apiUrl}:`, error);
-            selectElement.disabled = true; // Đảm bảo vô hiệu hóa nếu lỗi
+            selectElement.disabled = true;
         }
     };
 
@@ -78,60 +90,60 @@ document.addEventListener('DOMContentLoaded', () => {
         quanHuyenEl.disabled = true;
         xaPhuongEl.innerHTML = '<option value="">Chọn xã/phường/thị trấn</option>';
         xaPhuongEl.disabled = true;
-        console.log(`Đã reset các select con: ${quanHuyenEl.id}, ${xaPhuongEl.id}`); // LOG: Reset select con
+      
     };
 
     // Hàm xử lý thay đổi Tỉnh/Thành phố
     const handleProvinceChange = async (provinceSelect, districtSelect, wardSelect) => {
         const selectedProvinceId = provinceSelect.value;
-        console.log(`Tỉnh/Thành phố được chọn (ID): ${selectedProvinceId}`); // LOG: ID tỉnh được chọn
-        resetChildSelects(districtSelect, wardSelect); // Reset cả quận/huyện và xã/phường
+        console.log(`Tỉnh/Thành phố được chọn (ID): ${selectedProvinceId}`);
+        resetChildSelects(districtSelect, wardSelect);
 
         if (selectedProvinceId) {
             const districtApiUrl = `${ESGOO_API.districts}${selectedProvinceId}.htm`;
-            console.log(`URL API để tải Quận/Huyện: ${districtApiUrl}`); // LOG: URL API quận/huyện
+          
             await loadOptionsFromApi(districtSelect, districtApiUrl, 'Chọn quận/huyện');
         } else {
             districtSelect.disabled = true;
             wardSelect.disabled = true;
-            console.log('Không có tỉnh/thành phố nào được chọn, vô hiệu hóa quận/huyện và xã/phường.'); // LOG: Không chọn tỉnh
+            console.log('Không có tỉnh/thành phố nào được chọn, vô hiệu hóa quận/huyện và xã/phường.');
         }
     };
 
     // Hàm xử lý thay đổi Quận/Huyện
     const handleDistrictChange = async (provinceSelect, districtSelect, wardSelect) => {
         const selectedDistrictId = districtSelect.value;
-        console.log(`Quận/Huyện được chọn (ID): ${selectedDistrictId}`); // LOG: ID huyện được chọn
+        console.log(`Quận/Huyện được chọn (ID): ${selectedDistrictId}`);
         wardSelect.innerHTML = '<option value="">Chọn xã/phường/thị trấn</option>';
         wardSelect.disabled = true;
 
         if (selectedDistrictId) {
             const wardApiUrl = `${ESGOO_API.wards}${selectedDistrictId}.htm`;
-            console.log(`URL API để tải Xã/Phường: ${wardApiUrl}`); // LOG: URL API xã/phường
+          
             await loadOptionsFromApi(wardSelect, wardApiUrl, 'Chọn xã/phường/thị trấn');
         } else {
             wardSelect.disabled = true;
-            console.log('Không có quận/huyện nào được chọn, vô hiệu hóa xã/phường.'); // LOG: Không chọn huyện
+            console.log('Không có quận/huyện nào được chọn, vô hiệu hóa xã/phường.');
         }
     };
 
-    // Hàm ẩn/hiện trường "Phổ thông Cao đẳng 9+"
+    // Hàm ẩn/hiện trường "Phổ thông Cao đẳng 9+" và cập nhật trạng thái required của file tốt nghiệp
     const togglePhoThong9PlusFields = () => {
         const selectedProgramRadio = document.querySelector('input[name="chuongTrinhDaoTao01"]:checked');
         const selectedProgram = selectedProgramRadio ? selectedProgramRadio.value : '';
         const isPhoThong9Plus = selectedProgram === 'phothong9plus';
 
-        // phoThong9PlusFields01.style.display = isPhoThong9Plus ? 'block' : 'none';
-        
-if (phoThong9PlusFields01) {
-    phoThong9PlusFields01.style.display = isPhoThong9Plus ? 'block' : 'none';
-   
-} else {
-    console.error("Không tìm thấy phần tử với ID 'phoThothong9PlusFields01'. Vui lòng kiểm tra lại ID trong HTML.");
-}
-        console.log(`Chương trình đào tạo: ${selectedProgram}. Hiển thị trường PT9+: ${isPhoThong9Plus}`); // LOG: Tình trạng hiển thị PT9+
+        if (phoThong9PlusFields01) {
+            phoThong9PlusFields01.style.display = isPhoThong9Plus ? 'block' : 'none';
+        } else {
+            console.error("Không tìm thấy phần tử với ID 'phoThong9PlusFields01'. Vui lòng kiểm tra lại ID trong HTML và JS.");
+        }
 
-        const requiredElements = phoThong9PlusFields01.querySelectorAll('input, select');
+        let requiredElements = [];
+        if (phoThong9PlusFields01) {
+            requiredElements = phoThong9PlusFields01.querySelectorAll('input, select');
+        }
+
         requiredElements.forEach(el => {
             if (isPhoThong9Plus) {
                 el.setAttribute('required', 'required');
@@ -140,22 +152,40 @@ if (phoThong9PlusFields01) {
             }
         });
 
+        // --- Cập nhật trạng thái 'required' và label cho trường file tốt nghiệp ---
+        if (fileBangTotNghiepInput && labelBangTotNghiep && fileBangTotNghiepSpan) {
+            if (isPhoThong9Plus) {
+                // Nếu là 9+, yêu cầu chứng nhận tốt nghiệp THCS
+                fileBangTotNghiepInput.setAttribute('required', 'required');
+                labelBangTotNghiep.textContent = 'Bản sao Chứng nhận tốt nghiệp THCS:';
+                fileBangTotNghiepSpan.textContent = 'Chưa có file chứng nhận THCS được chọn';
+                console.log("Hệ 9+, đặt required cho file chứng nhận tốt nghiệp THCS và cập nhật label.");
+            } else {
+                // Nếu là Cao đẳng hoặc khác, KHÔNG yêu cầu file tốt nghiệp
+                fileBangTotNghiepInput.removeAttribute('required');
+                labelBangTotNghiep.textContent = 'Bản sao bằng tốt nghiệp THPT (Không bắt buộc cho Cao đẳng):'; // Cập nhật để rõ ràng
+                fileBangTotNghiepSpan.textContent = 'Chưa có file nào được chọn';
+                // console.log("Hệ Cao đẳng hoặc khác, bỏ required cho file tốt nghiệp và cập nhật label.");
+            }
+        } else {
+            console.error("Không tìm thấy các phần tử cho trường file tốt nghiệp (input, label hoặc span).");
+        }
+
+
         if (!isPhoThong9Plus) {
             // Clear values and disable when hidden
             namTotNghiepTHCS01Select.value = '';
             truongTHCS01Input.value = '';
-            tinhThanhPhoTHCS01Select.value = ''; // Clear province select
+            tinhThanhPhoTHCS01Select.value = '';
             resetChildSelects(quanHuyenTHCS01Select, xaPhuongTHCS01Select);
-            console.log('Đã xóa giá trị và vô hiệu hóa các trường PT9+ khi ẩn.'); // LOG: Xóa giá trị PT9+
         } else {
             // Re-enable/reload if it was previously hidden and data is available
-            if (!tinhThanhPhoTHCS01Select.options.length > 1) { // Check if only default option exists
-                 loadOptionsFromApi(tinhThanhPhoTHCS01Select, ESGOO_API.provinces, 'Chọn tỉnh/thành phố');
-                 console.log('Đang tải lại tỉnh/thành phố cho trường THCS.'); // LOG: Tải lại tỉnh THCS
+            if (tinhThanhPhoTHCS01Select && (!tinhThanhPhoTHCS01Select.options.length > 1 || tinhThanhPhoTHCS01Select.options.length === 0)) {
+                loadOptionsFromApi(tinhThanhPhoTHCS01Select, ESGOO_API.provinces, 'Chọn tỉnh/thành phố');
             }
         }
     };
-
+    
     // Hàm xử lý hiển thị tên file được chọn
     const handleFileSelect = (event) => {
         const input = event.target;
@@ -164,10 +194,10 @@ if (phoThong9PlusFields01) {
         if (fileNameSpan) {
             if (input.files.length > 0) {
                 fileNameSpan.textContent = input.files[0].name;
-                console.log(`File chọn cho ${input.id}: ${input.files[0].name}`); // LOG: Tên file
+                // console.log(`File chọn cho ${input.id}: ${input.files[0].name}`);
             } else {
                 fileNameSpan.textContent = 'Chưa có file nào được chọn';
-                console.log(`Không có file nào được chọn cho ${input.id}.`); // LOG: Không có file
+                console.log(`Không có file nào được chọn cho ${input.id}.`);
             }
         }
     };
@@ -182,20 +212,20 @@ if (phoThong9PlusFields01) {
             option.textContent = i;
             namTotNghiepTHCS01Select.appendChild(option);
         }
-        console.log('Đã tạo các lựa chọn năm tốt nghiệp THCS.'); // LOG: Tạo năm tốt nghiệp
+        
     };
 
-    // --- CẬP NHẬT: Hàm tải ảnh lên Cloudinary để thêm tham số folder ---
-    const uploadImageToCloudinary = async (file) => {
+    // Hàm tải ảnh lên Cloudinary
+    // Thêm tham số folderName để có thể chỉ định thư mục tải lên
+    const uploadImageToCloudinary = async (file, folderName) => {
         if (!file) return null;
 
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-        // Thêm tham số folder để lưu ảnh vào thư mục 'CCCD'
-        formData.append('folder', CLOUDINARY_FOLDER); 
+        formData.append('folder', folderName); // Sử dụng folderName được truyền vào
 
-        console.log(`Đang tải ảnh "${file.name}" lên Cloudinary...`); // LOG: Bắt đầu tải ảnh
+        console.log(`Đang tải file "${file.name}" lên Cloudinary (thư mục: ${folderName})...`);
 
         try {
             const response = await fetch(CLOUDINARY_UPLOAD_URL, {
@@ -205,25 +235,25 @@ if (phoThong9PlusFields01) {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error('Lỗi khi tải ảnh lên Cloudinary:', errorData);
-                throw new Error(`Tải ảnh lên Cloudinary thất bại: ${errorData.error.message || response.statusText}`);
+                console.error('Lỗi khi tải file lên Cloudinary:', errorData);
+                throw new Error(`Tải file lên Cloudinary thất bại: ${errorData.error.message || response.statusText}`);
             }
 
             const data = await response.json();
-            console.log(`Ảnh "${file.name}" đã tải lên thành công: ${data.secure_url}`); // LOG: Tải ảnh thành công
-            return data.secure_url; // Trả về URL an toàn của ảnh
+            console.log(`File "${file.name}" đã tải lên thành công: ${data.secure_url}`);
+            return data.secure_url;
         } catch (error) {
             console.error('Lỗi kết nối Cloudinary:', error);
-            alert(`Không thể tải ảnh "${file.name}" lên Cloudinary. Vui lòng kiểm tra kết nối mạng hoặc thử lại.`);
+            alert(`Không thể tải file "${file.name}" lên Cloudinary. Vui lòng kiểm tra kết nối mạng hoặc thử lại.`);
             return null;
         }
     };
 
     // --- Khởi tạo ban đầu ---
-    console.log('Khởi tạo ban đầu: Tải tỉnh/thành phố chính...'); // LOG: Khởi tạo
+    
     loadOptionsFromApi(tinhThanhPho01Select, ESGOO_API.provinces, 'Chọn tỉnh/thành phố');
     populateNamTotNghiepTHCS();
-    togglePhoThong9PlusFields();
+    togglePhoThong9PlusFields(); // Gọi lần đầu để thiết lập trạng thái ban đầu
 
     // --- Event Listeners ---
     chuongTrinhDaoTao01Radios.forEach(radio => {
@@ -241,12 +271,12 @@ if (phoThong9PlusFields01) {
             if (document.querySelector('input[name="diaChiNhan01"]:checked').value === 'khac') {
                 diaChiKhacGroup01.style.display = 'block';
                 diaChiNhanKhac01Textarea.setAttribute('required', 'required');
-                console.log('Chọn địa chỉ khác: hiển thị trường nhập liệu.'); // LOG: Địa chỉ khác
+                console.log('Chọn địa chỉ khác: hiển thị trường nhập liệu.');
             } else {
                 diaChiKhacGroup01.style.display = 'none';
                 diaChiNhanKhac01Textarea.removeAttribute('required');
                 diaChiNhanKhac01Textarea.value = '';
-                console.log('Chọn địa chỉ mặc định: ẩn trường nhập liệu khác.'); // LOG: Địa chỉ mặc định
+                console.log('Chọn địa chỉ mặc định: ẩn trường nhập liệu khác.');
             }
         });
     });
@@ -258,7 +288,6 @@ if (phoThong9PlusFields01) {
     // Xử lý gửi form
     registrationForm01.addEventListener('submit', async (event) => {
         event.preventDefault(); // Ngăn chặn form gửi đi mặc định
-        console.log('Form đã được submit. Đang kiểm tra tính hợp lệ...'); // LOG: Submit form
 
         let isValid = registrationForm01.checkValidity();
         const camDoan01Checkbox = document.getElementById('camDoan01');
@@ -267,16 +296,15 @@ if (phoThong9PlusFields01) {
             isValid = false;
             alert('Bạn phải cam đoan những lời khai là đúng sự thật.');
             camDoan01Checkbox.focus();
-            console.log('Checkbox cam đoan chưa được chọn.'); // LOG: Lỗi cam đoan
+            console.log('Checkbox cam đoan chưa được chọn.');
         }
 
         if (isValid) {
-            // Hiển thị trạng thái đang tải (tùy chọn)
             alert('Đang tải ảnh và gửi thông tin. Vui lòng đợi...');
-            console.log('Form hợp lệ, bắt đầu quá trình tải ảnh và gửi dữ liệu.'); // LOG: Form hợp lệ
+            console.log('Form hợp lệ, bắt đầu quá trình tải ảnh và gửi dữ liệu.');
 
             const formData = new FormData();
-            
+
             // Lấy giá trị từ các trường input
             const hoTen = document.getElementById('hoTen01').value;
             const ngaySinh = document.getElementById('ngaySinh01').value;
@@ -285,11 +313,11 @@ if (phoThong9PlusFields01) {
             const soCmnd = document.getElementById('cccd01').value;
             const ngayCapCmnd = document.getElementById('ngayCapCCCD01').value;
             const noiCapCmnd = document.getElementById('noiCapCCCD01').value;
-            
+
             const thanhPhoText = tinhThanhPho01Select.options[tinhThanhPho01Select.selectedIndex].textContent;
             const quanHuyenText = quanHuyen01Select.options[quanHuyen01Select.selectedIndex].textContent;
             const phuongText = xaPhuong01Select.options[xaPhuong01Select.selectedIndex].textContent;
-            
+
             const soNhaTenDuong = document.getElementById('soNhaDuong01').value;
             const soDienThoai = document.getElementById('sdtThiSinh01').value;
             const email = document.getElementById('emailThiSinh01').value;
@@ -299,23 +327,19 @@ if (phoThong9PlusFields01) {
             const nganhDangKy2 = document.getElementById('nguyenVong201').value;
             const nganhDangKy3 = document.getElementById('nguyenVong301').value;
 
-            // Lấy file ảnh gốc
+            // Lấy file ảnh CCCD
             const anhCmndMatTruocFile = document.getElementById('anhCCCDTruoc01').files[0];
             const anhCmndMatSauFile = document.getElementById('anhCCCDSau01').files[0];
-            const banSaoTotNghiepThptFile = document.getElementById('bangTotNghiepTHPT01').files[0];
 
-            // --- Tải ảnh lên Cloudinary và lấy URL ---
-            const anhCmndMatTruocUrl = await uploadImageToCloudinary(anhCmndMatTruocFile);
-            const anhCmndMatSauUrl = await uploadImageToCloudinary(anhCmndMatSauFile);
-            const banSaoTotNghiepThptUrl = await uploadImageToCloudinary(banSaoTotNghiepThptFile);
+            // --- Tải ảnh CCCD lên Cloudinary và lấy URL ---
+            const anhCmndMatTruocUrl = await uploadImageToCloudinary(anhCmndMatTruocFile, CLOUDINARY_FOLDER_CCCD);
+            const anhCmndMatSauUrl = await uploadImageToCloudinary(anhCmndMatSauFile, CLOUDINARY_FOLDER_CCCD);
 
-            // Kiểm tra nếu có bất kỳ ảnh nào không tải được
-            if ((anhCmndMatTruocFile && !anhCmndMatTruocUrl) || 
-                (anhCmndMatSauFile && !anhCmndMatSauUrl) ||
-                (banSaoTotNghiepThptFile && !banSaoTotNghiepThptUrl)) {
-                alert('Có lỗi khi tải lên một hoặc nhiều ảnh. Vui lòng kiểm tra lại.');
-                console.error('Không thể gửi form do lỗi tải ảnh lên Cloudinary.'); // LOG: Lỗi tải ảnh
-                return; // Ngừng quá trình gửi form nếu có lỗi tải ảnh
+            // Kiểm tra nếu có bất kỳ ảnh CCCD nào không tải được
+            if ((anhCmndMatTruocFile && !anhCmndMatTruocUrl) ||
+                (anhCmndMatSauFile && !anhCmndMatSauUrl)) {
+                alert('Có lỗi khi tải lên một hoặc nhiều ảnh CCCD. Vui lòng kiểm tra lại.');
+                return; // Ngừng quá trình gửi form nếu có lỗi tải ảnh CCCD
             }
 
             // Thêm dữ liệu vào FormData
@@ -327,7 +351,7 @@ if (phoThong9PlusFields01) {
             formData.append('ngay_cap_cmnd', ngayCapCmnd);
             formData.append('noi_cap_cmnd', noiCapCmnd);
             formData.append('thanh_pho', thanhPhoText);
-            formData.append('quan', quanHuyenText); // Thêm trường này nếu Django backend của bạn nhận
+            formData.append('quan', quanHuyenText);
             formData.append('phuong', phuongText);
             formData.append('so_nha_ten_duong', soNhaTenDuong);
             formData.append('so_dien_thoai', soDienThoai);
@@ -338,34 +362,48 @@ if (phoThong9PlusFields01) {
             if (nganhDangKy2) formData.append('nganh_dang_ky_2', nganhDangKy2);
             if (nganhDangKy3) formData.append('nganh_dang_ky_3', nganhDangKy3);
 
-            // Thêm URL ảnh vào FormData thay vì File
+            // Thêm URL ảnh CCCD vào FormData
             if (anhCmndMatTruocUrl) formData.append('anh_cmnd_mat_truoc', anhCmndMatTruocUrl);
             if (anhCmndMatSauUrl) formData.append('anh_cmnd_mat_sau', anhCmndMatSauUrl);
-            if (banSaoTotNghiepThptUrl) {
-                formData.append('ban_sao_tot_nghiep_thpt', banSaoTotNghiepThptUrl);
-            }
 
             const selectedProgram = document.querySelector('input[name="chuongTrinhDaoTao01"]:checked').value;
             let apiUrl = '';
 
             if (selectedProgram === 'caodang') {
                 apiUrl = `${BASE_API_URL}dang-ky-nhap-hoc/`;
-                console.log('Chương trình Cao đẳng được chọn. API gửi: dang-ky-nhap-hoc/'); // LOG: API chương trình
+                console.log('Hệ Cao đẳng: Không đính kèm bất kỳ file tốt nghiệp nào.');
+                // Đảm bảo rằng API cho Cao đẳng không yêu cầu trường này.
             } else if (selectedProgram === 'phothong9plus') {
                 apiUrl = `${BASE_API_URL}dang-ky-nhap-hoc-thpt/`;
+
+                // --- Chỉ tải và đính kèm URL chứng nhận tốt nghiệp THCS cho hệ 9+ ---
+                const chungNhanTotNghiepTHCSFile = fileBangTotNghiepInput.files[0];
+                if (chungNhanTotNghiepTHCSFile) {
+                    const chungNhanTotNghiepTHCSUrl = await uploadImageToCloudinary(chungNhanTotNghiepTHCSFile, CLOUDINARY_FOLDER_BANSAOTOTNGHIEP);
+                    if (chungNhanTotNghiepTHCSUrl) {
+                        formData.append('chung_nhan_tot_nghiep_thcs', chungNhanTotNghiepTHCSUrl); // Gửi URL lên backend
+                        console.log('Đã đính kèm URL file chứng nhận tốt nghiệp THCS cho hệ Phổ thông 9+.');
+                    } else {
+                        alert('Không thể tải file chứng nhận tốt nghiệp THCS lên Cloudinary. Vui lòng thử lại.');
+                        return; // Ngừng nếu tải file tốt nghiệp thất bại
+                    }
+                } else {
+                    console.warn('Không có file chứng nhận tốt nghiệp THCS được chọn cho hệ Phổ thông 9+. Nếu trường này bắt buộc, API sẽ báo lỗi.');
+                }
+
                 formData.append('nam_tot_nghiep_THCS', namTotNghiepTHCS01Select.value);
                 formData.append('truong_tot_nghiep_THCS', truongTHCS01Input.value);
+                // Lấy thông tin nơi tốt nghiệp THCS dưới dạng text
                 const noiTotNghiepTHCS = `${xaPhuongTHCS01Select.options[xaPhuongTHCS01Select.selectedIndex].textContent}, ${quanHuyenTHCS01Select.options[quanHuyenTHCS01Select.selectedIndex].textContent}, ${tinhThanhPhoTHCS01Select.options[tinhThanhPhoTHCS01Select.selectedIndex].textContent}`;
                 formData.append('noi_tot_nghiep', noiTotNghiepTHCS);
-                console.log('Chương trình Phổ thông 9+ được chọn. API gửi: dang-ky-nhap-hoc-thpt/'); // LOG: API chương trình
             }
-            
-            console.log('Dữ liệu FormData trước khi gửi:', Object.fromEntries(formData.entries())); // LOG: Toàn bộ FormData
+
+            // console.log('Dữ liệu FormData trước khi gửi:', Object.fromEntries(formData.entries()));
 
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
-                    body: formData, 
+                    body: formData,
                 });
 
                 if (response.ok) {
@@ -373,6 +411,7 @@ if (phoThong9PlusFields01) {
                     alert('Đăng ký thành công!');
                     console.log('Phản hồi từ API:', result);
                     registrationForm01.reset();
+                    // Reset các span hiển thị tên file
                     fileInputs01.forEach(input => {
                         const fileNameSpanId = 'file' + input.id.charAt(0).toUpperCase() + input.id.slice(1);
                         const fileNameSpan = document.getElementById(fileNameSpanId);
@@ -380,10 +419,10 @@ if (phoThong9PlusFields01) {
                             fileNameSpan.textContent = 'Chưa có file nào được chọn';
                         }
                     });
-                    togglePhoThong9PlusFields();
+                    togglePhoThong9PlusFields(); // Gọi lại để reset trạng thái required và label
                     loadOptionsFromApi(tinhThanhPho01Select, ESGOO_API.provinces, 'Chọn tỉnh/thành phố');
                     resetChildSelects(quanHuyen01Select, xaPhuong01Select);
-                    console.log('Form đã reset và thiết lập lại.'); // LOG: Reset form
+
                 } else {
                     const errorData = await response.json();
                     let errorMessage = 'Đăng ký thất bại. ';
@@ -393,15 +432,15 @@ if (phoThong9PlusFields01) {
                         }
                     }
                     alert(errorMessage);
-                    console.error('Lỗi khi gửi form:', errorData); // LOG: Lỗi gửi form
+                    console.error('Lỗi khi gửi form:', errorData);
                 }
             } catch (error) {
-                console.error('Lỗi kết nối hoặc xử lý:', error); // LOG: Lỗi mạng/xử lý
+                console.error('Lỗi kết nối hoặc xử lý:', error);
                 alert('Có lỗi xảy ra, vui lòng thử lại sau.');
             }
         } else {
             alert('Vui lòng điền đầy đủ và chính xác các thông tin bắt buộc.');
-            console.log('Form không hợp lệ. Vui lòng điền đủ thông tin.'); // LOG: Form không hợp lệ
+            console.log('Form không hợp lệ. Vui lòng điền đủ thông tin.');
         }
     });
 });

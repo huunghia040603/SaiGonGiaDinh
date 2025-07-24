@@ -1,0 +1,382 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* static/css/coming_soon.css */
+    @font-face {
+        font-family: 'font2';
+        src: url('/static/fonts/font2.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'font6';
+        src: url('/static/fonts/font6.ttf') format('truetype');
+    }
+    
+    .coming-soon-container {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 40px 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+        width: 90%;
+        transform: translateY(-20px);
+        /* Hiệu ứng nhẹ khi tải */
+        animation: fadeInSlideUp 0.8s ease-out forwards;
+        position: relative;
+        z-index: 1;
+    }
+
+    @keyframes fadeInSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .content h2 {
+        font-family: font2;
+        font-size: 4.2em;
+        color: #d49b18;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .content p {
+        font-size: 1.1em;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        color: #555;
+        padding: 10px 20%;
+        text-align: center;
+        font-family: font6;
+    }
+
+    /* Countdown Timer */
+    .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .countdown-item {
+        background-color: #3498db;
+        /* Xanh dương */
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .countdown-item span {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 5px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Subscribe Form */
+    .subscribe-form {
+        margin-bottom: 40px;
+    }
+
+    .subscribe-form p {
+        font-size: 1em;
+        margin-bottom: 15px;
+        color: #666;
+    }
+
+    .subscribe-form form {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        /* Cho phép xuống dòng trên màn hình nhỏ */
+    }
+
+    .subscribe-form input[type="email"] {
+        padding: 15px 20px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        width: 300px;
+        max-width: 100%;
+        font-size: 1em;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .subscribe-form input[type="email"]:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .subscribe-form button {
+        background-color: #2ecc71;
+        /* Xanh lá */
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .subscribe-form button:hover {
+        background-color: #27ae60;
+        transform: translateY(-2px);
+    }
+
+    .subscribe-form .message {
+        margin-top: 15px;
+        font-size: 0.95em;
+        color: #e74c3c;
+        /* Màu đỏ cho lỗi */
+        font-weight: 600;
+    }
+
+    /* Social Links */
+    .social-links {
+        margin-top: 30px;
+    }
+
+    .social-links p {
+        margin-bottom: 15px;
+        color: #666;
+    }
+
+    .social-links a {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: #7f8c8d;
+        /* Màu xám */
+        color: white;
+        font-size: 1.5em;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .social-links a.facebook {
+        background-color: #3b5998;
+    }
+
+    .social-links a.twitter {
+        background-color: #00acee;
+    }
+
+    .social-links a.instagram {
+        background-color: #e1306c;
+    }
+
+    .social-links a:hover {
+        transform: translateY(-3px) scale(1.1);
+    }
+
+    /* Footer */
+    .footer {
+        margin-top: 50px;
+        font-size: 0.9em;
+        color: #777;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .coming-soon-container {
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+        }
+
+        .content h2 {
+            font-size: 1.8em;
+        }
+
+        .countdown {
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .countdown-item {
+            padding: 10px 15px;
+            font-size: 0.9em;
+        }
+
+        .countdown-item span {
+            font-size: 2em;
+        }
+
+        .subscribe-form input[type="email"],
+        .subscribe-form button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .coming-soon-container {
+            padding: 20px 15px;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+        }
+
+        .content h2 {
+            font-size: 1.5em;
+        }
+    }
+</style>
+<div class="content">
+    <h2>Tính năng của chúng tôi hiện đang bảo trì!</h2>
+    <p>Chúng tôi đang tiến hành sửa chữa và nâng cấp tính năng. Vui lòng quay lại sau nhé!</p>
+
+    <div class="countdown" id="countdown">
+        <div class="countdown-item">
+            <span id="days">00</span>
+            Ngày
+        </div>
+        <div class="countdown-item">
+            <span id="hours">00</span>
+            Giờ
+        </div>
+        <div class="countdown-item">
+            <span id="minutes">00</span>
+            Phút
+        </div>
+        <div class="countdown-item">
+            <span id="seconds">00</span>
+            Giây
+        </div>
+    </div>
+</div>
+<script>
+    // static/js/coming_soon_script.js
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Đồng hồ đếm ngược ---
+        const countdownElement = document.getElementById('countdown');
+        if (countdownElement) {
+            // Đặt ngày mục tiêu là 11:30 sáng của ngày hiện tại
+            const launchDate = new Date();
+            launchDate.setHours(11); // Đặt giờ là 11
+            launchDate.setMinutes(0); // Đặt phút là 30
+            launchDate.setSeconds(0); // Đặt giây là 0
+            launchDate.setMilliseconds(0); // Đặt mili giây là 0
+
+            // Nếu 11:30 sáng của ngày hiện tại đã qua, đếm ngược đến 11:30 sáng ngày mai
+            const now = new Date();
+            if (launchDate.getTime() < now.getTime()) {
+                launchDate.setDate(launchDate.getDate() + 1);
+            }
+
+            const daysSpan = document.getElementById('days');
+            const hoursSpan = document.getElementById('hours');
+            const minutesSpan = document.getElementById('minutes');
+            const secondsSpan = document.getElementById('seconds');
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerHTML = "Tính năng đã trở lại!"; // Thay đổi thông báo khi hết giờ
+                    // Ẩn các phần tử ngày, giờ, phút, giây nếu muốn
+                    if (daysSpan) daysSpan.parentElement.style.display = 'none';
+                    if (hoursSpan) hoursSpan.parentElement.style.display = 'none';
+                    if (minutesSpan) minutesSpan.parentElement.style.display = 'none';
+                    if (secondsSpan) secondsSpan.parentElement.style.display = 'none';
+                    return;
+                }
+
+                // Tính toán lại days, hours, minutes, seconds từ khoảng cách
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Cập nhật textContent, đảm bảo các phần tử span tồn tại
+                if (daysSpan) daysSpan.textContent = String(days).padStart(2, '0');
+                if (hoursSpan) hoursSpan.textContent = String(hours).padStart(2, '0');
+                if (minutesSpan) minutesSpan.textContent = String(minutes).padStart(2, '0');
+                if (secondsSpan) secondsSpan.textContent = String(seconds).padStart(2, '0');
+            };
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Gọi lần đầu để hiển thị ngay lập tức
+        }
+
+        // --- Xử lý Form đăng ký Email ---
+        const subscribeForm = document.getElementById('subscribeForm');
+        const emailInput = document.getElementById('emailInput');
+        const subscribeMessage = document.getElementById('subscribeMessage');
+
+        if (subscribeForm) {
+            subscribeForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Ngăn chặn form submit mặc định
+                const email = emailInput.value;
+
+                if (email.trim() === '') {
+                    subscribeMessage.textContent = 'Vui lòng nhập địa chỉ email của bạn.';
+                    subscribeMessage.style.color = '#e74c3c'; // Màu đỏ cho lỗi
+                    return;
+                }
+
+                // Đây là nơi bạn sẽ gửi email đến backend (ví dụ: qua API)
+                // Hiện tại, đây chỉ là một hành động giả lập.
+                console.log(`Đăng ký email: ${email}`);
+
+                // Giả lập gửi thành công
+                subscribeMessage.textContent = 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ thông báo cho bạn sớm nhất.';
+                subscribeMessage.style.color = '#2ecc71'; // Màu xanh lá cho thành công
+                emailInput.value = ''; // Xóa input sau khi gửi
+
+                // Trong ứng dụng thực tế, bạn sẽ dùng fetch API:
+                /*
+                fetch('/api/subscribe', { // Tạo một route '/api/subscribe' trong Flask để xử lý email
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Đã xảy ra lỗi khi đăng ký.');
+                })
+                .then(data => {
+                    subscribeMessage.textContent = 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ thông báo cho bạn sớm nhất.';
+                    subscribeMessage.style.color = '#2ecc71';
+                    emailInput.value = '';
+                })
+                .catch(error => {
+                    console.error('Lỗi đăng ký:', error);
+                    subscribeMessage.textContent = 'Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.';
+                    subscribeMessage.style.color = '#e74c3c';
+                });
+                */
+            });
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,8 +1,16 @@
+<style>
+    .dropdown-menu li a {
+        font-weight: bold;
+        
+        font-size: 17px;
+    } 
+
+</style>
 <div class="top-bar">
     <div class="container">
         <div class="top-links">
             <a href="/dangnhap" id="loginStatusLink"><i class="fas fa-user"></i> ĐĂNG NHẬP SGC</a>
-            <a href="/sinhvien/dichvu"><i class="fas fa-graduation-cap"></i> DỊCH VỤ SINH VIÊN</a>
+            <a href="/sinhvien/dichvu" id="studentServicesLink"><i class="fas fa-graduation-cap"></i> DỊCH VỤ SINH VIÊN</a>
             <a href="/ktx"><i class="fa-solid fa-house-lock"></i> TRỌ VÀ KTX SINH VIÊN </a>
             <a href="/careers"><i class="fas fa-briefcase"></i> TUYỂN DỤNG</a>
             <a href="tel:02835885558"><i class="fas fa-phone"></i> HOTLINE: 02835885558</a>
@@ -35,7 +43,7 @@
 </header>
 
 <!-- Navigation Bar -->
-<nav class="main-nav" style="">
+<nav class="main-nav">
     <div class="container">
         <button class="mobile-menu-btn">
             <i class="fas fa-bars"></i>
@@ -45,7 +53,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">GIỚI THIỆU <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
-                     <li><a href="/vision">Tầm nhìn & Sứ mệnh</a></li>
+                    <li><a href="/vision">Tầm nhìn & Sứ mệnh</a></li>
                     <li><a href="#">HĐ công khai giáo dục</a></li>
                     <li><a href="/about">Giới thiệu</a></li>
                     <li><a href="/facilities">Cơ sở vật chất</a></li>
@@ -519,82 +527,94 @@
 
 </style>
 <script>
-  // Thêm đoạn này vào trong `document.addEventListener('DOMContentLoaded', () => { ... });`
+    // Thêm đoạn này vào trong `document.addEventListener('DOMContentLoaded', () => { ... });`
 
-  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navList = document.querySelector('.nav-list');
     const mainNav = document.querySelector('.main-nav'); // Cần để đóng menu khi click ra ngoài
 
-    if (mobileMenuBtn && navList) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navList.classList.toggle('active');
-            // Thêm/bỏ một lớp phủ nền (overlay) để làm mờ nội dung phía sau nếu muốn
-            // document.body.classList.toggle('no-scroll'); // Thêm class để ngăn cuộn trang
-        });
-
-        // Xử lý đóng menu khi click ra ngoài (ngoại trừ nút menu và chính menu)
-        document.addEventListener('click', (event) => {
-            if (navList.classList.contains('active') && 
-                !navList.contains(event.target) && 
-                !mobileMenuBtn.contains(event.target) &&
-                !mainNav.contains(event.target)) // Đảm bảo không đóng nếu click vào nav-bar
-            {
-                navList.classList.remove('active');
-                // document.body.classList.remove('no-scroll');
-            }
-        });
-
-        // Xử lý đóng dropdown cấp 1 và 2 trên mobile khi click vào link chính
-        // (Điều này có thể phức tạp hơn một chút nếu bạn muốn dropdown vẫn mở sau khi click)
-        // Cách đơn giản: đóng toàn bộ navList khi click vào bất kỳ link nào
-        navList.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) { // Chỉ trên mobile
-                    navList.classList.remove('active');
-                    // document.body.classList.remove('no-scroll');
-                }
-            });
-        });
-
-        // Xử lý click vào dropdown-toggle trên mobile để hiện dropdown
-        // (Do trên mobile bạn dùng display: none và .show, cần JS để chuyển đổi)
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle, .dropdown-toggle1');
-
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', (event) => {
-                if (window.innerWidth <= 768) { // Chỉ trên mobile
-                    event.preventDefault(); // Ngăn chặn nhảy link
-                    const parentLi = toggle.closest('li');
-                    const dropdownMenu = toggle.nextElementSibling; // Lấy ul.dropdown-menu hoặc ul.dropdown-menu1
-
-                    if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-                        // Xử lý dropdown cấp 1
-                        dropdownMenu.classList.toggle('show');
-                        // Đóng các dropdown khác cùng cấp
-                        navList.querySelectorAll('.dropdown-menu').forEach(menu => {
-                            if (menu !== dropdownMenu) {
-                                menu.classList.remove('show');
-                                menu.querySelectorAll('.dropdown-menu1').forEach(menu2 => menu2.classList.remove('show')); // Đóng cấp 2 nếu có
-                            }
-                        });
-                    } else if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu1')) {
-                        // Xử lý dropdown cấp 2
-                        dropdownMenu.classList.toggle('show');
-                        // Đóng các dropdown cấp 2 khác trong cùng cấp cha
-                        parentLi.querySelectorAll('.dropdown-menu1').forEach(menu => {
-                            if (menu !== dropdownMenu) {
-                                menu.classList.remove('show');
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    } else {
-        console.warn('Mobile menu button or nav list not found.');
+    // Hàm kiểm tra token đã có sẵn
+    function getAuthToken() {
+        const token = localStorage.getItem('authToken'); // Luôn lấy authToken cho giảng viên
+        return token;
     }
-</script>
 
+    // --- Bắt đầu đoạn code mới để kiểm tra token cho Dịch vụ sinh viên ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const studentServicesLink = document.getElementById('studentServicesLink');
+
+        if (studentServicesLink) {
+            studentServicesLink.addEventListener('click', (event) => {
+                const token = getAuthToken(); // Lấy token
+
+                if (!token) { // Nếu không có token (người dùng chưa đăng nhập)
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết (chuyển hướng)
+                    alert('Bạn cần đăng nhập để sử dụng dịch vụ sinh viên.');
+                    // Ngay sau khi người dùng nhấn OK trên alert, dòng này sẽ được thực thi
+                    window.location.href = '/dangnhap'; 
+                }
+            });
+        } else {
+            console.warn('Không tìm thấy liên kết "Dịch vụ sinh viên" với ID studentServicesLink.');
+        }
+
+        // --- Đoạn mã hiện có của bạn (đảm bảo nó vẫn nằm trong DOMContentLoaded nếu cần) ---
+        if (mobileMenuBtn && navList) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (navList.classList.contains('active') && 
+                    !navList.contains(event.target) && 
+                    !mobileMenuBtn.contains(event.target) &&
+                    !mainNav.contains(event.target)) 
+                {
+                    navList.classList.remove('active');
+                }
+            });
+
+            navList.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) { 
+                        navList.classList.remove('active');
+                    }
+                });
+            });
+
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle, .dropdown-toggle1');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (event) => {
+                    if (window.innerWidth <= 768) { 
+                        event.preventDefault(); 
+                        const parentLi = toggle.closest('li');
+                        const dropdownMenu = toggle.nextElementSibling; 
+
+                        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                            dropdownMenu.classList.toggle('show');
+                            navList.querySelectorAll('.dropdown-menu').forEach(menu => {
+                                if (menu !== dropdownMenu) {
+                                    menu.classList.remove('show');
+                                    menu.querySelectorAll('.dropdown-menu1').forEach(menu2 => menu2.classList.remove('show')); 
+                                }
+                            });
+                        } else if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu1')) {
+                            dropdownMenu.classList.toggle('show');
+                            parentLi.querySelectorAll('.dropdown-menu1').forEach(menu => {
+                                if (menu !== dropdownMenu) {
+                                    menu.classList.remove('show');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        } else {
+            console.warn('Mobile menu button or nav list not found.');
+        }
+    });
+</script>
 
 <script src="/static/js/auth_status.js"></script>
 <script src="/static/js/search_handle.js"></script>
