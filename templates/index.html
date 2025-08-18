@@ -5,6 +5,22 @@
 {% block content %}
 <style>
     /* Phần chứa cả hai bộ đếm - Ghim vào góc màn hình */
+    body {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Tùy chọn: Chặn kéo ảnh */
+    img {
+        -webkit-user-drag: none; /* Chrome, Safari */
+        -khtml-user-drag: none; /* Konqueror HTML */
+        -moz-user-drag: none; /* Firefox */
+        
+    }
     .counters-container {
         position: fixed; /* Ghim vào vị trí cố định trên màn hình */
         bottom: 20px;    /* Cách đáy 20px */
@@ -87,6 +103,16 @@
             font-size: 1.4em; /* Số nhỏ hơn một chút */
         }
     }
+    .major-content h3{
+        font-size: 30px !important;
+      
+
+    }
+    .major-content p{
+        font-size: 17px !important;
+      
+
+    }
 </style>
 
 <div class="banner-slider">
@@ -129,18 +155,7 @@
                             <p>Đào tạo chuyên sâu về kế toán, kiểm toán và tài chính doanh nghiệp</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Kế toán trưởng</li>
-                                <li>Kiểm toán viên</li>
-                                <li>Chuyên viên tư vấn tài chính</li>
-                                <li>Chuyên viên phân tích tài chính</li>
-                            </ul>
-                            <a href="/ke-toan-doanh-nghiep" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -158,18 +173,7 @@
                             <p>Phát triển kỹ năng quản lý và điều hành doanh nghiệp hiệu quả</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Giám đốc điều hành</li>
-                                <li>Quản lý dự án</li>
-                                <li>Chuyên viên tư vấn chiến lược</li>
-                                <li>Quản lý kinh doanh</li>
-                            </ul>
-                            <a href="/quan-tri-kinh-doanh" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                 
                 </div>
             </div>
 
@@ -186,18 +190,7 @@
                             <p>Đào tạo chuyên gia trong lĩnh vực tài chính và ngân hàng</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Chuyên viên tín dụng</li>
-                                <li>Chuyên viên đầu tư</li>
-                                <li>Quản lý quỹ</li>
-                                <li>Tư vấn tài chính cá nhân</li>
-                            </ul>
-                            <a href="/tai-chinh-ngan-hang" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -213,18 +206,7 @@
                             <p>Đào tạo chuyên gia trong lĩnh vực kinh doanh trực tuyến</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Quản lý sàn TMĐT</li>
-                                <li>Digital Marketing</li>
-                                <li>Quản lý dự án online</li>
-                                <li>Chuyên viên phát triển thị trường</li>
-                            </ul>
-                            <a href="/thuong-mai-dien-tu" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -240,18 +222,7 @@
                             <p>Đào tạo chuyên gia trong lĩnh vực quản lý chuỗi cung ứng và logistics</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Chuyên viên logistics</li>
-                                <li>Quản lý chuỗi cung ứng</li>
-                                <li>Điều phối vận tải</li>
-                                <li>Quản lý kho vận</li>
-                            </ul>
-                                <a href="/logistic" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+            
                 </div>
             </div>
 
@@ -267,18 +238,7 @@
                             <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo bác sĩ thú y chuyên nghiệp với kiến thức và kỹ năng toàn diện</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Bác sĩ thú y</li>
-                                <li>Chuyên gia dinh dưỡng động vật</li>
-                                <li>Nghiên cứu viên</li>
-                                <li>Quản lý trại chăn nuôi</li>
-                            </ul>
-                            <a href="/thu-y" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                 
                 </div>
             </div>
 
@@ -294,18 +254,7 @@
                             <p>Đào tạo kỹ sư CNTT với chương trình cập nhật theo xu hướng công nghệ mới nhất</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Chuyên ngành</h4>
-                            <ul>
-                                <li>Quản trị cơ sở dữ liệu</li>
-                                <li>Thiết kế đồ họa</li>
-                                <li>Lập trình máy tính</li>
-                                <li>An toàn thông tin</li>
-                            </ul>
-                            <a href="/cong-nghe-thong-tin" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>      
-                    </div>
+                  
                 </div>
             </div>
 
@@ -321,18 +270,7 @@
                             <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo kỹ thuật viên chuyên nghiệp trong lĩnh vực công nghệ ô tô</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Kỹ thuật viên ô tô</li>
-                                <li>Tư vấn kỹ thuật</li>
-                                <li>Quản lý xưởng dịch vụ</li>
-                                <li>Kiểm định viên ô tô</li>
-                            </ul>
-                            <a href="/cong-nghe-o-to" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -349,18 +287,7 @@
                             <p>Đào tạo chuyên gia trong lĩnh vực chế biến và bảo quản thực phẩm</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Quản lý sản xuất</li>
-                                <li>Kiểm soát chất lượng</li>
-                                <li>R&D thực phẩm</li>
-                                <li>Tư vấn dinh dưỡng</li>
-                            </ul>
-                            <a href="/cong-nghe-thuc-pham" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+              
                 </div>
             </div>
 
@@ -376,18 +303,7 @@
                                 <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/> Đào tạo dược sĩ chuyên nghiệp với kiến thức chuyên môn cao</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Dược sĩ nhà thuốc</li>
-                                <li>Trình dược viên</li>
-                                <li>Kiểm nghiệm dược phẩm</li>
-                                <li>Quản lý dược phẩm</li>
-                            </ul>
-                                        <a href="/y" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                
                 </div>
             </div>
 
@@ -403,18 +319,7 @@
                             <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo điều dưỡng viên chuyên nghiệp với tâm huyết chăm sóc sức khỏe cộng đồng</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Điều dưỡng viên</li>
-                                <li>Chăm sóc sức khỏe</li>
-                                <li>Hộ sinh viên</li>
-                                <li>Y tá trưởng</li>
-                            </ul>
-                            <a href="/dieu-duong" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -430,18 +335,7 @@
                             <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo y sĩ với kiến thức tổng quát về y học và kỹ năng khám chữa bệnh</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Y sĩ đa khoa</li>
-                                <li>Nhân viên y tế</li>
-                                <li>Trạm y tế</li>
-                                <li>Phòng khám đa khoa</li>
-                            </ul>
-                            <a href="/y-si-da-khoa" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+              
                 </div>
             </div>
 
@@ -458,18 +352,7 @@
                             <p>Đào tạo chuyên viên kỹ thuật trong lĩnh vực nha khoa</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Kỹ thuật viên phục hình</li>
-                                <li>Trợ lý nha khoa</li>
-                                <li>Chuyên viên labo răng</li>
-                                <li>Tư vấn nha khoa</li>
-                            </ul>
-                            <a href=/ky-thuat-phuc-hinh-rang-ham-mat class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+            
                 </div>
             </div>
 
@@ -483,18 +366,7 @@
                             <p>Đào tạo chuyên viên vật lý trị liệu và phục hồi chức năng</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Kỹ thuật viên PHCN</li>
-                                <li>Vật lý trị liệu</li>
-                                <li>Chuyên viên trị liệu</li>
-                                <li>Phục hồi chức năng</li>
-                            </ul>
-                            <a href="/ky-thuat-phuc-hoi-chuc-nang-vat-ly-tri-lieu" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
 
@@ -508,18 +380,7 @@
                             <p>Đào tạo y sĩ y học cổ truyền kết hợp với y học hiện đại</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Y sĩ YHCT</li>
-                                <li>Châm cứu viên</li>
-                                <li>Bốc thuốc đông y</li>
-                                <li>Phòng khám YHCT</li>
-                            </ul>
-                            <a href="/y-hoc-co-truyen" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
 
@@ -533,18 +394,7 @@
                             <p><text class="text-do" style="color: #ee232b;">An tâm học phí cùng nghị định 81</text><br/>Đào tạo chuyên viên trong lĩnh vực du lịch và lữ hành</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Hướng dẫn viên du lịch</li>
-                                <li>Điều hành tour</li>
-                                <li>Quản lý du lịch</li>
-                                <li>Tư vấn du lịch</li>
-                            </ul>
-                            <a href="/du-lich" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+              
                 </div>
             </div>
 
@@ -558,18 +408,7 @@
                             <p>Đào tạo chuyên gia ngôn ngữ Anh với kỹ năng giao tiếp quốc tế</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Biên phiên dịch</li>
-                                <li>Giáo viên tiếng Anh</li>
-                                <li>Trợ lý đối ngoại</li>
-                                <li>Nhân viên quan hệ quốc tế</li>
-                            </ul>
-                            <a href="/ngon-ngu-anh" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+             
                 </div>
             </div>
 
@@ -583,18 +422,7 @@
                             <p>Đào tạo chuyên viên pháp lý với kiến thức luật thực tiễn</p>
                         </div>
                     </div>
-                    <div class="major-back">
-                        <div class="major-details">
-                            <h4>Triển vọng nghề nghiệp</h4>
-                            <ul>
-                                <li>Chuyên viên pháp lý</li>
-                                <li>Tư vấn luật</li>
-                                <li>Thư ký tòa án</li>
-                                <li>Trợ lý pháp lý</li>
-                            </ul>
-                            <a href="/dich-vu-phap-ly" class="major-link">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
@@ -763,9 +591,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='js/user_visit_web.js') }}"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<!-- <script src="{{ url_for('static', filename='js/banner.js') }}"></script> -->
 <script src="{{ url_for('static', filename='js/stats-animation.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/about-animation.js') }}"></script>
@@ -835,6 +663,147 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // --- Logic xử lý banner từ API ---
+    const bannerSlidesContainer = document.getElementById('banner-slides');
+    const sliderDotsContainer = document.getElementById('slider-dots');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const apiUrl = 'https://saigongiadinh.pythonanywhere.com/edit-banner/';
+
+    let currentSlide = 0;
+    let slides = [];
+    let dots = [];
+    let slideInterval;
+
+    function showSlide(index) {
+        if (slides.length === 0) return;
+
+        // Reset tất cả slide và dots
+        slides.forEach((slide, i) => {
+            slide.style.display = 'none';
+            dots[i].classList.remove('active');
+        });
+
+        // Hiển thị slide hiện tại và dot tương ứng
+        slides[index].style.display = 'block';
+        dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function startSlideShow() {
+        stopSlideShow(); // Dừng nếu đang chạy
+        slideInterval = setInterval(nextSlide, 5000); // Tự động chuyển slide sau 5 giây
+    }
+
+    function stopSlideShow() {
+        clearInterval(slideInterval);
+    }
+
+    // Fetch banner data
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Lọc chỉ các banner đang hoạt động và sắp xếp theo 'order'
+            const activeBanners = data.filter(banner => banner.is_active).sort((a, b) => a.order - b.order);
+
+            activeBanners.forEach((banner, index) => {
+                // Tạo slide div
+                const slideDiv = document.createElement('div');
+                slideDiv.classList.add('slide');
+
+                // Tạo img element
+                const imgElement = document.createElement('img');
+                imgElement.src = banner.image_path;
+                imgElement.alt = `Banner ${banner.id}`;
+
+                slideDiv.appendChild(imgElement);
+                bannerSlidesContainer.appendChild(slideDiv);
+                slides.push(slideDiv); // Thêm vào mảng slides
+
+                // Tạo dot
+                const dotSpan = document.createElement('span');
+                dotSpan.classList.add('dot');
+                dotSpan.addEventListener('click', () => {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                    startSlideShow(); // Bắt đầu lại slideshow khi dot được click
+                });
+                sliderDotsContainer.appendChild(dotSpan);
+                dots.push(dotSpan); // Thêm vào mảng dots
+            });
+
+            if (slides.length > 0) {
+                showSlide(currentSlide); // Hiển thị slide đầu tiên
+                startSlideShow(); // Bắt đầu slideshow
+            } else {
+                // Xử lý trường hợp không có banner nào hoạt động
+                bannerSlidesContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Hiện không có banner nào để hiển thị.</p>';
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            bannerSlidesContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: red;">Không thể tải banner. Vui lòng thử lại sau.</p>';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            sliderDotsContainer.style.display = 'none';
+        });
+
+    // Event Listeners cho nút điều hướng
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startSlideShow(); // Bắt đầu lại slideshow khi nút được click
+    });
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startSlideShow(); // Bắt đầu lại slideshow khi nút được click
+    });
+
+    // Dừng slideshow khi chuột di vào slider và bắt đầu lại khi chuột rời đi
+    const bannerSlider = document.querySelector('.banner-slider');
+    if (bannerSlider) {
+        bannerSlider.addEventListener('mouseenter', stopSlideShow);
+        bannerSlider.addEventListener('mouseleave', startSlideShow);
+    }
 });
+</script>
+ <script>
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của chuột phải
+        // Bạn có thể thêm một thông báo tùy chỉnh ở đây nếu muốn
+        // alert("Chức năng chuột phải đã bị vô hiệu hóa.");
+    });
+</script>
+<script>
+    document.onkeydown = function(e) {
+        // Chặn F12
+        if (e.keyCode == 123) {
+            return false;
+        }
+        // Chặn Ctrl+Shift+I (hoặc J, C)
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
+            return false;
+        }
+        // Chặn Ctrl+U (View Page Source)
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+        }
+    };
 </script>
 {% endblock %}

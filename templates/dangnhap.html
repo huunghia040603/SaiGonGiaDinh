@@ -78,6 +78,7 @@
     </div>
 
     <script src="/static/js/dangnhap.js"></script>
+    <script src="{{ url_for('static', filename='js/user_visit_web.js') }}"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('loginForm');
@@ -124,5 +125,28 @@
         });
     });
     </script>
+    <script>
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của chuột phải
+        // Bạn có thể thêm một thông báo tùy chỉnh ở đây nếu muốn
+        // alert("Chức năng chuột phải đã bị vô hiệu hóa.");
+    });
+</script>
+<script>
+    document.onkeydown = function(e) {
+        // Chặn F12
+        if (e.keyCode == 123) {
+            return false;
+        }
+        // Chặn Ctrl+Shift+I (hoặc J, C)
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
+            return false;
+        }
+        // Chặn Ctrl+U (View Page Source)
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+        }
+    };
+</script>
 </body>
 </html>

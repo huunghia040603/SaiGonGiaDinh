@@ -288,6 +288,31 @@
 .legend-color-box.consulted {
     background-color: #e0f2ff; /* Tương ứng với group-status-consulted */
 }
+        .export-excel-btn {
+            background-color: #28a745; /* Màu xanh lá cây */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease;
+            display: inline-flex; /* Để icon và chữ nằm cạnh nhau */
+            align-items: center;
+            gap: 5px;
+        }
+        .export-excel-btn:hover {
+            background-color: #218838; /* Màu xanh đậm hơn khi hover */
+        }
+        /* Điều chỉnh vị trí của nút */
+        .header-actions {
+            display: flex;
+            justify-content: space-between; /* Đẩy tiêu đề và nút ra hai phía */
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Cho phép xuống dòng trên mobile */
+            gap: 10px; /* Khoảng cách giữa các phần tử khi wrap */
+        }
     </style>
 {% endblock %}
 
@@ -308,6 +333,42 @@
         <span>Đã tư vấn</span>
     </div>
 </div>
+<div class="header-actions">
+                <h1 class="mb-0">Danh sách Đăng ký tư vấn</h1>
+                <button id="exportExcelBtn" class="export-excel-btn">
+                    <i class="bi bi-file-earmark-excel-fill"></i> Xuất Excel
+                </button>
+                <div class="row mb-4">
+ 
+</div>
+ 
+<div class="col-md-12">
+    <div class="card p-3">
+        <h5 class="card-title">Bộ lọc theo ngày</h5>
+        <form id="filterForm">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label">Từ ngày:</label>
+                    <input type="date" class="form-control" id="startDate" name="registration_date_after">
+                </div>
+                <div class="col-md-4">
+                    <label for="endDate" class="form-label">Đến ngày:</label>
+                    <input type="date" class="form-control" id="endDate" name="registration_date_before">
+                </div>
+                <div class="col-md-4">
+                    <label for="exactDate" class="form-label">Ngày chính xác:</label>
+                    <input type="date" class="form-control" id="exactDate" name="registration_date_exact">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary w-50">Lọc</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+            </div>
             <h1 class="mb-4">Danh sách Đăng ký tư vấn</h1>
 
             <div class="table-responsive">
@@ -395,5 +456,6 @@
 {% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="{{ url_for('static', filename='js/xlsx.full.min.js') }}"></script> 
     <script src="{{ url_for('static', filename='js/faculty/faculty_registrations.js') }}"></script>
 {% endblock %}
