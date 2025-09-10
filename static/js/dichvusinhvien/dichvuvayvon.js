@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const majorSelect = document.getElementById('major');
     const courseSelect = document.getElementById('training_course');
     const classCodeInput = document.getElementById('class_code');
+    const trainingSystemSelect = document.getElementById('training_system'); // Thêm trường training_system
     const messageContainer = document.getElementById('messageContainer');
 
     // Ánh xạ các ngành học với mã viết tắt
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Gán sự kiện change cho các trường liên quan
     majorSelect.addEventListener('change', generateClassCode);
     courseSelect.addEventListener('change', generateClassCode);
 
@@ -62,8 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(loanForm);
         const data = Object.fromEntries(formData.entries());
 
+        // Gán giá trị mã lớp vào payload với key lophoc
         data.lophoc = classCodeInput.value;
-
+        
+        // Gán giá trị hệ đào tạo vào payload với key training_system
+        data.training_system = trainingSystemSelect.value;
+        
+        // Xóa trường không cần thiết để tránh gửi dư thừa
         delete data.class_code;
 
         data.miengiam = data.miengiam || 'khong_mien_giam';
@@ -75,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         messageContainer.className = 'mt-4 text-center text-sm font-bold';
         
         try {
-            const response = await fetch('https://saigongiadinh.pythonanywhere.com/vayvon/', {
+            const response = await fetch('https://saigonginh.pythonanywhere.com/vayvon/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -247,25 +247,46 @@
     }
 
     function showDetails(item) {
-        let detailsHTML = `
-            <p><strong>Mã Hồ Sơ:</strong> ${item.ma_ho_so}</p>
-            <p><strong>Họ Tên:</strong> ${item.full_name}</p>
-            <p><strong>Ngày Sinh:</strong> ${item.date_of_birth}</p>
-            <p><strong>Giới Tính:</strong> ${item.gender}</p>
-            <p><strong>Nơi Sinh:</strong> ${item.place_of_birth}</p>
-            <p><strong>CCCD:</strong> ${item.cccd}</p>
-            <p><strong>Ngày Cấp CCCD:</strong> ${item.cccd_issue_date}</p>
-            <p><strong>Hộ Khẩu Thường trú:</strong> ${item.permanent_residence}</p>
-            <p><strong>Ngành:</strong> ${item.major}</p>
-            <p><strong>Trình độ đào tạo:</strong> ${item.training_level}</p>
-            <p><strong>Khóa đào tạo:</strong> ${item.training_course}</p>
-            <p><strong>Số bản sao:</strong> ${item.number_of_copies}</p>
-            <p><strong>Tình trạng:</strong> ${getStatusBox(item.trang_thai)}</p>
-            <p><strong>Ngày nộp hồ sơ:</strong> ${new Date(item.submission_date).toLocaleString()}</p>
-        `;
-        modalBody.innerHTML = detailsHTML;
-        modal.style.display = 'block';
-    }
+    let detailsHTML = `
+        <h3>Thông tin cá nhân</h3>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Mã Hồ Sơ:</strong> ${item.ma_ho_so}</p>
+            <p class="detail-item"><strong>Họ Tên:</strong> ${item.full_name}</p>
+            <p class="detail-item"><strong>Ngày Sinh:</strong> ${item.date_of_birth}</p>
+        </div>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Giới Tính:</strong> ${item.gender}</p>
+            <p class="detail-item"><strong>Nơi Sinh:</strong> ${item.place_of_birth}</p>
+            <p class="detail-item"><strong>CCCD:</strong> ${item.cccd}</p>
+        </div>
+
+        <h3 style="margin-top: 20px;">Thông tin liên hệ</h3>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Ngày Cấp CCCD:</strong> ${item.cccd_issue_date}</p>
+            <p class="detail-item"><strong>Thường trú:</strong> ${item.permanent_residence}</p>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Thông tin học vấn</h3>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Ngành:</strong> ${item.major}</p>
+            <p class="detail-item"><strong>Trình độ đào tạo:</strong> ${item.training_level}</p>
+            <p class="detail-item"><strong>Hệ đào tạo:</strong> ${item.training_system}</p>
+        </div>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Lớp:</strong> ${item.lophoc}</p>
+            <p class="detail-item"><strong>Khóa đào tạo:</strong> ${item.training_course}</p>
+            <p class="detail-item"><strong>Số bản sao:</strong> ${item.number_of_copies}</p>
+        </div>
+
+        <h3 style="margin-top: 20px;">Trạng thái hồ sơ</h3>
+        <div class="detail-row">
+            <p class="detail-item"><strong>Tình trạng:</strong> ${getStatusBox(item.trang_thai)}</p>
+            <p class="detail-item"><strong>Ngày nộp hồ sơ:</strong> ${new Date(item.submission_date).toLocaleString()}</p>
+        </div>
+    `;
+    modalBody.innerHTML = detailsHTML;
+    modal.style.display = 'block';
+}
 
     closeModal.onclick = function() {
         modal.style.display = 'none';
