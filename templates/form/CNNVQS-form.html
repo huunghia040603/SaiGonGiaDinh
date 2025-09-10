@@ -21,6 +21,7 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             padding: 25mm 18mm 20mm 18mm; /* Lề trên, phải, dưới, trái */
             box-sizing: border-box;
+            position: relative; /* để nút in nằm trong tờ giấy */
         }
 
         /* Dùng table để căn chỉnh phần header */
@@ -180,14 +181,22 @@
             }
         }
         
-        .button-container {
-            text-align: center;
-            margin: 20px auto;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        /* Nút in nổi bật góc phải trên */
+        .print-btn.no-print {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #1d4ed8;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .print-btn.no-print:hover {
+            background: #153ea8;
         }
         
         /* CSS bổ sung để ẩn header/footer trình duyệt */
@@ -207,6 +216,7 @@
 <body>
 
 <div class="page">
+    <button class="print-btn no-print" onclick="window.print()">In Giấy Xác Nhận</button>
     <table class="header-table">
         <tr>
             <td class="header-left">
@@ -264,6 +274,7 @@
             <tr>
                 <td class="label">Trình độ đào tạo:</td>
                 <td id="training_level"></td>
+
                 <td class="label">Hệ đào tạo:</td>
                 <td id="training_system"></td>
             </tr>
@@ -306,25 +317,33 @@
     });
 
     function fillForm(data) {
+        function formatDateToVN(value) {
+            if (!value) return '';
+            const m = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (m) {
+                return `${m[3]}/${m[2]}/${m[1]}`;
+            }
+            return value;
+        }
         // Thông tin cá nhân
         document.getElementById('full_name').textContent = data.full_name || '';
         document.getElementById('gender').textContent = data.gender || '';
-        document.getElementById('date_of_birth').textContent = data.date_of_birth || '';
+        document.getElementById('date_of_birth').textContent = formatDateToVN(data.date_of_birth) || '';
         document.getElementById('place_of_birth').textContent = data.place_of_birth || '';
         document.getElementById('cccd').textContent = data.cccd || '';
-        document.getElementById('cccd_issue_date').textContent = data.cccd_issue_date || '';
+        document.getElementById('cccd_issue_date').textContent = formatDateToVN(data.cccd_issue_date) || '';
         document.getElementById('permanent_residence').textContent = data.permanent_residence || '';
         
         // Thông tin học tập
-        document.getElementById('student_class').textContent = data.student_class || 'K11 CĐTY';
+        document.getElementById('student_class').textContent = data.lophoc;
         document.getElementById('major').textContent = data.major || '';
-        document.getElementById('training_level').textContent = data.training_level || 'Cao đẳng';
-        document.getElementById('training_system').textContent = data.training_system || 'Chính quy';
-        document.getElementById('training_course_year').textContent = data.training_course_year || '2025 - 2028';
+        document.getElementById('training_level').textContent = data.training_level ;
+        document.getElementById('training_system').textContent = data.training_system ;
+        const trainingCourseValue = (data && (data['traning-course'] || data['training-course'])) || data.training_course_year || data.training_course || '';
+        document.getElementById('training_course_year').textContent = trainingCourseValue;
         
         // Lý do cấp giấy chứng nhận (mặc định)
         document.getElementById('reason').textContent = data.reason || 'Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.';
-
         // Ngày cấp (ngày hiện tại)
         const now = new Date();
         const day = now.getDate();

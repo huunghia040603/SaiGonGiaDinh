@@ -19,15 +19,16 @@
             margin: 30px auto;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 25mm 30mm 20mm 30mm; /* Lề trên, phải, dưới, trái */
+            padding: 25mm 18mm 20mm 18mm; /* Lề trên, phải, dưới, trái */
             box-sizing: border-box;
+            position: relative; /* để đặt nút in góc phải trên */
         }
 
         /* Dùng table để căn chỉnh phần header */
         .header-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13pt;
+            font-size: 11pt;
             text-align: center;
         }
 
@@ -95,8 +96,14 @@
         }
         .info-table td.label {
             white-space: nowrap;
-            padding-right: 15px;
+            padding-right: 5px;
+            padding-left: 10px;
+            font-weight: normal;
+        }
+        
+        .info-table td:not(.label) {
             font-weight: bold;
+            padding-left: 0px;
         }
         
         .sign-area {
@@ -133,27 +140,72 @@
                 height: 297mm;
                 margin: 0;
                 box-shadow: none;
-                padding: 25mm 30mm 20mm 30mm;
+                padding: 25mm 18mm 20mm 18mm; /* Giữ nguyên padding như màn hình */
             }
             .no-print {
                 display: none;
             }
+            /* Đảm bảo header không bị xuống dòng khi in */
+            .header-table {
+                font-size: 11pt !important;
+                line-height: 1.2 !important;
+            }
+            .header-table td {
+                width: 50% !important;
+                vertical-align: top !important;
+            }
+            .header-table p {
+                margin: 0 !important;
+                line-height: 1.2 !important;
+            }
+            .underline {
+                display: inline-block !important;
+                border-bottom: 1px solid #000 !important;
+                margin-top: 5px !important;
+            }
+            /* Ẩn header và footer của trình duyệt khi in */
+            @page {
+                margin: 0;
+                size: A4;
+            }
         }
         
-        .button-container {
-            text-align: center;
-            margin: 20px auto;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        /* Nút in nổi bật góc phải trên */
+        .print-btn.no-print {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #1d4ed8;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .print-btn.no-print:hover {
+            background: #153ea8;
+        }
+        
+        /* CSS bổ sung để ẩn header/footer trình duyệt */
+        @media print {
+            html, body {
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .page {
+                margin: 0 !important;
+                padding: 25mm 18mm 20mm 18mm !important;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="page">
+    <button class="print-btn no-print" onclick="window.print()">In Giấy Xác Nhận</button>
     <table class="header-table">
         <tr>
             <td class="header-left">
@@ -169,11 +221,10 @@
         </tr>
     </table>
 
-    <div class="content">
-        <p style="text-align: center; font-style: italic; font-size: 13pt; margin-top: 20px;">Số: .... /GXN-CĐSGGD</p>
+    <div class="content" style="margin-top: 30px;">
         <h1>GIẤY XÁC NHẬN</h1>
         <p style="text-align: center; font-size: 14pt; font-weight: bold;">HIỆU TRƯỞNG TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
-        <p style="margin-top: 20px;"><b>Xác nhận:</b></p>
+        <p style="margin-top: 20px;"> <strong>Xác nhận</strong></p>
 
         <table class="info-table">
             <tr>
@@ -203,6 +254,10 @@
                 <td colspan="3" id="permanent_residence"></td>
             </tr>
             <tr>
+                <td class="label">Lớp học:</td>
+                <td id="student_class"></td>
+            </tr>
+            <tr>
                 <td class="label">Là sinh viên ngành:</td>
                 <td id="major"></td>
                 <td class="label">Trình độ đào tạo:</td>
@@ -210,15 +265,18 @@
             </tr>
             <tr>
                 <td class="label">Hệ đào tạo:</td>
-                <td id="training_course"></td>
+                <td id="training_system"></td>
                 <td class="label">Khóa đào tạo:</td>
                 <td id="training_course_year"></td>
             </tr>
-            <tr>
-                <td class="label">Lý do cấp giấy chứng nhận:</td>
-                <td colspan="3" id="reason">Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.</td>
-            </tr>
         </table>
+        
+        <div style="margin-top: 20px;">
+            <p style="margin: 0; font-size: 13pt; line-height: 1.6;">
+                <strong>Lý do cấp giấy chứng nhận:</strong> 
+                <span id="reason" style="font-weight: bold; padding-left: 20px;">Xác nhận sinh viên đang theo học tại trường</span>
+            </p>
+        </div>
     </div>
 
     <div class="sign-area">
@@ -228,9 +286,7 @@
     </div>
 </div>
 
-<div class="button-container no-print">
-    <button onclick="window.print()">In Giấy Xác Nhận</button>
-</div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -244,18 +300,28 @@
     });
 
     function fillForm(data) {
+        function formatDateToVN(value) {
+            if (!value) return '';
+            const m = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (m) {
+                return `${m[3]}/${m[2]}/${m[1]}`;
+            }
+            return value;
+        }
         document.getElementById('full_name').textContent = data.full_name;
         document.getElementById('gender').textContent = data.gender;
-        document.getElementById('date_of_birth').textContent = data.date_of_birth;
+        document.getElementById('date_of_birth').textContent = formatDateToVN(data.date_of_birth);
         document.getElementById('place_of_birth').textContent = data.place_of_birth;
         document.getElementById('cccd').textContent = data.cccd;
-        document.getElementById('cccd_issue_date').textContent = data.cccd_issue_date;
+        document.getElementById('cccd_issue_date').textContent = formatDateToVN(data.cccd_issue_date);
+        document.getElementById('student_class').textContent = data.lophoc;
         document.getElementById('permanent_residence').textContent = data.permanent_residence;
         document.getElementById('major').textContent = data.major;
         document.getElementById('training_level').textContent = data.training_level;
-        document.getElementById('training_course').textContent = data.training_course;
-        document.getElementById('training_course_year').textContent = data.training_course_year;
-        document.getElementById('reason').textContent = data.reason;
+        document.getElementById('training_system').textContent = data.training_system || '';
+        const trainingCourseValue = (data && (data['traning-course'] || data['training-course'])) || data.training_course_year || data.training_course || '';
+        document.getElementById('training_course_year').textContent = trainingCourseValue;
+        document.getElementById('reason').textContent = data.reason || 'Xác nhận sinh viên đang theo học tại trường';
 
         const now = new Date();
         const day = now.getDate();
