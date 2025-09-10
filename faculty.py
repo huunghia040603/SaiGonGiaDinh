@@ -56,6 +56,11 @@ def tintuc():
     
     return render_template('faculty/manage_news.html')
 
+@faculty.route('/capgiay/')
+def cap_giay():
+    
+    return render_template('faculty/cap_giay.html')
+
 @faculty.route('/CNNVQS/')
 def CNNVQS():
     
@@ -70,3 +75,19 @@ def CNSV():
 def VayVon():
     
     return render_template('faculty/VayVon.html')
+
+# Routes to render printable forms
+@faculty.route('/form/cnsv/')
+def form_cnsv():
+    
+    return render_template('form/CNSV-form.html')
+
+@faculty.route('/form/cnnvqs/')
+def form_cnnvqs():
+    
+    return render_template('form/CNNVQS-form.html')
+
+@faculty.route('/form/vayvon/')
+def form_vayvon():
+    
+    return render_template('form/VayVon-form.html')

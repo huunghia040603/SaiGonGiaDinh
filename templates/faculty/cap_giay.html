@@ -1,0 +1,60 @@
+{% extends 'faculty/base_faculty.html' %}
+{% block title %}Cấp Giấy cho Sinh Viên{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h3 class="mb-3">Cấp Giấy cho Sinh Viên</h3>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row g-2 align-items-end">
+                <div class="col-12 col-md-5">
+                    <label class="form-label">Tìm theo Mã hồ sơ hoặc Họ tên</label>
+                    <input id="searchInput" class="form-control" placeholder="VD: SGC-094AH hoặc Nguyễn Văn A">
+                </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-label">Lọc loại giấy</label>
+                    <select id="filterType" class="form-select">
+                        <option value="">Tất cả</option>
+                        <option value="giay_chung_nhan_sv">Chứng nhận SV</option>
+                        <option value="giay_hoan_nvqs">CN NVQS</option>
+                        <option value="yeu_cau_vay_von">Yêu cầu vay vốn</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-2">
+                    <button id="reloadBtn" class="btn btn-secondary w-100">Tải lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Mã hồ sơ</th>
+                    <th>Họ và tên</th>
+                    <th>Ngành</th>
+                    <th>Lớp</th>
+                    <th>Loại giấy đủ điều kiện</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="profilesBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.badge-type { padding: 6px 10px; font-weight: 600; }
+.badge-cnsv { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+.badge-cnnvqs { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+.badge-vayvon { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.action-btn { margin-right: 6px; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/faculty/cap_giay.js') }}"></script>
+{% endblock %}
