@@ -539,24 +539,10 @@
         return token;
     }
 
-    // --- Bắt đầu đoạn code mới để kiểm tra token cho Dịch vụ sinh viên ---
+    // --- Đã bỏ yêu cầu đăng nhập cho Dịch vụ sinh viên ---
+    // Mọi người đều có thể truy cập dịch vụ sinh viên mà không cần đăng nhập
     document.addEventListener('DOMContentLoaded', () => {
-        const studentServicesLink = document.getElementById('studentServicesLink');
-
-        if (studentServicesLink) {
-            studentServicesLink.addEventListener('click', (event) => {
-                const token = getAuthToken(); // Lấy token
-
-                if (!token) { // Nếu không có token (người dùng chưa đăng nhập)
-                    event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết (chuyển hướng)
-                    alert('Bạn cần đăng nhập để sử dụng dịch vụ sinh viên.');
-                    // Ngay sau khi người dùng nhấn OK trên alert, dòng này sẽ được thực thi
-                    window.location.href = '/dangnhap'; 
-                }
-            });
-        } else {
-            console.warn('Không tìm thấy liên kết "Dịch vụ sinh viên" với ID studentServicesLink.');
-        }
+        // Code kiểm tra đăng nhập đã được bỏ để cho phép truy cập tự do
 
         // --- Đoạn mã hiện có của bạn (đảm bảo nó vẫn nằm trong DOMContentLoaded nếu cần) ---
         if (mobileMenuBtn && navList) {
