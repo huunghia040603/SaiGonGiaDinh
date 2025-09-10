@@ -411,6 +411,10 @@ def dangkychungnhan():
 def cnnvqs_form():
     return render_template('form/CNNVQS-form.html')
 
+@app.route('/form/CNSV-form.html')
+def cnsv():
+    return render_template('form/CNSV-form.html')
+
 @app.route('/dang-ky-the-sinh-vien')
 def dangkythesinhvien():
     return render_template('dichvu/dvthesv.html')

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Giấy Xác Nhận</title>
+    <style>
+        /* CSS cho màn hình và in ấn */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .page {
+            width: 210mm; /* Khổ giấy A4 */
+            min-height: 297mm;
+            margin: 30px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 25mm 30mm 20mm 30mm; /* Lề trên, phải, dưới, trái */
+            box-sizing: border-box;
+        }
+
+        /* Dùng table để căn chỉnh phần header */
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13pt;
+            text-align: center;
+        }
+
+        .header-table td {
+            padding: 0;
+            width: 50%;
+            vertical-align: top;
+        }
+        
+        .header-table .header-left p, .header-table .header-right p {
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .header-table .header-left p:first-child, .header-table .header-right p:first-child {
+            font-weight: bold;
+        }
+
+        .header-table .header-right p:last-child {
+            font-style: italic;
+        }
+
+        .header-table .underline {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            margin-top: 5px;
+        }
+
+        .header-table .left-underline {
+            width: 80%;
+        }
+
+        .header-table .right-underline {
+            width: 70%;
+        }
+
+        .content {
+            margin-top: 20px;
+        }
+        
+        .content h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 20px 0 0px;
+        }
+
+        .content p {
+            font-size: 13pt;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Dùng table để căn chỉnh các trường thông tin */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .info-table td {
+            padding: 2px 0;
+            font-size: 13pt;
+            line-height: 1.6;
+            vertical-align: top;
+        }
+        .info-table td.label {
+            white-space: nowrap;
+            padding-right: 15px;
+            font-weight: bold;
+        }
+        
+        .sign-area {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .sign-area p {
+            margin: 5px 0;
+            font-size: 13pt;
+            line-height: 1.5;
+        }
+        
+        .sign-area p:first-child {
+            font-style: italic;
+        }
+
+        .sign-area p:nth-child(2) {
+            font-weight: bold;
+            margin-bottom: 70px;
+        }
+        
+        .sign-area p:last-child {
+            font-weight: bold;
+        }
+        
+        /* CSS cho in ấn */
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                box-shadow: none;
+                padding: 25mm 30mm 20mm 30mm;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 20px auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <table class="header-table">
+        <tr>
+            <td class="header-left">
+                <p>BỘ GIÁO DỤC VÀ ĐÀO TẠO</p>
+                <p><b>TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</b></p>
+                <span class="underline left-underline"></span>
+            </td>
+            <td class="header-right">
+                <p>CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+                <p><b>Độc lập - Tự do - Hạnh phúc</b></p>
+                <span class="underline right-underline"></span>
+            </td>
+        </tr>
+    </table>
+
+    <div class="content">
+        <p style="text-align: center; font-style: italic; font-size: 13pt; margin-top: 20px;">Số: .... /GXN-CĐSGGD</p>
+        <h1>GIẤY XÁC NHẬN</h1>
+        <p style="text-align: center; font-size: 14pt; font-weight: bold;">HIỆU TRƯỞNG TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
+        <p style="margin-top: 20px;"><b>Xác nhận:</b></p>
+
+        <table class="info-table">
+            <tr>
+                <td class="label">Họ và tên:</td>
+                <td id="full_name"></td>
+                <td class="label">Giới tính:</td>
+                <td id="gender"></td>
+            </tr>
+            <tr>
+                <td class="label">Ngày sinh:</td>
+                <td id="date_of_birth"></td>
+                <td class="label">Nơi sinh:</td>
+                <td id="place_of_birth"></td>
+            </tr>
+            <tr>
+                <td class="label">Số CCCD:</td>
+                <td id="cccd"></td>
+                <td class="label">Ngày cấp:</td>
+                <td id="cccd_issue_date"></td>
+            </tr>
+            <tr>
+                <td class="label">Nơi cấp:</td>
+                <td colspan="3" id="cccd_issue_place">Cục trưởng CCSQLHCVTTXH</td>
+            </tr>
+            <tr>
+                <td class="label">Hộ khẩu thường trú:</td>
+                <td colspan="3" id="permanent_residence"></td>
+            </tr>
+            <tr>
+                <td class="label">Là sinh viên ngành:</td>
+                <td id="major"></td>
+                <td class="label">Trình độ đào tạo:</td>
+                <td id="training_level"></td>
+            </tr>
+            <tr>
+                <td class="label">Hệ đào tạo:</td>
+                <td id="training_course"></td>
+                <td class="label">Khóa đào tạo:</td>
+                <td id="training_course_year"></td>
+            </tr>
+            <tr>
+                <td class="label">Lý do cấp giấy chứng nhận:</td>
+                <td colspan="3" id="reason">Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sign-area">
+        <p>TP. Hồ Chí Minh, ngày <span id="issue_date"></span></p>
+        <p>HIỆU TRƯỞNG</p>
+        <p>TS. Bùi Quang Trung</p>
+    </div>
+</div>
+
+<div class="button-container no-print">
+    <button onclick="window.print()">In Giấy Xác Nhận</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const profileData = JSON.parse(sessionStorage.getItem('currentProfile'));
+
+        if (profileData) {
+            fillForm(profileData);
+        } else {
+            document.querySelector('.page').innerHTML = '<p style="text-align:center; color:red; margin-top: 50px;">Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại trang danh sách.</p>';
+        }
+    });
+
+    function fillForm(data) {
+        document.getElementById('full_name').textContent = data.full_name;
+        document.getElementById('gender').textContent = data.gender;
+        document.getElementById('date_of_birth').textContent = data.date_of_birth;
+        document.getElementById('place_of_birth').textContent = data.place_of_birth;
+        document.getElementById('cccd').textContent = data.cccd;
+        document.getElementById('cccd_issue_date').textContent = data.cccd_issue_date;
+        document.getElementById('permanent_residence').textContent = data.permanent_residence;
+        document.getElementById('major').textContent = data.major;
+        document.getElementById('training_level').textContent = data.training_level;
+        document.getElementById('training_course').textContent = data.training_course;
+        document.getElementById('training_course_year').textContent = data.training_course_year;
+        document.getElementById('reason').textContent = data.reason;
+
+        const now = new Date();
+        const day = now.getDate();
+        const month = now.getMonth() + 1;
+        const year = now.getFullYear();
+        document.getElementById('issue_date').textContent = `${day} tháng ${month} năm ${year}`;
+    }
+</script>
+
+</body>
+</html>
