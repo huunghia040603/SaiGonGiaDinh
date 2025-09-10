@@ -1,1 +1,353 @@
-{% include 'sapramat.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+        }
+
+        /* Main Content Area */
+        .container11 {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Section Title */
+        .section-title11 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title11::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #007bff;
+            border-radius: 2px;
+        }
+
+        /* Job Listings Grid */
+        .job-listings11 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Individual Job Card */
+        .job-card11 {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .job-card11:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-card11 img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .job-card-content11 {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .job-card-content11 h3 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .job-card-content11 p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .job-card-meta11 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        .job-card-meta11 span {
+            display: flex;
+            align-items: center;
+        }
+
+        .job-card-meta11 span svg {
+            margin-right: 5px;
+            color: #007bff;
+        }
+
+        /* Modal for Job Details */
+        .modal11 {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content11 {
+            background-color: #fefefe;
+            margin: 5% auto; /* 5% from the top and centered */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-button11 {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button11:hover,
+        .close-button11:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .job-details-content11 h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .job-details-content11 h4 {
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .job-details-content11 ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .job-details-content11 ul li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .job-details-content11 p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .job-details-contact11 {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .job-details-contact11 p strong {
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container11 {
+                width: 95%;
+                margin: 15px auto;
+                padding: 15px;
+            }
+
+            .job-listings11 {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content11 {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .section-title11 {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .job-card-content11 h3 {
+                font-size: 1.2em;
+            }
+
+            .job-card-content11 p {
+                font-size: 0.9em;
+            }
+
+            .job-details-content11 h2 {
+                font-size: 1.8em;
+            }
+
+            .job-details-content11 h4 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container11">
+        <h2 class="section-title11">Cơ Hội Việc Làm Hấp Dẫn Cho Sinh Viên</h2>
+
+        <div class="job-listings11">
+            <div class="job-card11" onclick="openModal11('accountingJob')">
+                <img src="/static/images/TIN DANG TUYEN DUNG-1.jpg" alt="Ảnh mô tả Nhân Viên Kế Toán">
+                <div class="job-card-content11">
+                    <h3>Nhân Viên Kế Toán </h3>
+                    <p>Theo dõi các khoản thu, chi, công nợ và lập báo cáo thuế. Không yêu cầu kinh nghiệm. </p>
+                    <div class="job-card-meta11">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            Quận 7, TP. HCM 
+                        </span>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.635-1.435 3.635-3.047 0-1.525-1.254-2.723-3.149-3.088V0h-1v3.957c-1.787.42-2.685 1.128-2.685 2.223 0 1.071.93 1.887 2.306 2.071v.715zm0 1.61c.404.552 1.137 1.006 2.342 1.006h.062c1.442 0 2.158-.654 2.158-1.517 0-1.036-.983-1.492-2.455-1.76l-.49-.09v1.275zm.992-4.636c.928.167 1.775.635 2.18 1.05v-1.1c-.6-.234-1.549-.712-2.18-.9zm2.18-2.92v-1.666q-.208-.027-.42-.039c-1.353-.119-2.393-.84-2.393-2.073 0-1.096.945-1.575 2.209-1.575h.42V1.5z"/>
+                            </svg>
+                            9 - 11 triệu VND 
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
+
+    <div id="accountingJobModal11" class="modal11">
+        <div class="modal-content11">
+            <span class="close-button11" onclick="closeModal11('accountingJobModal11')">&times;</span>
+            <div class="job-details-content11">
+                <h2>Vị trí tuyển dụng: Nhân viên Kế toán </h2>
+                <p><strong>Số lượng:</strong> 1 NAM + 1 NỮ </p>
+
+                <h4>MÔ TẢ CÔNG VIỆC: </h4>
+                <ul>
+                    <li><strong>Kế toán tiền mặt:</strong> Theo dõi các khoản thu, chi, tạm ứng bằng tiền mặt. </li>
+                    <li>Nhập liệu chi tiết các phần hành trên phần mềm Kế toán mới. </li>
+                    <li><strong>Công nợ trong nước & Thuế:</strong></li>
+                    <ul>
+                        <li>Theo dõi công nợ phải trả trong nước.</li>
+                        <li>Theo dõi và lập báo cáo liên quan đến Thuế theo tháng, quý, năm. </li>
+                    </ul>
+                </ul>
+
+                <h4>YÊU CẦU CÔNG VIỆC: </h4>
+                <ul>
+                    <li><strong>Độ tuổi:</strong> 22 ~ 30. </li>
+                    <li>Không yêu cầu kinh nghiệm. </li>
+                    <li>Tốt nghiệp Đại học chuyên ngành Kế toán, Kiểm toán, Tài chính và các ngành khác có liên quan. </li>
+                    <li>Thành thạo các phần mềm tin học văn phòng. </li>
+                    <li><strong>Trình độ ngoại ngữ:</strong> Tiếng Anh cơ bản, biết tiếng Nhật là lợi thế. </li>
+                    <li>Khả năng giải quyết công việc nhanh chóng, chính xác. Có tinh thần trách nhiệm cao, tỉ mỉ, cẩn thận. </li>
+                    <li>Giao tiếp tốt, có kỹ năng liên lạc, trao đổi và thảo luận trong công việc. </li>
+                </ul>
+
+                <h4>QUYỀN LỢI: </h4>
+                <ul>
+                    <li><strong>Thu nhập:</strong> 9.000.000 ~ 11.000.000 VND. </li>
+                    <li>Được đào tạo chuyên môn ngay từ khi nhận việc. </li>
+                    <li>Được hưởng đầy đủ các chế độ dành cho người lao động theo quy định của pháp luật (BHXH, BHYT, BHTN...). </li>
+                    <li>Nghỉ lễ, nghỉ phép năm theo luật định và nghỉ tăng thêm theo quy định của công ty. </li>
+                    <li>Trợ cấp khác (đi lại, chuyên cần, nhà ở, ....) theo quy định của công ty. </li>
+                    <li>Thưởng cuối năm, thưởng theo kết quả kinh doanh của công ty (1 lần/năm). </li>
+                    <li>Công ty đài thọ cơm trưa. Đồng phục được cấp định kỳ theo quy định.</li>
+                    <li><strong>Thời gian làm việc:</strong> 07:30 ~ 16:20, từ Thứ 2 đến Thứ 7 (trung bình mỗi tháng được nghỉ 1~2 ngày thứ 7). </li>
+                </ul>
+
+                <div class="job-details-contact11">
+                    <p><strong>Nơi làm việc:</strong> CÔNG TY TNHH KIM MAY ORGAN (VN). </p>
+                    <p><strong>Địa chỉ:</strong> U.02-12a, Đường số 22, Khu chế xuất Tân Thuận, Phường Tân Thuận Đông, Quận 7, TP. HCM. </p>
+                    <p><strong>Hình thức nộp hồ sơ:</strong> </p>
+                    <ul>
+                        <li>Nộp CV online qua địa chỉ email: <a href="mailto:tuyendungonv@organvn.com.vn">tuyendungonv@organvn.com.vn</a> </li>
+                        <li>Nộp CV trực tiếp: Tại phòng Bảo vệ của công ty. </li>
+                    </ul>
+                    <p><strong>Liên hệ:</strong> Phòng Nhân sự 028 37701473 bấm 109 hoặc 121. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal11(jobId) {
+            document.getElementById(jobId + 'Modal11').style.display = "block";
+        }
+
+        function closeModal11(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close the modal if the user clicks anywhere outside of the modal content
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal11');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+
+{% endblock %}
