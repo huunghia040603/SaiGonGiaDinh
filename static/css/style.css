@@ -4,6 +4,40 @@ html, body {
     width: 100%;
     overflow-x: hidden; /* THÊM DÒNG NÀY - Đảm bảo không có thanh cuộn ngang */
 }
+
+/* Modern Pastel Color Palette for Cosmetics */
+:root {
+    /* Main Colors - Light Gray, White, Black */
+    --primary-gray: #f8f9fa;
+    --secondary-gray: #e9ecef;
+    --accent-gray: #dee2e6;
+    --dark-gray: #6c757d;
+    --text-dark: #212529;
+    --text-light: #6c757d;
+    --white: #ffffff;
+    --black: #000000;
+    
+    /* Pastel Accent Colors */
+    --pastel-pink: #EFB0C9;
+    --pastel-pink-light: #F4C2D7;
+    --pastel-pink-lighter: #F8DAE9;
+    --pastel-blue: #B9D6F3;
+    --pastel-blue-dark: #A1C9F1;
+    --pastel-beige: #F1E8D9;
+    
+    /* Hover and Interactive Colors */
+    --hover-pink: #e8a0b9;
+    --hover-blue: #a9c6e3;
+    --hover-gray: #f1f3f4;
+    
+    /* Shadows and Borders */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.15);
+    --border-light: #e9ecef;
+    --border-medium: #dee2e6;
+}
+
 /* Banner Slider */
 @font-face {
     font-family: font3;
@@ -27,7 +61,7 @@ html, body {
     overflow: hidden;
     margin-top: 10px;
     /* Add space at the top */
-    padding: 0 15px;
+    /* padding: 0 15px; */
     /* Add some horizontal padding */
 }
 
@@ -50,7 +84,7 @@ html, body {
     height: auto;
     object-fit: contain;
     display: block;
-    max-height: 600px;
+    max-height: 700px;
 }
 
 /* Navigation Buttons */

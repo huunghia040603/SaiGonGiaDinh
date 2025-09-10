@@ -342,6 +342,10 @@ def lienthongvanbangdaihoc():
 def hoatdongtuvan():
     return render_template('tintuctuyensinh.html')
 
+@app.route('/news-detail')
+def news_detail():
+    return render_template('news_detail.html')
+
 @app.route('/tintucgiaoduc')
 def tintucgiaoduc():
     return render_template('tintucgiaoduc.html')

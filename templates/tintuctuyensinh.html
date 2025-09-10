@@ -99,11 +99,16 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        cursor: pointer;
     }
 
     .news-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .news-card:hover .read-more {
+        color: #a31f2f;
     }
 
     .card-image-wrapper {
@@ -206,11 +211,7 @@
         transition: color 0.3s ease;
         align-self: flex-start; /* Căn chỉnh nút về phía trái */
         font-family: 'font2', sans-serif;
-    }
-
-    .read-more:hover {
-        color: #a31f2f;
-        text-decoration: underline;
+        pointer-events: none; /* Ngăn chặn event riêng của read-more */
     }
 
     .read-more i {
@@ -222,12 +223,40 @@
         margin-left: 12px;
     }
 
+    /* External indicator */
+    .external-indicator {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: #007bff;
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75em;
+        z-index: 1;
+    }
+
+    .external-hint {
+        font-size: 0.8em;
+        color: #007bff;
+        font-style: italic;
+        margin-left: 5px;
+    }
+
+    /* Đảm bảo các element con không bị ảnh hưởng bởi click event */
+    .card-category,
+    .external-indicator {
+        pointer-events: none;
+    }
+
     /* Pagination - Phân trang */
     .pagination {
         display: flex;
         justify-content: center;
+        align-items: center;
         margin-top: 50px;
         gap: 10px;
+        min-height: 50px;
     }
 
     .page-link {
@@ -354,6 +383,17 @@
         }
         .article-meta i{
             padding-right: 5px;
+        }
+        
+        .external-indicator {
+            top: 10px;
+            left: 10px;
+            padding: 3px 6px;
+            font-size: 0.7em;
+        }
+        
+        .external-hint {
+            font-size: 0.75em;
         }
     }
 </style>

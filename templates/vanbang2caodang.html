@@ -308,9 +308,106 @@
     transition: color 0.3s;
 }
 
-.contact-details a:hover {
+    .contact-details a:hover {
     text-decoration: underline;
     color: #0056b3;
+}
+
+/* Banner Section Styles */
+.banner-section {
+    margin: 40px 0;
+}
+
+.banner-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+
+
+.banner-container img {
+    height: 300px;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 51, 102, 0.7), rgba(163, 31, 47, 0.7));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 40px 20px;
+}
+
+.banner-content h2 {
+    font-family: font2;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.banner-content p {
+    font-size: 1.3em;
+    margin-bottom: 25px;
+    opacity: 0.95;
+    font-family: font6;
+}
+
+.banner-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    border: 2px solid white;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.banner-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Banner */
+@media (max-width: 768px) {
+    .banner-content h2 {
+        font-size: 1.8em;
+    }
+    
+    .banner-content p {
+        font-size: 1.1em;
+    }
+    
+    .banner-btn {
+        padding: 12px 25px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content h2 {
+        font-size: 1.5em;
+    }
+    
+    .banner-content p {
+        font-size: 1em;
+    }
+    
+    .banner-overlay {
+        padding: 30px 15px;
+    }
 }
 
 /* Responsive adjustments */
@@ -393,7 +490,15 @@
 
    
     <main class="main-content">
+        
         <div class="container" style="margin-top: 20px;">
+             <!-- Banner Section -->
+         <!-- <section class="banner-section" style="margin: 40px 0;">
+            <div class="banner-container" style="position: relative; overflow: hidden;  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);">
+                <img src="{{ url_for('static', filename='images/tivi 12.jpg') }}" alt="Banner Liên thông Văn bằng 2" style="width: 100%; height: auto; display: block; transition: transform 0.3s ease;">
+                
+            </div> -->
+        </section>
             <section class="admission-hero">
                 <h1 class="hero-title" style="text-transform: uppercase;"> Tuyển sinh Liên thông / Văn bằng 2 Cao đẳng!</h1>
                 <p class="hero-subtitle" style="font-family: font2;">Bạn đang tìm kiếm cơ hội để nâng cao trình độ, mở rộng kiến thức hoặc chuyển đổi ngành nghề ?</p>
@@ -401,11 +506,12 @@
                 <div class="hero-actions">
                     <a href="#register-section" class="btn btn-primary">Đăng ký ngay</a>
                     <a href="/dangki" class="btn btn-primary">Liên hệ tư vấn</a>
-              <a href="/static/pdf/THÔNG BÁO TUYỂN SINH T7_LTVB2 2025.pdf" class="btn btn-primary"><i class="fa-solid fa-book-open"></i> XEM THÔNG TIN CHI TIẾT</a>
+              <a href="/static/pdf/THÔNG BÁO TUYỂN SINH T8_LTVB2 2025.pdf" class="btn btn-primary"><i class="fa-solid fa-book-open"></i> XEM THÔNG TIN CHI TIẾT</a>
 
                 </div>
             </section>
           
+           
 
             <section id="nganh-tuyen-sinh" class="admission-section">
                 <h2 class="section-title"><i class="fas fa-graduation-cap icon"></i> Ngành Tuyển Sinh</h2>
@@ -442,9 +548,9 @@
                         <h3 class="category-title"><i class="fas fa-laptop-code"></i> Khoa Công nghệ - Kỹ thuật</h3>
                         <ul>
                             <li>Công nghệ thông tin</li>
-                            <li>Quản trị cơ sở dữ liệu</li>
-                            <li>Thiết kế đồ họa</li>
-                            <li>Lập trình máy tính</li>
+                            <li> + Quản trị cơ sở dữ liệu</li>
+                            <li> + Thiết kế đồ họa</li>
+                            <li> +Lập trình máy tính</li>
                             <li>Công nghệ ô tô</li>
                             <li>Công nghệ thực phẩm</li>
                         </ul>
@@ -453,8 +559,8 @@
                         <h3 class="category-title"><i class="fas fa-globe-asia"></i> Khoa Xã hội - Du lịch – Pháp luật</h3>
                         <ul>
                             <li>Du lịch</li>
-                            <li>Hướng dẫn du lịch</li>
-                            <li>Quản trị Nhà hàng – Khách sạn</li>
+                            <li> + Hướng dẫn du lịch</li>
+                            <li> + Quản trị Nhà hàng – Khách sạn</li>
                             <li>Ngôn ngữ Anh</li>
                             <li>Luật – Dịch vụ pháp lý</li>
                         </ul>
@@ -467,8 +573,12 @@
                 <div class="content-block">
                     <h3>Đối tượng tuyển sinh:</h3>
                     <ul>
-                        <li>Thí sinh tốt nghiệp Trung cấp cùng ngành.</li>
-                        <li>Thí sinh tốt nghiệp Trung cấp, Cao đẳng, Đại học khác ngành.</li>
+                        
+                            <li>Thí sinh Tốt nghiệp THPT hoặc bổ túc THPT</li>
+                            <li>Thí sinh đã hoàn thành chương trình THPT</li>
+                            <li>Thí sinh đang học dang dở các trường Cao Đẳng, Đại học khác</li>
+                            <li>Thí sinh Tốt nghiệp THCS hoặc học dang dở lớp 10, 11, 12</li>
+                       
                     </ul>
                 </div>
                 <div class="content-block">
@@ -501,15 +611,16 @@
             </section>
 
             <section id="thoi-gian-dang-ky" class="admission-section">
-                <h2 class="section-title"><i class="fas fa-calendar-alt icon"></i> Thời gian Tuyển sinh & Hình thức Đăng ký</h2>
+                <h2 class="section-title"><i class="fas fa-calendar-alt icon"></i> Thời gian tuyển sinh & Hình thức đăng ký</h2>
                 <div class="content-block">
                     <h3>Thời gian tuyển sinh:</h3>
                     <ul>
                         <li><strong style="font-family: font2;">Thời gian nhận hồ sơ:</strong> từ ngày ra thông báo.</li>
                         <li><strong style="font-family: font2;">Thời gian khai giảng dự kiến:</strong>
                             <ul>
-                                <li>Lớp Thứ 7, Chủ nhật: ngày 01/06/2025</li>
-                                <li>Lớp các buổi tối: ngày 02/06/2025</li>
+                               
+                                <li>Lớp Thứ 7, Chủ nhật: ngày 06/09/2025</li>
+ <li>Lớp các buổi tối: ngày 08/09/2025</li>
                             </ul>
                         </li>
                     </ul>
@@ -523,9 +634,9 @@
                         <li><i class="far fa-address-card"></i> Lý lịch HSSV (theo mẫu và xác nhận địa phương).</li>
                         <li><i class="fas fa-id-card"></i> Bản sao hợp lệ Căn cước công dân, Giấy khai sinh.</li>
                         <li><i class="fas fa-graduation-cap"></i> Bản sao hợp lệ Bằng tốt nghiệp và học bạ THPT.</li>
-                        <li><i class="fas fa-award"></i> Bản sao hợp lệ Bảng điểm toàn khóa và Bằng tốt nghiệp trung cấp hoặc cao đẳng hoặc đại học.</li>
+                        <li><i class="fas fa-award"></i> Bản sao hợp lệ Bảng điểm toàn khóa và Bằng tốt nghiệp trung cấp/cao đẳng/đại học.</li>
                         <li><i class="fas fa-exchange-alt"></i> Bản sao hợp lệ Chứng chỉ chuyển đổi (nếu có).</li>
-                        <li><i class="fas fa-camera"></i> 04 ảnh thẻ 2x3 (ghi rõ họ tên và ngày tháng năm sinh mặt sau).</li>
+                        <li><i class="fas fa-camera"></i> 04 ảnh thẻ 3x4 (ghi rõ họ tên và ngày tháng năm sinh mặt sau).</li>
                     </ul>
                 </div>
                 <div class="content-block">
