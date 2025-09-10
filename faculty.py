@@ -55,3 +55,9 @@ def dangkynhaphoc():
 def tintuc():
     
     return render_template('faculty/manage_news.html')
+
+@faculty.route('/CNNVQS/')
+def CNNVQS():
+    
+    return render_template('faculty/CNNVQS.html')
+
