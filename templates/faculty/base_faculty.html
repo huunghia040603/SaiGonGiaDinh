@@ -42,7 +42,7 @@
         
         <div class="sidebar" id="sidebar"> {# Thêm ID cho sidebar để dễ thao tác JS #}
             <div class="sidebar-header">
-                <img style="width: 35px; height: 35px;" src="/static//images/logoSGGD.png"/>&nbsp;<span>SGC</span>
+                <img style="width: 35px; height: 35px;" src="/static/images/logoSGGD.png"/>&nbsp;<span>SGC</span>
             </div>
 
            <div class="sidebar-search-bar">
@@ -112,7 +112,7 @@
     <script src="{{ url_for('static', filename='js/faculty/sidebar_active.js') }}"></script>
     <script src="{{ url_for('static', filename='js/logout.js') }}"></script> {# Đảm bảo đã thêm logout.js #}
     <script src="{{ url_for('static', filename='js/faculty/mobile_sidebar.js') }}"></script> {# THÊM DÒNG NÀY CHO JS XỬ LÝ MOBILE #}
-
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     {% block scripts %}
     {# Các script riêng của từng trang có thể được thêm ở đây #}
     {% endblock %}

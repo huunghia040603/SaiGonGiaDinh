@@ -10,7 +10,7 @@
     <div class="container">
         <div class="top-links">
             <a href="/dangnhap" id="loginStatusLink"><i class="fas fa-user"></i> ĐĂNG NHẬP SGC</a>
-            <a href="/sinhvien/dichvu" id="studentServicesLink"><i class="fas fa-graduation-cap"></i> DỊCH VỤ SINH VIÊN</a>
+            <a href="/dichvu" id="studentServicesLink"><i class="fas fa-graduation-cap"></i> DỊCH VỤ SINH VIÊN</a>
             <a href="/ktx"><i class="fa-solid fa-house-lock"></i> TRỌ VÀ KTX SINH VIÊN </a>
             <a href="/careers"><i class="fas fa-briefcase"></i> TUYỂN DỤNG</a>
             <a href="tel:02835885558"><i class="fas fa-phone"></i> HOTLINE: 02835885558</a>
@@ -616,6 +616,7 @@
     });
 </script>
 
-<script src="/static/js/auth_status.js"></script>
+
 <script src="/static/js/search_handle.js"></script>
 <script src="/static/js/navbar_active.js"></script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>

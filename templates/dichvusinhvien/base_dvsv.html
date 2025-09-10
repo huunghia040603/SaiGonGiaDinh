@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ Sinh Viên - Cao đẳng Sài Gòn Gia Định</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="/static/images/logoSGGD.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Tùy chỉnh font chữ */
+        @font-face {
+            font-family: 'font2';
+            src: url('/static/font/font2.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'font6';
+            src: url('/static/font/font6.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'font3';
+            src: url('/static/font/font3.ttf') format('truetype');
+        }
+        
+        /* CÁC BIẾN CSS */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --bg-light: #f8f9fa;
+            --text-dark: #212529;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.08);
+            --hover-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        /* CĂN CHỈNH TỔNG THỂ */
+        body {
+            font-family: font2 !important;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Căn trên cùng */
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        /* MAIN CONTAINER */
+        .main-container {
+            max-width: 1800px;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        /* KHỐI NỘI DUNG CHÍNH */
+        .main-content {
+            padding: 40px 0;
+            background-color: var(--bg-light);
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.8em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: 'font2' !important;
+        }
+
+        .page-description {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 50px;
+        }
+
+        /* KHỐI DỊCH VỤ */
+        .service-category {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--card-shadow);
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+
+        .category-title {
+            color: var(--text-dark);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-title .fas, .category-title .fa-solid {
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+
+        /* GRID CÁC DỊCH VỤ */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        /* THẺ DỊCH VỤ */
+        .service-card {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none; /* Bỏ gạch chân cho thẻ */
+        }
+
+        .service-card .icon {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .service-card h3 {
+            color: var(--text-dark);
+            font-size: 1.4em;
+            margin: 0 0 8px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: var(--secondary-color);
+            font-size: 0.9em;
+            line-height: 1.4;
+            font-family: 'font6', sans-serif;
+        }
+
+        /* HIỆU ỨNG HOVER/ACTIVE */
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px var(--hover-shadow);
+        }
+
+        .service-card:hover .icon {
+            color: var(--accent-color);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.2em; }
+            .page-description { font-size: 1em; margin-bottom: 30px; }
+            .category-title { font-size: 1.8em; }
+            .service-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .service-card { padding: 20px; }
+            .service-card .icon { font-size: 2.5em; margin-bottom: 10px; }
+            .service-card h3 { font-size: 1.2em; }
+            .service-card p { font-size: 0.85em; }
+        }
+
+        @media (max-width: 480px) {
+            .page-title { font-size: 1.8em; }
+            .page-description { font-size: 0.9em; margin-bottom: 25px; }
+            .service-card .icon { font-size: 2.2em; }
+            .service-card h3 { font-size: 1em; }
+            .service-card p { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        {% block content %}
+        {# Nội dung cụ thể của từng trang sẽ được đặt ở đây #}
+        {% endblock %}
+    </main>
+</body>
+</html>

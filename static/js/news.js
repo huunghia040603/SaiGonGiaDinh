@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const newsGridContainer = document.getElementById('news-grid-container');
     const loadingMessage = document.getElementById('loading-message');
@@ -5,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const API_URL = 'https://saigongiadinh.pythonanywhere.com/news/';
     const ITEMS_PER_PAGE = 6; // Số lượng bài viết mỗi trang
 
-    let allNews = []; // Đảm bảo đây luôn là một mảng
     let currentPage = 1;
+    let totalPages = 1;
 
     // Hàm định dạng ngày tháng
     function formatDate(dateString) {
@@ -19,52 +21,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const newsCard = document.createElement('div');
         newsCard.classList.add('news-card');
 
-        // Extract image URL safely
-        // Dựa trên cấu trúc JSON, featured_image là một đường dẫn tương đối hoặc cần tiền tố
-        // Nếu API trả về "image/upload/v1749022077/Screenshot_...", thì cần tiền tố Cloudinary
-        const imageUrl = `${newsItem.featured_image}`; 
-        
-        // CẬP NHẬT: Lấy tên loại tin tức từ newsItem.type.name
-        // Đảm bảo newsItem.type tồn tại và có thuộc tính 'name'
+        const imageUrl = newsItem.featured_image; 
         const newsType = newsItem.type_display;
-        const newsTypeKey = newsItem.type_display && newsItem.type.key ? newsItem.type.key : '';
-
-        // Limit title to 3 lines (CSS handles truncation, nhưng bạn có thể cắt ở đây nếu muốn)
         const truncatedTitle = newsItem.title; 
-        
-        // Limit description to 3 lines (CSS handles truncation, nhưng bạn có thể cắt ở đây nếu muốn)
-        const truncatedDescription = newsItem.short_description; // Sử dụng short_description
-
-        // Construct detail URL: Ưu tiên newsItem.link, sau đó là newsItem.slug, cuối cùng là '#'
-        const detailUrl = newsItem.link ? newsItem.link : (newsItem.slug ? `/news/${newsItem.slug}` : '#');
+        const truncatedDescription = newsItem.short_description;
+        const detailUrl = newsItem.link || (newsItem.slug ? `/news/${newsItem.slug}` : '#');
         
         let displayCategory;
-        // CẬP NHẬT: Sử dụng newsTypeKey cho switch case
+        const newsTypeKey = newsItem.type_display;
         switch (newsTypeKey) {
-            case "TU_VAN":
-                displayCategory = "Tư vấn";
+            case "TIN TỨC": displayCategory = "Tin tức";
                 break;
-            case "GIAO_DUC":
-                displayCategory = "Giáo dục";
+            case "TUYỂN SINH": displayCategory = "Tuyển sinh";
                 break;
-            case "PHONG_TRAO":
-                displayCategory = "Phong trào";
+            case "TƯ VẤN": displayCategory = "Tư vấn";
                 break;
-            case "SU_KIEN":
-                displayCategory = "Sự kiện"; // Thêm case cho "Sự kiện" nếu cần
+            case "GIAO_DUC": displayCategory = "Giáo dục";
                 break;
-            case "HOAT_DONG":
-                displayCategory = "Hoạt động"; // Thêm case cho "Hoạt động" nếu cần
+            case "PHONG_TRAO": displayCategory = "Phong trào";
                 break;
-            default:
-                displayCategory = newsType; // Giữ nguyên tên loại tin tức nếu không khớp với các trường hợp trên
+            case "SU_KIEN": displayCategory = "Sự kiện";
+                break;
+            case "HOAT_DONG": displayCategory = "Hoạt động";
+                break;
+            default: displayCategory = newsType;
                 break;
         }
 
         newsCard.innerHTML = `
             <div class="card-image-wrapper">
                 <img src="${imageUrl}" alt="Ảnh bìa" class="image" style="width: 100%; height: 100%; opacity: 0.9;">
-                
                 <span class="card-category">${displayCategory}</span>
             </div>
             <div class="card-content">
@@ -77,28 +63,22 @@ document.addEventListener('DOMContentLoaded', function() {
         return newsCard;
     }
 
-    // Hàm hiển thị tin tức cho trang hiện tại
-    function displayNews(page) {
-        newsGridContainer.innerHTML = ''; // Xóa tin tức cũ
-        const startIndex = (page - 1) * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const newsToDisplay = allNews.slice(startIndex, endIndex); // allNews giờ là mảng, slice() hoạt động
-
-        if (newsToDisplay.length === 0 && page === 1) {
+    // Hàm hiển thị tin tức đã nhận từ API
+    function displayNews(newsItems) {
+        newsGridContainer.innerHTML = '';
+        if (newsItems.length === 0) {
             newsGridContainer.innerHTML = '<p style="text-align: center; font-size: 1.2em; color: #555;">Không có tin tức nào để hiển thị.</p>';
-            return;
+        } else {
+            newsItems.forEach(newsItem => {
+                const card = createNewsCard(newsItem);
+                newsGridContainer.appendChild(card);
+            });
         }
-
-        newsToDisplay.forEach(newsItem => {
-            const card = createNewsCard(newsItem);
-            newsGridContainer.appendChild(card);
-        });
     }
 
     // Hàm tạo phân trang
-    function setupPagination(totalItems) {
-        paginationContainer.innerHTML = ''; // Xóa phân trang cũ
-        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    function setupPagination() {
+        paginationContainer.innerHTML = '';
 
         // Nút "Trước"
         const prevLink = document.createElement('a');
@@ -110,10 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             prevLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                currentPage--;
-                displayNews(currentPage);
-                setupPagination(totalItems);
-                window.scrollTo({ top: newsGridContainer.offsetTop - 100, behavior: 'smooth' }); // Cuộn lên đầu phần tin tức
+                fetchNews(currentPage - 1);
             });
         }
         paginationContainer.appendChild(prevLink);
@@ -129,10 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 pageLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    currentPage = i;
-                    displayNews(currentPage);
-                    setupPagination(totalItems);
-                    window.scrollTo({ top: newsGridContainer.offsetTop - 100, behavior: 'smooth' }); // Cuộn lên đầu phần tin tức
+                    fetchNews(i);
                 });
             }
             paginationContainer.appendChild(pageLink);
@@ -148,33 +122,33 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             nextLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                currentPage++;
-                displayNews(currentPage);
-                setupPagination(totalItems);
-                window.scrollTo({ top: newsGridContainer.offsetTop - 100, behavior: 'smooth' }); // Cuộn lên đầu phần tin tức
+                fetchNews(currentPage + 1);
             });
         }
         paginationContainer.appendChild(nextLink);
     }
 
     // Hàm Fetch dữ liệu từ API
-    async function fetchNews() {
-        loadingMessage.style.display = 'block'; // Hiển thị thông báo đang tải
-        newsGridContainer.innerHTML = ''; // Xóa nội dung cũ để chuẩn bị tải mới
+    async function fetchNews(page = 1) {
+        loadingMessage.style.display = 'block';
+        newsGridContainer.innerHTML = '';
+        paginationContainer.innerHTML = '';
 
         try {
-            const response = await fetch(API_URL);
+            const response = await fetch(`${API_URL}?page=${page}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
 
-            allNews = data.results || []; 
-            
-            loadingMessage.style.display = 'none'; // Ẩn thông báo đang tải
+            currentPage = data.current_page;
+            totalPages = data.num_pages;
 
-            displayNews(currentPage); // Hiển thị trang đầu tiên
-            setupPagination(allNews.length); // Thiết lập phân trang
+            loadingMessage.style.display = 'none';
+            displayNews(data.results);
+            setupPagination();
+            window.scrollTo({ top: newsGridContainer.offsetTop - 100, behavior: 'smooth' });
+
         } catch (error) {
             console.error('Lỗi khi fetch dữ liệu:', error);
             loadingMessage.textContent = 'Không thể tải tin tức. Vui lòng thử lại sau.';

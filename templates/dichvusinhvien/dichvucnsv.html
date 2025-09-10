@@ -1,0 +1,114 @@
+{% extends "dichvusinhvien/base_dvsv.html" %}
+
+{% block content %}
+
+<section class="min-h-screen py-6 px-3 sm:py-10 sm:px-6 lg:px-8 bg-gray-50 flex items-center justify-center">
+    <div class="max-w-xs sm:max-w-xl md:max-w-6xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden md:flex">
+        <div class="md:w-1/3 p-4 sm:p-6 flex items-center justify-center">
+            <img src="{{ url_for('static', filename='images/hotro.png') }}" alt="Đăng ký cấp chứng nhận sinh viên" class="rounded-lg shadow-md w-full h-auto object-cover max-w-[200px] sm:max-w-full mx-auto">
+        </div>
+        
+        <div class="md:w-2/3 p-6 lg:p-12">
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 mb-4 sm:mb-6 text-center" style="font-family: font2;">Đăng Ký Cấp Chứng Nhận Sinh Viên</h2>
+            <div class="bg-blue-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-blue-700 mb-4 sm:mb-6 text-center" style="font-family: font2;">BIỂU MẪU ĐĂNG KÝ</h3>
+                <form id="tourForm" action="/register-tour" method="POST" class="space-y-4 sm:space-y-6">
+                    <div class="form-group">
+                        <label for="full_name" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Họ và tên <span class="text-red-500">*</span></label>
+                        <input type="text" id="full_name" name="full_name" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required placeholder="Nhập họ và tên">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="date_of_birth" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Ngày sinh <span class="text-red-500">*</span></label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Giới tính <span class="text-red-500">*</span></label>
+                            <select id="gender" name="gender" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label for="place_of_birth" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Nơi sinh <span class="text-red-500">*</span></label>
+                            <input type="text" id="place_of_birth" name="place_of_birth" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required placeholder="Nhập nơi sinh">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd" class="block text-xs sm:text-sm text-gray-700 mb-0.5 sm:mb-1">Số CCCD <span class="text-red-500">*</span></label>
+                            <input type="text" id="cccd" name="cccd" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required placeholder="Nhập số CCCD">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd_issue_date" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Ngày cấp CCCD <span class="text-red-500">*</span></label>
+                            <input type="date" id="cccd_issue_date" name="cccd_issue_date" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="permanent_residence" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Hộ khẩu thường trú <span class="text-red-500">*</span></label>
+                        <input type="text" id="permanent_residence" name="permanent_residence" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required placeholder="Nhập hộ khẩu thường trú">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label for="major" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Ngành học <span class="text-red-500">*</span></label>
+                            <select id="major" name="major" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="Kế toán doanh nghiệp">Kế toán doanh nghiệp</option>
+                                <option value="Quản trị kinh doanh">Quản trị kinh doanh</option>
+                                <option value="Tài chính ngân hàng">Tài chính ngân hàng</option>
+                                <option value="Thương mại điện tử">Thương mại điện tử</option>
+                                <option value="Logistic">Logistic</option>
+                                <option value="Thú y">Thú y</option>
+                                <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                                <option value="Công nghệ ô tô">Công nghệ ô tô</option>
+                                <option value="Công nghệ thực phẩm">Công nghệ thực phẩm</option>
+                                <option value="Dược">Dược</option>
+                                <option value="Điều dưỡng">Điều dưỡng</option>
+                                <option value="Y sĩ đa khoa">Y sĩ đa khoa</option>
+                                <option value="Kỹ thuật phục hình răng">Kỹ thuật phục hình răng</option>
+                                <option value="Kỹ thuật phục hồi chức năng">Kỹ thuật phục hồi chức năng</option>
+                                <option value="Y học cổ truyền">Y học cổ truyền</option>
+                                <option value="Du lịch">Du lịch</option>
+                                <option value="Ngôn ngữ Anh">Ngôn ngữ Anh</option>
+                                <option value="Luật dịch vụ pháp lý">Luật dịch vụ pháp lý</option>
+                                <option value="Sư phạm mầm non">Sư phạm mầm non</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="training_level" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Trình độ đào tạo <span class="text-red-500">*</span></label>
+                            <select id="training_level" name="training_level" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="Chính quy">Chính quy</option>
+                                <option value="Liên thông VB2">Liên thông VB2</option>
+                                <option value="Liên thông VB2 Đại học">Liên thông VB2 Đại học</option>
+                                <option value="Phổ thông 9+">Phổ thông 9+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="training_course" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Khóa đào tạo <span class="text-red-500">*</span></label>
+                            <select id="training_course" name="training_course" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="2025 - 2028">2025 - 2028</option>
+                                <option value="2024 - 2027">2024 - 2027</option>
+                                <option value="2023 - 2026">2023 - 2026</option>
+                                <option value="2022 - 2025">2022 - 2025</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="number_of_copies" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Số lượng bản <span class="text-red-500">*</span></label>
+                        <input type="number" id="number_of_copies" name="number_of_copies" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border"value="1">
+                    </div>
+                    
+                    <button type="submit" class="w-full flex justify-center py-2 sm:py-3 px-3 sm:px-4 border border-transparent rounded-md shadow-sm text-base sm:text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out">
+                        Gửi thông tin
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{{ url_for('static', filename='js/dichvusinhvien/dichvucnsv.js') }}"></script>
+{% endblock %}

@@ -18,11 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPath = currentPath.slice(0, -1);
         }
 
-        // So sánh đường dẫn hiện tại với href của link
-        // Xử lý đặc biệt cho các dropdown parent link:
-        // Nếu link là dropdown-toggle (GIỚI THIỆU, TUYỂN SINH, v.v.)
-        // và một trong các child link của nó khớp với đường dẫn hiện tại,
-        // thì parent link đó sẽ được đánh dấu là active.
+        
         if (link.classList.contains('dropdown-toggle')) {
             const dropdownMenu = link.nextElementSibling; // Lấy ul.dropdown-menu
             if (dropdownMenu) {

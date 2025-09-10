@@ -15,7 +15,19 @@
 <body>
     <div class="login-container">
         <div class="illustration-section">
+            <div class="character character-orange">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
             </div>
+            <div class="character character-purple">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+            </div>
+            <div class="character character-black">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+            </div>
+        </div>
         <div class="login-section">
             <div class="logo">
                 <img src="/static/images/logoSGGD.png" alt="Logo Cao Đẳng Sài Gòn Gia Định">
@@ -59,7 +71,7 @@
                         <input type="checkbox" name="remember" checked>
                         <span>Nhớ Mật Khẩu</span>
                     </label>
-                    <a href="/forgot-password" class="forgot-password">Quên mật khẩu?</a>
+                    <a href="/forgot_password" class="forgot-password">Quên mật khẩu?</a>
                 </div>
 
                 <button type="submit" class="btn-login" id="loginBtn">
@@ -67,86 +79,7 @@
             </form>
         </div>
     </div>
-
-    <div class="character character-purple">
-        <div class="eye eye-left"></div>
-        <div class="eye eye-right"></div>
-    </div>
-    <div class="character character-black">
-        <div class="eye eye-left"></div>
-        <div class="eye eye-right"></div>
-    </div>
-
-    <script src="/static/js/dangnhap.js"></script>
-    <script src="{{ url_for('static', filename='js/user_visit_web.js') }}"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Quan trọng: Ngăn chặn submit form mặc định
-
-            // Client-side validation (giữ nguyên hoặc điều chỉnh tùy ý)
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailInput.value)) {
-                alert('Vui lòng nhập email hợp lệ');
-                emailInput.focus();
-                return;
-            }
-            if (passwordInput.value.length < 3) {
-                alert('Mật khẩu phải có ít nhất 3 ký tự');
-                passwordInput.focus();
-                return;
-            }
-
-            // Nếu validation thành công, gọi hàm xử lý đăng nhập đã nằm trong dangnhap.js
-            // Logic chính đã được di chuyển vào dangnhap.js, không cần this.submit() ở đây
-            // hoặc trigger sự kiện click của nút (nó sẽ tự động xảy ra khi form được submit qua nút)
-        });
-
-        // Improve mobile UX (giữ nguyên)
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.addEventListener('dblclick', function() {
-                this.value = '';
-            });
-            input.addEventListener('focus', function() {
-                setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            });
-        });
-
-        window.addEventListener('orientationchange', function() {
-            window.scrollTo(0, 0);
-            document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-    });
-    </script>
-    <script>
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của chuột phải
-        // Bạn có thể thêm một thông báo tùy chỉnh ở đây nếu muốn
-        // alert("Chức năng chuột phải đã bị vô hiệu hóa.");
-    });
-</script>
-<script>
-    document.onkeydown = function(e) {
-        // Chặn F12
-        if (e.keyCode == 123) {
-            return false;
-        }
-        // Chặn Ctrl+Shift+I (hoặc J, C)
-        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
-            return false;
-        }
-        // Chặn Ctrl+U (View Page Source)
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
-    };
-</script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dangnhap.js') }}"></script>
 </body>
 </html>
