@@ -3,7 +3,6 @@
 {% block title %}Hiển thị dữ liệu xin cấp chứng nhận hoãn NVQS{% endblock %}
 {% block page_styles %}
     <style>
-        
         h1, h2 {
             text-align: center;
             color: #333;
@@ -47,6 +46,15 @@
             cursor: pointer;
             font-size: 14px;
         }
+        .detail-button2 {
+            background-color: #e6e60e;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
         .detail-button:hover {
             background-color: #005f7a;
         }
@@ -63,31 +71,31 @@
             padding-top: 60px;
         }
         .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-    position: relative; /* Thêm dòng này để định vị tuyệt đối cho .close */
-}
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            position: relative;
+        }
         @keyframes animatetop {
             from {top: -300px; opacity: 0}
             to {top: 0; opacity: 1}
         }
         .close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute; /* Thêm dòng này để định vị tuyệt đối */
-    top: 10px; /* Định vị cách đỉnh 10px */
-    right: 15px; /* Định vị cách bên phải 15px */
-    cursor: pointer; /* Thêm dòng này để hiển thị con trỏ tay khi di chuột */
-}
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
         .close:hover, .close:focus {
             color: black;
             text-decoration: none;
@@ -102,149 +110,343 @@
             width: 150px;
         }
         .status-box {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .status-box.dang_xu_ly {
+            background-color: #f44336;
+        }
+
+        .status-box.da_kiem_duyet {
+            background-color: #ff9800;
+        }
+
+        .status-box.da_xu_ly {
+            background-color: #4CAF50;
+        }
+        /* CSS cho form chỉnh sửa */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group-inline {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group-inline label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group-inline input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        /* Thêm đoạn này vào phần <style> */
+.detail-row {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các mục tự động xuống dòng */
+    gap: 20px; /* Khoảng cách giữa các mục */
+    margin-bottom: 10px;
+}
+
+.detail-item {
+    flex: 1 1 250px; /* Sửa giá trị này để 3 mục có thể nằm trên cùng một hàng */
+}
+
+.detail-item strong {
     display: inline-block;
-    min-width: 120px;
-    text-align: center;
-}
-
-.status-box.dang_xu_ly {
-    background-color: #f44336; /* Màu đỏ */
-}
-
-.status-box.da_kiem_duyet {
-    background-color: #ff9800; /* Màu cam/vàng */
-}
-
-.status-box.da_xu_ly {
-    background-color: #4CAF50; /* Màu xanh lá cây */
+    width: 150px; /* Đặt chiều rộng cố định cho label để các hàng thẳng hàng */
 }
     </style>
 {% endblock %}
 {% block content %}
 
 <div class="container">
-    <h1>Danh sách Hồ sơ</h1>
-    <div id="data-table"></div>
+    <h1>Danh sách Hồ sơ</h1>
+    <div id="data-table"></div>
 </div>
 
 <div id="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Thông tin chi tiết</h2>
-        <div id="modal-body"></div>
-    </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Thông tin chi tiết</h2>
+        <div id="modal-body"></div>
+    </div>
 </div>
 {% endblock %}
 {% block scripts %}
 <script>
-    const apiURL = 'https://saigongiadinh.pythonanywhere.com/cnsv/';
-    const dataTableDiv = document.getElementById('data-table');
-    const modal = document.getElementById('modal');
-    const modalBody = document.getElementById('modal-body');
-    const closeModal = document.querySelector('.close');
+    const apiURL = 'https://saigongiadinh.pythonanywhere.com/cnsv/';
+    const dataTableDiv = document.getElementById('data-table');
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    const closeModal = document.querySelector('.close');
 
-    async function fetchData() {
-        try {
-            const response = await fetch(apiURL);
-            if (!response.ok) {
-                throw new Error('Lỗi khi tải dữ liệu: ' + response.statusText);
-            }
-            const data = await response.json();
-            displayData(data);
-        } catch (error) {
-            dataTableDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
-        }
-    }
+    async function fetchData() {
+        try {
+            const response = await fetch(apiURL);
+            if (!response.ok) {
+                throw new Error('Lỗi khi tải dữ liệu: ' + response.statusText);
+            }
+            const data = await response.json();
+            displayData(data);
+        } catch (error) {
+            dataTableDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
+        }
+    }
 
-    function displayData(data) {
-        if (data.length === 0) {
-            dataTableDiv.innerHTML = '<p>Không có dữ liệu để hiển thị.</p>';
-            return;
-        }
+    async function editDetails(item) {
+        let editFormHTML = `
+            <form id="editForm">
+                <p><strong>Mã Hồ Sơ:</strong> ${item.ma_ho_so}</p>
 
-        let tableHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mã Hồ Sơ</th>
-                        <th>Họ Tên</th>
-                        <th>Ngành</th>
-                        <th>Tình Trạng</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="full_name">Họ Tên:</label>
+                            <input type="text" id="full_name" name="full_name" value="${item.full_name}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="date_of_birth">Ngày Sinh:</label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" value="${item.date_of_birth}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="gender">Giới Tính:</label>
+                            <input type="text" id="gender" name="gender" value="${item.gender}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="gender">Lớp:</label>
+                            <input type="text" id="gender" name="gender" value="${item.lophoc}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="place_of_birth">Nơi Sinh:</label>
+                            <input type="text" id="place_of_birth" name="place_of_birth" value="${item.place_of_birth}" required>
+                        </div>
+                    </div>
+                </div>
 
-        data.forEach(item => {
-            const statusBox = getStatusBox(item.trang_thai);
-            tableHTML += `
-                    <tr>
-                        <td>${item.ma_ho_so}</td>
-                        <td>${item.full_name}</td>
-                        <td>${item.major}</td>
-                        <td>${statusBox}</td>
-                        <td>
-                            <button class="detail-button" onclick='showDetails(${JSON.stringify(item)})'><i class="fa-solid fa-eye"></i></button>
-                            <button class="detail-button1 print-button" onclick='openPrintForm(${JSON.stringify(item)})'><i class="fa-solid fa-print"></i></button>
-                        </td>
-                    </tr>
-                `;
-        });
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="cccd">CCCD:</label>
+                            <input type="text" id="cccd" name="cccd" value="${item.cccd}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="cccd_issue_date">Ngày Cấp CCCD:</label>
+                            <input type="date" id="cccd_issue_date" name="cccd_issue_date" value="${item.cccd_issue_date}" required>
+                        </div>
+                    </div>
+                </div>
 
-        tableHTML += `
-                </tbody>
-            </table>
-        `;
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="permanent_residence">Hộ khẩu Thường trú:</label>
+                            <input type="text" id="permanent_residence" name="permanent_residence" value="${item.permanent_residence}" required>
+                        </div>
+                    </div>
+                </div>
 
-        dataTableDiv.innerHTML = tableHTML;
-    }
-    function getStatusBox(status) {
-    let className = '';
-    let statusText = '';
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="major">Ngành:</label>
+                            <input type="text" id="major" name="major" value="${item.major}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="training_level">Trình độ đào tạo:</label>
+                            <input type="text" id="training_level" name="training_level" value="${item.training_level}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="training_level">Hệ đào tạo:</label>
+                            <input type="text" id="training_level" name="training_level" value="${item.training_system}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="training_course">Khóa đào tạo:</label>
+                            <input type="text" id="training_course" name="training_course" value="${item.training_course}" required>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group-inline">
+                            <label for="number_of_copies">Số bản sao:</label>
+                            <input type="number" id="number_of_copies" name="number_of_copies" value="${item.number_of_copies}" required>
+                        </div>
+                    </div>
+                </div>
 
-    switch (status) {
-        case 'dang_xu_ly':
-            className = 'dang_xu_ly';
-            statusText = 'Đang xử lý';
-            break;
-        case 'da_hoan_thanh':
-            className = 'da_xu_ly';
-            statusText = 'Đã hoàn thành';
-            break;
-        case 'huy_bo':
-            className = 'huy_bo';
-            statusText = 'Hủy bỏ';
-            break;
-        default:
-            statusText = status;
-            break;
-    }
-    return `<span class="status-box ${className}">${statusText}</span>`;
-}
+                <button type="submit" class="detail-button1">Lưu Chỉnh Sửa</button>
+            </form>
+        `;
+        modalBody.innerHTML = editFormHTML;
+        modal.style.display = 'block';
 
-    function formatStatus(status) {
-        switch (status) {
-            case 'dang_xu_ly':
-                return 'Đang xử lý';
-            case 'da_hoan_thanh':
-                return 'Đã hoàn thành';
-            case 'huy_bo':
-                return 'Hủy bỏ';
-            default:
-                return status;
-        }
-    }
+        const editForm = document.getElementById('editForm');
+        editForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const formData = new FormData(editForm);
+            const payload = {
+                full_name: formData.get('full_name'),
+                date_of_birth: formData.get('date_of_birth'),
+                gender: formData.get('gender'),
+                place_of_birth: formData.get('place_of_birth'),
+                cccd: formData.get('cccd'),
+                cccd_issue_date: formData.get('cccd_issue_date'),
+                permanent_residence: formData.get('permanent_residence'),
+                major: formData.get('major'),
+                training_level: formData.get('training_level'),
+                training_course: formData.get('training_course'),
+                number_of_copies: parseInt(formData.get('number_of_copies'), 10),
+            };
 
-    // Hàm mới để mở trang in
-    function openPrintForm(item) {
-        sessionStorage.setItem('currentProfile', JSON.stringify(item));
-        window.open('/form/CNNVQS-form.html', '_blank');
-    }
+            const submitButton = editForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Đang lưu...';
+
+            try {
+                const response = await fetch(`${apiURL}${item.ma_ho_so}/`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (response.ok) {
+                    alert('Cập nhật thành công!');
+                    modal.style.display = 'none';
+                    fetchData();
+                } else {
+                    const errorData = await response.json();
+                    alert(`Lỗi khi cập nhật: ${errorData.detail || 'Lỗi không xác định'}`);
+                }
+            } catch (error) {
+                alert(`Đã xảy ra lỗi: ${error.message}`);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Lưu Chỉnh Sửa';
+            }
+        });
+    }
+
+    function displayData(data) {
+        if (data.length === 0) {
+            dataTableDiv.innerHTML = '<p>Không có dữ liệu để hiển thị.</p>';
+            return;
+        }
+
+        let tableHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã Hồ Sơ</th>
+                        <th>Họ Tên</th>
+                        <th>Ngành</th>
+                        <th>Tình Trạng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(item => {
+            const statusBox = getStatusBox(item.trang_thai);
+            tableHTML += `
+                    <tr>
+                        <td>${item.ma_ho_so}</td>
+                        <td>${item.full_name}</td>
+                        <td>${item.major}</td>
+                        <td>${statusBox}</td>
+                        <td>
+                            <button class="detail-button" onclick='showDetails(${JSON.stringify(item)})'><i class="fa-solid fa-eye"></i></button>
+                            <button class="detail-button2 edit-button" onclick='editDetails(${JSON.stringify(item)})'><i class="fa-solid fa-edit"></i></button>
+                            <button class="detail-button1 print-button" onclick='openPrintForm(${JSON.stringify(item)})'><i class="fa-solid fa-print"></i></button>
+                        </td>
+                    </tr>
+                `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+        dataTableDiv.innerHTML = tableHTML;
+    }
+    function getStatusBox(status) {
+        let className = '';
+        let statusText = '';
+
+        switch (status) {
+            case 'dang_xu_ly':
+                className = 'dang_xu_ly';
+                statusText = 'Đang xử lý';
+                break;
+            case 'da_hoan_thanh':
+                className = 'da_xu_ly';
+                statusText = 'Đã hoàn thành';
+                break;
+            case 'huy_bo':
+                className = 'huy_bo';
+                statusText = 'Hủy bỏ';
+                break;
+            default:
+                statusText = status;
+                break;
+        }
+        return `<span class="status-box ${className}">${statusText}</span>`;
+    }
+
+    function formatStatus(status) {
+        switch (status) {
+            case 'dang_xu_ly':
+                return 'Đang xử lý';
+            case 'da_hoan_thanh':
+                return 'Đã hoàn thành';
+            case 'huy_bo':
+                return 'Hủy bỏ';
+            default:
+                return status;
+        }
+    }
+
+    // Hàm mới để mở trang in
+    function openPrintForm(item) {
+        sessionStorage.setItem('currentProfile', JSON.stringify(item));
+        window.open('/form/CNNVQS-form.html', '_blank');
+    }
 
     function showDetails(item) {
         let detailsHTML = `
@@ -256,7 +458,6 @@
             <p><strong>CCCD:</strong> ${item.cccd}</p>
             <p><strong>Ngày Cấp CCCD:</strong> ${item.cccd_issue_date}</p>
             <p><strong>Hộ Khẩu Thường trú:</strong> ${item.permanent_residence}</p>
-            <p><strong>Lớp học:</strong> ${item.lophoc}</p>
             <p><strong>Ngành:</strong> ${item.major}</p>
             <p><strong>Trình độ đào tạo:</strong> ${item.training_level}</p>
             <p><strong>Khóa đào tạo:</strong> ${item.training_course}</p>
@@ -268,17 +469,16 @@
         modal.style.display = 'block';
     }
 
-    closeModal.onclick = function() {
-        modal.style.display = 'none';
-    }
+    closeModal.onclick = function() {
+        modal.style.display = 'none';
+    }
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
 
-    // Tự động tải dữ liệu khi trang được tải
-    document.addEventListener('DOMContentLoaded', fetchData);
+    document.addEventListener('DOMContentLoaded', fetchData);
 </script>
 {% endblock %}

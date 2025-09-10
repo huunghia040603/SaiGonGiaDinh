@@ -81,6 +81,25 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="training_system" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Hệ đào tạo <span class="text-red-500">*</span></label>
+                            <select id="training_system" name="training_system" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="Chính quy">Chính quy</option>
+                                <option value="Liên thông VB2">Liên thông VB2</option>
+                                <option value="Liên thông VB2 Đại học">Liên thông VB2 Đại học</option>
+                                <option value="Phổ thông 9+">Phổ thông 9+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="training_level" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Trình độ đào tạo <span class="text-red-500">*</span></label>
+                            <select id="training_level" name="training_level" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
+                                <option value="Chính quy">Cao đẳng</option>
+                                <option value="Liên thông VB2">Phổ thông</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
                             <label for="training_course" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Khóa đào tạo <span class="text-red-500">*</span></label>
                             <select id="training_course" name="training_course" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
                                 <option value="2025 - 2028">2025 - 2028</option>
@@ -93,20 +112,10 @@
                             <label for="class_code" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Lớp</label>
                             <input type="text" id="class_code" name="class_code" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border bg-gray-100 cursor-not-allowed" readonly>
                         </div>
-                    </div>
-                    <div class="form-group">
-                            <label for="training_level" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Trình độ đào tạo <span class="text-red-500">*</span></label>
-                            <select id="training_level" name="training_level" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
-                                <option value="Chính quy">Chính quy</option>
-                                <option value="Liên thông VB2">Liên thông VB2</option>
-                                <option value="Liên thông VB2 Đại học">Liên thông VB2 Đại học</option>
-                                <option value="Phổ thông 9+">Phổ thông 9+</option>
-                            </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="number_of_copies" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Số lượng bản <span class="text-red-500">*</span></label>
-                        <input type="number" id="number_of_copies" name="number_of_copies" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border" value="1">
+                        <div class="form-group">
+                            <label for="number_of_copies" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Số lượng bản <span class="text-red-500">*</span></label>
+                            <input type="number" id="number_of_copies" name="number_of_copies" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border" value="1">
+                        </div>
                     </div>
                     
                     <button type="submit" class="w-full flex justify-center py-2 sm:py-3 px-3 sm:px-4 border border-transparent rounded-md shadow-sm text-base sm:text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out">

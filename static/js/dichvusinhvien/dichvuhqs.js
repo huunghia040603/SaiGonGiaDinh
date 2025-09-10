@@ -1,9 +1,66 @@
 // Lắng nghe sự kiện khi toàn bộ trang đã tải xong
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Lấy tham chiếu đến form đăng ký bằng ID
+    // Ánh xạ khóa học sang tên lớp tương ứng
+    const courseToClassMap = {
+        '2025 - 2028': 'K11',
+        '2024 - 2027': 'K10',
+        '2023 - 2026': 'K9',
+        '2022 - 2025': 'K8'
+    };
+
+    // Ánh xạ tên ngành học sang viết tắt
+    const majorToAbbreviationMap = {
+        'Kế toán doanh nghiệp': 'KT',
+        'Quản trị kinh doanh': 'QTKD',
+        'Tài chính ngân hàng': 'TCNH',
+        'Thương mại điện tử': 'TMDT',
+        'Logistic': 'LGC',
+        'Thú y': 'TY',
+        'Công nghệ thông tin': 'CNTT',
+        'Công nghệ ô tô': 'OTO',
+        'Công nghệ thực phẩm': 'TP',
+        'Dược': 'DUOC',
+        'Điều dưỡng': 'DD',
+        'Y sĩ đa khoa': 'YDK',
+        'Kỹ thuật phục hình răng': 'KTPHR',
+        'Kỹ thuật phục hồi chức năng': 'KTPHCN',
+        'Y học cổ truyền': 'YHCT',
+        'Du lịch': 'DL',
+        'Ngôn ngữ Anh': 'NNA',
+        'Luật dịch vụ pháp lý': 'LDVPL',
+        'Sư phạm mầm non': 'SPMN'
+    };
+
+    // Lấy tham chiếu đến các phần tử cần thiết
     const form = document.getElementById('tourForm');
-    
+    const majorSelect = document.getElementById('major');
+    const trainingCourseSelect = document.getElementById('training_course');
+    const classInfoDiv = document.getElementById('class_info');
+    const classNameInput = document.getElementById('class_name');
+
+    // Hàm để tính toán và cập nhật tên lớp học
+    const updateClassInfo = () => {
+        const selectedMajor = majorSelect.value;
+        const selectedCourse = trainingCourseSelect.value;
+
+        const majorAbbreviation = majorToAbbreviationMap[selectedMajor] || '';
+        const classPrefix = courseToClassMap[selectedCourse] || '';
+
+        const fullClassName = `${classPrefix}-${majorAbbreviation}`;
+        
+        classInfoDiv.textContent = fullClassName;
+        classNameInput.value = fullClassName;
+    };
+
+    // Lắng nghe sự kiện thay đổi của các trường ngành học và khóa đào tạo
+    if (majorSelect && trainingCourseSelect) {
+        majorSelect.addEventListener('change', updateClassInfo);
+        trainingCourseSelect.addEventListener('change', updateClassInfo);
+        // Cập nhật lần đầu tiên khi trang tải xong
+        updateClassInfo();
+    }
+
     // Kiểm tra xem form có tồn tại không
     if (form) {
         // Thêm một message container để hiển thị kết quả
@@ -28,8 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 cccd_issue_date: formData.get('cccd_issue_date'),
                 permanent_residence: formData.get('permanent_residence'),
                 major: formData.get('major'),
+                training_system: formData.get('training_system'), // Thêm trường training_system
                 training_level: formData.get('training_level'),
                 training_course: formData.get('training_course'),
+                lophoc: formData.get('class_name'), // Thêm trường lớp học đã được tính toán
                 number_of_copies: parseInt(formData.get('number_of_copies'), 10), // Chuyển đổi sang số nguyên
             };
 
