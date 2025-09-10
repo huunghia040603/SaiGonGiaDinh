@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             // URL của API
-            const apiUrl = 'https://saigongiadinh.pythonanywhere.com/xnsv/';
+            const apiUrl = 'https://saigongiadinh.pythonanywhere.com/cnsv/';
 
             // Cập nhật trạng thái UI để báo cho người dùng biết đang xử lý
             const submitButton = form.querySelector('button[type="submit"]');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Kiểm tra xem phản hồi có thành công không (status code 200-299)
                 if (response.ok) {
                     const result = await response.json();
-                    messageContainer.textContent = 'Bạn đã đăng ký thành công Giấy chứng nhận sinh viên. Vui lòng đến phòng tuyển sinh sau 1-3 ngày làm việc để nhận giấy nhé.';
+                    messageContainer.textContent = 'Bạn đã đăng ký thành công Giấy xác nhận tạm hoãn nghĩa vụ quân sự. Vui lòng đến phòng tuyển sinh sau 1-3 ngày làm việc để nhận giấy nhé.';
                     messageContainer.classList.add('bg-green-100', 'text-green-700');
                     console.log('Đăng ký thành công:', result);
                     form.reset(); // Đặt lại form sau khi gửi thành công
