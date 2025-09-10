@@ -94,5 +94,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100); 
 
     // (Tùy chọn) Tự động làm mới số lượng thông báo định kỳ (ví dụ: mỗi 5 phút)
-    // setInterval(fetchNotificationCount, 5 * 60 * 1000); 
+    setInterval(fetchNotificationCount, 5 * 60 * 1000); 
 });

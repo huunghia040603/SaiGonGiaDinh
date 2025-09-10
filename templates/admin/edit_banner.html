@@ -227,6 +227,7 @@
         const CLOUDINARY_CLOUD_NAME = 'dftarzzfw';
         const CLOUDINARY_UPLOAD_PRESET = 'SGGDCollege'; // Đảm bảo preset này là 'Unsigned'
         const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+        const CLOUDINARY_FOLDER ='banner'
         // const CLOUDINARY_FOLDER = 'banner'; // Không cần thiết khi dùng unsigned preset
 
         // Lấy token từ localStorage (đảm bảo bạn đã lưu token sau khi đăng nhập)
@@ -467,6 +468,7 @@
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('folder', CLOUDINARY_FOLDER);
             // formData.append('folder', CLOUDINARY_FOLDER); // Đã comment vì không cần khi dùng unsigned preset
 
             try {

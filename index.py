@@ -387,13 +387,17 @@ def xhdlpl():
 # def dichvusv():
 #     return render_template('dichvusv.html')
 
+@app.route('/dichvu')
+def dichvu():
+    return render_template('dichvusinhvien/dichvusinhvien.html')
+
 @app.route('/dang-ky-bang-diem')
 def dangkybangdiem():
     return render_template('dichvu/dvbangdiem.html')
 
 @app.route('/dang-ky-chung-nhan')
 def dangkychungnhan():
-    return render_template('dichvu/dvchungnhansv.html')
+    return render_template('dichvusinhvien/dichvucnsv.html')
 
 @app.route('/dang-ky-the-sinh-vien')
 def dangkythesinhvien():
@@ -586,6 +590,11 @@ def dadangki():
 def hocbong():
     return render_template('/hocbong.html')
 
+
+
+@app.route('/forgot_password')
+def forgot_password():
+    return render_template('/forgot_password.html')
 
 @app.route('/hoc-tap')
 def study_home():

@@ -23,51 +23,67 @@
             font-family: 'Courier New', Courier, monospace;
         }
 
+        /* Sửa đổi .form-group để label và input nằm trên cùng một hàng */
         .change-password-form .form-group {
             margin-bottom: 20px;
             text-align: left;
+            display: flex; /* Bật Flexbox trên phần tử cha */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between; /* Căn lề hai đầu */
+            flex-wrap: nowrap; /* Ngăn không cho các phần tử xuống dòng */
         }
 
+        /* Sửa đổi label để căn chỉnh tốt hơn trong Flexbox */
         .change-password-form .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0; /* Bỏ margin dưới để căn chỉnh tốt hơn */
+            margin-right: 15px; /* Tạo khoảng cách giữa label và input */
             font-weight: bold;
             color: #555;
+            white-space: nowrap; /* Ngăn label bị xuống dòng */
+            min-width: 120px; /* Đặt chiều rộng tối thiểu cho label để căn chỉnh đều */
         }
 
-        .change-password-form .form-group input[type="password"] {
-            width: calc(100% - 20px);
-            padding: 12px 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
+        /* Style cho input chỉ có border bottom */
+        .input-underline {
+            flex-grow: 1; /* Cho phép input mở rộng để lấp đầy không gian còn lại */
+            width: 100%; /* Đảm bảo input chiếm đủ chiều rộng trong flex-item */
+            padding: 10px 0;
+            border: none;
+            border-bottom: 2px solid #ccc; /* Chỉ có viền dưới */
+            background-color: transparent;
+            transition: border-bottom-color 0.3s ease;
+            outline: none; /* Bỏ viền khi focus */
+            box-sizing: border-box; /* Tính cả padding và border vào width */
         }
 
-        .change-password-form .form-group input[type="password"]:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        .input-underline:focus {
+            border-bottom-color: #007bff; /* Thay đổi màu viền khi được focus */
         }
-
-        .change-password-form button {
+        
+        /* Các style cho nút submit trong form đổi mật khẩu */
+        #changePasswordForm #submitPasswordBtn {
             background-color: #007bff;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px; /* Điều chỉnh padding */
             border: none;
-            border-radius: 8px;
+            border-radius: 15px; /* Giữ border-radius */
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 15px;
+            height: 35px; /* Giữ chiều cao */
+            width: 180px; /* Giữ chiều rộng */
+            margin-top: 30px; /* Giữ margin-top */
+            margin-left: auto; /* Căn giữa nút */
+            margin-right: auto; /* Căn giữa nút */
+            display: block; /* Để margin auto hoạt động */
             transition: background-color 0.3s ease;
-            width: 100%;
-            margin-top: 15px;
         }
 
-        .change-password-form button:hover {
+        #changePasswordForm #submitPasswordBtn:hover {
             background-color: #0056b3;
         }
 
-        .change-password-form button:disabled {
+        #changePasswordForm #submitPasswordBtn:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
         }
@@ -96,7 +112,6 @@
             margin-right: 8px;
         }
 
-        /* NEW/MODIFIED STYLES FOR BUTTONS AND THEIR CONTAINER */
         .action-buttons-container {
             display: flex;
             justify-content: center;
@@ -111,13 +126,13 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Thêm box-shadow transition */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Tăng độ sâu box-shadow */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             white-space: nowrap;
-            text-decoration: none; /* Đảm bảo không có gạch chân cho div */
+            text-decoration: none;
         }
 
         /* Logout button */
@@ -129,8 +144,8 @@
 
         #logoutBtn:hover {
             background-color: #c82333;
-            transform: translateY(-3px); /* Tăng hiệu ứng dịch chuyển */
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); /* Tăng box-shadow khi hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
         }
 
         /* Change Password button */
@@ -146,8 +161,8 @@
 
         #changePasswordTrigger:hover {
             background-color: #e66a00;
-            transform: translateY(-3px); /* Tăng hiệu ứng dịch chuyển */
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); /* Tăng box-shadow khi hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
         }
 
         .action-buttons-container button i,
@@ -229,8 +244,8 @@
 </head>
 <body>
     <div class="container7">
-        <h1 style="font-family:font2"><i class="fas fa-user-graduate" ></i> Thông tin Sinh viên</h1>
-        
+        <h1 style="font-family:font2"><i class="fas fa-user-graduate"></i> Thông tin Sinh viên</h1>
+
         <div id="student-info">
             <p class="loading7">Đang tải thông tin...</p>
         </div>
@@ -258,494 +273,28 @@
     <div id="changePasswordModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-key"></i> Đổi mật khẩu</h2>
+                <h2>Đổi Mật Khẩu</h2>
                 <span class="close-button" id="closeModalBtn">&times;</span>
             </div>
-            <form id="changePasswordForm" class="change-password-form">
+            <form id="changePasswordForm">
                 <div class="form-group">
-                    <label for="current-password"><i class="fas fa-lock"></i> Mật khẩu hiện tại:</label>
-                    <input type="password" id="current-password" name="current_password" required>
+                    <label for="oldPassword">Mật khẩu cũ</label>
+                    <input type="password" id="oldPassword" class="input-underline" required>
                 </div>
                 <div class="form-group">
-                    <label for="new-password"><i class="fas fa-unlock"></i> Mật khẩu mới:</label>
-                    <input type="password" id="new-password" name="new_password" required>
+                    <label for="newPassword">Mật khẩu mới</label>
+                    <input type="password" id="newPassword" class="input-underline" required>
                 </div>
                 <div class="form-group">
-                    <label for="confirm-new-password"><i class="fas fa-check-lock"></i> Xác nhận mật khẩu mới:</label>
-                    <input type="password" id="confirm-new-password" name="confirm_new_password" required>
+                    <label for="confirmNewPassword">Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirmNewPassword" class="input-underline" required>
                 </div>
-                <button type="submit" id="changePasswordBtn">
-                    <i class="fas fa-save"></i>&nbsp;Đổi mật khẩu
-                </button>
-                <div id="password-message" class="password-message" style="display: none;"></div>
+                <div id="passwordMessage" class="password-message"></div>
+                <button type="submit" id="submitPasswordBtn">Cập Nhật Mật Khẩu</button>
             </form>
         </div>
     </div>
-    <script>
-        const API_URL = "https://saigongiadinh.pythonanywhere.com/students/me/";
-        const LOGIN_PAGE_URL = "/dangnhap"; 
-        const LOGOUT_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/logout/";
-        const CHANGE_PASSWORD_API_URL = "https://saigongiadinh.pythonanywhere.com/auth/change-password/";
 
-        // Lấy các phần tử DOM (unchanged, but re-order for clarity)
-        const studentInfoDiv = document.getElementById('student-info');
-        const errorMessageDiv = document.getElementById('error-message');
-        const loginRequiredDiv = document.getElementById('login-required');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const containerDiv = document.querySelector('.container7');
-        
-        const changePasswordTrigger = document.getElementById('changePasswordTrigger');
-        const changePasswordModal = document.getElementById('changePasswordModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const changePasswordForm = document.getElementById('changePasswordForm');
-        const passwordMessageDiv = document.getElementById('password-message');
-        const changePasswordBtn = document.getElementById('changePasswordBtn');
-
-        async function fetchStudentInfo() {
-            const authToken = localStorage.getItem('authToken');
-
-            if (containerDiv) {
-                containerDiv.classList.add('fade-in-container7');
-            }
-
-            if (!authToken) {
-                studentInfoDiv.innerHTML = '';
-                loginRequiredDiv.style.display = 'flex';
-                logoutBtn.style.display = 'none'; 
-                if (changePasswordTrigger) { 
-                    changePasswordTrigger.style.display = 'none'; // Ẩn nút nếu chưa đăng nhập
-                }
-                return;
-            }
-
-            logoutBtn.style.display = 'flex'; // Sử dụng 'flex' để phù hợp với flexbox của action-buttons-container
-            if (changePasswordTrigger) { 
-                changePasswordTrigger.style.display = 'flex'; // Hiển thị nút nếu đã đăng nhập
-            }
-
-            studentInfoDiv.innerHTML = '<p class="loading7">Đang tải thông tin...</p>';
-            errorMessageDiv.style.display = 'none';
-            loginRequiredDiv.style.display = 'none';
-
-            const loadingParagraph = studentInfoDiv.querySelector('.loading7');
-            if (loadingParagraph) {
-                loadingParagraph.classList.remove('hide7');
-            }
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${authToken}`
-                    }
-                });
-
-                if (!response.ok) {
-                    if (response.status === 401 || response.status === 403) {
-                        localStorage.removeItem('authToken');
-                        localStorage.removeItem('userId');
-                        localStorage.removeItem('userEmail');
-                        localStorage.removeItem('userRole');
-                        localStorage.removeItem('userFullName');
-                        window.location.href = LOGIN_PAGE_URL;
-                        return;
-                    }
-                    const errorData = await response.json();
-                    throw new Error(errorData.detail || `Lỗi khi tải thông tin: ${response.status} ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                displayStudentInfo(data);
-
-            } catch (error) {
-                console.error("Lỗi khi fetch thông tin sinh viên:", error);
-                studentInfoDiv.innerHTML = '';
-                errorMessageDiv.innerHTML = `
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span class="error-text">Lỗi: ${error.message}</span>
-                `;
-                errorMessageDiv.style.display = 'flex';
-            } finally {
-                const finalLoadingParagraph = studentInfoDiv.querySelector('.loading7');
-                if (finalLoadingParagraph) {
-                    finalLoadingParagraph.classList.add('hide7');
-                }
-            }
-        }
-
-        async function handleChangePassword(event) {
-    event.preventDefault();
-
-    const currentPassword = document.getElementById('current-password').value;
-    const newPassword = document.getElementById('new-password').value;
-    const confirmNewPassword = document.getElementById('confirm-new-password').value;
-    
-    passwordMessageDiv.style.display = 'none';
-    passwordMessageDiv.classList.remove('success', 'error');
-    passwordMessageDiv.textContent = '';
-
-    // Kiểm tra khớp mật khẩu mới ở frontend (nên giữ lại)
-    if (newPassword !== confirmNewPassword) {
-        passwordMessageDiv.innerHTML = '<i class="fas fa-times-circle"></i> Mật khẩu mới và xác nhận mật khẩu không khớp.';
-        passwordMessageDiv.classList.add('error');
-        passwordMessageDiv.style.display = 'block';
-        return;
-    }
-
-    // Kiểm tra độ dài mật khẩu mới ở frontend (nên giữ lại)
-    if (newPassword.length < 8) { 
-        passwordMessageDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Mật khẩu mới phải có ít nhất 8 ký tự.';
-        passwordMessageDiv.classList.add('error');
-        passwordMessageDiv.style.display = 'block';
-        return;
-    }
-
-    const authToken = localStorage.getItem('authToken');
-    if (!authToken) {
-        passwordMessageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Bạn chưa đăng nhập. Vui lòng đăng nhập lại.';
-        passwordMessageDiv.classList.add('error');
-        passwordMessageDiv.style.display = 'block';
-        setTimeout(() => window.location.href = LOGIN_PAGE_URL, 1500);
-        return;
-    }
-
-    changePasswordBtn.disabled = true;
-    changePasswordBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đổi...';
-
-    try {
-        const response = await fetch(CHANGE_PASSWORD_API_URL, {
-            method: 'POST', // Hoặc 'PATCH' nếu bạn cấu hình router để dùng PATCH cho update
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${authToken}`
-            },
-            body: JSON.stringify({
-                old_password: currentPassword,
-                new_password: newPassword,
-                confirm_new_password: confirmNewPassword // THÊM DÒNG NÀY ĐỂ KHỚP VỚI POSTMAN VÀ SERILIZER NẾU NÓ YÊU CẦU
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            passwordMessageDiv.innerHTML = '<i class="fas fa-check-circle"></i> Đổi mật khẩu thành công! Vui lòng đăng nhập lại với mật khẩu mới.';
-            passwordMessageDiv.classList.add('success');
-            passwordMessageDiv.style.display = 'block';
-            
-            // Xóa token cũ và chuyển hướng để người dùng đăng nhập lại
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userRole');
-            localStorage.removeItem('userFullName');
-            
-            setTimeout(() => {
-                changePasswordModal.style.display = 'none';
-                window.location.href = LOGIN_PAGE_URL;
-            }, 2000); 
-        } else {
-            // Xử lý lỗi từ backend
-            let errorMessage = '<i class="fas fa-exclamation-circle"></i> Đổi mật khẩu thất bại.';
-            if (data) {
-                // Kiểm tra các trường lỗi cụ thể từ serializer
-                if (data.old_password) {
-                    errorMessage = `<i class="fas fa-times-circle"></i> Mật khẩu hiện tại không đúng: ${data.old_password[0]}`;
-                } else if (data.new_password) {
-                    errorMessage = `<i class="fas fa-times-circle"></i> Mật khẩu mới không hợp lệ: ${data.new_password[0]}`;
-                } else if (data.non_field_errors) { // Xử lý lỗi không liên quan đến trường cụ thể (ví dụ: new_password và confirm_new_password không khớp từ serializer)
-                    errorMessage = `<i class="fas fa-times-circle"></i> ${data.non_field_errors[0]}`;
-                } else if (data.detail) { // Lỗi chung như xác thực, rate limit
-                    errorMessage = `<i class="fas fa-times-circle"></i> Lỗi: ${data.detail}`;
-                } else { // Trường hợp lỗi không mong muốn hoặc cấu trúc JSON lỗi khác
-                    errorMessage = '<i class="fas fa-times-circle"></i> Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.';
-                }
-            } else if (response.status === 401 || response.status === 403) {
-                errorMessage = '<i class="fas fa-times-circle"></i> Phiên đăng nhập hết hạn hoặc không có quyền. Vui lòng đăng nhập lại.';
-                localStorage.removeItem('authToken');
-                setTimeout(() => window.location.href = LOGIN_PAGE_URL, 1500);
-            }
-            passwordMessageDiv.innerHTML = errorMessage;
-            passwordMessageDiv.classList.add('error');
-            passwordMessageDiv.style.display = 'block';
-        }
-    } catch (error) {
-        console.error("Lỗi khi đổi mật khẩu:", error);
-        passwordMessageDiv.innerHTML = `<i class="fas fa-times-circle"></i> Lỗi kết nối: ${error.message}. Vui lòng thử lại.`;
-        passwordMessageDiv.classList.add('error');
-        passwordMessageDiv.style.display = 'block';
-    } finally {
-        changePasswordBtn.disabled = false;
-        changePasswordBtn.innerHTML = '<i class="fas fa-save"></i> Đổi mật khẩu';
-        // Xóa các trường input sau khi xử lý (thành công hay thất bại)
-        document.getElementById('current-password').value = '';
-        document.getElementById('new-password').value = '';
-        document.getElementById('confirm-new-password').value = '';
-    }
-}
-
-        function displayStudentInfo(student) {
-            const loadingParagraph = studentInfoDiv.querySelector('.loading7');
-            if (loadingParagraph) {
-                loadingParagraph.classList.add('hide7');
-            }
-
-            studentInfoDiv.innerHTML = `
-                <div class="profile-header7">
-                    <img src="${student.user_photo || '/static/images/default-avatar.png'}" 
-                         alt="${student.full_name || 'Ảnh đại diện'}" 
-                         class="profile-avatar7" 
-                         id="profile-avatar7"
-                         onerror="this.src='/static/images/default-avatar.png'">
-                    <h2 id="student-name7">${student.full_name || 'N/A'}</h2>
-                    <p id="student-id7"><i class="fas fa-id-card"></i> ${student.student_code || 'N/A'}</p>
-                </div>
-                <div class="profile-details7">
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fas fa-envelope"></i> Email</span>
-                        <span class="detail-value7" id="student-email7">${student.email || 'N/A'}</span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fas fa-user"></i> Họ</span>
-                        <span class="detail-value7" id="student-lastname7">${student.last_name || 'N/A'}</span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fas fa-user-circle"></i> Tên đệm & Tên</span>
-                        <span class="detail-value7" id="student-firstname7">${student.first_name || 'N/A'}</span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fa-solid fa-cake-candles"></i>Ngày sinh</span>
-                        <span class="detail-value7" id="student-firstname7">
-                            ${
-                                student.date_of_birth
-                                    ? new Date(student.date_of_birth).toLocaleDateString('vi-VN', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric',
-                                    })
-                                    : 'N/A'
-                            }
-                        </span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fa-solid fa-briefcase"></i> Khoa</span>
-                        <span class="detail-value7" id="student-firstname7">${student.department_name || 'N/A'}</span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fa-solid fa-chalkboard"></i>Ngành</span>
-                        <span class="detail-value7" id="student-firstname7">${student.major_name || 'N/A'}</span>
-                    </div>
-                    
-                   <div class="detail-item7">
-                        <span class="detail-label7"><i class="fa-solid fa-box-archive"></i>Hệ đào tạo</span>
-                        <span class="detail-value7" id="student-firstname7">
-                            ${
-                                (() => {
-                                    switch (student.program_name) {
-                                        case 'CHINH_QUY':
-                                            return 'CHÍNH QUY';
-                                        case 'PHO_THONG_CAO_DANG':
-                                            return 'Phổ thông cao đẳng 9+';
-                                        case 'LIEN_THONG_VAN_BANG_2_CAO_DANG':
-                                            return 'Liên thông/Văn bằng 2 cao đẳng';
-                                        case 'LIEN_THONG_VAN_BANG_2_DAI_HOC':
-                                            return 'Liên thông/Văn bằng 2 đại học';
-                                        default:
-                                            return student.program_name || 'N/A';
-                                    }
-                                })()
-                            }
-                        </span>
-                    </div>
-                    <div class="detail-item7">
-                        <span class="detail-label7"><i class="fa-solid fa-graduation-cap"></i>Niên khóa</span>
-                        <span class="detail-value7" id="student-firstname7">${student.academic_year_name || 'N/A'}</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function handleLogout() {
-            const originalButtonText = logoutBtn.innerHTML;
-
-            logoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng xuất...';
-            logoutBtn.disabled = true;
-
-            const authToken = localStorage.getItem('authToken'); 
-            if (authToken) { 
-                try {
-                    const response = await fetch(LOGOUT_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Token ${authToken}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        console.log('Đăng xuất thành công trên server.');
-                    } else {
-                        const errorData = await response.json();
-                        console.error('Lỗi khi gửi yêu cầu logout tới server:', errorData.detail || 'Lỗi không xác định.');
-                    }
-                } catch (error) {
-                    console.error('Lỗi khi gửi yêu cầu logout (mạng hoặc CORS):', error);
-                }
-            }
-
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userRole');
-            localStorage.removeItem('userFullName');
-
-            setTimeout(() => {
-                logoutBtn.innerHTML = originalButtonText;
-                logoutBtn.disabled = false;
-                window.location.href = LOGIN_PAGE_URL;
-            }, 1000);
-        }
-
-        async function handleChangePassword(event) {
-            event.preventDefault();
-
-            const currentPassword = document.getElementById('current-password').value;
-            const newPassword = document.getElementById('new-password').value;
-            const confirmNewPassword = document.getElementById('confirm-new-password').value;
-            
-            passwordMessageDiv.style.display = 'none';
-            passwordMessageDiv.classList.remove('success', 'error');
-            passwordMessageDiv.textContent = '';
-
-            if (newPassword !== confirmNewPassword) {
-                passwordMessageDiv.innerHTML = '<i class="fas fa-times-circle"></i> Mật khẩu mới và xác nhận mật khẩu không khớp.';
-                passwordMessageDiv.classList.add('error');
-                passwordMessageDiv.style.display = 'block';
-                return;
-            }
-
-            if (newPassword.length < 8) { 
-                passwordMessageDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Mật khẩu mới phải có ít nhất 8 ký tự.';
-                passwordMessageDiv.classList.add('error');
-                passwordMessageDiv.style.display = 'block';
-                return;
-            }
-
-            const authToken = localStorage.getItem('authToken');
-            if (!authToken) {
-                passwordMessageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Bạn chưa đăng nhập. Vui lòng đăng nhập lại.';
-                passwordMessageDiv.classList.add('error');
-                passwordMessageDiv.style.display = 'block';
-                setTimeout(() => window.location.href = LOGIN_PAGE_URL, 1500);
-                return;
-            }
-
-            changePasswordBtn.disabled = true;
-            changePasswordBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đổi...';
-
-            try {
-                const response = await fetch(CHANGE_PASSWORD_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${authToken}`
-                    },
-                    body: JSON.stringify({
-                        old_password: currentPassword,
-                        new_password: newPassword
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    passwordMessageDiv.innerHTML = '<i class="fas fa-check-circle"></i> Đổi mật khẩu thành công! Vui lòng đăng nhập lại với mật khẩu mới.';
-                    passwordMessageDiv.classList.add('success');
-                    passwordMessageDiv.style.display = 'block';
-                    
-                    localStorage.removeItem('authToken');
-                    localStorage.removeItem('userId');
-                    localStorage.removeItem('userEmail');
-                    localStorage.removeItem('userRole');
-                    localStorage.removeItem('userFullName');
-                    
-                    setTimeout(() => {
-                        changePasswordModal.style.display = 'none';
-                        window.location.href = LOGIN_PAGE_URL;
-                    }, 2000); 
-                } else {
-                    let errorMessage = '<i class="fas fa-exclamation-circle"></i> Đổi mật khẩu thất bại.';
-                    if (data && data.old_password) {
-                        errorMessage = `<i class="fas fa-times-circle"></i> Mật khẩu hiện tại không đúng: ${data.old_password[0]}`;
-                    } else if (data && data.new_password) {
-                        errorMessage = `<i class="fas fa-times-circle"></i> Mật khẩu mới không hợp lệ: ${data.new_password[0]}`;
-                    } else if (data && data.detail) {
-                        errorMessage = `<i class="fas fa-times-circle"></i> Lỗi: ${data.detail}`;
-                    } else if (response.status === 400) {
-                        errorMessage = '<i class="fas fa-times-circle"></i> Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.';
-                    } else if (response.status === 401 || response.status === 403) {
-                        errorMessage = '<i class="fas fa-times-circle"></i> Phiên đăng nhập hết hạn hoặc không có quyền. Vui lòng đăng nhập lại.';
-                        localStorage.removeItem('authToken');
-                        setTimeout(() => window.location.href = LOGIN_PAGE_URL, 1500);
-                    }
-                    passwordMessageDiv.innerHTML = errorMessage;
-                    passwordMessageDiv.classList.add('error');
-                    passwordMessageDiv.style.display = 'block';
-                }
-            } catch (error) {
-                console.error("Lỗi khi đổi mật khẩu:", error);
-                passwordMessageDiv.innerHTML = `<i class="fas fa-times-circle"></i> Lỗi kết nối: ${error.message}. Vui lòng thử lại.`;
-                passwordMessageDiv.classList.add('error');
-                passwordMessageDiv.style.display = 'block';
-            } finally {
-                changePasswordBtn.disabled = false;
-                changePasswordBtn.innerHTML = '<i class="fas fa-save"></i> Đổi mật khẩu';
-                document.getElementById('current-password').value = '';
-                document.getElementById('new-password').value = '';
-                document.getElementById('confirm-new-password').value = '';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchStudentInfo();
-
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', handleLogout);
-            }
-
-            const loginPromptLink = document.querySelector('#login-required a');
-            if (loginPromptLink) {
-                loginPromptLink.href = LOGIN_PAGE_URL;
-            }
-
-            if (changePasswordTrigger) {
-                changePasswordTrigger.addEventListener('click', () => {
-                    changePasswordModal.style.display = 'flex';
-                    passwordMessageDiv.style.display = 'none';
-                    passwordMessageDiv.classList.remove('success', 'error');
-                    document.getElementById('current-password').value = '';
-                    document.getElementById('new-password').value = '';
-                    document.getElementById('confirm-new-password').value = '';
-                });
-            }
-
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', () => {
-                    changePasswordModal.style.display = 'none';
-                });
-            }
-
-            window.addEventListener('click', (event) => {
-                if (event.target == changePasswordModal) {
-                    changePasswordModal.style.display = 'none';
-                }
-            });
-
-            if (changePasswordForm) {
-                changePasswordForm.addEventListener('submit', handleChangePassword);
-            }
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
 </body>
 {% endblock %}
