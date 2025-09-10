@@ -116,7 +116,9 @@
 </style>
 
 <div class="banner-slider">
+
     <div class="slides" id="banner-slides">
+        
         </div>
 
     <button class="slider-btn prev-btn">
@@ -137,6 +139,30 @@
 
 
 <!-- Detailed Majors Section -->
+<style>
+    /* Modern card styles for Detailed Majors Section */
+    .detailed-majors { padding: 80px 0; background: #f7f9fc; }
+    .detailed-majors .section-header { text-align: center; margin-bottom: 40px; }
+    .detailed-majors .section-title { font-family: font2; font-size: 38px; color: #002147; margin: 0 0 10px; }
+    .detailed-majors .section-subtitle { color: #667085; font-family: font6; margin: 0; }
+    .detailed-majors .majors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+    .detailed-majors .major-card { position: relative; border-radius: 16px; overflow: hidden; background: #0b2447; box-shadow: 0 10px 24px rgba(0,0,0,0.08); transition: transform .35s ease, box-shadow .35s ease; isolation: isolate; }
+    .detailed-majors .major-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+    .detailed-majors .major-card-inner { height: 100%; }
+    .detailed-majors .major-front { position: relative; height: 240px; }
+    .detailed-majors .major-front img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform .6s ease; display: block; }
+    .detailed-majors .major-card:hover .major-front img { transform: scale(1.1); }
+    .detailed-majors .major-front::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.55) 100%); z-index: 1; transition: opacity .35s ease; }
+    .detailed-majors .major-card:hover .major-front::after { opacity: .9; }
+    .detailed-majors .major-content { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 16px 18px 18px; }
+    .detailed-majors .major-content h3 { margin: 0 0 6px; color: #fff; font-family: font2; font-size: 22px; font-weight: 800; letter-spacing: .3px; line-height: 1.25; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+    .detailed-majors .major-content p { margin: 0; color: #F2F4F7; font-family: font6; font-size: 14px; line-height: 1.7; text-shadow: 0 1px 6px rgba(0,0,0,.3); }
+    .detailed-majors .major-card::before { content: attr(data-chip); position: absolute; top: 14px; left: 14px; z-index: 3; background: rgba(255,255,255,0.16); backdrop-filter: blur(6px); color: #fff; font-family: font6; font-size: 12px; padding: 6px 10px; border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; }
+    .detailed-majors .major-card::after { content: 'Xem chi tiết →'; position: absolute; right: 12px; bottom: 12px; z-index: 3; padding: 8px 12px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: #fff; border-radius: 10px; font-size: 12px; opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease; }
+    .detailed-majors .major-card:hover::after { opacity: 1; transform: translateY(0); }
+    @media (max-width: 992px) { .detailed-majors { padding: 60px 0; } .detailed-majors .major-front { height: 220px; } }
+    @media (max-width: 576px) { .detailed-majors { padding: 40px 0; } .detailed-majors .majors-grid { gap: 16px; } .detailed-majors .major-front { height: 200px; } .detailed-majors .major-content h3 { font-size: 18px; } .detailed-majors .major-content p { font-size: 12px; } }
+</style>
 <section class="detailed-majors">
     <div class="container">
         <div class="section-header">
@@ -144,9 +170,237 @@
             <p class="section-subtitle">Khám phá các chuyên ngành đào tạo tại Cao đẳng Sài Gòn Gia Định</p>
         </div>
 
+        <style>
+            /* New modern majors grid - v2 */
+            .majors-grid-v2 { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+                gap: 22px; 
+            }
+            .major-cardv2 { 
+                display: block; 
+                position: relative; 
+                border-radius: 16px; 
+                overflow: hidden; 
+                background: #0b2447; 
+                box-shadow: 0 10px 24px rgba(0,0,0,0.08); 
+                transition: transform .35s ease, box-shadow .35s ease; 
+                text-decoration: none; 
+                color: inherit; 
+                height: auto; 
+            }
+            .major-cardv2:hover { 
+                transform: translateY(-6px); 
+                box-shadow: 0 16px 36px rgba(0,0,0,0.12); 
+            }
+            .major-cardv2 img { width: 100%; height: 240px; object-fit: cover; display: block; transform: scale(1.02); transition: transform .6s ease; }
+            .major-cardv2:hover img { transform: scale(1.1); }
+            .major-cardv2::before { 
+                content: ''; position: absolute; inset: 0; 
+                /* background: linear-gradient(180deg, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.65) 100%); z-index: 1;  */
+            }
+            .major-badge { 
+                position: absolute; top: 12px; left: 12px; z-index: 2; 
+                background: rgba(255,255,255,.16); color:#fff; font-size: 12px; padding: 6px 10px; border-radius: 999px; border:1px solid rgba(255,255,255,.25); backdrop-filter: blur(6px);
+            }
+            .major-info-v2 { position: static; padding: 14px 16px 16px; background: #0b2447; }
+            .major-info-v2 h3 { margin: 0 0 6px; color:#fff; font-family: font2; font-size: 24px; font-weight: 800; letter-spacing:.3px; line-height: 1.3; text-shadow: 0 3px 14px rgba(0,0,0,.4); }
+            .major-info-v2 p { margin: 0; color:#F3F6FA; font-family: font6; font-size: 15px;  text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+            .major-cta { display: none; }
+            .fee-badge { position:absolute; top:12px; right:12px; z-index:2; background:#ee232b; color:#fff; font-size:11px; padding:6px 10px; border-radius:999px; box-shadow:0 6px 18px rgba(238,35,43,0.3); }
+            /* Hide old grid to avoid broken layout */
+            .detailed-majors .majors-grid { display: none; }
+            @media (max-width: 576px){ .major-cardv2 img{ height:200px; } .major-info-v2 h3{ font-size:18px;} .major-info-v2 p{font-size:12px;} }
+        </style>
+
+        <div class="majors-grid-v2">
+            <a class="major-cardv2" href="/ke-toan-doanh-nghiep" aria-label="Kế toán doanh nghiệp">
+                <img src="{{ url_for('static', filename='images/nganhmoi/ketoan.jpg') }}" alt="Kế toán doanh nghiệp">
+                <span class="major-badge">Kinh tế - Tài chính</span>
+                <div class="major-info-v2">
+                    <h3>Kế toán doanh nghiệp</h3>
+                    <p>Kế toán, kiểm toán và tài chính doanh nghiệp theo chuẩn thực hành</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/quan-tri-kinh-doanh" aria-label="Quản trị kinh doanh">
+                <img src="{{ url_for('static', filename='images/nganhmoi/quantri.jpg') }}" alt="Quản trị kinh doanh">
+                <span class="major-badge">Kinh tế - Tài chính</span>
+                <div class="major-info-v2">
+                    <h3>Quản trị kinh doanh</h3>
+                    <p>Kỹ năng quản lý và điều hành doanh nghiệp hiện đại</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/tai-chinh-ngan-hang" aria-label="Tài chính - Ngân hàng">
+                <img src="{{ url_for('static', filename='images/nganhmoi/nganhang.jpg') }}" alt="Tài chính - Ngân hàng">
+                <span class="major-badge">Kinh tế - Tài chính</span>
+                <div class="major-info-v2">
+                    <h3>Tài chính - Ngân hàng</h3>
+                    <p>Tài chính số, ngân hàng và quản trị rủi ro</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/thuong-mai-dien-tu" aria-label="Thương mại điện tử">
+                <img src="{{ url_for('static', filename='images/nganhmoi/thuongmaidientu.jpg') }}" alt="Thương mại điện tử">
+                <span class="major-badge">Kinh tế - Tài chính</span>
+                <div class="major-info-v2">
+                    <h3>Thương mại điện tử</h3>
+                    <p>Kinh doanh online, vận hành sàn TMĐT và marketing số</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/logistic" aria-label="Logistics">
+                <img src="{{ url_for('static', filename='images/nganhmoi/logistics.jpg') }}" alt="Logistics">
+                <span class="major-badge">Kinh tế - Tài chính</span>
+                <div class="major-info-v2">
+                    <h3>Logistics</h3>
+                    <p>Chuỗi cung ứng, kho vận và tối ưu hóa vận tải</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/thu-y-chan-nuoi" aria-label="Thú y">
+                <img src="{{ url_for('static', filename='images/nganhmoi/thuy.jpg') }}" alt="Thú y">
+                <span class="major-badge">Thú y - Chăn nuôi</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Thú y</h3>
+                    <p>Đào tạo bác sĩ thú y chuyên nghiệp, chú trọng thực hành</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/cong-nghe-thong-tin" aria-label="Công nghệ thông tin">
+                <img src="{{ url_for('static', filename='images/nganhmoi/cntt.jpg') }}" alt="Công nghệ thông tin">
+                <span class="major-badge">Công nghệ - Kỹ Thuật</span>
+                <div class="major-info-v2">
+                    <h3>Công nghệ thông tin</h3>
+                    <p>Lập trình, dữ liệu và thiết kế sản phẩm số</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/cong-nghe-o-to" aria-label="Công nghệ ô tô">
+                <img src="{{ url_for('static', filename='images/nganhmoi/oto.jpg') }}" alt="Công nghệ ô tô">
+                <span class="major-badge">Công nghệ - Kỹ Thuật</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Công nghệ ô tô</h3>
+                    <p>Kỹ thuật viên ô tô, chẩn đoán và sửa chữa hiện đại</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/cong-nghe-thuc-pham" aria-label="Công nghệ thực phẩm">
+                <img src="{{ url_for('static', filename='images/nganhmoi/thucpham.jpg') }}" alt="Công nghệ thực phẩm">
+                <span class="major-badge">Công nghệ - Kỹ Thuật</span>
+                <div class="major-info-v2">
+                    <h3>Công nghệ thực phẩm</h3>
+                    <p>Chế biến, bảo quản và an toàn thực phẩm</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/y-duoc" aria-label="Dược">
+                <img src="{{ url_for('static', filename='images/nganhmoi/duoc.jpg') }}" alt="Dược">
+                <span class="major-badge">Y - Dược</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Dược</h3>
+                    <p>Kiến thức dược học và kỹ năng nghề dược</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/dieu-duong" aria-label="Điều dưỡng">
+                <img src="{{ url_for('static', filename='images/nganhmoi/dieuduong.jpg') }}" alt="Điều dưỡng">
+                <span class="major-badge">Y - Dược</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Điều dưỡng</h3>
+                    <p>Chăm sóc sức khỏe cộng đồng, thực hành chuẩn</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/y-si-da-khoa" aria-label="Y sĩ đa khoa">
+                <img src="{{ url_for('static', filename='images/nganhmoi/ysidakhoa.jpg') }}" alt="Y sĩ đa khoa">
+                <span class="major-badge">Y - Dược</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Y sĩ đa khoa</h3>
+                    <p>Kiến thức tổng quát y học và kỹ năng khám chữa bệnh</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <!-- Y học cổ truyền -->
+            <a class="major-cardv2" href="/y-hoc-co-truyen" aria-label="Y học cổ truyền">
+                <img src="{{ url_for('static', filename='images/nganhmoi/yhoccotruyen.jpg') }}" alt="Y học cổ truyền">
+                <span class="major-badge">Y - Dược</span>
+                <div class="major-info-v2">
+                    <h3>Y học cổ truyền</h3>
+                    <p>Kết hợp y lý Đông y với thực hành chăm sóc sức khỏe hiện đại</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/ky-thuat-phuc-hinh-rang-ham-mat" aria-label="Kỹ thuật phục hình răng">
+                <img src="{{ url_for('static', filename='images/nganhmoi/phuchinhrang.jpg') }}" alt="Kỹ thuật phục hình răng">
+                <span class="major-badge">Y - Dược</span>
+                <div class="major-info-v2">
+                    <h3>Kỹ thuật phục hình răng</h3>
+                    <p>Đào tạo chuyên viên kỹ thuật trong lĩnh vực nha khoa</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <a class="major-cardv2" href="/ky-thuat-phuc-hoi-chuc-nang-vat-ly-tri-lieu" aria-label="Kỹ thuật phục hồi chức năng">
+                <img src="{{ url_for('static', filename='images/nganhmoi/phuchoichucnang.jpg') }}" alt="Kỹ thuật phục hồi chức năng">
+                <span class="major-badge">Y - Dược</span>
+                <div class="major-info-v2">
+                    <h3>Kỹ thuật phục hồi chức năng</h3>
+                    <p>Vật lý trị liệu và phục hồi chức năng chuyên sâu</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <!-- Du lịch -->
+            <a class="major-cardv2" href="/du-lich" aria-label="Du lịch">
+                <img src="{{ url_for('static', filename='images/nganhmoi/dulich.jpg') }}" alt="Du lịch">
+                <span class="major-badge">XH - DL - PL</span>
+                <span class="fee-badge">Nghị định 81</span>
+                <div class="major-info-v2">
+                    <h3>Du lịch</h3>
+                    <p>Hướng dẫn du lịch, quản trị lữ hành và khách sạn hiện đại</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <!-- Ngôn ngữ Anh -->
+            <a class="major-cardv2" href="/ngon-ngu-anh" aria-label="Ngôn ngữ Anh">
+                <img src="{{ url_for('static', filename='images/nganhmoi/ngonguanh.jpg') }}" alt="Ngôn ngữ Anh">
+                <span class="major-badge">XH - DL - PL</span>
+                <div class="major-info-v2">
+                    <h3>Ngôn ngữ Anh</h3>
+                    <p>Năng lực tiếng Anh học thuật và ứng dụng trong công việc</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <!-- Luật - Dịch vụ pháp lý -->
+            <a class="major-cardv2" href="/luat-dich-vu-phap-ly" aria-label="Luật - Dịch vụ pháp lý">
+                <img src="{{ url_for('static', filename='images/nganhmoi/luat.jpg') }}" alt="Luật - Dịch vụ pháp lý">
+                <span class="major-badge">XH - DL - PL</span>
+                <div class="major-info-v2">
+                    <h3>Luật - Dịch vụ pháp lý</h3>
+                    <p>Kiến thức pháp luật nền tảng và kỹ năng dịch vụ pháp lý</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+            <!-- Văn hoá THPT 9+ -->
+            <a class="major-cardv2" href="/phothong-cao-dang-9" aria-label="Văn hoá THPT 9+">
+                <img src="{{ url_for('static', filename='images/new-giaoduc/1.jpg') }}" alt="Văn hoá THPT 9+">
+                <span class="major-badge">Chương trình</span>
+                <div class="major-info-v2">
+                    <h3>Văn hoá THPT 9+</h3>
+                    <p>Chương trình văn hóa THPT tích hợp định hướng nghề nghiệp</p>
+                </div>
+                <span class="major-cta">Xem chi tiết →</span>
+            </a>
+        </div>
+
         <div class="majors-grid">
             <!-- Kinh tế -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Kinh tế">
                 <div class="major-card-inner">
                     <div class="major-front">
                         <img src="{{ url_for('static', filename='/images/nganhmoi/ketoan.jpg') }}" alt="Kế toán">
@@ -160,7 +414,7 @@
             </div>
 
             <!-- Quản trị kinh doanh -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Kinh tế">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -178,7 +432,7 @@
             </div>
 
             <!-- Tài chính ngân hàng -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Kinh tế">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -195,7 +449,7 @@
             </div>
 
             <!-- Thương mại điện tử -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Kinh tế">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -211,7 +465,7 @@
             </div>
 
             <!-- Logistics -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Kinh tế">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -227,7 +481,7 @@
             </div>
 
             <!-- Thú y -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Thú y">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -243,7 +497,7 @@
             </div>
 
             <!-- Công nghệ thông tin -->
-            <div class="major-card">
+            <div class="major-card" data-chip="Công nghệ">
                 <div class="major-card-inner">
                     <div class="major-front">
 
@@ -790,20 +1044,5 @@ document.addEventListener('DOMContentLoaded', function() {
         // alert("Chức năng chuột phải đã bị vô hiệu hóa.");
     });
 </script>
-<script>
-    document.onkeydown = function(e) {
-        // Chặn F12
-        if (e.keyCode == 123) {
-            return false;
-        }
-        // Chặn Ctrl+Shift+I (hoặc J, C)
-        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
-            return false;
-        }
-        // Chặn Ctrl+U (View Page Source)
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
-    };
-</script>
+
 {% endblock %}

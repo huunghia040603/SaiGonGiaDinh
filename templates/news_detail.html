@@ -1,0 +1,709 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'font2';
+        src: url('/static/fonts/font2.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'font6';
+        src: url('/static/fonts/font6.ttf') format('truetype');
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px 0;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+    .breadcrumb a {
+        color: #007bff;
+        text-decoration: none;
+        font-family: 'font2', sans-serif;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    .breadcrumb .separator {
+        margin: 0 10px;
+        color: #6c757d;
+    }
+
+    /* Article Header */
+    .article-header {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: #fff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .article-header::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .article-category {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        font-family: 'font2', sans-serif;
+    }
+
+    .article-title {
+        font-family: 'font2', sans-serif;
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        line-height: 1.2;
+        position: relative;
+        z-index: 1;
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 0.95em;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+
+    .article-meta i {
+        margin-right: 5px;
+        color: #ffd700;
+    }
+
+    /* Article Content */
+    .article-content {
+        background: #fff;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .article-featured-image {
+        width: 100%;
+        /* max-height: 500px; */
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-description {
+        font-size: 1.2em;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-left: 4px solid #007bff;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+    }
+
+    .article-body {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+    }
+
+    .article-body h2, .article-body h3 {
+        color: #002147;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-family: 'font2', sans-serif;
+    }
+
+    .article-body p {
+        margin-bottom: 20px;
+    }
+
+    .article-body img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 20px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-paragraph {
+        margin-bottom: 20px;
+        line-height: 1.8;
+        text-align: justify;
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    /* External Link */
+    .external-link-container {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .external-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        font-size: 0.9em;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+
+    .external-link:hover {
+        background: #e9ecef;
+        border-color: #adb5bd;
+        color: #495057;
+    }
+
+    .external-link i {
+        color: #007bff;
+        font-size: 0.85em;
+    }
+
+    .external-link a {
+        color: inherit;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .external-link a:hover {
+        color: #007bff;
+        text-decoration: underline;
+    }
+
+    .article-heading {
+        color: #002147;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-family: 'font2', sans-serif;
+        font-weight: bold;
+        font-size: 1.4em;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 8px;
+        position: relative;
+    }
+
+    .article-heading::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 50px;
+        height: 2px;
+        background: #ff6b35;
+    }
+
+    .article-content-image {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+        margin: 20px 0 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .article-body blockquote {
+        background: #f8f9fa;
+        border-left: 4px solid #007bff;
+        margin: 20px 0;
+        padding: 15px 20px;
+        font-style: italic;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .article-body ul, .article-body ol {
+        margin: 20px 0;
+        padding-left: 30px;
+    }
+
+    .article-body li {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .article-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-body th, .article-body td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .article-body th {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+    }
+
+    .article-body tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    /* Album Gallery */
+    .article-album {
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #e9ecef;
+    }
+
+    .album-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .album-item {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .album-item:hover {
+        transform: scale(1.05);
+    }
+
+    .album-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Image Modal */
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+        position: relative;
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .modal-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-caption {
+        color: white;
+        text-align: center;
+        margin-top: 15px;
+        font-size: 1.1em;
+        font-family: 'font2', sans-serif;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .close-modal:hover {
+        color: #bbb;
+    }
+
+    .modal-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 15px;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-nav:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-prev {
+        left: 20px;
+    }
+
+    .modal-next {
+        right: 20px;
+    }
+
+    /* Article Footer */
+    .article-footer {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+    }
+
+    .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .article-tag {
+        background: #007bff;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.85em;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .article-tag:hover {
+        background: #0056b3;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .article-share {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .share-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 0.9em;
+        transition: transform 0.3s ease;
+    }
+
+    .share-button:hover {
+        transform: translateY(-2px);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .share-facebook {
+        background: #1877f2;
+    }
+
+    .share-twitter {
+        background: #1da1f2;
+    }
+
+    .share-linkedin {
+        background: #0077b5;
+    }
+
+    /* Related Articles */
+    .related-articles {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .related-articles h3 {
+        color: #002147;
+        margin-bottom: 20px;
+        font-family: 'font2', sans-serif;
+        font-size: 1.5em;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .related-card {
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .related-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .related-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .related-card-content {
+        padding: 15px;
+    }
+
+    .related-card-title {
+        font-family: 'font2', sans-serif;
+        font-size: 1.1em;
+        color: #002147;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+
+    .related-card-date {
+        font-size: 0.85em;
+        color: #6c757d;
+    }
+
+    /* Loading State */
+    .loading-container {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Error State */
+    .error-container {
+        text-align: center;
+        padding: 50px 20px;
+        color: #dc3545;
+    }
+
+    .error-container i {
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .article-header {
+            padding: 30px 20px;
+        }
+
+        .article-title {
+            font-size: 2em;
+        }
+
+        .article-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .article-content {
+            padding: 25px 20px;
+        }
+
+        .article-footer {
+            padding: 20px;
+        }
+
+        .related-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .article-title {
+            font-size: 1.6em;
+        }
+
+        .article-content {
+            padding: 20px 15px;
+        }
+
+        .article-description {
+            font-size: 1.1em;
+            padding: 15px;
+        }
+
+        .album-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .album-item img {
+            height: 120px;
+        }
+
+        .modal-nav {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .close-modal {
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+        }
+
+        .external-link {
+            padding: 6px 12px;
+            font-size: 0.85em;
+        }
+    }
+</style>
+
+<main class="news-detail-page">
+    <div class="container" style="margin-top: 20px;">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span class="separator">/</span>
+            <a href="/hoatdongtuvan">Tin tức</a>
+            <span class="separator">/</span>
+            <span id="breadcrumb-title">Chi tiết bài viết</span>
+        </nav>
+
+        <!-- Loading State -->
+        <div id="loading-container" class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Đang tải bài viết...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-container" class="error-container" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Không thể tải bài viết</h3>
+            <p id="error-message">Đã xảy ra lỗi khi tải bài viết. Vui lòng thử lại sau.</p>
+            <a href="/hoatdongtuvan" class="btn btn-primary">Quay lại trang tin tức</a>
+        </div>
+
+        <!-- Article Content -->
+        <div id="article-content" style="display: none;">
+            <!-- Article Header -->
+            <header class="article-header">
+                <span class="article-category" id="article-category">Tin tức</span>
+                <h1 class="article-title" id="article-title">Tiêu đề bài viết</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar-alt"></i> <span id="article-date">Ngày đăng</span></span>
+                    <span><i class="far fa-eye"></i> <span id="article-views">0</span> lượt xem</span>
+                    <span><i class="far fa-user"></i> <span id="article-author">Tác giả</span></span>
+                </div>
+            </header>
+
+            <!-- Article Content -->
+            <article class="article-content">
+                <img id="article-image" class="article-featured-image" src="" alt="Ảnh bìa bài viết">
+                
+                <div class="article-description" id="article-description">
+                    Mô tả ngắn của bài viết
+                </div>
+
+                <div class="article-body" id="article-body">
+                    Nội dung bài viết sẽ được hiển thị ở đây
+                </div>
+            </article>
+
+            <!-- Article Footer -->
+            <footer class="article-footer">
+                <div class="article-tags" id="article-tags">
+                    <!-- Tags will be populated here -->
+                </div>
+                
+                <div class="article-share">
+                    <span>Chia sẻ:</span>
+                    <a href="#" class="share-button share-facebook" id="share-facebook">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </a>
+                   
+                </div>
+            </footer>
+
+            <!-- Related Articles -->
+            <section class="related-articles">
+                <h3>Bài viết liên quan</h3>
+                <div class="related-grid" id="related-articles">
+                    <!-- Related articles will be populated here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal" onclick="closeImageModal()">&times;</span>
+        <button class="modal-nav modal-prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="modal-nav modal-next" onclick="changeImage(1)">&#10095;</button>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/news_detail.js') }}"></script>
+
+{% endblock %} 
