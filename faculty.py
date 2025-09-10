@@ -65,3 +65,8 @@ def CNNVQS():
 def CNSV():
     
     return render_template('faculty/CNSV.html')
+
+@faculty.route('/VayVon/')
+def VayVon():
+    
+    return render_template('faculty/VayVon.html')

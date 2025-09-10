@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const loanForm = document.getElementById('loanForm');
     const majorSelect = document.getElementById('major');
     const courseSelect = document.getElementById('training_course');
     const classCodeInput = document.getElementById('class_code');
+    const messageContainer = document.getElementById('messageContainer');
 
     // Ánh xạ các ngành học với mã viết tắt
     const majorAbbreviations = {
@@ -44,14 +46,65 @@ document.addEventListener('DOMContentLoaded', function() {
         if (majorAbbr && courseAbbr) {
             classCodeInput.value = `${courseAbbr}-${majorAbbr}`;
         } else {
-            classCodeInput.value = ''; // Xóa trường nếu không có giá trị
+            classCodeInput.value = '';
         }
     }
 
-    // Lắng nghe sự kiện khi người dùng thay đổi Ngành học hoặc Khóa đào tạo
     majorSelect.addEventListener('change', generateClassCode);
     courseSelect.addEventListener('change', generateClassCode);
 
     // Tạo mã lớp ngay khi trang được tải lần đầu tiên
     generateClassCode();
+    
+    loanForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(loanForm);
+        const data = Object.fromEntries(formData.entries());
+
+        data.lophoc = classCodeInput.value;
+
+        delete data.class_code;
+
+        data.miengiam = data.miengiam || 'khong_mien_giam';
+        data.doituong = data.doituong || 'khong_mo_coi';
+        data.trang_thai = 'dang_xu_ly';
+        
+        // Reset nội dung thông báo và style
+        messageContainer.textContent = '';
+        messageContainer.className = 'mt-4 text-center text-sm font-bold';
+        
+        try {
+            const response = await fetch('https://saigongiadinh.pythonanywhere.com/vayvon/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Success:', result);
+                messageContainer.textContent = 'Bạn đã đăng ký thành công Giấy xác nhận vay vốn. Vui lòng đến phòng tuyển sinh sau 1-3 ngày làm việc để nhận giấy nhé.';
+                messageContainer.classList.add('text-green-600');
+                
+                // Reset form sau khi gửi thành công
+                loanForm.reset();
+                
+                // Cần gọi lại hàm generateClassCode để điền lại giá trị ban đầu cho class_code
+                generateClassCode();
+                
+            } else {
+                const errorData = await response.json();
+                console.error('Error:', errorData);
+                messageContainer.textContent = 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin và thử lại.';
+                messageContainer.classList.add('text-red-600');
+            }
+        } catch (error) {
+            console.error('Network or server error:', error);
+            messageContainer.textContent = 'Có lỗi xảy ra. Vui lòng thử lại sau.';
+            messageContainer.classList.add('text-red-600');
+        }
+    });
 });

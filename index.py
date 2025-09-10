@@ -415,6 +415,10 @@ def cnnvqs_form():
 def cnsv():
     return render_template('form/CNSV-form.html')
 
+@app.route('/form/VayVon-form.html')
+def vayvon():
+    return render_template('form/VayVon-form.html')
+
 @app.route('/dang-ky-the-sinh-vien')
 def dangkythesinhvien():
     return render_template('dichvu/dvthesv.html')
