@@ -19,7 +19,7 @@
             margin: 30px auto;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 25mm 30mm 20mm 30mm; /* Lề trên, phải, dưới, trái */
+            padding: 25mm 18mm 20mm 18mm; /* Lề trên, phải, dưới, trái */
             box-sizing: border-box;
         }
 
@@ -27,7 +27,7 @@
         .header-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13pt;
+            font-size: 11pt;
             text-align: center;
         }
 
@@ -95,8 +95,14 @@
         }
         .info-table td.label {
             white-space: nowrap;
-            padding-right: 15px;
+            padding-right: 5px;
+            padding-left: 10px;
+            font-weight: normal;
+        }
+        
+        .info-table td:not(.label) {
             font-weight: bold;
+            padding-left: 0px;
         }
         
         .sign-area {
@@ -133,10 +139,44 @@
                 height: 297mm;
                 margin: 0;
                 box-shadow: none;
-                padding: 25mm 30mm 20mm 30mm;
+                padding: 25mm 18mm 20mm 18mm; /* Giữ nguyên padding như màn hình */
             }
             .no-print {
                 display: none;
+            }
+            /* Đảm bảo header không bị xuống dòng khi in */
+            .header-table {
+                font-size: 11pt !important;
+                line-height: 1.2 !important;
+            }
+            .header-table td {
+                width: 50% !important;
+                vertical-align: top !important;
+            }
+            .header-table p {
+                margin: 0 !important;
+                line-height: 1.2 !important;
+            }
+            .underline {
+                display: inline-block !important;
+                border-bottom: 1px solid #000 !important;
+                margin-top: 5px !important;
+            }
+            /* Ẩn header và footer của trình duyệt khi in */
+            @page {
+                margin: 0;
+                size: A4;
+            }
+            /* Ẩn tất cả header/footer của trình duyệt */
+            @media print {
+                @page {
+                    margin: 0;
+                    size: A4;
+                }
+                body {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
             }
         }
         
@@ -148,6 +188,19 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+        }
+        
+        /* CSS bổ sung để ẩn header/footer trình duyệt */
+        @media print {
+            html, body {
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .page {
+                margin: 0 !important;
+                padding: 25mm 18mm 20mm 18mm !important;
+            }
         }
     </style>
 </head>
@@ -169,11 +222,11 @@
         </tr>
     </table>
 
-    <div class="content">
-        <p style="text-align: center; font-style: italic; font-size: 13pt; margin-top: 20px;">Số: .... /GXN-CĐSGGD</p>
+    <div class="content" style="margin-top: 30px;">
+        <!-- <p style="text-align: center; font-style: italic; font-size: 13pt; margin-top: 20px;">Số: .... /GXN-CĐSGGD</p> -->
         <h1>GIẤY XÁC NHẬN</h1>
         <p style="text-align: center; font-size: 14pt; font-weight: bold;">HIỆU TRƯỞNG TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
-        <p style="margin-top: 20px;"><b>Xác nhận:</b></p>
+        <p style="margin-top: 20px;"> <strong>Xác nhận</strong></p>
 
         <table class="info-table">
             <tr>
@@ -196,35 +249,44 @@
             </tr>
             <tr>
                 <td class="label">Nơi cấp:</td>
-                <td colspan="3" id="cccd_issue_place">Cục trưởng CCSQLHCVTTXH</td>
+                <td colspan="3" id="cccd_issue_place" style="font-weight: bold;">Cục trưởng CCSQLHCVTTXH</td>
             </tr>
             <tr>
                 <td class="label">Hộ khẩu thường trú:</td>
                 <td colspan="3" id="permanent_residence"></td>
             </tr>
             <tr>
-                <td class="label">Là sinh viên ngành:</td>
+                <td class="label">Là sinh viên lớp:</td>
+                <td id="student_class"></td>
+                <td class="label">Ngành:</td>
                 <td id="major"></td>
+            </tr>
+            <tr>
                 <td class="label">Trình độ đào tạo:</td>
                 <td id="training_level"></td>
+                <td class="label">Hệ đào tạo:</td>
+                <td id="training_system"></td>
             </tr>
             <tr>
-                <td class="label">Hệ đào tạo:</td>
-                <td id="training_course"></td>
                 <td class="label">Khóa đào tạo:</td>
                 <td id="training_course_year"></td>
-            </tr>
-            <tr>
-                <td class="label">Lý do cấp giấy chứng nhận:</td>
-                <td colspan="3" id="reason">Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.</td>
+                <td class="label"></td>
+                <td></td>
             </tr>
         </table>
+        
+        <div style="margin-top: 20px;">
+            <p style="margin: 0; font-size: 13pt; line-height: 1.6;">
+                <strong>Lý do cấp giấy chứng nhận:</strong> 
+                <span id="reason" style="font-weight: bold; padding-left: 20px;">Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.</span>
+            </p>
+        </div>
     </div>
 
     <div class="sign-area">
         <p>TP. Hồ Chí Minh, ngày <span id="issue_date"></span></p>
-        <p>HIỆU TRƯỞNG</p>
-        <p>TS. Bùi Quang Trung</p>
+        <p style="padding-right: 80px;">HIỆU TRƯỞNG</p>
+        <p style="padding-right: 60px;">TS. Bùi Quang Trung</p>
     </div>
 </div>
 
@@ -244,19 +306,26 @@
     });
 
     function fillForm(data) {
-        document.getElementById('full_name').textContent = data.full_name;
-        document.getElementById('gender').textContent = data.gender;
-        document.getElementById('date_of_birth').textContent = data.date_of_birth;
-        document.getElementById('place_of_birth').textContent = data.place_of_birth;
-        document.getElementById('cccd').textContent = data.cccd;
-        document.getElementById('cccd_issue_date').textContent = data.cccd_issue_date;
-        document.getElementById('permanent_residence').textContent = data.permanent_residence;
-        document.getElementById('major').textContent = data.major;
-        document.getElementById('training_level').textContent = data.training_level;
-        document.getElementById('training_course').textContent = data.training_course;
-        document.getElementById('training_course_year').textContent = data.training_course_year;
-        document.getElementById('reason').textContent = data.reason;
+        // Thông tin cá nhân
+        document.getElementById('full_name').textContent = data.full_name || '';
+        document.getElementById('gender').textContent = data.gender || '';
+        document.getElementById('date_of_birth').textContent = data.date_of_birth || '';
+        document.getElementById('place_of_birth').textContent = data.place_of_birth || '';
+        document.getElementById('cccd').textContent = data.cccd || '';
+        document.getElementById('cccd_issue_date').textContent = data.cccd_issue_date || '';
+        document.getElementById('permanent_residence').textContent = data.permanent_residence || '';
+        
+        // Thông tin học tập
+        document.getElementById('student_class').textContent = data.student_class || 'K11 CĐTY';
+        document.getElementById('major').textContent = data.major || '';
+        document.getElementById('training_level').textContent = data.training_level || 'Cao đẳng';
+        document.getElementById('training_system').textContent = data.training_system || 'Chính quy';
+        document.getElementById('training_course_year').textContent = data.training_course_year || '2025 - 2028';
+        
+        // Lý do cấp giấy chứng nhận (mặc định)
+        document.getElementById('reason').textContent = data.reason || 'Bổ túc hồ sơ tạm hoãn nghĩa vụ quân sự.';
 
+        // Ngày cấp (ngày hiện tại)
         const now = new Date();
         const day = now.getDate();
         const month = now.getMonth() + 1;
