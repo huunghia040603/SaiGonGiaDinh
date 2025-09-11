@@ -87,6 +87,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: fixed;
         }
         .info-table td {
             padding: 2px 0;
@@ -96,14 +97,25 @@
         }
         .info-table td.label {
             white-space: nowrap;
-            padding-right: 5px;
+            padding-right: 0px;
             padding-left: 10px;
             font-weight: normal;
+            width: 25%;
         }
         
         .info-table td:not(.label) {
             font-weight: bold;
             padding-left: 0px;
+            width: 25%;
+        }
+        
+        /* Các cột bên phải có label ngắn hơn */
+        .info-table tr td:nth-child(3) {
+            width: 22%;
+        }
+        
+        .info-table tr td:nth-child(4) {
+            width: 35%;
         }
         
         .sign-area {
@@ -188,6 +200,24 @@
             background: #153ea8;
         }
         
+        /* Nút quay lại góc trái trên */
+        .back-btn.no-print {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #6b7280;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .back-btn.no-print:hover {
+            background: #4b5563;
+        }
+        
         /* CSS bổ sung để ẩn header/footer trình duyệt */
         @media print {
             html, body {
@@ -206,6 +236,7 @@
 
 <div class="page">
     <button class="print-btn no-print" onclick="window.print()">In Giấy Xác Nhận</button>
+    <button class="back-btn no-print" onclick="goBack()">Quay lại</button>
     <table class="header-table">
         <tr>
             <td class="header-left">
@@ -328,6 +359,16 @@
         const month = now.getMonth() + 1;
         const year = now.getFullYear();
         document.getElementById('issue_date').textContent = `${day} tháng ${month} năm ${year}`;
+    }
+    
+    function goBack() {
+        // Thử quay lại trang trước
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // Nếu không có lịch sử, chuyển về trang chủ faculty
+            window.location.href = '/gv/capgiay/';
+        }
     }
 </script>
 

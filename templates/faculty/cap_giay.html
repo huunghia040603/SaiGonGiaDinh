@@ -3,18 +3,46 @@
 
 {% block content %}
 <div class="container py-4">
-    <h3 class="mb-3">Cấp Giấy cho Sinh Viên</h3>
+    <div class="d-flex align-items-center mb-4">
+        <div class="me-3">
+            <i class="fas fa-file-alt fa-2x text-primary"></i>
+        </div>
+        <div>
+            <h3 class="mb-0 text-primary fw-bold">Cấp Giấy cho Sinh Viên</h3>
+            <p class="text-muted mb-0">Quản lý và in các loại giấy tờ cho sinh viên</p>
+        </div>
+        <div class="ms-auto">
+            <button class="btn btn-success me-2" onclick="openStatusModal()">
+                <i class="fas fa-edit me-1"></i>Cập nhật trạng thái
+            </button>
+            <button class="btn btn-info me-2" onclick="openBulkStatusModal()">
+                <i class="fas fa-tasks me-1"></i>Cập nhật hàng loạt
+            </button>
+            
+        </div>
+    </div>
 
-    <div class="card mb-3">
+    <div class="card mb-4 shadow-sm border-0" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
         <div class="card-body">
-            <div class="row g-2 align-items-end">
+            <div class="row g-3 align-items-end">
                 <div class="col-12 col-md-5">
-                    <label class="form-label">Tìm theo Mã hồ sơ hoặc Họ tên</label>
-                    <input id="searchInput" class="form-control" placeholder="VD: SGC-094AH hoặc Nguyễn Văn A">
+                    <label class="form-label fw-bold text-primary">
+                        <i class="fas fa-search me-2"></i>Tìm theo Mã hồ sơ, Họ tên hoặc CCCD
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary text-white border-primary">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input id="searchInput" class="form-control border-primary" 
+                               placeholder="VD: SGC-094AH, Nguyễn Văn A hoặc 012345678912"
+                               style="border-left: none;">
+                    </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <label class="form-label">Lọc loại giấy</label>
-                    <select id="filterType" class="form-select">
+                    <label class="form-label fw-bold text-primary">
+                        <i class="fas fa-filter me-2"></i>Lọc loại giấy
+                    </label>
+                    <select id="filterType" class="form-select border-primary shadow-sm">
                         <option value="">Tất cả</option>
                         <option value="giay_chung_nhan_sv">Chứng nhận SV</option>
                         <option value="giay_hoan_nvqs">CN NVQS</option>
@@ -22,22 +50,32 @@
                     </select>
                 </div>
                 <div class="col-6 col-md-2">
-                    <button id="reloadBtn" class="btn btn-secondary w-100">Tải lại</button>
+                    <label class="form-label fw-bold text-primary">
+                        <i class="fas fa-sync-alt me-2"></i>Thao tác
+                    </label>
+                    <button id="reloadBtn" class="btn btn-primary w-100 shadow-sm">
+                        <i class="fas fa-sync-alt me-1"></i>Tải lại
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover align-middle">
+        <table class="table table-hover align-middle table-striped">
             <thead class="table-light">
                 <tr>
+                    <th width="50px">
+                        <input type="checkbox" id="selectAll" class="form-check-input">
+                    </th>
                     <th>Mã hồ sơ</th>
                     <th>Họ và tên</th>
                     <th>Ngành</th>
                     <th>Lớp</th>
-                    <th>Loại giấy đủ điều kiện</th>
+                    <th>Trạng thái</th>
+                    <th>Loại giấy yêu cầu</th>
                     <th>Hành động</th>
+                    <th>Sửa</th>
                 </tr>
             </thead>
             <tbody id="profilesBody">
@@ -46,13 +84,420 @@
     </div>
 </div>
 
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editModalLabel">
+                    <i class="fas fa-edit me-2"></i>Sửa thông tin sinh viên
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="edit_id" name="id">
+                    
+                    <!-- Thông tin cá nhân -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-user me-2"></i>Thông tin cá nhân</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold" style="width: 20%;">Họ và tên:</td>
+                                            <td style="width: 30%;">
+                                                <input type="text" class="form-control form-control-sm" id="edit_full_name" name="full_name" required>
+                                            </td>
+                                            <td class="fw-bold" style="width: 20%;">Ngày sinh:</td>
+                                            <td style="width: 30%;">
+                                                <input type="date" class="form-control form-control-sm" id="edit_date_of_birth" name="date_of_birth" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Giới tính:</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="edit_gender" name="gender" required>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
+                                                </select>
+                                            </td>
+                                            <td class="fw-bold">Số CCCD:</td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm" id="edit_cccd" name="cccd" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Nơi sinh:</td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm" id="edit_place_of_birth" name="place_of_birth">
+                                            </td>
+                                            <td class="fw-bold">Ngày cấp CCCD:</td>
+                                            <td>
+                                                <input type="date" class="form-control form-control-sm" id="edit_cccd_issue_date" name="cccd_issue_date">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Hộ khẩu thường trú:</td>
+                                            <td colspan="3">
+                                                <input type="text" class="form-control form-control-sm" id="edit_permanent_residence" name="permanent_residence">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin học tập -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Thông tin học tập</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold" style="width: 20%;">Ngành:</td>
+                                            <td style="width: 30%;">
+                                                <input type="text" class="form-control form-control-sm" id="edit_major" name="major">
+                                            </td>
+                                            <td class="fw-bold" style="width: 20%;">Lớp học:</td>
+                                            <td style="width: 30%;">
+                                                <input type="text" class="form-control form-control-sm" id="edit_lophoc" name="lophoc">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Trình độ đào tạo:</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="edit_training_level" name="training_level">
+                                                    <option value="Cao đẳng">Cao đẳng</option>
+                                                    <option value="Đại học">Đại học</option>
+                                                    <option value="Trung cấp">Trung cấp</option>
+                                                </select>
+                                            </td>
+                                            <td class="fw-bold">Hệ đào tạo:</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="edit_training_system" name="training_system">
+                                                    <option value="Chính quy">Chính quy</option>
+                                                    <option value="Vừa học vừa làm">Vừa học vừa làm</option>
+                                                    <option value="Từ xa">Từ xa</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Khóa đào tạo:</td>
+                                            <td colspan="3">
+                                                <input type="text" class="form-control form-control-sm" id="edit_training_course" name="training_course">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loại giấy tờ -->
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-certificate me-2"></i>Loại giấy tờ</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="edit_giay_chung_nhan_sv" name="giay_chung_nhan_sv">
+                                        <label class="form-check-label fw-bold" for="edit_giay_chung_nhan_sv">
+                                            <i class="fas fa-id-card me-1 text-primary"></i>Giấy chứng nhận sinh viên
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="edit_giay_hoan_nvqs" name="giay_hoan_nvqs">
+                                        <label class="form-check-label fw-bold" for="edit_giay_hoan_nvqs">
+                                            <i class="fas fa-shield-alt me-1 text-success"></i>Giấy hoãn NVQS
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="edit_yeu_cau_vay_von" name="yeu_cau_vay_von">
+                                        <label class="form-check-label fw-bold" for="edit_yeu_cau_vay_von">
+                                            <i class="fas fa-hand-holding-usd me-1 text-danger"></i>Yêu cầu vay vốn
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>Hủy
+                </button>
+                <button type="button" class="btn btn-primary" id="saveEditBtn">
+                    <i class="fas fa-save me-1"></i>Lưu thay đổi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
-.badge-type { padding: 6px 10px; font-weight: 600; }
-.badge-cnsv { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
-.badge-cnnvqs { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
-.badge-vayvon { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-.action-btn { margin-right: 6px; }
+.badge-type { 
+    padding: 6px 10px; 
+    font-weight: 600; 
+    display: inline-block;
+    margin: 2px;
+    border-radius: 4px;
+}
+.badge-cnsv { 
+    background-color: #dbeafe; 
+    color: #1e40af; 
+    border: 1px solid #93c5fd; 
+}
+.badge-cnnvqs { 
+    background-color: #dcfce7; 
+    color: #166534; 
+    border: 1px solid #86efac; 
+}
+.badge-vayvon { 
+    background-color: #fee2e2; 
+    color: #991b1b; 
+    border: 1px solid #fecaca; 
+}
+
+/* Action buttons styling */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 140px;
+}
+
+.action-btn { 
+    margin: 0;
+    padding: 4px 8px;
+    font-size: 11px;
+    white-space: nowrap;
+    border-radius: 4px;
+    border: 1px solid;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Edit button styling */
+.edit-btn {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: 4px;
+    border: 1px solid #ffc107;
+    background-color: #fff3cd;
+    color: #856404;
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: #ffc107;
+    color: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Table responsive improvements */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.table {
+    margin-bottom: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    padding: 12px 15px;
+    border: none;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table tbody tr:nth-child(even):hover {
+    background-color: #f0f2ff;
+}
+
+/* Specific column widths */
+.table th:nth-child(1), .table td:nth-child(1) { width: 12%; } /* Mã hồ sơ */
+.table th:nth-child(2), .table td:nth-child(2) { width: 20%; } /* Họ và tên */
+.table th:nth-child(3), .table td:nth-child(3) { width: 15%; } /* Ngành */
+.table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Lớp */
+.table th:nth-child(5), .table td:nth-child(5) { width: 15%; } /* Loại giấy */
+.table th:nth-child(6), .table td:nth-child(6) { width: 20%; } /* Hành động */
+.table th:nth-child(7), .table td:nth-child(7) { width: 8%; } /* Sửa */
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2px;
+        min-width: auto;
+    }
+    
+    .action-btn {
+        font-size: 10px;
+        padding: 3px 6px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .edit-btn {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .table th, .table td {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .action-btn {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+    
+    .edit-btn {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+}
 </style>
+
+<!-- Status Update Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="statusModalLabel">
+                    <i class="fas fa-edit me-2"></i>Cập nhật trạng thái hồ sơ
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="statusForm">
+                    <input type="hidden" id="status_id" name="id">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mã hồ sơ:</label>
+                        <input type="text" class="form-control" id="status_ma_ho_so" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Họ và tên:</label>
+                        <input type="text" class="form-control" id="status_full_name" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Trạng thái hiện tại:</label>
+                        <input type="text" class="form-control" id="status_current" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Trạng thái mới:</label>
+                        <select class="form-select" id="status_new" name="trang_thai" required>
+                            <option value="dang_xu_ly">Đang xử lý</option>
+                            <option value="da_xu_ly">Đã xử lý</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>Hủy
+                </button>
+                <button type="button" class="btn btn-success" id="saveStatusBtn">
+                    <i class="fas fa-save me-1"></i>Cập nhật
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Status Update Modal -->
+<div class="modal fade" id="bulkStatusModal" tabindex="-1" aria-labelledby="bulkStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="bulkStatusModalLabel">
+                    <i class="fas fa-tasks me-2"></i>Cập nhật trạng thái hàng loạt
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Chọn trạng thái mới:</label>
+                    <select class="form-select" id="bulkStatus" required>
+                        <option value="">-- Chọn trạng thái --</option>
+                        <option value="dang_xu_ly">Đang xử lý</option>
+                        <option value="da_xu_ly">Đã xử lý</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Hồ sơ đã chọn:</label>
+                    <div id="selectedProfiles" class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                        <p class="text-muted mb-0">Chưa có hồ sơ nào được chọn</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>Hủy
+                </button>
+                <button type="button" class="btn btn-info" id="saveBulkStatusBtn">
+                    <i class="fas fa-save me-1"></i>Cập nhật tất cả
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

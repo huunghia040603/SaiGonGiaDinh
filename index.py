@@ -629,7 +629,19 @@ def course_detail_page(course_id):
 def sinhvien():
     return render_template('/page_sinh_vien/base_sv.html')
 
-
+@app.route('/email-template')
+def email_template():
+    # Dữ liệu mẫu để test form email
+    sample_data = {
+        'ho_so': {
+            'full_name': 'Nguyễn Văn A',
+            'ma_ho_so': 'SGC-094AH',
+            'submission_date': '2025-01-15 14:30:00'
+        },
+        'ten_dich_vu': 'Giấy chứng nhận sinh viên',
+        'trang_thai_moi': 'Đã xử lý'
+    }
+    return render_template('form/form-emali.html', **sample_data)
 
 if __name__ == '__main__':
     # Khởi tạo file visitor_count.json nếu chưa có

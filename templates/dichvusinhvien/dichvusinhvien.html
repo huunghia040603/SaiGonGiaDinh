@@ -11,26 +11,23 @@
         <div class="service-grid8">
            
            
-            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-chung-nhan">
                 <i class="fas fa-certificate icon8"></i>
                 <h3>Đăng ký giấy hoãn NVQS</h3>
                 <p>Yêu cầu cấp giấy hoãn NVQS.</p>
-            </div></a>
+            </div>
 
-            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-the-sinh-vien">
                 <i class="fas fa-id-card icon8"></i>
                 <h3>Đăng ký chứng nhận Sinh Viên</h3>
                 <p>Yêu cầu cấp chứng nhận Sinh Viên.</p>
-            </div></a>
+            </div>
 
-            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-xac-nhan-vay-von">
                 <i class="fas fa-hand-holding-usd icon8"></i>
                 <h3>Đăng ký xác nhận vay vốn</h3>
                 <p>Yêu cầu giấy xác nhận vay vốn.</p>
-            </div></a>
+            </div>
 
                     
             
@@ -39,8 +36,8 @@
                     <h1>Tra cứu trạng thái cấp hồ sơ</h1>
                     <form id="searchForm">
                         <div class="form-group">
-                            <label for="ma_ho_so">Nhập Mã Hồ Sơ Của Bạn</label>
-                            <input type="text" id="ma_ho_so" name="ma_ho_so" required placeholder="Ví dụ: SGC-09L31">
+                            <label for="search_input">Tìm theo Mã hồ sơ, Họ tên hoặc CCCD</label>
+                            <input type="text" id="search_input" name="search_input" required placeholder="Ví dụ: SGC-09L31, Nguyễn Văn A hoặc 012345678912">
                         </div>
                         <button type="submit" class="btn-submit">
                             Tra Cứu
@@ -397,7 +394,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchForm = document.getElementById('searchForm');
-        const maHoSoInput = document.getElementById('ma_ho_so');
+        const searchInput = document.getElementById('search_input');
         const resultContainer = document.getElementById('resultContainer');
         const hosoInfoDiv = document.getElementById('hoso-info');
         const errorMessageP = document.getElementById('error-message');
@@ -405,8 +402,8 @@
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const maHoSo = maHoSoInput.value.trim().toUpperCase();
-            if (!maHoSo) {
+            const searchTerm = searchInput.value.trim();
+            if (!searchTerm) {
                 return;
             }
 
@@ -418,24 +415,37 @@
             resultContainer.style.display = 'block';
 
             try {
-                // Sử dụng URL API mới với tham số tìm kiếm
-                const response = await fetch(`https://saigongiadinh.pythonanywhere.com/hoso/?ma_ho_so=${maHoSo}`);
+                // Lấy tất cả hồ sơ và tìm kiếm local
+                const response = await fetch('https://saigongiadinh.pythonanywhere.com/hoso/');
                 const data = await response.json();
 
-                // Kiểm tra xem có kết quả trả về hay không
-                if (data && Array.isArray(data) && data.length > 0) {
-                    const hoso = data[0]; // Lấy đối tượng hồ sơ đầu tiên trong mảng
-                    
-                    hosoInfoDiv.innerHTML = `
-                        <p><strong>Mã hồ sơ:</strong> <span>${hoso.ma_ho_so}</span></p>
-                        <p><strong>Họ và tên:</strong> <span>${hoso.full_name}</span></p>
-                        <p><strong>Ngày đăng ký:</strong> <span>${new Date(hoso.submission_date).toLocaleDateString('vi-VN')}</span></p>
-                        <p><strong>Tình trạng:</strong> <span class="status-badge ${hoso.trang_thai}">${getTrangThaiText(hoso.trang_thai)}</span></p>
-                        <p><strong>Giấy tờ đã đăng ký:</strong> <span>${getServiceNames(hoso)}</span></p>
-                    `;
+                if (data && Array.isArray(data)) {
+                    // Tìm kiếm theo nhiều tiêu chí
+                    const searchTermLower = searchTerm.toLowerCase();
+                    const foundHoso = data.find(hoso => {
+                        return (
+                            (hoso.ma_ho_so && hoso.ma_ho_so.toLowerCase().includes(searchTermLower)) ||
+                            (hoso.full_name && hoso.full_name.toLowerCase().includes(searchTermLower)) ||
+                            (hoso.cccd && hoso.cccd.toLowerCase().includes(searchTermLower))
+                        );
+                    });
+
+                    if (foundHoso) {
+                        hosoInfoDiv.innerHTML = `
+                            <p><strong>Mã hồ sơ:</strong> <span>${foundHoso.ma_ho_so}</span></p>
+                            <p><strong>Họ và tên:</strong> <span>${foundHoso.full_name}</span></p>
+                            <p><strong>CCCD:</strong> <span>${foundHoso.cccd || 'Chưa cập nhật'}</span></p>
+                            <p><strong>Ngày đăng ký:</strong> <span>${new Date(foundHoso.submission_date).toLocaleDateString('vi-VN')}</span></p>
+                            <p><strong>Tình trạng:</strong> <span class="status-badge ${foundHoso.trang_thai}">${getTrangThaiText(foundHoso.trang_thai)}</span></p>
+                            <p><strong>Giấy tờ đã đăng ký:</strong> <span>${getServiceNames(foundHoso)}</span></p>
+                        `;
+                    } else {
+                        hosoInfoDiv.innerHTML = '';
+                        errorMessageP.textContent = 'Không tìm thấy hồ sơ phù hợp. Vui lòng kiểm tra lại thông tin tìm kiếm.';
+                    }
                 } else {
                     hosoInfoDiv.innerHTML = '';
-                    errorMessageP.textContent = 'Không tìm thấy mã hồ sơ này. Vui lòng kiểm tra lại.';
+                    errorMessageP.textContent = 'Không thể tải dữ liệu. Vui lòng thử lại sau.';
                 }
             } catch (error) {
                 console.error('Lỗi khi tra cứu:', error);
@@ -443,8 +453,8 @@
                 errorMessageP.textContent = 'Đã xảy ra lỗi khi kết nối. Vui lòng thử lại sau.';
             }
 
-            // Dòng code mới: Reset ô nhập liệu sau khi tra cứu
-            maHoSoInput.value = '';
+            // Reset ô nhập liệu sau khi tra cứu
+            searchInput.value = '';
         });
 
         function getServiceNames(hoso) {
@@ -476,4 +486,6 @@
         }
     });
 </script>
+
+<script src="{{ url_for('static', filename='js/dichvusinhvien/dichvuhoso.js') }}"></script>
 {% endblock %}

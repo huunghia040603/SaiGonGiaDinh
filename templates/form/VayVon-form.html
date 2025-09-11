@@ -204,6 +204,24 @@
             background: #153ea8;
         }
         
+        /* Nút quay lại góc trái trên */
+        .back-btn.no-print {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #6b7280;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .back-btn.no-print:hover {
+            background: #4b5563;
+        }
+        
         /* CSS bổ sung để ẩn header/footer trình duyệt */
         @media print {
             html, body {
@@ -222,6 +240,7 @@
 
 <div class="page">
     <button class="print-btn no-print" onclick="window.print()">In Giấy Xác Nhận</button>
+    <button class="back-btn no-print" onclick="goBack()">Quay lại</button>
     <table class="header-table">
         <tr>
             <td class="header-left">
@@ -446,6 +465,16 @@
             return 'Thú y';
         }
         return 'Y-Dược'; // Default
+    }
+    
+    function goBack() {
+        // Thử quay lại trang trước
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // Nếu không có lịch sử, chuyển về trang chủ faculty
+            window.location.href = '/gv/capgiay/';
+        }
     }
 </script>
 

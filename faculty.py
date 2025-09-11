@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, session, flash, request
+from flask import Blueprint, render_template, redirect, url_for, session, flash, request, jsonify
+import requests
 
 faculty = Blueprint('faculty', __name__, url_prefix='/gv')
 
@@ -91,3 +92,4 @@ def form_cnnvqs():
 def form_vayvon():
     
     return render_template('form/VayVon-form.html')
+
