@@ -87,22 +87,40 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: fixed;
         }
         .info-table td {
             padding: 2px 0;
             font-size: 13pt;
             line-height: 1.6;
             vertical-align: top;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .info-table td.label {
             white-space: nowrap;
             padding-right: 5px;
             padding-left: 10px;
             font-weight: normal;
+            width: 35%;
         }
         .info-table td:not(.label) {
             font-weight: bold;
             padding-left: 0px;
+            width: 15%;
+        }
+        .info-table td.wide {
+            width: 25%;
+        }
+        .info-table td.extra-wide {
+            width: 35%;
+        }
+        .info-table td.label-right {
+            padding-left: 0px !important;
+            transform: translateX(-20px);
+        }
+        .info-table td.data-right {
+            transform: translateX(-20px);
         }
         
         .sign-area {
@@ -221,88 +239,102 @@
 
     <div class="content" style="margin-top: 30px;">
         <h1>GIẤY XÁC NHẬN</h1>
-        <p style="text-align: center; font-size: 14pt; font-weight: bold;">HIỆU TRƯỞNG TRƯỜNG CAO ĐẲNG SÀI GÒN GIA ĐỊNH</p>
-        <p style="margin-top: 20px;"> <strong>Xác nhận</strong></p>
+       
 
         <table class="info-table">
             <tr>
-                <td class="label">Họ và tên:</td>
-                <td id="full_name"></td>
-                <td class="label">Giới tính:</td>
-                <td id="gender"></td>
+                <td class="label" >Họ và tên học sinh (sinh viên):</td>
+                <td id="full_name" class="wide"></td>
             </tr>
             <tr>
                 <td class="label">Ngày sinh:</td>
                 <td id="date_of_birth"></td>
-                <td class="label">Nơi sinh:</td>
-                <td id="place_of_birth"></td>
+                <td class="label label-right">Giới tính:</td>
+                <td class="data-right">
+                    <span id="gender_male">☐</span> Nam
+                    <span id="gender_female">☐</span> Nữ
+                </td>
             </tr>
             <tr>
-                <td class="label">Số CCCD:</td>
+                <td class="label">Số CMND:</td>
                 <td id="cccd"></td>
-                <td class="label">Ngày cấp:</td>
-                <td id="cccd_issue_date"></td>
+                <td class="label label-right">Ngày cấp:</td>
+                <td id="cccd_issue_date" class="data-right"></td>
             </tr>
             <tr>
                 <td class="label">Nơi cấp:</td>
-                <td colspan="3" id="cccd_issue_place">Cục trưởng CCSQLHCVTTXH</td>
+                <td colspan="3" id="cccd_issue_place" class="extra-wide">Cục Cảnh sát Quản lý hành chính về trật tự xã hội</td>
             </tr>
             <tr>
-                <td class="label">Hộ khẩu thường trú:</td>
-                <td colspan="3" id="permanent_residence"></td>
+                <td class="label">Mã trường theo học (mã quy ước trong quy chế tuyển sinh):</td>
+                <td colspan="3" style="padding-left: 190px !important;">D53</td>
             </tr>
             <tr>
-                <td class="label">Là sinh viên ngành:</td>
+                <td class="label">Tên trường:</td>
+                <td colspan="3" class="wide">Trường Cao đẳng Sài Gòn Gia Định</td>
+            </tr>
+            <tr>
+                <td class="label">Ngành học:</td>
                 <td id="major"></td>
-                <td class="label">Trình độ đào tạo:</td>
-                <td id="training_level"></td>
             </tr>
             <tr>
-                <td class="label">Lớp học:</td>
-                <td id="student_class"></td>
-                <td class="label">Hệ đào tạo:</td>
+                <td class="label">Hệ đào tạo (Đại học, Cao đẳng, TCCN, dạy nghề):</td>
+                <td id="training_level" class="wide" style="white-space: nowrap; padding-left: 130px !important;"></td>
+            </tr>
+            <tr>
+                <td class="label">Loại hình đào tạo:</td>
                 <td id="training_system"></td>
+                <td class="label label-right">Khóa:</td>
+                <td id="training_course_year" class="data-right"></td>
             </tr>
             <tr>
-                <td class="label">Khóa đào tạo:</td>
-                <td id="training_course_year"></td>
-                <td class="label"></td>
-                <td></td>
+                <td class="label">Lớp:</td>
+                <td id="student_class"></td>
+                <td class="label label-right">Số thẻ HSSV:</td>
+                <td id="ma_so_HSSV" class="data-right"></td>
             </tr>
             <tr>
-                <td class="label">Mã hồ sơ:</td>
-                <td id="ma_ho_so"></td>
-                <td class="label">Mã số HSSV:</td>
-                <td id="ma_so_HSSV"></td>
+                <td class="label">Khoa:</td>
+                <td id="faculty_name"></td>
+                <td class="label label-right">Ngày nhập học:</td>
+                <td id="ngay_nhap_hoc" class="data-right"></td>
             </tr>
             <tr>
-                <td class="label">Thời gian học:</td>
-                <td colspan="3" id="study_period"></td>
+                <td class="label">Thời gian ra trường (tháng/năm):</td>
+                <td id="ngay_ket_thuc"></td>
+                <td class="label label-right">(Thời gian học tại trường: 36 tháng)</td>
+                <td class="data-right"></td>
             </tr>
             <tr>
-                <td class="label">Học phí toàn khóa:</td>
-                <td id="hoc_phi"></td>
-                <td class="label">Học phí mỗi tháng:</td>
-                <td id="hoc_phi_moi_thang"></td>
+                <td class="label">- Số tiền học phí hàng tháng:</td>
+                <td id="hoc_phi_moi_thang"> </td>
             </tr>
             <tr>
-                <td class="label">Đối tượng chính sách:</td>
-                <td id="doituong"></td>
-                <td class="label">Miễn giảm:</td>
-                <td id="miengiam"></td>
+                <td class="label" style="font-weight: bold;">Thuộc diện:</td>
+                <td colspan="3" class="extra-wide">
+                    <span id="khong_mien_giam">☐</span> Không miễn giảm
+                    <span id="giam_hoc_phi">☐</span> Giảm học phí
+                    <span id="mien_hoc_phi">☐</span> Miễn học phí
+                </td>
             </tr>
             <tr>
-                <td class="label">Số bản cấp:</td>
-                <td id="number_of_copies"></td>
-                <td class="label"></td>
-                <td></td>
+                <td class="label" style="font-weight: bold;">Thuộc đối tượng:</td>
+                <td colspan="3" class="extra-wide">
+                    <span id="mo_coi">☐</span> Mồ côi
+                    <span id="khong_mo_coi">☐</span> Không mồ côi
+                </td>
             </tr>
         </table>
         
         <div style="margin-top: 20px;">
+            <p style="margin: 0; font-size: 13pt; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word; font-weight: bold;">
+                - Trong thời gian học tại trường, anh (chị): <span id="full_name_behavior"></span> không bị xử phạt hành chính trở lên về các hành vi: Cờ bạc, nghiện hút, trộm cắp, buôn lậu.
+            </p>
+        </div>
+        
+        <div style="margin-top: 20px;">
             <p style="margin: 0; font-size: 13pt; line-height: 1.6;">
-                <strong>Mục đích sử dụng giấy xác nhận:</strong> 
-                <span id="reason" style="font-weight: bold; padding-left: 20px;">Vay vốn tín dụng sinh viên tại Ngân hàng Chính sách Xã hội.</span>
+                - Số tài khoản của Nhà trường: .................................................................................................
             </p>
         </div>
     </div>
@@ -340,40 +372,80 @@
             if (value === null || value === undefined || value === '') return '';
             const num = Number(String(value).replace(/[^0-9.-]/g, ''));
             if (Number.isNaN(num)) return String(value);
-            return num.toLocaleString('vi-VN') + ' đ';
+            return num.toLocaleString('vi-VN');
         }
-        document.getElementById('full_name').textContent = data.full_name;
-        document.getElementById('gender').textContent = data.gender;
+        
+        // Basic info
+        document.getElementById('full_name').textContent = data.full_name || '';
+        document.getElementById('full_name_behavior').textContent = data.full_name || '';
         document.getElementById('date_of_birth').textContent = formatDateToVN(data.date_of_birth);
-        document.getElementById('place_of_birth').textContent = data.place_of_birth;
-        document.getElementById('cccd').textContent = data.cccd;
+        document.getElementById('cccd').textContent = data.cccd || '';
         document.getElementById('cccd_issue_date').textContent = formatDateToVN(data.cccd_issue_date);
-        document.getElementById('permanent_residence').textContent = data.permanent_residence || '';
+        
+        // Gender checkboxes
+        const gender = (data.gender || '').toLowerCase();
+        if (gender === 'nam' || gender === 'male') {
+            document.getElementById('gender_male').textContent = '☑';
+            document.getElementById('gender_female').textContent = '☐';
+        } else if (gender === 'nữ' || gender === 'female') {
+            document.getElementById('gender_male').textContent = '☐';
+            document.getElementById('gender_female').textContent = '☑';
+        } else {
+            document.getElementById('gender_male').textContent = '☐';
+            document.getElementById('gender_female').textContent = '☐';
+        }
+        
+        // Academic info
         document.getElementById('student_class').textContent = data.lophoc || '';
         document.getElementById('major').textContent = data.major || '';
         document.getElementById('training_level').textContent = data.training_level || 'Cao đẳng';
         document.getElementById('training_system').textContent = data.training_system || 'Chính quy';
         const trainingCourseValue = (data && (data['traning-course'] || data['training-course'])) || data.training_course || data.training_course_year || '';
         document.getElementById('training_course_year').textContent = trainingCourseValue;
-        document.getElementById('reason').textContent = data.reason || 'Vay vốn tín dụng sinh viên tại Ngân hàng Chính sách Xã hội.';
-
-        // Trường mở rộng theo vayvon.docx
-        document.getElementById('ma_ho_so').textContent = data.ma_ho_so || '';
-        document.getElementById('ma_so_HSSV').textContent = data.ma_so_HSSV || '';
-        const ngayNhap = data.ngay_nhap_hoc || '';
-        const ngayKet = data.ngay_ket_thuc || '';
-        document.getElementById('study_period').textContent = (ngayNhap && ngayKet) ? `${ngayNhap} - ${ngayKet}` : (ngayNhap || ngayKet || '');
-        document.getElementById('hoc_phi').textContent = formatCurrencyVND(data.hoc_phi || '');
-        document.getElementById('hoc_phi_moi_thang').textContent = formatCurrencyVND(data.hoc_phi_moi_thang || '');
-        document.getElementById('miengiam').textContent = (data.miengiam === 'khong_mien_giam' || data.miengiam === 'khong') ? 'Không miễn giảm' : (data.miengiam || '');
-        document.getElementById('doituong').textContent = (data.doituong === 'khong_mo_coi' || data.doituong === 'khong') ? 'Không thuộc diện' : (data.doituong || '');
-        document.getElementById('number_of_copies').textContent = (data.number_of_copies != null) ? String(data.number_of_copies) : '';
+        document.getElementById('ma_so_HSSV').textContent = data.ma_so_HSSV || data.cccd || '';
+        
+        // Faculty name mapping
+        const facultyName = data.major ? getFacultyName(data.major) : '';
+        document.getElementById('faculty_name').textContent = facultyName;
+        
+        // Dates
+        document.getElementById('ngay_nhap_hoc').textContent = data.ngay_nhap_hoc || '';
+        document.getElementById('ngay_ket_thuc').textContent = data.ngay_ket_thuc || '';
+        
+        // Tuition
+        document.getElementById('hoc_phi_moi_thang').textContent = formatCurrencyVND(data.hoc_phi_moi_thang) + ' đồng';
+        
+        // Checkboxes for categories
+        const miengiam = (data.miengiam || '').toLowerCase();
+        document.getElementById('khong_mien_giam').textContent = (miengiam === 'khong_mien_giam' || miengiam === 'khong' || miengiam === '') ? '☑' : '☐';
+        document.getElementById('giam_hoc_phi').textContent = (miengiam === 'giam_hoc_phi' || miengiam === 'giam') ? '☑' : '☐';
+        document.getElementById('mien_hoc_phi').textContent = (miengiam === 'mien_hoc_phi' || miengiam === 'mien') ? '☑' : '☐';
+        
+        const doituong = (data.doituong || '').toLowerCase();
+        document.getElementById('mo_coi').textContent = (doituong === 'mo_coi' || doituong === 'mồ côi') ? '☑' : '☐';
+        document.getElementById('khong_mo_coi').textContent = (doituong === 'khong_mo_coi' || doituong === 'không mồ côi' || doituong === '') ? '☑' : '☐';
 
         const now = new Date();
         const day = now.getDate();
         const month = now.getMonth() + 1;
         const year = now.getFullYear();
         document.getElementById('issue_date').textContent = `${day} tháng ${month} năm ${year}`;
+    }
+    
+    function getFacultyName(major) {
+        const majorLower = (major || '').toLowerCase();
+        if (majorLower.includes('y') || majorLower.includes('dược') || majorLower.includes('điều dưỡng')) {
+            return 'Y-Dược';
+        } else if (majorLower.includes('công nghệ') || majorLower.includes('thông tin') || majorLower.includes('kỹ thuật')) {
+            return 'Công nghệ thông tin';
+        } else if (majorLower.includes('kế toán') || majorLower.includes('kinh tế') || majorLower.includes('quản trị')) {
+            return 'Kinh tế';
+        } else if (majorLower.includes('du lịch') || majorLower.includes('luật') || majorLower.includes('ngoại ngữ')) {
+            return 'Xã hội - Du lịch - Pháp lý';
+        } else if (majorLower.includes('thú y')) {
+            return 'Thú y';
+        }
+        return 'Y-Dược'; // Default
     }
 </script>
 
