@@ -11,31 +11,52 @@
         <div class="service-grid8">
            
            
-            <a href="/dichvunvqs" style="text-decoration: none;">
+            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-chung-nhan">
                 <i class="fas fa-certificate icon8"></i>
                 <h3>Đăng ký giấy hoãn NVQS</h3>
                 <p>Yêu cầu cấp giấy hoãn NVQS.</p>
             </div></a>
 
-            <a href="/dang-ky-chung-nhan" style="text-decoration: none;">
+            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-the-sinh-vien">
                 <i class="fas fa-id-card icon8"></i>
                 <h3>Đăng ký chứng nhận Sinh Viên</h3>
                 <p>Yêu cầu cấp chứng nhận Sinh Viên.</p>
             </div></a>
 
-            <a href="/dichvuvayvon" style="text-decoration: none;">
+            <a href="/dichvuhoso" style="text-decoration: none;">
             <div class="service-card8" data-service="dang-ky-xac-nhan-vay-von">
                 <i class="fas fa-hand-holding-usd icon8"></i>
                 <h3>Đăng ký xác nhận vay vốn</h3>
                 <p>Yêu cầu giấy xác nhận vay vốn.</p>
             </div></a>
+
+                    
             
         </div>
+        <div class="container">
+                    <h1>Tra cứu trạng thái cấp hồ sơ</h1>
+                    <form id="searchForm">
+                        <div class="form-group">
+                            <label for="ma_ho_so">Nhập Mã Hồ Sơ Của Bạn</label>
+                            <input type="text" id="ma_ho_so" name="ma_ho_so" required placeholder="Ví dụ: SGC-09L31">
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            Tra Cứu
+                        </button>
+                    </form>
+
+                    <div id="resultContainer" class="result-container">
+                        <h2>Thông Tin Hồ Sơ</h2>
+                        <div id="hoso-info" class="hoso-info">
+                            </div>
+                        <p id="error-message" class="error-message"></p>
+                    </div>
+                </div>
     </section>
 
-    
+
 
 <style>
     /* CSS đã được tối ưu hóa để chỉ chứa các quy tắc cần thiết cho trang này */
@@ -59,6 +80,9 @@
         --card-bg8: #ffffff;
         --card-shadow8: rgba(0, 0, 0, 0.08);
         --hover-shadow8: rgba(0, 0, 0, 0.15);
+        --status-processing: #ffc107; /* Vàng */
+        --status-processed: #28a745; /* Xanh lá */
+        --status-cancelled: #dc3545; /* Đỏ */
     }
     
     /* Container chính và bố cục */
@@ -170,12 +194,12 @@
     @media (max-width: 768px) {
         .container8 {
             padding: 0 15px;
-            margin-left: auto; /* Căn giữa lại */
+            margin-left: auto;
             margin-right: auto;
         }
         .main-content8 {
             padding: 30px 0;
-            margin-left: 0; /* Bỏ lề trái */
+            margin-left: 0;
         }
         .page-title8 { font-size: 2em; margin-bottom: 5px; }
         .page-description8 { font-size: 0.9em; margin-bottom: 30px; }
@@ -221,9 +245,235 @@
     /* Xóa các quy tắc lề trái không cần thiết, vì nó sẽ gây lỗi responsive */
     @media (min-width: 1721px), (max-width: 1720px), (max-width: 1620px), (max-width: 1000px), (max-width: 768px) {
         .main-content8 {
-            margin-left: auto; /* Đảm bảo nội dung luôn được căn giữa */
+            margin-left: auto;
+        }
+    }
+
+    /* === Quy tắc CSS mới cho khối tra cứu hồ sơ === */
+    .container {
+        width: 100%;
+        max-width: 800px;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin: 40px auto;
+        transition: transform 0.3s ease-in-out;
+        font-family: 'font6'; /* Giữ font chữ như đã yêu cầu */
+    }
+    .container:hover {
+        transform: translateY(-5px);
+    }
+    .container h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #333;
+        text-align: center;
+        margin-bottom: 25px;
+        font-family: 'font2'; /* Áp dụng font chữ tiêu đề */
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-family: 'font6';
+    }
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        font-family: 'font6';
+    }
+    .form-group input:focus {
+        outline: none;
+        border-color: #4a90e2;
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    }
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        font-family: 'font6';
+    }
+    .btn-submit:hover {
+        background-color: #3b7ad1;
+        transform: translateY(-2px);
+    }
+    .result-container {
+        margin-top: 2rem;
+        border-top: 2px solid #e9ecef;
+        padding-top: 2rem;
+        display: none;
+    }
+    .result-container h2 {
+        font-size: 1.8rem;
+        color: var(--primary-color8);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-family: 'font2';
+    }
+    .hoso-info {
+        background-color: #f0f8ff;
+        border: 1px solid #cce5ff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        font-family: 'font6'; /* Giữ font chữ cho nội dung */
+    }
+    .hoso-info p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 0;
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .hoso-info p:last-child {
+        border-bottom: none;
+    }
+    .hoso-info strong {
+        color: var(--primary-color8);
+        min-width: 150px;
+        display: inline-block;
+        font-family: 'font2'; /* Font cho tiêu đề */
+    }
+    .status-badge {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 12px;
+        color: #10075c;
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-family: 'font6';
+    }
+    .status-badge.processing {
+        background-color: var(--status-processing);
+    }
+    .status-badge.processed {
+        background-color: var(--status-processed);
+    }
+    .status-badge.cancelled {
+        background-color: var(--status-cancelled);
+    }
+    .error-message {
+        color: var(--status-cancelled);
+        text-align: center;
+        font-weight: 600;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        font-family: 'font6';
+    }
+    @media (max-width: 576px) {
+        .hoso-info p {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .hoso-info strong {
+            margin-bottom: 5px;
         }
     }
 </style>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('searchForm');
+        const maHoSoInput = document.getElementById('ma_ho_so');
+        const resultContainer = document.getElementById('resultContainer');
+        const hosoInfoDiv = document.getElementById('hoso-info');
+        const errorMessageP = document.getElementById('error-message');
+
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const maHoSo = maHoSoInput.value.trim().toUpperCase();
+            if (!maHoSo) {
+                return;
+            }
+
+            hosoInfoDiv.innerHTML = '';
+            errorMessageP.textContent = '';
+            resultContainer.style.display = 'none';
+
+            hosoInfoDiv.innerHTML = '<p style="text-align: center; color: #555;">Đang tra cứu...</p>';
+            resultContainer.style.display = 'block';
+
+            try {
+                // Sử dụng URL API mới với tham số tìm kiếm
+                const response = await fetch(`https://saigongiadinh.pythonanywhere.com/hoso/?ma_ho_so=${maHoSo}`);
+                const data = await response.json();
+
+                // Kiểm tra xem có kết quả trả về hay không
+                if (data && Array.isArray(data) && data.length > 0) {
+                    const hoso = data[0]; // Lấy đối tượng hồ sơ đầu tiên trong mảng
+                    
+                    hosoInfoDiv.innerHTML = `
+                        <p><strong>Mã hồ sơ:</strong> <span>${hoso.ma_ho_so}</span></p>
+                        <p><strong>Họ và tên:</strong> <span>${hoso.full_name}</span></p>
+                        <p><strong>Ngày đăng ký:</strong> <span>${new Date(hoso.submission_date).toLocaleDateString('vi-VN')}</span></p>
+                        <p><strong>Tình trạng:</strong> <span class="status-badge ${hoso.trang_thai}">${getTrangThaiText(hoso.trang_thai)}</span></p>
+                        <p><strong>Giấy tờ đã đăng ký:</strong> <span>${getServiceNames(hoso)}</span></p>
+                    `;
+                } else {
+                    hosoInfoDiv.innerHTML = '';
+                    errorMessageP.textContent = 'Không tìm thấy mã hồ sơ này. Vui lòng kiểm tra lại.';
+                }
+            } catch (error) {
+                console.error('Lỗi khi tra cứu:', error);
+                hosoInfoDiv.innerHTML = '';
+                errorMessageP.textContent = 'Đã xảy ra lỗi khi kết nối. Vui lòng thử lại sau.';
+            }
+
+            // Dòng code mới: Reset ô nhập liệu sau khi tra cứu
+            maHoSoInput.value = '';
+        });
+
+        function getServiceNames(hoso) {
+            const services = [];
+            if (hoso.giay_chung_nhan_sv) {
+                services.push('Giấy chứng nhận sinh viên');
+            }
+            if (hoso.giay_hoan_nvqs) {
+                services.push('Giấy hoãn nghĩa vụ quân sự');
+            }
+            if (hoso.yeu_cau_vay_von) {
+                services.push('Giấy xác nhận vay vốn');
+            }
+            return services.length > 0 ? services.join(', ') : 'Không có';
+        }
+
+        // Hàm chuyển đổi giá trị 'trang_thai' thành văn bản dễ đọc
+        function getTrangThaiText(trangThai) {
+            switch (trangThai) {
+                case 'dang_xu_ly':
+                    return 'Đang xử lý';
+                case 'da_xu_ly':
+                    return 'Đã xử lý';
+                case 'da_huy':
+                    return 'Đã hủy';
+                default:
+                    return trangThai;
+            }
+        }
+    });
+</script>
 {% endblock %}

@@ -362,13 +362,10 @@ def camnang():
 def lienhe():
     return render_template('lienhe.html')
 
-@app.route('/dichvunvqs')
+@app.route('/dichvuhoso')
 def dichvunvqs():
     return render_template('dichvusinhvien/dichvunvqs.html')
 
-@app.route('/dichvuvayvon')
-def dichvuvayvon():
-    return render_template('dichvusinhvien/dichvuvayvon.html')
 
 
 @app.route('/kinh-te-tai-chinh')
