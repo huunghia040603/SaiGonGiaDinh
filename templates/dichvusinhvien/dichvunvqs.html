@@ -4,18 +4,36 @@
 
 <section class="min-h-screen py-6 px-3 sm:py-10 sm:px-6 lg:px-8 bg-gray-50 flex items-center justify-center">
     <div class="max-w-xs sm:max-w-xl md:max-w-7xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden md:flex">
-        <div class="md:w-1/2 p-4 sm:p-6 flex items-center justify-center bg-gradient-to-br ">
+        <div class="md:w-1/2 p-4 sm:p-6 flex items-center justify-center bg-gradient-to-br">
             <div class="w-full h-full flex flex-col items-center justify-center">
-                <img src="{{ url_for('static', filename='images/hotro.png') }}" alt="Đăng ký cấp chứng nhận sinh viên" class="rounded-lg shadow-lg w-full h-auto object-cover max-w-[400px] sm:max-w-full mx-auto mb-4">
-                
+                <img src="{{ url_for('static', filename='images/hotro.png') }}" alt="Hỗ trợ sinh viên" class="rounded-lg shadow-lg w-full h-auto object-cover max-w-[400px] sm:max-w-full mx-auto mb-4">
             </div>
         </div>
         
         <div class="md:w-1/2 p-4 sm:p-6 lg:p-8">
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 mb-4 sm:mb-6 text-center" style="font-family: font2;">Đăng Ký Cấp Giấy Chứng Nhận Sinh Viên</h2>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 mb-4 sm:mb-6 text-center" style="font-family: font2;">Dịch Vụ Hỗ Trợ Sinh Viên</h2>
             <div class="bg-blue-50 p-4 sm:p-6 rounded-lg shadow-inner">
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-blue-700 mb-4 sm:mb-6 text-center" style="font-family: font2;">BIỂU MẪU ĐĂNG KÝ</h3>
-                <form id="tourForm" action="/register-tour" method="POST" class="space-y-4 sm:space-y-6">
+                
+                <form id="mainForm" action="/register-services" method="POST" class="space-y-4 sm:space-y-6">
+                    <div class="form-group mb-4">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Chọn loại giấy tờ cần đăng ký <span class="text-red-500">*</span></label>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="check-cnsv" name="services" value="Giấy chứng nhận sinh viên" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="check-cnsv" class="ml-2 block text-sm text-gray-900">Giấy chứng nhận sinh viên</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="check-nvqs" name="services" value="Giấy hoãn nghĩa vụ quân sự" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="check-nvqs" class="ml-2 block text-sm text-gray-900">Giấy hoãn nghĩa vụ quân sự</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="check-vayvon" name="services" value="Giấy xác nhận vay vốn" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="check-vayvon" class="ml-2 block text-sm text-gray-900">Giấy xác nhận vay vốn</label>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="full_name" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Họ và tên <span class="text-red-500">*</span></label>
                         <input type="text" id="full_name" name="full_name" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" required placeholder="Nhập họ và tên">
@@ -92,8 +110,8 @@
                         <div class="form-group">
                             <label for="training_level" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Trình độ đào tạo <span class="text-red-500">*</span></label>
                             <select id="training_level" name="training_level" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" required>
-                                <option value="Chính quy">Cao đẳng</option>
-                                <option value="Liên thông VB2">Phổ thông</option>
+                                <option value="Cao đẳng">Cao đẳng</option>
+                                <option value="Phổ thông">Phổ thông</option>
                             </select>
                         </div>
                     </div>
@@ -115,13 +133,38 @@
                         </div>
                         <div class="form-group">
                             <label for="number_of_copies" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Số lượng bản <span class="text-red-500">*</span></label>
-                            <input type="number" id="number_of_copies" name="number_of_copies" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border"value="1">
+                            <input type="number" id="number_of_copies" name="number_of_copies" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 font-bold focus:border-blue-500 border" value="1">
                         </div>
                     </div>
-                    
+
+                    <div id="vayvon-options" class="space-y-4 sm:space-y-6 hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label for="mien_giam" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Thuộc diện <span class="text-red-500">*</span></label>
+                                <select id="mien_giam" name="mien_giam" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" disabled>
+                                    <option value="Không miễn giảm">Không miễn giảm</option>
+                                    <option value="Giảm học phí">Giảm học phí</option>
+                                    <option value="Miễn học phí">Miễn học phí</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="doi_tuong" class="block text-xs sm:text-sm font-bold text-gray-700 mb-0.5 sm:mb-1">Thuộc đối tượng <span class="text-red-500">*</span></label>
+                                <select id="doi_tuong" name="doi_tuong" class="mt-1 block w-full pl-3 pr-10 py-1.5 sm:py-2 text-sm sm:text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md appearance-none bg-white border" disabled>
+                                    <option value="Mồ côi">Mồ côi</option>
+                                    <option value="Không mồ côi">Không mồ côi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 mb-0.5 sm:mb-1">Bạn muốn nhận thông báo qua email khi hồ sơ bạn đã được xử lý thì hãy điền email nhé</label>
+                        <input type="email" id="email" name="email" class="mt-1 block w-full shadow-sm text-sm border-gray-300 rounded-md p-1.5 sm:p-2 focus:ring-blue-500 focus:border-blue-500 border" placeholder="Nhập email của bạn">
+                    </div>
+
                     <button type="submit" class="w-full flex justify-center py-2 sm:py-3 px-3 sm:px-4 border border-transparent rounded-md shadow-sm text-base sm:text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out">
                         Gửi thông tin
                     </button>
+                    <div id="messageContainer" class="mt-4 text-center text-sm font-bold"></div>
                 </form>
             </div>
         </div>
@@ -168,5 +211,6 @@
     }
 }
 </style>
-<script src="{{ url_for('static', filename='js/dichvusinhvien/dichvuhqs.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/dichvuhoso.js') }}"></script>
 {% endblock %}
